@@ -1,7 +1,3 @@
-
-% ********************************** Sub-Files ************************************
-\usepackage{subfiles} % To work seamlessly with mutiple file projects
-
 % ******************************************************************************
 % ****************************** Custom Margin *********************************
 
@@ -92,6 +88,9 @@
 %\usepackage[perpage]{footmisc} %Range of footnote options
 
 
+% ********************************** Sub-Files ************************************
+\usepackage{subfiles} % To work seamlessly with mutiple file projects
+
 % *****************************************************************************
 % *************************** Bibliography  and References ********************
 
@@ -99,12 +98,12 @@
 
 % Add `custombib' in the document class option to use this section
 \ifuseCustomBib
-   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+%   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
-%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
-%\bibliography{References/references} %Location of references.bib only for biblatex
+	\RequirePackage[backend=bibtex, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+	\bibliography{references} %Location of references.bib only for biblatex
 
 \fi
 
