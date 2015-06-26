@@ -1,0 +1,131 @@
+
+\definecolor{accolornotes}{rgb}{0.7,0.3,0.2}
+\newcommand{\acnote}[1]{\textcolor{accolornotes}{[{\bf #1}]}}
+
+
+\definecolor{jscolornotes}{rgb}{0.3,0.7,0.2}
+\newcommand{\jsnote}[1]{\textcolor{jscolornotes}{[{\bf #1}]}}
+
+
+\definecolor{acgray}{rgb}{0.8,0.8,0.8}
+\newcommand{\acremove}[1]{\textcolor{acgray}{[{#1}]}}
+
+\definecolor{myred}{rgb}{0.6, 0, 0}
+\definecolor{myblue}{rgb}{0.3, 0.1, 0.9}
+
+%\definecolor{acgreen}{rgb}{0.1,0.5,0.1}
+%\definecolor{acblue}{rgb}{0.1,0.1,0.5}
+%\newcommand{\bl}[1]{\textcolor{acgreen}{#1}}
+%\newcommand{\gr}[1]{\textcolor{acblue}{#1}}
+
+\newcommand{\eg}{{\it e.g.}\ }
+\newcommand{\ie}{{\it i.e.}\ }
+%\newcommand{\vs}{{v.s.}\ }
+%\newcommand{\cf}{{\it cf}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+
+% Standardized section label and references
+\newcommand{\chaplabel}[1]{\label{chap:#1}}
+\newcommand{\chapref}[1]{\chaptername~\ref{chap:#1}} % Use mid-sentence
+\newcommand{\Chapref}[1]{\chaptername~\ref{chap:#1}} % Use at start of sentence
+\newcommand{\chaprefs}[2]{\chaptername s~\ref{chap:#1}~and~\ref{chap:#2}} % Use mid-sentence
+\newcommand{\Chaprefs}[2]{\chaptername s~\ref{chap:#1}~and~\ref{chap:#2}} % Use at start of sentence
+\newcommand{\appref}[1]{\appendixname~\ref{chap:#1}}
+
+% Standardized section label and references
+\newcommand{\seclabel}[1]{\label{sec:\reflabel-#1}}
+\newcommand{\secref}[2][\reflabel]{Section~\ref{sec:#1-#2}} % Use mid-sentence
+\newcommand{\Secref}[2][\reflabel]{Section~\ref{sec:#1-#2}} % Use at start of sentence
+\newcommand{\secrefs}[3][\reflabel]{Sections~\ref{sec:#1-#2} and~\ref{sec:#1-#3}} % Use mid-sentence
+\newcommand{\Secrefs}[3][\reflabel]{Sections~\ref{sec:#1-#2} and~\ref{sec:#1-#3}} % Use at start of sentence
+
+% Standardized figure label and references
+\newcommand{\figlabel}[2][\reflabel]{\label{fig:#1-#2}}
+\newcommand{\figref}[2][\reflabel]{Figure~\ref{fig:#1-#2}} % Use mid-sentence
+\newcommand{\Figref}[2][\reflabel]{Figure~\ref{fig:#1-#2}} % Use at start of sentence
+\newcommand{\figrefs}[3][\reflabel]{Figures~\ref{fig:#1-#2} and~\ref{fig:#1-#3}} % Use mid-sentence
+\newcommand{\Figrefs}[3][\reflabel]{Figures~\ref{fig:#1-#2} and~\ref{fig:#1-#3}} % Use at start of sentence
+
+% Standardized table label and references
+\newcommand{\tablelabel}[2][\reflabel]{\label{table:#1-#2}}
+\newcommand{\tableref}[2][\reflabel]{Table~\ref{table:#1-#2}} % Use mid-sentence
+\newcommand{\Tableref}[2][\reflabel]{Table~\ref{table:#1-#2}} % Use at start of sentence
+\newcommand{\tablerefs}[3][\reflabel]{Tables~\ref{table:#1-#2} and~\ref{table:#1-#3}} % Use mid-sentence
+\newcommand{\Tablerefs}[3][\reflabel]{Tables~\ref{table:#1-#2} and~\ref{table:#1-#3}} % Use at start of sentence
+
+% Standardized equation label and references -- NB if you change this one, some of the uses in the text might have grammatical problems
+\newcommand{\eqlabel}[1]{\label{eq:\reflabel-#1}}
+\renewcommand{\eqref}[2][\reflabel]{(\ref{eq:#1-#2})} % Use mid-sentence
+\newcommand{\Eqref}[2][\reflabel]{(\ref{eq:#1-#2})} % Use at start of sentence
+\newcommand{\eqrefs}[3][\reflabel]{(\ref{eq:#1-#2}) and~(\ref{eq:#1-#3})} % Use mid-sentence
+\newcommand{\Eqrefs}[3][\reflabel]{Equations (\ref{eq:#1-#2}) and~(\ref{eq:#1-#3})} % Use at start of sentence
+
+% Standardized algorithm label and references
+\newcommand{\alglabel}[2][\reflabel]{\label{alg:#1-#2}}
+\newcommand{\algref}[2][\reflabel]{Algorithm~\ref{alg:#1-#2}} % Use mid-sentence
+\newcommand{\algrefs}[3][\reflabel]{Algorithms~\ref{alg:#1-#2} and~\ref{alg:#1-#3}} % Use at start of sentence
+\newcommand{\Algref}[2][\reflabel]{Algorithm~\ref{alg:#1-#2}} % Use mid-sentence
+\newcommand{\Algrefs}[3][\reflabel]{Algorithm~\ref{alg:#1-#2} and~\ref{alg:#1-#3}} % Use at start of sentence
+
+% Standardized part references
+\newcommand{\PartI}{Part I\xspace}
+\newcommand{\PartII}{Part II\xspace}
+\newcommand{\PartIII}{Part III\xspace}
+
+
+\newcommand{\reflabel}{dummy} % Dummy initial reflabel - use renewcommand at the start of each chapter
+
+%%%
+%%% Stuff for vector typesetting  ----------------------------------------
+%%%
+%%%    e.g. use "\v a" or "\v r" for vectors
+%%%
+\def\vec#1{\mathchoice{\mbox{\boldmath  $\displaystyle\bf#1$}}
+{\mbox{\boldmath  $\textstyle\bf#1$}}
+{\mbox{\boldmath  $\scriptstyle\bf#1$}}
+{\mbox{\boldmath  $\scriptscriptstyle\bf#1$}}}
+\def\v#1{\protect\vec #1}
+
+%%%
+%%% Stuff for matrix typesetting  ----------------------------------------
+%%%
+%%%    e.g. use "\m M" or "\m A" for matrices
+%%%
+\def\mat#1{\mathchoice{\mbox{\boldmath$\displaystyle\tt#1$}}
+{\mbox{\boldmath$\textstyle\tt#1$}}
+{\mbox{\boldmath$\scriptstyle\tt#1$}}
+{\mbox{\boldmath$\scriptscriptstyle\tt#1$}}}
+\def\m#1{\protect\mat #1}
+
+%%%
+%%% Stuff for bold maths typesetting  ----------------------------------------
+%%%
+%%%   e.g. use "\bfmu" for boldface mu symbol
+%%%
+\def\bfmu{\mbox{\boldmath$\mu$}}
+\def\bftau{\mbox{\boldmath$\tau$}}
+\def\bftheta{\mbox{\boldmath$\theta$}}
+\def\bfdelta{\mbox{\boldmath$\delta$}}
+\def\bfphi{\mbox{\boldmath$\phi$}}
+\def\bfpsi{\mbox{\boldmath$\psi$}}
+\def\bfeta{\mbox{\boldmath$\eta$}}
+\def\bfnabla{\mbox{\boldmath$\nabla$}}
+\def\bfGamma{\mbox{\boldmath$\Gamma$}}
+
+%%%
+%%% Stuff for argmax argmin  ----------------------------------------
+%%%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+%%%
+%%% Stuff for calligraphic style  ----------------------------------------
+%%%
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
