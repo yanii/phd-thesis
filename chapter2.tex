@@ -13,20 +13,39 @@
     \graphicspath{{Figs/Vector/}{Figs/}}
 \fi
 
-\section{Classifiers}
-\subsection{Neural Networks}
+\section{Neural Networks}
 Artificial Neural Networks (or simply Neural Networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}). Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards practical models for applications as diverse as computer vision, speech recognition, and general classifiers.
 
 Neural networks are a universal approximator - a network with one \emph{hidden} layer can theoretically represent any function. However, in practice less nodes are required when more hidden layers are used, and thus in practice networks may have many hidden layers.
+
+There have now been three major eras of artificial neural network research, of which we are in the third. The history of connectionist learning has been punctuated by findings resulting in a loss of confidence of the model. 
+
+\subsection{The Perceptron}
+The first connectionist model, the perceptron, was typically only a two layer network - one layer of input neurons, and one layer of output neurons. Such networks were shown by Minksy et al.~to not be able to represent a simple XOR function. Given such a lack of representational power, research and funding in the field went into severe decline. 
+
+This fundamental restriction was shown, 10 years later, to be solved by the addition of at least one `hidden' layer, \ie a layer not having any direct connection to the input or outputs of the network. At the limit, a hidden layer with an infinite number of neurons was in fact shown to be a universal approximator - it could approximate any function. 
+
+\subsection{Back-propagation}
+The addition of a hidden layer, however, added new problems for training - the so called credit problem. This too was solved with the introduction of back-propagation - applying the chain rule to propagate error derivatives from the output layer throughout the network. 
+
+Although networks with arbitrary numbers of hidden neurons could now be trained from a random initialization, such an optimization is very sensitive to the initialization, and would usually find a local optimum. Optimization methods that settle in local minima are typically not desirable, global minima being the objective of any reasonable optimization. combined with the difficulty of `vanishing gradients' when training a network with many hidden layers (\ie deep neural networks), neural networks fell out of favour yet again.
+
+\subsection{Imagenet}
+The third era of neural network research began when 
+
 \subsection{Decision Forests}
 
 \section{The relationship between Decision Forests and Neural Networks}
-There has been work in the past exploring the relationship between decision forests and neural networks. This work has usually focused on exploiting the equivalence of decision trees and a subset of neural networks.
+There has been work in the past exploring the relationship between decision forests and neural networks. Although this work has identified that neural networks are a generalisation of decision forests, it focused on exploiting tree training towards either the initialization or training of neural networks, rather than creating hybrid models of classifier exploiting the conditional computation in neural networks, while preserving end-to-end training found in state of the art deep neural networks.
 
 \subsection{Entropy Nets}
-This equivalence was introduced by Sethi~\cite{Sethi1990}, describing how the decision boundaries which are explicitly expressed in a decision tree can be represented by a three-layer neural network, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer)
-\subsection{Random Forests as Artificial Neural Networks}
-~\cite{Welbl2014casting}
+The relationship between decision forests and neural networks was first described by Sethi~\cite{Sethi1990}, the primary intuition of which is that the decision boundaries which are explicitly expressed in a decision tree can also be represented by a three-layer neural network, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer.
+\subsection{Casting Random Forests as Artificial Neural Networks}
+More recently this relationship was rediscovered~\cite{Welbl2014casting}, in a very similair manner a method of initializing a neural network with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network in order to avoid the neural network from over-fitting during stochastic gradient descent.
+
+
+Over-fitting however is not the main issue at present with neural networks, already state of the art deep neural networks are 
+
 
 \section{Object Recognition Datasets}
 \subsection{CIFAR 10/100}
