@@ -194,4 +194,11 @@
 
 % Example todo: \mynote{Hey! I have a note}
 
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Figs/PDF/}{Figs/Raster/}{Figs/Vector/}{Figs/}}
+\else
+    \graphicspath{{Figs/EPS/}{Figs/Raster/}{Figs/Vector/}{Figs/}}
+\fi
+
 \include{acsettings}
