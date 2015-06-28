@@ -67,14 +67,6 @@ Convolutional neural networks (CNNs) typically include layers with pooling opera
 \label{fig:decisionTree}
 \end{figure}
 
-This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in Fig.~\ref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. 
-
-We are still missing the method of conditional computation in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
-
-We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary tree. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing. 
-
-\subsection{Conditional Networks}
-
 \begin{figure}[htbp!] 
 \centering
 \begin{subfigure}[b]{\textwidth}
@@ -88,19 +80,30 @@ We achieve this with the minor addition of a new set of nodes we call a \emph{ro
    \centering
    \includegraphics[width=0.9\textwidth]{identitynotation}
    \caption{Identity projection with identity function, typically found in decision trees.}
-   \label{fig:selectionnotation}
+   \label{fig:identitynotation}
 \end{subfigure}
 ~
 \begin{subfigure}[b]{\textwidth}
    \centering
    \includegraphics[width=0.9\textwidth]{selectionnotation}
-   \caption{Selection projection with identity function, limited connectivity.}
+   \caption{Selection projection, found in random forests.}
    \label{fig:selectionnotation}
 \end{subfigure}
 \caption[Various projection matrices in conditional networks.]{{\bf The proposed compact graphical notation for various types of projection in a conditional network}. \copyright Antonio Criminisi}
 \label{fig:projections}
 \end{figure}
 
+This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in Fig.~\ref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in Fig.~\ref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\cite{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in Fig.~\ref{fig:identitynotation}.
+
+Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in Fig.~\ref{fig:selectionnotation}.
+
+We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
+
+We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary tree. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing. 
+
+\subsection{Random Forests}
+
+\subsection{Conditional Networks}
 The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers.
 
 \end{document}
