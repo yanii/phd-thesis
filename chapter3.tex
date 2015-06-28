@@ -25,13 +25,15 @@ The proposals we will make require a re-interpretation of existing classificatio
 \begin{figure}[htbp!] 
 \centering
 \begin{subfigure}[b]{0.45\textwidth}
+   \centering
    \includegraphics[width=\textwidth]{fullyconnected}
    \caption{Standard diagram of a neural network with one hidden layer.}
    \label{fig:oldnotation}
 \end{subfigure}
 ~
-\begin{subfigure}[b]{0.4\textwidth}
-   \includegraphics[width=\textwidth]{newnotation}
+\begin{subfigure}[b]{0.45\textwidth}
+   \centering
+   \includegraphics[width=0.9\textwidth]{newnotation}
    \caption{New notation showing transformation between layers explicitly.}
    \label{fig:newnotation}
 \end{subfigure}
@@ -49,14 +51,16 @@ Convolutional neural networks (CNNs) typically include layers with pooling opera
 \begin{figure}[htbp!] 
 \centering
 \begin{subfigure}[b]{0.45\textwidth}
-%   \includegraphics[width=\textwidth]{decisiontree}
-   \caption{Standard diagram of a binary decision tree.}
+   \centering
+   \includegraphics[width=0.95\textwidth]{oldtreenotation}
+   \caption{Standard diagram of a decision tree.}
    \label{fig:oldtreenotation}
 \end{subfigure}
 ~
-\begin{subfigure}[b]{0.4\textwidth}
-%   \includegraphics[width=\textwidth]{newdecisiontree}
-   \caption{New notation showing transformation between levels explicitly.}
+\begin{subfigure}[b]{0.45\textwidth}
+   \centering
+   \includegraphics[width=0.95\textwidth]{newtreenotation}
+   \caption{New explicit graphical notation.}
    \label{fig:newtreenotation}
 \end{subfigure}
 \caption[New graphical notation for a binary decision tree.]{{\bf The proposed compact graphical notation for a decision tree}. \copyright Antonio Criminisi}
@@ -70,6 +74,33 @@ We are still missing the method of conditional computation in our graphical lang
 We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary tree. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing. 
 
 \subsection{Conditional Networks}
+
+\begin{figure}[htbp!] 
+\centering
+\begin{subfigure}[b]{\textwidth}
+   \centering
+   \includegraphics[width=0.7\textwidth]{projectionnotation}
+   \caption{Generic projection with non-linearity, typically found in neural networks.}
+   \label{fig:projectionnotation}
+\end{subfigure}
+~
+\begin{subfigure}[b]{\textwidth}
+   \centering
+   \includegraphics[width=0.9\textwidth]{identitynotation}
+   \caption{Identity projection with identity function, typically found in decision trees.}
+   \label{fig:selectionnotation}
+\end{subfigure}
+~
+\begin{subfigure}[b]{\textwidth}
+   \centering
+   \includegraphics[width=0.9\textwidth]{selectionnotation}
+   \caption{Selection projection with identity function, limited connectivity.}
+   \label{fig:selectionnotation}
+\end{subfigure}
+\caption[Various projection matrices in conditional networks.]{{\bf The proposed compact graphical notation for various types of projection in a conditional network}. \copyright Antonio Criminisi}
+\label{fig:projections}
+\end{figure}
+
 The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers.
 
 \end{document}
