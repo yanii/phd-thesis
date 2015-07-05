@@ -5,18 +5,21 @@
 \label{firstyear}
 
 \subsection{Imagenet Large Scale Visual Recognition Challenge (ILSVRC)}
-We validate the use of conditional networks for image classification on the ILSVRC dataset~\cite{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus since the results of Krizhevsky et al.~\cite{Krizhevsky2012imanet}
-We base our experiments on the VGG network~\cite{Simonyan2014verydeep} on which the current best models are also based~\cite{He2015delving}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe on a single Nvidia K40 GPU).
+We validate the use of conditional networks for image classification on the ILSVRC dataset~\cite{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus since the results of Krizhevsky et al.~\cite{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
 
-\noindent{\bf Using global max-pooling to reduce model size.}
+AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
+
+We based our experiments on the VGG network~\cite{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\cite{He2015delving}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe on a single Nvidia K40 GPU). It notably does not have any filter grouping, as found in AlexNet, or low-dimensional embeddings, as found in network-in-network. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
+
+\subsection{Global max-pooling to reduce model size}
 We found that global {\em max}-pooling, like 
-{\em average}-pooling (as used in~\cite{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy.
+{\em average}-pooling (as used in~\cite{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy. In VGG11 the input to the first fully connected layer (\ie \texttt{fc7}) consists of a tensor of size 
 This suggests that preserving spatial information after the convolutional layers may not be as important as previously thought. 
 We trained a new network (`VGG11-GMP') with such pooling, and achieved lower top-5 error than the baseline VGG11 
 network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see Fig.~\ref{fig:VggPerLayerCost}).
 
-\noindent{\bf Designing an efficient conditional architecture.}
-Starting from the already improved, unrouted VGG11-GMP architecture,\textbf{} we designed the conditional network in Fig.~\ref{fig:Imagenet_CondNet}.
+\subsection{Designing an efficient conditional architecture}
+Starting from the already improveld, unrouted VGG11-GMP architecture, we designed the conditional network in Fig.~\ref{fig:Imagenet_CondNet}.
 % figure 
 \begin{figure}[t]
 \centerline{
@@ -37,7 +40,7 @@ divided into $2^{(n-2)}$ groups. Each group depends only on the results of exact
 The feature maps of the last convolutional layer are concatenated together, and globally max-pooled
  before the fully-connected layers, which remain the same as those in VGG11-GMP.
 
-\noindent{\bf Training.}
+\subsection{Training}
 We trained our conditional network with the same hyperparameters as in~\cite{Simonyan2014verydeep}, 
 except for using the initialization strategy suggested of~\cite{He2015delving}, and a learning schedule of 
 $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ 
@@ -46,7 +49,7 @@ When the validation accuracy of the network levelled out, the learning rate was 
 The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
  training time given its higher efficiency.
 
-\noindent{\bf Accuracy \vs efficiency results.}
+\subsection{Accuracy \vs efficiency results}
 In order to compare different network architectures as fairly as possible, here we did not use any training
  augmentation aside from that supported by Caffe (mirroring/random crops). Similarly we report test-time 
  accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
@@ -114,10 +117,6 @@ Finally, Fig.~\ref{fig:VggPerLayerCost} shows efficiency improvements achieved b
 
 
 % Removed to save space
-
-%SuperVision uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs.
-% The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. 
-
 %GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, 
 %giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within 
 %these routes reduces compute and parameters of the network even further.
@@ -161,7 +160,7 @@ Best viewed on screen.}
 \label{fig:Cifar_CondNet}
 \end{figure}
 
-\noindent{\bf Designing a family of conditional networks.}
+\subsection{Designing a family of conditional networks}
 The NiN model has a large number (192) of initial image-level filters in the first convolutional layer (`conv1'), 
 representing a sizable amount of the overall compute.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
 
@@ -173,7 +172,7 @@ Additionally, training routed convolutional layers means that filters are expose
 By changing the number of routes at each level of the NiN-64 model (from conv2) we can 
 generate a whole family of possible conditional architectures. 
 
-\noindent{\bf Learning the optimal network architecture.}
+\subsection{Learning the optimal network architecture}
 In this experiment we have optimized the network structure {\em automatically}, 
 by using Bayesian optimization~\cite{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
 This has allowed us to search the large joint space of parameters and structures in a principled way, 
