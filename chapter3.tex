@@ -29,7 +29,7 @@ The proposals we will make require a re-interpretation of existing classificatio
    \caption{New notation showing transformation between layers explicitly.}
    \label{fig:newnotation}
 \end{subfigure}
-\caption[New graphical notation for a standard neural network with one hidden layer.]{{\bf The proposed compact graphical notation for neural networks}. Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$. Figures used with permission~\copyright Antonio Criminisi}
+\caption[New graphical notation for a standard neural network with one hidden layer.]{The proposed compact graphical notation for neural networks. Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$. Figures used with permission~\copyright Antonio Criminisi}
 \label{fig:newGraphLanguage}
 \end{figure}
 
@@ -40,32 +40,6 @@ In this simple example of a fully-connected neural network, between layers $i$ a
 Convolutional neural networks (CNNs) typically include layers with pooling operations (\eg max pooling), or local response normalization. Any of these operations may also be represented by the function $\sigma$.
 
 \subsection{Decision Trees and Random Forests}
-
-\begin{figure}[htbp!] 
-\centering
-\includegraphics[width=0.95\textwidth]{treenotation}
-\caption[New graphical notation for a binary decision tree.]{{\bf The proposed compact graphical notation for a decision tree}. \copyright Antonio Criminisi}
-\label{fig:treeNotation}
-\end{figure}
-
-\begin{figure}[htbp!] 
-\centering
-\begin{subfigure}[b]{0.4\textwidth}
-   \centering
-   \includegraphics[width=0.95\textwidth]{oldtreenotation}
-   \caption{Standard diagram of a decision tree.}
-   \label{fig:oldtreenotation}
-\end{subfigure}
-~
-\begin{subfigure}[b]{0.4\textwidth}
-   \centering
-   \includegraphics[width=0.8\textwidth]{newtreenotation}
-   \caption{New explicit graphical notation.}
-   \label{fig:newtreenotation}
-\end{subfigure}
-\caption[New graphical notation for a binary decision tree.]{{\bf The proposed compact graphical notation for a decision tree}. \copyright Antonio Criminisi}
-\label{fig:complexDecisionTree}
-\end{figure}
 
 \begin{figure}[htbp!] 
 \centering
@@ -97,9 +71,73 @@ This graphical language may also represent decision trees, also typically depict
 
 Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in Fig.~\ref{fig:selectionnotation}.
 
+\subsection{Explicit Routing}
+\begin{figure}[htbp!] 
+\centering
+\includegraphics[width=0.95\textwidth]{treenotation}
+\caption{The proposed compact graphical notation for a ``decision stump''. \copyright Antonio Criminisi}
+\label{fig:treeNotation}
+\end{figure}
+
+\begin{figure}[htbp!] 
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
+   \centering
+   \includegraphics[width=0.95\textwidth]{oldtreenotation}
+   \caption{Standard diagram of a decision tree.}
+   \label{fig:oldtreenotation}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.4\textwidth}
+   \centering
+   \includegraphics[width=0.8\textwidth]{newtreenotation}
+   \caption{New explicit graphical notation.}
+   \label{fig:newtreenotation}
+\end{subfigure}
+\caption{The proposed compact graphical notation for a full decision tree. \copyright Antonio Criminisi}
+\label{fig:complexDecisionTree}
+\end{figure}
+
 We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
 
-We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing. 
+We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in Fig.~\ref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
+
+
+\begin{figure}[htbp!] 
+\centering
+\begin{subfigure}[b]{0.45\textwidth}
+   \centering
+   \includegraphics[width=0.95\textwidth]{explicit}
+   \caption{Explicitly routed network.}
+   \label{fig:explicitRouter}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.45\textwidth}
+   \centering
+   \includegraphics[width=0.95\textwidth]{explicit}
+   \caption{Implcitly routed network.}
+   \label{fig:implicitRouter}
+\end{subfigure}
+\caption{Explicit \vs Implicitly routed networks. \copyright Antonio Criminisi}
+\label{fig:routerConnections}
+\end{figure}
+
+\subsection{Implicit Routing}
+It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{implicit routing} \vs \emph{explicit routing}, where a router is used. 
+
+In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in Fig.~\ref{fig:explicit} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
+
+\begin{equation}
+	y_1 = \{y_1^j\} \forall j\circleplus \vec r = \sum_j r_j \sigma(P^j \vec v_1^j ).
+\end{equation}
+
+For an implicitly routed network instead a (non-weighted) linear combination is followed by an inner product, as used between layers of a fully connected neural network, \ie for Fig.~\ref{fig:implicit}, the input to $\vec v_2$, $y_1$,  is simply,
+
+\begin{equation}
+	y_1 = \sum_j v_1^j \sigma(P^j \vec v_0), 
+\end{equation}
+
+and hence the 
 
 \subsection{Conditional Networks}
 The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space.

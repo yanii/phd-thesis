@@ -78,6 +78,24 @@
 \newcommand{\PartII}{Part II\xspace}
 \newcommand{\PartIII}{Part III\xspace}
 
+\usepackage{tikz}
+
+\newcommand{\circleplus}{ 
+  \mathbin{
+    \mathchoice
+      {\buildcircleplus{\displaystyle}}
+      {\buildcircleplus{\textstyle}}
+      {\buildcircleplus{\scriptstyle}}
+      {\buildcircleplus{\scriptscriptstyle}}
+  } 
+}
+
+\newcommand\buildcircleplus[1]{%
+  \begin{tikzpicture}[baseline=(X.base), inner sep=0, outer sep=0]
+    \node[draw,circle] (X)  {$#1+$};
+  \end{tikzpicture}%
+}
+
 
 \newcommand{\reflabel}{dummy} % Dummy initial reflabel - use renewcommand at the start of each chapter
 
