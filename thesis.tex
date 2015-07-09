@@ -1,12 +1,12 @@
 % arara: clean: { files: [thesis.aux, thesis.bbl, thesis.blg, thesis.dvi, thesis.fdb_latexmk, thesis.fls, thesis.idx, thesis.ilg, thesis.ind, thesis.lof, thesis.log, thesis.lot, thesis.nlo, thesis.nls, thesis.out, thesis.pdf, thesis.ps, thesis.toc]}
-% arara: latex:  { shell: yes }
+% arara: pdflatex:  { shell: yes }
 % arara: bibtex
 % arara: nomencl
-% arara: latex
+% arara: pdflatex
 % arara: makeindex
+% arara: pdflatex:  { shell: yes }
 % arara: latex:  { shell: yes }
 % arara: dvips
-% arara: pdflatex
 
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
@@ -145,7 +145,19 @@
 % ******************************** Main Matter *********************************
 \mainmatter
 
-
+%Background
+%• Trees, DAGs and deep neural networks (DNNs)
+%• Motivation: Representing trees/DAGs as MLPs
+%• Motivation: ReLUs and data routing
+%Conditional networks (methodology)
+%• The model
+%• Training via back-propagation
+%Experiments and results (results)
+%• Conditional sparsification of a perceptron
+%• Comparing architectures on ImageNet
+%• Comparing architectures on CIFAR
+%• Conditional ensembles
+%• Conclusion
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION
 \subfile{chapter1}
@@ -156,7 +168,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METHODOLOGY
 \subfile{chapter3}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METHODOLOGY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiments and Results
 \subfile{chapter4}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 'MEAT'

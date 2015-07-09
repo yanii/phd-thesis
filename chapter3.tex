@@ -29,7 +29,7 @@ The proposals we will make require a re-interpretation of existing classificatio
    \caption{New notation showing transformation between layers explicitly.}
    \label{fig:newnotation}
 \end{subfigure}
-\caption[New graphical notation for a standard neural network with one hidden layer.]{The proposed compact graphical notation for neural networks. Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$. Figures used with permission~\copyright Antonio Criminisi}
+\caption[New graphical notation for a standard neural network with one hidden layer.]{The proposed compact graphical notation for neural networks. Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}
 \label{fig:newGraphLanguage}
 \end{figure}
 
@@ -63,7 +63,7 @@ Convolutional neural networks (CNNs) typically include layers with pooling opera
    \caption{Selection projection, found in random forests.}
    \label{fig:selectionnotation}
 \end{subfigure}
-\caption[Various projection matrices in conditional networks.]{{\bf The proposed compact graphical notation for various types of projection in a conditional network}. \copyright Antonio Criminisi}
+\caption[Various projection matrices in conditional networks.]{{\bf The proposed compact graphical notation for various types of projection in a conditional network}.}
 \label{fig:projections}
 \end{figure}
 
@@ -75,7 +75,7 @@ Random forests consist of a number of decision trees, each of which is applied t
 \begin{figure}[htbp!] 
 \centering
 \includegraphics[width=0.95\textwidth]{treenotation}
-\caption{The proposed compact graphical notation for a ``decision stump''. \copyright Antonio Criminisi}
+\caption{The proposed compact graphical notation for a ``decision stump''.}
 \label{fig:treeNotation}
 \end{figure}
 
@@ -94,7 +94,7 @@ Random forests consist of a number of decision trees, each of which is applied t
    \caption{New explicit graphical notation.}
    \label{fig:newtreenotation}
 \end{subfigure}
-\caption{The proposed compact graphical notation for a full decision tree. \copyright Antonio Criminisi}
+\caption{The proposed compact graphical notation for a full decision tree.}
 \label{fig:complexDecisionTree}
 \end{figure}
 
@@ -118,7 +118,7 @@ We achieve this with the minor addition of a new set of nodes we call a \emph{ro
    \caption{Implcitly routed network.}
    \label{fig:implicitRouter}
 \end{subfigure}
-\caption{Explicit \vs Implicitly routed networks. \copyright Antonio Criminisi}
+\caption{Explicit \vs Implicitly routed networks.}
 \label{fig:routerConnections}
 \end{figure}
 
@@ -131,15 +131,15 @@ In an explicitly routed network, the routes are trained by combining the routes 
 	y_1 = \{y_1^j\} \forall j\circleplus \vec r = \sum_j r_j \sigma(P^j \vec v_1^j ).
 \end{equation}
 
-For an implicitly routed network instead a (non-weighted) linear combination is followed by an inner product, as used between layers of a fully connected neural network, \ie for Fig.~\ref{fig:implicit}, the input to $\vec v_2$, $y_1$,  is simply,
+For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and ReLU, \ie for Fig.~\ref{fig:implicit}, the output of $\vec v_2$,  is simply,
 
 \begin{equation}
-	y_1 = \sum_j v_1^j \sigma(P^j \vec v_0), 
+	y_1 = \max (0, ~\sum_j v_1^j \sigma(P^j \vec v_0) ), 
 \end{equation}
 
 and hence the 
 
 \subsection{Conditional Networks}
-The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space.
+The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
 
 \end{document}

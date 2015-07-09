@@ -5,7 +5,7 @@
 \label{firstyear}
 
 \subsection{Imagenet Large Scale Visual Recognition Challenge (ILSVRC)}
-We validate the use of conditional networks for image classification on the ILSVRC dataset~\cite{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus since the results of Krizhevsky et al.~\cite{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
+We first validate the use of conditional networks for image classification on the ILSVRC dataset~\cite{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\cite{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 
@@ -22,11 +22,9 @@ network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over
 Starting from the already improveld, unrouted VGG11-GMP architecture, we designed the conditional network in Fig.~\ref{fig:Imagenet_CondNet}.
 % figure 
 \begin{figure}[t]
-\centerline{
+\centering
 \includegraphics[width=1.1\linewidth]{resultsImagenet_conditionalNetwork}
-}
-   \caption{{\bf The conditional network used on the Imagenet experiments} employs implicit data routing in the 
-   (expensive) convolutional layers to yield higher compute efficiency than the corresponding, unrouted DNNs.}
+\caption[Conditional network used with Imagenet ILSVRC experiments]{The conditional network used on the Imagenet experiments employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, unrouted DNNs.}
 \label{fig:Imagenet_CondNet}
 \end{figure}
 %
@@ -76,7 +74,7 @@ all models, without changing their ranking.
    \caption{Top-5 ILSVRC validation error (centre crop) \vs model size for various architectures.}
    \label{fig:resultsImagenet_AccVsSize}
 \end{subfigure}
-\caption{Our VGG11-GMP (green diamond in \ref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}
+\caption[Efficiency of conditional networks on ILSVRC relative to state of the art.]{Our VGG11-GMP (green diamond in \ref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}
 \label{fig:Imagenet_results}
 \end{figure}
 
@@ -105,10 +103,9 @@ Finally, Fig.~\ref{fig:VggPerLayerCost} shows efficiency improvements achieved b
 
 %%% Figure ---------------
 \begin{figure}[t]
-\centerline{
+\centering
 \includegraphics[width=\linewidth]{vgg11costs}
-}
-   \caption{{\bf Cost of VGG11-based networks per layer}. 
+\caption[Cost of VGG11-based networks per layer]{
    Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) 
    layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) 
    reduce both the memory use and the compute cost.}
