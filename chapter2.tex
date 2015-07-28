@@ -18,14 +18,14 @@ Artificial neural networks (or simply neural networks) are a broad range of stat
 
 Neural networks with at least one \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\cite{journals/mcss/Cybenko92,hornik89a}. Representing complex functions requires a very large number of nodes in the hidden layer, however less nodes are required when more hidden layers are used, and thus in practice networks with many hidden layers achieve better accuracy than networks with few hidden layers. 
 
-We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of research directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to \cite{Bishop1995}.
+We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of research directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to the excellent reference of Bishop~\cite{Bishop1995}.
 
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by Fukushima et al.~\cite{Fuk80,fukushima2013artificial}, on the \emph{Neocognitron}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
 Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement in both the description of the network and it's operation that it gained wider acknowledgement as a breakthrough for image recognition, notably in the work of LeCun, Bottou, Bengio and Haffner~\cite{Lecun1998}. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. Their application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications. 
 
-The application of the LeNet-style CNN architecture to more complex problems however proved infeasible, these problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
 
 \subsection{Contemporary Convolutional Neural Networks}
 \subsubsection{Supervision - Alex Krizhevsky \etal}
@@ -34,18 +34,6 @@ Training \emph{deep} networks, that is neural networks with many (\eg 2 or more)
 AlexNet notably used training-time and test-time augmentation to achieve it's state of the art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the PCA components over all RGB pixels in the image are used to perturbe the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and it's mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these mdoels. 
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation and model parameters across two GPUs, the motivation being that at the time GPUs did not have enough memory to fit such a large model. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enough that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
-
-%There have now been three major eras of artificial neural network research, of which we are in the third. The history of connectionist learning has been punctuated by findings resulting in a loss of confidence of the model.
-
-%\subsection{The Perceptron}
-%The first connectionist model, the perceptron, was typically only a two layer network - one layer of input neurons, and one layer of output neurons. Such networks were shown by Minksy et al.~to not be able to represent a simple XOR function. Given such a lack of representational power, research and funding in the field went into severe decline.
-
-%This fundamental restriction was shown, 10 years later, to be solved by the addition of at least one `hidden' layer, \ie a layer not having any direct connection to the input or outputs of the network. At the limit, a hidden layer with an infinite number of neurons was in fact shown to be a universal approximator - it could approximate any function.
-
-%\subsection{Back-propagation}
-%The addition of a hidden layer, however, added new problems for training - the so called credit problem. This too was solved with the introduction of back-propagation - applying the chain rule to propagate error derivatives from the output layer throughout the network.
-
-%Although networks with arbitrary numbers of hidden neurons could now be trained from a random initialization, such an optimization is very sensitive to the initialization, and would usually find a local optimum. Optimization methods that settle in local minima are typically not desirable, global minima being the objective of any reasonable optimization. combined with the difficulty of `vanishing gradients' when training a network with many hidden layers (\ie deep neural networks), neural networks fell out of favour yet again.
 
 \subsubsection{Network in Network}
 Lin \etal~\cite{Lin2013NiN} introduced \emph{Network in Network}, or NiN, in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using $1\times 1$ convolutions. This extra non-linearity allows the networks to capture more complex functions. These $1\times 1$ convolutions also allowed \emph{low dimensional embeddings}, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly. 
@@ -63,9 +51,14 @@ The winner of the ILSVRC2014 challenge, as measured by classification accuracy a
 \section{Decision Forests}
 \mynote{TODO}
 \subsection{Decision Trees}
-\mynote{TODO}
+Decision trees have played a part in statistics, and machine learning, for a long time. They have their roots in classification trees, human generated versions of which have been commonly used for hiearchial classification of animal and plant species. As such they are conceptually amongst the simplest classification methods to understand. 
+
+In machine learning we are interested in automatically learning classifiers from training data. However, despite the simplicity of decision trees, in general learning an optimal decision tree for a given training set has been shown to be NP-hard~\cite{journals/iandc/HancockJLT96}. For this reason greedy training algorithms are used to train and grow trees from training data, based on various heuristics, typically measures of entropy or information gain at split nodes~\cite{breiman84}. 
+
+Like nearest neighbours, deep decision trees can easily achieve perfect training set accuracy, but do not generalise well. For this reason decision trees alone have not been of much interest in machine learning.
+
 \subsection{Random Forests/Decision Forests}
-\mynote{TODO}
+Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular the introduction of Decision Forests (Random Forests)
 \subsection{Jungles/DAGs}
 \mynote{TODO}
 
