@@ -3,9 +3,30 @@
 \begin{document}
 \chapter{Research Proposal}
 \label{futurework}
+\section{Future Work}
+While the results presented in chapter \ref{firstyear} are motivating, there is much of the story of conditional networks to fill in still. In this section we present potential avenues for further research, and propose a rough timeline for the research of the next two years.
+\section{Implicit Conditional Networks - Architecture}
+\subsection{Routing Fully-connected Layers}
+Our conditional network for Imagenet exclusively routed the convolutional layers, since these layers alone account for the vast majority of the computation in the network. However, there are also good reasons to apply the same concept to the fully-connected layers of the network. The fully connected layers account for most of the model parameters, and hence model size. By routing these layers we can reduce the number of parameters significantly. Furthermore, restricting connectivity helps regularise the network. In fact preliminary results on CIFAR10 show that appropriate routing of networks can avoid using the costly drop-out regularisation when training.
+\subsection{Heterogeneous Routes}
+The implicit conditional networks we have trained all exhibit homogeneous routes, \ie each set of filters is split into groups of equal number of filters. However, if we believe that these routes exhibit specificity, as initial results suggest, then it is likely that some visual features require more filters than others. If this is true, by only allowing homogeneous routes we are likely restricting the number of filters for some routes excessively, while for others we are being generous with the number of filters. In the former case both training and test accuracy may suffer, in the latter generalization, and hence test accuracy, may be adversely affected.
 
-\section{Training Conditional Networks}
-\subsection{Training Implicit Neural Networks}
+We plan to train similar networks with heterogeneously sized routes, to observe empirically if there is such an effect. More generally however, this leading into our next outstanding research topic.
+\section{Implicit Conditional Networks - Training Conditional Networks}
+\subsection{Conditional Network Route Learning - Graph Partitioning}
+Decision trees are constructed in a data-driven way, and although finding optimal decision trees is in general NP-hard, even the greedy algorithms do quite well. In contrast, the process of designing neural networks is often described in intuition and experience. In fact designing a neural network for an arbitrary problem is a hard problem, for which there do not even exist good heuristical methods. In this manner the conditional network architectures we have explored are, at the moment, much closer to neural networks. Although for CIFAR10 we used Bayesian optimisation to create an efficient network, this was in the very limited setting of optimising the number of homogeneous routes (number of filter groups) at each layer.
 
+Clearly a more data-driven approach is called for, and when we frame the routing of neural networks as weight matrix block-diagonalisation, it is easier to see that this is a well-explored problem. 
+
+We intend to look at existing methods for graph partitioning as applied to automatic block-diagonalisation of existing network weight matrices. We would hope that such an approach would result in much more computationally efficient networks (due to more smaller block sub-matrices) with better regularisation (due to limited connectivity and unused weights). It is not clear if this would help address the question of route cardinality however.
+
+\subsection{Conditional Network Route Learning - Clustering}
+Another approach to the problem may be to cluster the input space for each route.
+\subsection{Mini-batch Specificity}
+For the work outlined in the previous chapter, we used the same methods for training conditional networks as are used for traditional deep learning methods - that is stochastic gradient descent. In stochastic gradient descent, at each iteration the network is trained using a \emph{mini-batch}, \ie a small number of randomly selected training samples. If we wish routes within a conditional network to be highly specialized, it makes little sense to be training all routes with all data. In the best case this will slow down training, in the worst it will lead to non-specific routes.
+
+
+\section{Learning Separable Filters}
+\section{Max-K pooling}
 
 \end{document}
