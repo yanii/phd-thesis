@@ -33,6 +33,11 @@ The activation function $f(a)$ is typically chosen to be a \emph{sigmoid} functi
 \subsubsection{Softmax}
 The output of a neural network typically requires a different treatment than the inner layers, we want to constrain the outputs such that the output neurons give a class output resembling probabilities, \ie the output should be normalized and sum to one. 
 
+\section{A History of Neural Networks}
+
+\subsection{The 1940s: Cybernetics}
+The 1940s saw the introduction of the idea that mind-like machines could have, as a basis of their architecture, simple abstractions based on what was known of biological nerve cells. Warren McCulloch and Walter Pitts discussed ``neuro-logical networks'' in their 1943 publication ``A Logical Calculus of the Ideas of Immanent in Nervous Activity'', covering ideas on finite-state machines, linear threshold decision elements. These ideas were further expanded in the publication ``How We Know Universals''. to describe network architectures which in principle could recognise spatial patterns invariant to some geometric transformations. Perhaps the most famous work of the decade however came in 1949 with Donald Hebb's book, ``The Organization of Behavior'',
+
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by Fukushima et al.~\cite{Fuk80,fukushima2013artificial}, on the \emph{Neocognitron}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
