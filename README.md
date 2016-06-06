@@ -1,10 +1,13 @@
 CUED PhD thesis template
 ========================
-> A LaTeX PhD thesis template for Cambridge University Engineering Department.
+
+[![Join the chat at https://gitter.im/kks32/phd-thesis-template](https://badges.gitter.im/kks32/phd-thesis-template.svg)](https://gitter.im/kks32/phd-thesis-template?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+> A LaTeX / XeLaTeX / LuaLaTeX PhD thesis template for Cambridge University Engineering Department.
 
 [![Build Status](https://api.travis-ci.org/kks32/phd-thesis-template.svg)](https://travis-ci.org/kks32/phd-thesis-template)
 [![License MIT](http://img.shields.io/badge/license-MIT-brightgreen.svg)](license.md)
-[![Version](http://img.shields.io/badge/version-1.4.1-brightgreen.svg)](https://github.com/kks32/phd-thesis-template/releases/latest)
+[![Version](http://img.shields.io/badge/version-2.0-brightgreen.svg)](https://github.com/kks32/phd-thesis-template/releases/latest)
+
 ## Author(s)
 *   Krishna Kumar
 
@@ -13,11 +16,17 @@ CUED PhD thesis template
 
 *   Conforms to the Student Registry PhD dissertation guidelines and CUED PhD guidelines
 
+*   Supports LaTeX, XeLaTeX and LuaLaTeX
+
 *   Adaptive Title Page: Title page adapts to title length
+
+*   Title page with both College and University crests.
 
 *   Print / On-line version: Different layout and hyper-referencing styles
 
 *   Pre-defined and custom fonts (Times / Fourier / Latin Modern) with math support
+
+*   Supports system fonts (XeLaTeX)
 
 *   Pre-defined and custom bibliography style support (authoryear / numbered / custom)
 
@@ -31,11 +40,32 @@ CUED PhD thesis template
 
 *   Draft mode: Draft water mark, timestamp, version numbering and line numbering
 
+*   Add supervisor and/or advisor to your PhD thesis or MPhil report
+
 *   A LyX Template is now available at [https://github.com/kks32/PhDThesisLyX/](https://github.com/kks32/PhDThesisLyX/)
 
 --------------------------------------------------------------------------------
 
-## Building your thesis
+## Building your thesis - XeLaTeX
+
+### Using latexmk (Unix/Linux/Windows)
+
+This template supports `XeLaTeX` compilation chain. To generate  PDF run
+
+    latexmk -xelatex thesis.tex
+    makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+    latexmk -xelatex -g thesis.tex
+
+## Building your thesis - LuaLaTeX
+
+### Using latexmk (Unix/Linux/Windows)
+
+This template supports `XeLaTeX` compilation chain. To generate  PDF run
+
+    latexmk -pdflatex=lualatex -pdf thesis.tex
+
+
+## Building your thesis - LaTeX / PDFLaTeX
 
 ### Using latexmk (Unix/Linux/Windows)
 
@@ -44,11 +74,6 @@ This template supports `latexmk`. To generate DVI, PS and PDF run
     latexmk -dvi -ps -pdf thesis.tex
 
 
-### Using ARARA (Unix/Linux/Windows)
-
-This template supports `arara`. You can edit the arara commands in `thesis.tex` to suit your needs. Default is set to LATEX >> DVI >> PS2PDF with nomenclature and make index support.
-
-    arara -v thesis.tex
 
 ### Using the make file (Unix/Linux)
 
@@ -94,6 +119,7 @@ Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
     `compile-thesis-windows.bat`.
 
 *    Alternatively, double click on `compile-thesis-windows.bat`
+
 
 -------------------------------------------------------------------------------
 
@@ -158,11 +184,16 @@ The front page (title page) resizes to fit your title length. You can modify the
 
 If `\college` is defined, the bottom of the title page will look like this:
 
-        King's College 			   			                                            2014
+        King's College 			                                         2014
 
 If `\college` is undefined or blank, the `degreedate` will be centered.
 
-                                                2014
+                                        2014
+
+The template offers support to having both the college and university crests or just one of the crests.
+
+* `\collegeshield` (optional): Includes college crest in addition to the university crest. This reformats the front page layout.
+
 ### Abstract separate
 
 *  A separate abstract with the title of the PhD and the candidate name has to be submitted to the Student Registry. This can be generated using `abstract` option in the document class. Ignore subsequent warnings about skipping sections (if any).
@@ -183,7 +214,7 @@ If `\college` is undefined or blank, the `degreedate` will be centered.
 			\includeonly{Chapter3/chapter3}
 		\fi
 
-### Draft 
+### Draft
 
 `draft` adds a watermark `draft` text with timestamp and version number at the top or
 the bottom of the page. Pagewise line numbering is added on every page. `draft` settings can be tweaked in the `preamble.tex`.
@@ -327,9 +358,9 @@ The visual style of chapter headings can be modified using the `titlesec` packag
 *   You can change the Title of Nomenclature to Notations or Symbols in the `preamble.tex` using:
 
         \renewcommand\nomname{Symbols}
- 
+
  TexStudio's default compile option doesn't include `nomenclature`, to compile your document with the nomenclature, do the following:
- 
+
 		Options >> Configure TexStudio >> Build >> User Commands >> add user command
 In `add user command` type `makenomeclature:makenomenclature` on the left pane and `makeindex %.nlo -s nomencl.ist -o %.nls` on the execution side. Now you can run the user defined command `makenomenclature` from `Tools >> User >> makenomenclature`.
 
@@ -379,10 +410,10 @@ To include custom to-do notes in your pdf document use  `\mynote{Hey! I have a n
 #### _Q2_: Where can I find newer versions of the University of Cambridge crest/logos?
 
 The university updates its crest every now and then. You can find up-to-date
-logos on [this page](http://www.admin.cam.ac.uk/offices/communications/services/logos/)
+logos on [this page](http://www.cam.ac.uk/brand-resources/about-the-logo/logo-downloads)
 (subject to change without notice).
 
-Download and exchange the new logos with `CUni.eps` and/or `CUni.pdf`. I'll try to keep the crest up to date.
+Download and exchange the new logos with `University_Crest.eps` and/or `University_Crest.pdf`. I'll try to keep the crest up to date.
 
 #### _Q3_: Where can I find the guidelines to submit my thesis and requirements?
 
@@ -403,7 +434,25 @@ or
 or
     `texcount -inc *.tex` (eg., result 2341 words)
 
-#### _Q5_: I found a bug in the template. Where do I report bugs?
+#### _Q5_: How do I use a system font (libertine)?
+
+To use a system font (open type) font with XeLaTeX, please select `customfont` option in the `documentclass` in `thesis.tex`. Add the path and font name to the custom font definition in `preamble.tex`
+
+    \ifsetCustomFont
+      \setmainfont[
+        Path              = ./libertine/opentype/,
+        Extension         = .otf,
+        UprightFont = LinLibertine_R,
+        BoldFont = LinLibertine_RZ, % Regular Semibold
+        ItalicFont = LinLibertine_RI,
+        BoldItalicFont = LinLibertine_RZI, % Regular Semibold Italic
+      ] {libertine}
+      \newfontfamily\libertinesystemfont{Linux Libertine O}
+    \fi
+
+Please use XeLaTeX tool chain with LaTeXmk.
+
+#### _Q6_: I found a bug in the template. Where do I report bugs?
 
 You can report issues at
 [our GitHub repository](https://github.com/kks32/phd-thesis-template).
@@ -439,6 +488,10 @@ If you are generating a separate abstract for your thesis submission, ignore thi
 #### _W6_: I get blank pages between chapters
 
 This is normal for a book class. Usually, a new chapter in a book always starts on the right hand side, which is why you see a blank page. You can remove the extra blank page by passing `openany` option to the documentclass. This works for double sided printing. However, if you are printing on a single side, please pass `oneside` option to the document class.
+
+#### _W7_: My references aren't listed in the ordered in which I cite them
+
+This is controlled by the bibliography style. Please use `\bibliographystyle{unsrt}` in `thesis.tex` instead of `apalike`. This applicable only for numerically sorted references.
 
 --------------------------------------------------------------------------------
 
