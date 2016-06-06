@@ -21,6 +21,18 @@ Neural networks with at least one \emph{hidden} layer have been proven to be a u
 
 We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of research directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to the excellent reference of Bishop~\cite{Bishop1995}.
 
+\subsubsection{Neurons}
+Each neuron consists of an input vector $\mathbf{x}$, activation function $f$, weights $\mathbf{w}$ and a bias $b$, the output of which is,
+
+\begin{equation}
+    y = f(\mathbf{w}^T\mathbf{x} + b).
+\end{equation}
+
+The activation function $f(a)$ is typically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to postive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function $y = \frac{1}{1+e^{-a}}$, hyperbolic tan $y = \tanh(a)$:
+
+\subsubsection{Softmax}
+The output of a neural network typically requires a different treatment than the inner layers, we want to constrain the outputs such that the output neurons give a class output resembling probabilities, \ie the output should be normalized and sum to one. 
+
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by Fukushima et al.~\cite{Fuk80,fukushima2013artificial}, on the \emph{Neocognitron}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
