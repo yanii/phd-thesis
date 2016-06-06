@@ -1,4 +1,17 @@
 ## Change log
+### 2015/06/20 - Version 2.1
+> Commit a5feb0732d7f13fa9703fddcee703224c00b83dd
+*   Support for including supervisor and/or advisor
+
+### 2015/06/20 - Version 2.0.1
+> Commit 0e0d1e617acb42b034870ea325271cce8d3d8d8e
+*   Fixed centering of year on front page - Issue #16
+
+### 2015/06/20 - Version 2.0
+> Commit f4723434f92eedc163fdcb74c7ac04c8d842bc05
+*   XeLaTeX and LuaLaTeX support
+*   College crest + University crest support
+
 ### 2014/12/02 - Version 1.4.5
 > Commit 427230cae012194a2e433ec001677c43ffd8250e
 *   Fixed issue with the misaligned date and college in the frontpage.
