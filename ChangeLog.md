@@ -1,4 +1,9 @@
 ## Change log
+### 2016/07/04 - Version 2.2
+> Commit 68c4499d170bf167d2410741d573cdf9402d6e80
+*   Support for including multiple supervisor and/or advisor
+*   Fixes `maketitle` in thesis.tex
+
 ### 2015/06/20 - Version 2.1
 > Commit a5feb0732d7f13fa9703fddcee703224c00b83dd
 *   Support for including supervisor and/or advisor

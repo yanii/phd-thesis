@@ -4,15 +4,15 @@
 %%                                                                            %%
 %% A PhD thesis LaTeX template for Cambridge University Engineering Department%%
 %%                                                                            %%
-%% Version: v2.1                                                              %%
+%% Version: v2.2                                                              %%
 %% Authors: Krishna Kumar                                                     %%
-%% License: MIT License (c) 2015 Krishna Kumar                                %%
+%% License: MIT License (c) 2016 Krishna Kumar                                %%
 %% GitHub Repo: https://github.com/kks32/phd-thesis-template/                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ************************** Class Identification ******************************
-\newcommand\fileversion{2.1}
-\newcommand\filedate{2015/12/21}
+\newcommand\fileversion{2.2}
+\newcommand\filedate{2016/07/04}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{PhDThesisPSnPDF}[\filedate\space A PhD thesis class file
  by Krishna Kumar (v\fileversion)]
@@ -928,43 +928,13 @@ wish to left align your text}
 % *************************** Front Matter Layout ******************************
 % ******************************************************************************
 
-% ******************************** titlepage  **********************************
-
-% Fix issue of title page having same number as the next page in oneside option
-% Issue #24 https://github.com/kks32/phd-thesis-template/issues/24
-\if@oneside
-\renewenvironment{titlepage} % changed from "newenvironment"
-{%
-\begingroup
-\if@twocolumn
-    \@restonecoltrue\onecolumn
-\else
-    \@restonecolfalse\newpage
-\fi
-    \thispagestyle{empty}
-    \setcounter{page}\z@
-}%
-{
-
-\if@restonecol
-    \twocolumn
-\else 
-    \newpage 
-\fi 
-\endgroup
-\clearpage
-\addtocounter{page}{1}
-}
-\fi
-
 % ******************************** Title Page **********************************
 \renewcommand{\maketitle}{
 
 % To compute the free vertical space in Title page
 \computeTitlePageSpacing
 
-% Fix for issue #24 https://github.com/kks32/phd-thesis-template/issues/24
-\renewcommand*{\thepage}{i}
+\thispagestyle{empty}
 
 \begin{singlespace}
 \begin{center}
