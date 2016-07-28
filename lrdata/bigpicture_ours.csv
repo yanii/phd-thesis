@@ -1,0 +1,5 @@
+Network, Stride, Real Name, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.
+vgg-gmp-lr-join-wfull, 1, msrc-vgg-11-ns-inv-sf-ninjoinlayer-fixed, 6336823656, 37184712, 0.704181, 0.897385
+vgg-gmp-lr-64, 1, msrc-vgg-11-ns-inv-sf-full-latelr, 3136795304, 31298792, 0.693059, 0.889326
+vgg-gmp-lr-lde, 2, msrc-vgg-11-ns-inv-sf-conv5-512-lde-conv1-3-stride2, 1024052248, 26444584, 0.66694, 0.875402
+googlenet-lr, 2, msrc-googlenet-sf, 1178239528, 3503664, 0.6725, 0.8795

@@ -1,0 +1,5 @@
+Network, Stride, Real Name, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.
+gmp,2, vgg-11-gmp,1877109674,32200040,0.526,0.83
+gmp-sf,2, msrc-vgg-11-seqsf-conv1-stride2,1656614490,130321320,0.517,0.824
+gmp-lr-join,2, msrc-vgg-11-ns-inv-sf-full-ninjoinlayer-conv5-512,963505754,27257768,0.512,0.821
+gmp-lr,2, msrc-vgg-11-ns-inv-sf-all-conv5-512-32,629533610,26054888,0.52,0.825

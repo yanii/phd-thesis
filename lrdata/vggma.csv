@@ -1,0 +1,9 @@
+Network, Stride, Real Name, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.
+vgg-11, 1, vgg-11, 7609101992, 132863336, 0.649, 0.8617
+gmp, 1, vgg-11-gmp, 7508438696, 32200040, 0.685, 0.887
+gmp-sf, 1, msrc-vgg-11-seqsf-gmp, 6525794664, 29658024, 0.672539, 0.878822
+gmp-lr-join-wfull, 1, msrc-vgg-11-ns-inv-sf-ninjoinlayer-fixed, 6336823656, 37184712, 0.704181, 0.897385
+gmp-lr-join, 1, msrc-vgg-11-ns-inv-sf-full-ninjoinlayer-conv5-512, 3854023016, 27257768, 0.674619, 0.880108
+gmp-lr-2x, 1, msrc-vgg-11-ns-inv-sf-full-latelr, 3136795304, 31298792, 0.693059, 0.889326
+gmp-lr, 1, msrc-vgg-11-ns-inv-sf-all-conv5-512-32, 2518134440, 26054888, 0.67608, 0.880346
+gmp-lr-lde, 2, msrc-vgg-11-ns-inv-sf-conv5-512-lde-conv1-3-stride2, 1024052248, 26444584, 0.66694, 0.875402
