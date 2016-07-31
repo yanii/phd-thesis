@@ -13,57 +13,188 @@
 \chapter{Background}
 \label{background}
 
-\section{Data Pre-processing}
 \section{Neural Networks}
 Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}). Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards practical models for applications as diverse as computer vision, speech recognition, and general classifiers.
 
 Neural networks with at least one \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\cite{journals/mcss/Cybenko92,hornik89a}. Representing complex functions requires a very large number of nodes in the hidden layer, however less nodes are required when more hidden layers are used, and thus in practice networks with many hidden layers achieve better accuracy than networks with few hidden layers. 
 
-We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of research directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to the excellent reference of Bishop~\cite{Bishop1995}.
+We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to the excellent reference of Bishop~\cite{Bishop1995}.
 
-\subsubsection{Neurons}
+
+\subsection{The Neuron}
 Each neuron consists of an input vector $\mathbf{x}$, activation function $f$, weights $\mathbf{w}$ and a bias $b$, the output of which is,
 
 \begin{equation}
-    y = f(\mathbf{w}^T\mathbf{x} + b).
+y = f(\mathbf{w}^T\mathbf{x} + b).
 \end{equation}
 
-The activation function $f(a)$ is typically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to postive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function $y = \frac{1}{1+e^{-a}}$, hyperbolic tan $y = \tanh(a)$:
 
-\subsubsection{Softmax}
-The output of a neural network typically requires a different treatment than the inner layers, we want to constrain the outputs such that the output neurons give a class output resembling probabilities, \ie the output should be normalized and sum to one. 
+\subsection{Activation Functions}
 
-\section{A History of Neural Networks}
+If the activation function $f$ is defined as a linear function, a neural network of arbitrary complexity would have the representational ability of a linear classifier. The activation function $f$ is thus a non-linearity, classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function: 
 
-\subsection{The 1940s: Cybernetics}
-The 1940s saw the introduction of the idea that mind-like machines could have, as a basis of their architecture, simple abstractions based on what was known of biological nerve cells. Warren McCulloch and Walter Pitts discussed ``neuro-logical networks'' in their 1943 publication ``A Logical Calculus of the Ideas of Immanent in Nervous Activity'', covering ideas on finite-state machines, linear threshold decision elements. These ideas were further expanded in the publication ``How We Know Universals''. to describe network architectures which in principle could recognise spatial patterns invariant to some geometric transformations. Perhaps the most famous work of the decade however came in 1949 with Donald Hebb's book, ``The Organization of Behavior'',
+\begin{equation}
+	y = \frac{1}{1+e^{-a}},
+\end{equation}:
+
+hyperbolic tangent:
+\begin{equation}
+	y = \tanh(a).
+\end{equation}
 
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by Fukushima et al.~\cite{Fuk80,fukushima2013artificial}, on the \emph{Neocognitron}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
-Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement in both the description of the network and it's operation that it gained wider acknowledgement as a breakthrough for image recognition, notably in the work of LeCun, Bottou, Bengio and Haffner~\cite{Lecun1998}. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. Their application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications. 
+Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement  of LeCun, Bottou, Bengio and Haffner~\cite{Lecun1998} in both the description of the network and it's operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications. 
 
 The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
 
-\subsection{Contemporary Convolutional Neural Networks}
-\subsubsection{Supervision - Alex Krizhevsky \etal}
+\section{Contemporary Methods of Training Deep Neural Networks}
+\subsection{Rectified Linear Activation Function}
+An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in Fig.~\ref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^-t}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
+
+\begin{figure}[tp]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\begin{tikzpicture}
+		\begin{axis}%
+		[
+		width=\textwidth,
+		height=0.85\textwidth,
+		grid=major,
+		xmin=-5,
+		xmax=5,
+		axis x line=bottom,
+		ytick={-1,0,1},
+		ymax=1,
+		ymin=-1,
+		axis y line=middle,
+		]
+		\addplot%
+		[
+		blue,%
+		mark=none,
+		samples=500,
+		domain=-5:5,
+		]
+		(x,{tanh(x)});
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Hyperbolic Tangent $y = \tanh(x)$}
+		\label{fig:tanh}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.48\textwidth}
+		\begin{tikzpicture}
+		\begin{axis}%
+		[
+		width=\textwidth,
+		height=0.85\textwidth,
+		grid=major,
+		xmin=-1,
+		xmax=1,
+		axis x line=bottom,
+		ytick={-1,0,1},
+		ymax=1,
+		ymin=-1,
+		axis y line=middle,
+		]
+		\addplot%
+		[
+		blue,%
+		mark=none,
+		samples=500,
+		domain=-5:5,
+		]
+		(x,{max(x,0)});
+		\end{axis}
+		\end{tikzpicture}
+		\caption{ReLU activation function $y = \max(0,x)$}
+		\label{fig:relu}
+	\end{subfigure}
+	\caption{Activation Functions}
+	\label{fig:afunctions}
+\end{figure}
+
+A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether -- a situation that is often called the `vanishing gradient' problem. 
+
+Instead, the rectified linear units (ReLU) were proposed, first for restricted boltzman machines~\cite{nair2010rectified}, and later for neural networks \cite{glorot2011deep}, to allow for easier training. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (Fig.~\ref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of Krizhevsky et al.~\cite{krizhevsky2012imagenet}.
+
+\subsection{Methods of Network Initialization}\label{ssec:init}
+Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks [1]. The so-called vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exasperated by the use of the softmax function at the end of the network, due to the use of exponential function.
+
+For example, consider a deep network consisting of $L$ identical layers as shown in Fig.~\ref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\beta$ for each layer.
+
+After propagating through $L$ layers, this becomes a scaling of $\beta^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\beta$:
+
+\begin{figure}[tp]
+	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
+	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
+	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
+	$\cdots$
+	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 400 600, clip=true]{layer}
+	\caption{\textbf{Vanishing Gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}
+	\label{fig:manylayers}
+\end{figure}
+
+\begin{eqnarray*}
+	f_L(x) & = & (f_1 \circ f_2 \ldots \circ f_L) (x)\\
+	& = & x \, \prod^{L}_{l} \beta = x\, \beta^L
+\end{eqnarray*}
+
+\[
+\lim_{L\to\infty} f_L(x) = 
+\begin{cases}
+\infty & \text{if } \beta > 1, \text{ training loss \emph{diverges}}\\
+0 & \text{if } \beta < 1, \text{ training loss \emph{stalls}},
+\end{cases}
+\]
+
+where $(f \circ g)(x)$ is the composition $f(g(x))$.
+
+Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the 'vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by Glorot et al.~\cite{glorot2010understanding}. For random Gaussiaan initialization, and given the number of outgoing/incoming connections to each neuron, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
+
+In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initialization, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, Glorot et al.~\cite{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
+
+\begin{eqnarray*}
+	\sigma_{\textrm{forwards}} &=& \frac{1}{\sqrt{n_{\text{out}}}},\\
+	\sigma_{\textrm{backwards}} &=& \frac{1}{\sqrt{n_{\text{in}}}},\\
+	\sigma_{\textrm{average}} &=& \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+\end{eqnarray*}
+
+For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{he2015delving}:
+
+\begin{eqnarray*}
+	\sigma_{\textrm{forwards}} &=& \frac{2}{\sqrt{n_{\text{out}}}},\\
+	\sigma_{\textrm{backwards}} &=& \frac{2}{\sqrt{n_{\text{in}}}},\\
+	\sigma_{\textrm{average}} &=& \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+\end{eqnarray*}
+
+\subsection{Batch Normalization}
+Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by Ioffe et al.~\cite{ioffe2015batch}. Most state-of-the-art supervised deep networks now use both of these methods.
+
+Batch normalization uses batch statistics to whiten the responses of layers it is applied to during training. Batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. 
+
+\section{Contemporary Deep Neural Networks}
+
+\subsection{Supervision - Alex Krizhevsky \etal}
 Training \emph{deep} networks, that is neural networks with many (\eg 2 or more) hidden layers, had proven difficult due to the high computational complexity, and the so called ``vanishing gradient'' problem~\cite{bengio:ieeenn94}. However, recent advances have made training deep neural networks possible. A combination of these advances were used in the work of Krizhevsky \etal\cite{Krizhevsky2012imanet} to show that a deep convolutional network with appropriate initialization~\cite{Sutskever2013momentum}, weight decay, ReLU activation functions~\cite{conf/icml/NairH10} and drop out regularisation~\cite{1207.0580v1} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
 
 AlexNet notably used training-time and test-time augmentation to achieve it's state of the art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the PCA components over all RGB pixels in the image are used to perturb the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and it's mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these mdoels. 
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation and model parameters across two GPUs, the motivation being that at the time GPUs did not have enough memory to fit such a large model. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enough that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 
-\subsubsection{Network in Network}
+\subsection{Network in Network}
 Lin \etal~\cite{Lin2013NiN} introduced \emph{Network in Network}, or NiN, in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using $1\times 1$ convolutions. This extra non-linearity allows the networks to capture more complex functions. These $1\times 1$ convolutions also allowed \emph{low dimensional embeddings}, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly. 
 
 Network in Network also introduced \emph{Global Average Pooling}, where the spatial extents at the end of the convolutional layers (\ie pool5 for NiN/AlexNet). This reduces the parameters of the network most significantly since the majority of the parameters of the network would otherwise be in this one layer, and also achieves regularization. Lin \etal showed that on CIFAR-10 global average pooling by itself achieved a lower error than having a fully connected layer with dropout.
 
 
-\subsubsection{VGG Networks}
+\subsection{VGG Networks}
 Since AlexNet, there have been many improvements to the state of the art on the ILSVRC challenge, every one of which has been an improved CNN architecture. One particular model that has lended itself to both high accuracy and being a natural extension of the original network has been the models proposed by Simonyan \etal of the Visual Geometry Group (VGG) at Oxford. The primary contribution of the VGG network is showing that very deep networks improve accuracy. VGG is an evolution of the AlexNet models, with the same number of max-pooling layers, however using very small convolutional filters ($3 \times 3$) in the convolutional layers, and many more of these convolutional layers between pooling, instead of the relatively large single layers of convolutional filters in AlexNet ($7\times 7$). In addition VGG uses small non-overlapping max-pooling ($2\times 2$), and the fully convolutional trick of Overfeat to do test-time oversampling. VGG uses extensive training augmentation, extending the augmentation used in AlexNet by adding scale augmentation, where crops are taken from images of different rescaled sizes. 
 
 
-\subsubsection{GoogLeNet}
+\subsection{GoogLeNet}
 The winner of the ILSVRC2014 challenge, as measured by classification accuracy alone, was GoogLeNet. The GoogLeNet architecture is particularly interesting, in that it uses the low dimensional embeddings of Network in Network, along with micro
 
 \section{Decision Forests}
