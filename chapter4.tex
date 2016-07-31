@@ -2,7 +2,7 @@
 
 \begin{document}
 	
-	\chapter{Learning a low-rank basis for filters in Convolutional Neural Networks}
+	\chapter{Learning a Low-rank Basis for Filters in Convolutional Neural Networks}
 	\label{lowrankfilters}
     
     \section{Introduction}
@@ -538,13 +538,13 @@
     
     Given that most discriminative filters learned for image classification appear to be low-rank, we instead structure our architectures with a set of basis filters in the way illustrated in Fig.~\ref{fig:ourmethodfullrank}. This allows our networks to learn the most effective combinations of complex (\eg $k\times k$) and simple (\eg $1\times k$, $k\times 1$) filters. Furthermore, in restricting how many complex spatial filters may be learned, this architecture prevents over-fitting, and helps improve generalization. Even in our models where we do not use square $k\times k$ filters, we obtain comparable accuracies to the baseline model, since the rank-2 cross-shaped filters effectively learned as a combination of $3 \times 1$ and $1 \times 3$ filters are capable of representing more complex local pixel relations than rank-1 filters.
     
-    \section{Conclusion}
-    This paper has presented a method to train convolutional neural networks from scratch using low-rank filters. This is made possible by a new way of initializing the network’s weights which takes into consideration the presence of differently shape filters in composite layers. 
-    Validation on image classification in three popular datasets confirms similar or higher accuracy than state of the art, with much greater computational efficiency. 
+    %\section{Conclusion}
+    %This paper has presented a method to train convolutional neural networks from scratch using low-rank filters. This is made possible by a new way of initializing the network’s weights which takes into consideration the presence of differently shape filters in composite layers. 
+    %Validation on image classification in three popular datasets confirms similar or higher accuracy than state of the art, with much greater computational efficiency. 
     
-    Recent advances in state-of-the-art accuracy with CNNs for image classification have come at the cost of increasingly large and computational complex models. We believe our results to show that learning computationally efficient models with fewer, more relevant parameters, can prevent over-fitting, increase generalization and thus also increase accuracy.
+    %Recent advances in state-of-the-art accuracy with CNNs for image classification have come at the cost of increasingly large and computational complex models. We believe our results to show that learning computationally efficient models with fewer, more relevant parameters, can prevent over-fitting, increase generalization and thus also increase accuracy.
     
-    \subsection*{Future Work}
-    This paper has addressed the spatial extents of convolutional filters in CNNs, however the channel extents also exhibit some redundancy, as highlighted by \citet{journals/corr/JaderbergVZ14}, and exploited in the form of low-dimensional embeddings by \citet{journals/corr/LinCY13,journals/corr/SzegedyLJSRAEVR14}. We intend to further explore how our methods can be extended to learn and combine even smaller basis filters and filters with more diverse shapes.
+    %\subsection*{Future Work}
+    %This paper has addressed the spatial extents of convolutional filters in CNNs, however the channel extents also exhibit some redundancy, as highlighted by \citet{journals/corr/JaderbergVZ14}, and exploited in the form of low-dimensional embeddings by \citet{journals/corr/LinCY13,journals/corr/SzegedyLJSRAEVR14}. We intend to further explore how our methods can be extended to learn and combine even smaller basis filters and filters with more diverse shapes.
     
 \end{document}

@@ -1,0 +1,1 @@
+imagenet-10:/scratchvol/b-yani/models/msrc-resnet-50-latelr2$ ~/scripts/covar.py covar.prototxt 100000 net_iter_iter_370000.caffemodel  | tee decov_avg.log
