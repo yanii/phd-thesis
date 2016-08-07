@@ -248,7 +248,7 @@ In practice however, most networks have layers of different numbers of neurons. 
 	\sigma_{\textrm{average}} &=& \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
 \end{eqnarray*}
 
-For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{he2015delving}:
+For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{He2015delving}:
 
 \begin{eqnarray*}
 	\sigma_{\textrm{forwards}} &=& \frac{2}{\sqrt{n_{\text{out}}}},\\
@@ -286,7 +286,7 @@ As will be explained in \S{\ref{googlenetasbasis}}, the specific method inceptio
 \mynote{Add section on how inception is learning basis for spatial dimension of filters}
 
 \subsection{Residual Networks}
-\citet{HeResnet2016} introduced residual networks, with the insight that training extra layers to deep networks could in fact \emph{increase} training error. Yet it is not clear why this should be so -- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
+\citet{He2015} introduced residual networks, with the insight that training extra layers to deep networks could in fact \emph{increase} training error. Yet it is not clear why this should be so -- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
 	F(x) = H(x) + x.
 \end{equation}
