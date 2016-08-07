@@ -204,7 +204,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether -- a situation that is often called the `vanishing gradient' problem (although this term has also been conflated with numerical precision issues caused by incorrect initialization).
 
-Rectified linear units (ReLU) were proposed as a solution, first for restricted boltzman machines~\cite{nair2010rectified}, and later for neural networks \cite{glorot2011deep}, where empirically they were shown to allow easier training with backpropogation. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (Fig.~\ref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of Krizhevsky et al.~\cite{krizhevsky2012imagenet}.
+Rectified linear units (ReLU) were proposed as a solution, first for restricted boltzman machines~\citep{conf/icml/NairH10}, and later for neural networks \citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropogation. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (Fig.~\ref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012imanet}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
 Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks [1]. The so-called vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exasperated by the use of the softmax function at the end of the network, due to the use of exponential function.
@@ -257,7 +257,7 @@ For the more typically used rectified linear unit, a variation of this initializ
 \end{eqnarray*}
 
 \subsection{Batch Normalization}
-Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by \citet{ioffe2015batch}. Most state-of-the-art supervised deep networks now use both of these methods.
+Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by \citet{Ioffe2015}. Most state-of-the-art supervised deep networks now use both of these methods.
 
 Batch normalization uses batch statistics to whiten the responses of layers it is applied to during training. Batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. 
 
@@ -286,7 +286,7 @@ As will be explained in \S{\ref{googlenetasbasis}}, the specific method inceptio
 \mynote{Add section on how inception is learning basis for spatial dimension of filters}
 
 \subsection{Residual Networks}
-\citet{He2016} introduced residual networks, with the insight that training extra layers to deep networks could in fact \emph{increase} training error. Yet it is not clear why this should be so -- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
+\citet{HeResnet2016} introduced residual networks, with the insight that training extra layers to deep networks could in fact \emph{increase} training error. Yet it is not clear why this should be so -- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
 	F(x) = H(x) + x.
 \end{equation}
