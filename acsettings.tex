@@ -23,3 +23,80 @@
 \newcommand{\vs}{{v.s.}\ }
 \newcommand{\etal}{{et al.}\ }
 %\newcommand{\cf}{{\it cf}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+
+\usepackage{tikz}
+
+\newcommand{\circleplus}{ 
+  \mathbin{
+    \mathchoice
+      {\buildcircleplus{\displaystyle}}
+      {\buildcircleplus{\textstyle}}
+      {\buildcircleplus{\scriptstyle}}
+      {\buildcircleplus{\scriptscriptstyle}}
+  } 
+}
+
+\newcommand\buildcircleplus[1]{%
+  \begin{tikzpicture}[baseline=(X.base), inner sep=0, outer sep=0]
+    \node[draw,circle] (X)  {$#1+$};
+  \end{tikzpicture}%
+}
+
+
+\newcommand{\reflabel}{dummy} % Dummy initial reflabel - use renewcommand at the start of each chapter
+
+%%%
+%%% Stuff for vector typesetting  ----------------------------------------
+%%%
+%%%    e.g. use "\v a" or "\v r" for vectors
+%%%
+\def\vec#1{\mathchoice{\mbox{\boldmath  $\displaystyle\bf#1$}}
+{\mbox{\boldmath  $\textstyle\bf#1$}}
+{\mbox{\boldmath  $\scriptstyle\bf#1$}}
+{\mbox{\boldmath  $\scriptscriptstyle\bf#1$}}}
+\def\v#1{\protect\vec #1}
+
+%%%
+%%% Stuff for matrix typesetting  ----------------------------------------
+%%%
+%%%    e.g. use "\m M" or "\m A" for matrices
+%%%
+\def\mat#1{\mathchoice{\mbox{\boldmath$\displaystyle\tt#1$}}
+{\mbox{\boldmath$\textstyle\tt#1$}}
+{\mbox{\boldmath$\scriptstyle\tt#1$}}
+{\mbox{\boldmath$\scriptscriptstyle\tt#1$}}}
+\def\m#1{\protect\mat #1}
+
+%%%
+%%% Stuff for bold maths typesetting  ----------------------------------------
+%%%
+%%%   e.g. use "\bfmu" for boldface mu symbol
+%%%
+\def\bfmu{\mbox{\boldmath$\mu$}}
+\def\bftau{\mbox{\boldmath$\tau$}}
+\def\bftheta{\mbox{\boldmath$\theta$}}
+\def\bfdelta{\mbox{\boldmath$\delta$}}
+\def\bfphi{\mbox{\boldmath$\phi$}}
+\def\bfpsi{\mbox{\boldmath$\psi$}}
+\def\bfeta{\mbox{\boldmath$\eta$}}
+\def\bfnabla{\mbox{\boldmath$\nabla$}}
+\def\bfGamma{\mbox{\boldmath$\Gamma$}}
+
+%%%
+%%% Stuff for argmax argmin  ----------------------------------------
+%%%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+%%%
+%%% Stuff for calligraphic style  ----------------------------------------
+%%%
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
