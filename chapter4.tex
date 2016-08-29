@@ -15,7 +15,7 @@
     %%% Figure
     \begin{figure}[t] 
         \centerline{
-            \includegraphics[width=0.61\columnwidth]{sparseconn3}
+            \includegraphics[width=0.95\textwidth]{sparseconn3}
         }
         \caption[Image access map visualizing sparsity of convolutional filters.]{
             {\bf Network connection structure for convolutional layers.} An input image is transformed in one layer of an neural network into an output image of same size. Connection weight maps show pairwise dependencies between input and output pixels. In (a), each node is connected to all input pixels. For (b,c,d), output pixels depend only on a subset of input pixels (shared weights are represented by unique colours). Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
@@ -49,23 +49,23 @@
     %%% Figure
     \begin{figure}[t] 
         \centering
-        \begin{subfigure}[l]{0.38\columnwidth}
-            \includegraphics[width=\columnwidth, page=1]{sparsification}
+        \begin{subfigure}[l]{0.38\textwidth}
+            \includegraphics[width=\textwidth, page=1]{sparsification}
             \caption{A full rank convolutional layer.}
             \label{fig:fullrank}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.6\columnwidth}
-            \includegraphics[width=\columnwidth, page=2]{sparsification}
+        \begin{subfigure}[b]{0.6\textwidth}
+            \includegraphics[width=\textwidth, page=2]{sparsification}
             \caption{Sequential separable filters \citep{journals/corr/JaderbergVZ14}.}
             \label{fig:separableseq}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.6\columnwidth}
-            \includegraphics[width=\columnwidth, page=3]{sparsification}
+        \begin{subfigure}[b]{0.6\textwidth}
+            \includegraphics[width=\textwidth, page=3]{sparsification}
             \caption{Our method, a learned basis space of filters that are rectangular in the spatial domain and oriented horizontally and vertically.}
             \label{fig:ourmethod}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.6\columnwidth}
-            \includegraphics[width=\columnwidth, page=4]{sparsification}
+        \begin{subfigure}[b]{0.6\textwidth}
+            \includegraphics[width=\textwidth, page=4]{sparsification}
             \caption{Our method, a learned basis space of vertical/horizontal rectangular filters and square filters. Filters of other shapes are also possible.}
             \label{fig:ourmethodfullrank}
         \end{subfigure}
@@ -100,15 +100,15 @@
             &
             \subcaptionbox{$3\times1$ filters.\label{fig:horizontalfilters}}
             {
-                \includegraphics[width=0.3\columnwidth]{conv1_x}
+                \includegraphics[width=0.3\textwidth]{conv1_x}
             }\\
-            \subcaptionbox{$1\times3$ filters.\label{fig:verticalfilters}}[0.3\columnwidth]
+            \subcaptionbox{$1\times3$ filters.\label{fig:verticalfilters}}[0.3\textwidth]
             {
-                \includegraphics[height=0.3\columnwidth]{conv1_y}
+                \includegraphics[height=0.3\textwidth]{conv1_y}
             }&
             \subcaptionbox{Learned linear combinations.\label{fig:linearcomb}}
             {
-                \includegraphics[width=0.3\columnwidth]{linearcombinations}
+                \includegraphics[width=0.3\textwidth]{linearcombinations}
             }\\
         \end{tabular}
         \caption[Learned Cross-Shaped Filters.]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}
@@ -181,7 +181,7 @@
     %%% Figure
     \begin{figure}[tb!]
         \centering
-        \includegraphics[width=0.7\columnwidth]{composite}
+        \includegraphics[width=0.7\textwidth]{composite}
         \caption[Composite Layer.]{{\bf A composite layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
         \label{fig:compositelayers}
     \end{figure}
@@ -246,10 +246,13 @@
     \paragraph{Low-Dimensional Embeddings.}
     We attempted to reduce the computational complexity of our `gmp-lr' network further in the \textbf{vgg-gmp-lr-lde} network by using a stride of 2 in the first convolutional layer, and adding low-dimensional embeddings, as in \citet{Lin2014,Szegedy2014going}. We reduced the number of output channels by half after each convolutional layer using $1 \times 1$ convolutional layers, as detailed in Appendix~\ref{vggmodeltable}, Table~\ref{table:vggarch}. While this reduces computation significantly, by approx.~86\% compared to our baseline, we saw a decrease in top-5 accuracy on ILSVRC of 1.2 percentage points. We do note however, that this network remains 2.5 percentage points more accurate than the original VGG-11 network, but is 87\% faster.
     
-    \begin{table}[htb]
-        \centering
-        %\resizebox{\columnwidth}{!}{
+    \begin{table}[tbp]
+        \caption[VGG ILSVRC Results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this paper.}
+        
         \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
+        
+%        \scalebox{0.9}{
+		\tabcolsep=5pt
         \pgfplotstabletypeset[
         every head row/.style={
             before row=\toprule,after row=\midrule},
@@ -278,20 +281,19 @@
         highlight col min ={\data}{Param.},
         highlight col min ={\data}{Multiply-Acc.},
         col sep=comma]{\data}
-        %}
-        \caption[VGG ILSVRC Results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this paper.}
+%        }
         \label{table:vggimagenetresults}
     \end{table}
     
-    \begin{figure}[htb!] 
+    \begin{figure}[tbp] 
         \centering
         \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\datatable
         \pgfplotsset{major grid style={dotted,red}}
         
         \begin{tikzpicture}
         \begin{axis}[
-        width=\columnwidth,
-        height=0.33\columnwidth,
+        width=\textwidth,
+        height=0.33\textwidth,
         axis x line=bottom,
         ylabel=Top-5 Error,
         xlabel=Multiply-Accumulate Operations,
@@ -327,9 +329,11 @@
         \label{fig:vggplots}
     \end{figure}
     
-    \begin{table}[htbp]
+    \begin{table}[tbp]
         \centering
-        %\resizebox{\columnwidth}{!}{
+        \caption[MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this paper. All networks were trained at stride 2 for the MIT Places dataset.
+        }
+        %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/mitma.csv}\data
         \pgfplotstabletypeset[
         every head row/.style={
@@ -357,8 +361,6 @@
         highlight col min ={\data}{Multiply-Acc.}, 
         col sep=comma]{\data}
         %}
-        \caption[MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this paper. All networks were trained at stride 2 for the MIT Places dataset.
-        }
         \label{table:placesresults}
     \end{table}
     
@@ -370,9 +372,11 @@
     
     Results are shown in Table~\ref{table:googlenetimagenetresults}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. Table~\ref{table:googlenetimagenetresults} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{jia2014caffe} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
     
-    \begin{table}[htb]
+    \begin{table}[tbp]
         \centering
-        %\resizebox{\columnwidth}{!}{
+        \caption[GoogLeNet ILSVRC Results]{{\bf GoogLeNet ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this paper.
+        }
+%        \resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/googlenetma.csv}\data
         \pgfplotstabletypeset[
         every head row/.style={
@@ -400,21 +404,19 @@
         highlight col min ={\data}{Test Param.}, 
         highlight col min ={\data}{Multiply-Acc.}, 
         col sep=comma]{\data}
-        %}
-        \caption[GoogLeNet ILSVRC Results]{{\bf GoogLeNet ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this paper.
-        }
+%        }
         \label{table:googlenetimagenetresults}
     \end{table}
     
-    \begin{figure}[htbp] 
+    \begin{figure}[tbp] 
         \centering
         \pgfplotstableread[col sep=comma]{lrdata/googlenetma.csv}\datatable
         \pgfplotsset{major grid style={dotted,red}}
         
         \begin{tikzpicture}
         \begin{axis}[
-        width=\columnwidth,
-        height=0.33\columnwidth,
+        width=\textwidth,
+        height=0.33\textwidth,
         axis x line=bottom,
         ylabel=Top-5 Error,
         xlabel=Multiply-Accumulate Operations,
@@ -453,9 +455,10 @@
     \subsection{Network-in-Network for CIFAR-10 Object Classification}
     The CIFAR-10 dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the CIFAR-10 dataset, we used the Network in Network architecture~\citep{Lin2014}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state of the art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. The results of our CIFAR experiments are listed in Table~\ref{table:cifarresults} and plotted in Fig.~\ref{fig:cifarresults}.
     
-    \begin{table}[htb]
+    \begin{table}[tbp]
         \centering
-        %\resizebox{\columnwidth}{!}{
+        \caption[CIFAR-10 Results.]{{\bf Network-in-Network CIFAR-10 Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline Network-in-Network model and more efficient versions created by the methods described in this paper.}
+        %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\data
         \pgfplotstabletypeset[
         every head row/.style={
@@ -482,19 +485,18 @@
         highlight col min ={\data}{Multiply-Acc.}, 
         col sep=comma]{\data}
         %}
-        \caption[CIFAR-10 Results.]{{\bf Network-in-Network CIFAR-10 Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline Network-in-Network model and more efficient versions created by the methods described in this paper.}
         \label{table:cifarresults}
     \end{table}
     
-    \begin{figure}[htbp] 
+    \begin{figure}[tbp] 
         \centering
         \pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\datatable
         \pgfplotsset{major grid style={dotted,red}}
         
         \begin{tikzpicture}
         \begin{axis}[
-        width=\columnwidth,
-        height=0.33\columnwidth,
+        width=\textwidth,
+        height=0.33\textwidth,
         axis x line=bottom,
         ylabel=Error,
         xlabel=Multiply-Accumulate Operations,

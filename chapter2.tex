@@ -56,7 +56,7 @@ The application of the LeNet-style CNN architecture to more complex problems, ho
 \subsection{Rectified Linear Activation Function}
 An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in Fig.~\ref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^-t}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
 
-\begin{figure}[tp]
+\begin{figure}[tbp]
 	\centering
 	\begin{subfigure}[t]{0.48\textwidth}
 		\begin{tikzpicture}
@@ -213,7 +213,7 @@ For example, consider a deep network consisting of $L$ identical layers as shown
 
 After propagating through $L$ layers, this becomes a scaling of $\beta^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\beta$:
 
-\begin{figure}[tp]
+\begin{figure}[tbp]
 	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
 	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
 	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
@@ -223,10 +223,10 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 	\label{fig:manylayers}
 \end{figure}
 
-\begin{eqnarray*}
+\begin{eqnarray}
 	f_L(x) & = & (f_1 \circ f_2 \ldots \circ f_L) (x)\\
 	& = & x \, \prod^{L}_{l} \beta = x\, \beta^L
-\end{eqnarray*}
+\end{eqnarray}
 
 \[
 \lim_{L\to\infty} f_L(x) = 
@@ -242,19 +242,19 @@ Thus we want a random initialization of layers such that $\beta\approx 1$ to min
 
 In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initialization, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, Glorot et al.~\cite{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
 
-\begin{eqnarray*}
+\begin{eqnarray}
 	\sigma_{\textrm{forwards}} &=& \frac{1}{\sqrt{n_{\text{out}}}},\\
 	\sigma_{\textrm{backwards}} &=& \frac{1}{\sqrt{n_{\text{in}}}},\\
 	\sigma_{\textrm{average}} &=& \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
-\end{eqnarray*}
+\end{eqnarray}
 
 For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{He2015delving}:
 
-\begin{eqnarray*}
+\begin{eqnarray}
 	\sigma_{\textrm{forwards}} &=& \frac{2}{\sqrt{n_{\text{out}}}},\\
 	\sigma_{\textrm{backwards}} &=& \frac{2}{\sqrt{n_{\text{in}}}},\\
 	\sigma_{\textrm{average}} &=& \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
-\end{eqnarray*}
+\end{eqnarray}
 
 \subsection{Batch Normalization}
 Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by \citet{Ioffe2015}. Most state-of-the-art supervised deep networks now use both of these methods.

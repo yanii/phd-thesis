@@ -23,7 +23,7 @@
 	The proposals we will make require a re-interpretation of existing classification models, that is neural networks and decision trees, but standard graphical diagrams for both of these models hides the implicit functional similarities on which we will build our models, and are instead connection-centric - focused on showing the connectivity of the models rather than the underlying data transformations. As such, before we are able to explain the concept of a conditional network, a new graphical language is proposed.
 	
 	\subsection{Neural Networks}
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
@@ -50,7 +50,7 @@
 	
 	\subsection{Decision Trees and Random Forests}
 	
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{\textwidth}
 			\centering
@@ -88,7 +88,7 @@
 		\label{fig:treeNotation}
 	\end{figure}
 	
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
@@ -112,7 +112,7 @@
 	We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in Fig.~\ref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
 	
 	
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
@@ -170,9 +170,9 @@
 	\subsection{Designing an efficient conditional architecture}
 	Starting from the already improveld, unrouted VGG11-GMP architecture, we designed the conditional network in Fig.~\ref{fig:Imagenet_CondNet}.
 	% figure 
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 		\centering
-		\includegraphics[width=1.1\linewidth]{resultsImagenet_conditionalNetwork}
+		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
 		\caption[Conditional network used with Imagenet ILSVRC experiments]{The conditional network used on the Imagenet experiments employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, unrouted DNNs.}
 		\label{fig:Imagenet_CondNet}
 	\end{figure}
@@ -208,18 +208,18 @@
 	%%% Figure ---------------
 	
 	
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
-			\includegraphics[width=0.9\textwidth]{resultsImagenet_AccVsEff}
+			\includegraphics[width=\linewidth]{resultsImagenet_AccVsEff}
 			\caption{Top-5 ILSVRC validation error (centre crop) \vs compute for various network architectures.}
 			\label{fig:resultsImagenet_AccVsEff}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
-			\includegraphics[width=0.9\textwidth]{resultsImagenet_AccVsSize}
+			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
 			\caption{Top-5 ILSVRC validation error (centre crop) \vs model size for various architectures.}
 			\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
@@ -251,7 +251,7 @@
 	Finally, Fig.~\ref{fig:VggPerLayerCost} shows efficiency improvements achieved by our conditional network, layer by layer.
 	
 	%%% Figure ---------------
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{vgg11costs}
 		\caption[Cost of VGG11-based networks per layer]{
@@ -297,7 +297,7 @@
 	%\acnote{there is another net which is 0.1\% better.}
 	
 	% figure 
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 		\centerline{
 			\includegraphics[width=1.1\linewidth]{resultsCifar_conditionalNetwork}
 		}
@@ -342,18 +342,18 @@
 	The standard 10,000 held-out images are used for testing.
 	
 	
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
-			\includegraphics[width=0.9\textwidth]{resultsCifar_AccVsEff}
+			\includegraphics[width=\linewidth]{resultsCifar_AccVsEff}
 			\caption{Test error \vs test-time compute for various architectures used in the CIFAR experiments.}
 			\label{fig:resultsCifar_AccVsEff}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
-			\includegraphics[width=0.9\textwidth]{resultsCifar_AccVsSize}
+			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}
 			\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
