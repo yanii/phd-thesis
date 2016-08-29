@@ -220,7 +220,17 @@
     \graphicspath{{Figs/EPS/}{Figs/Raster/}{Figs/Vector/}{Figs/}}
 \fi
 
-
-\usepackage{pgfplotstable}
+\usepackage{tikz}
+\usetikzlibrary{colorbrewer}
+\usepackage{pgfplots, pgfplotstable}
+\usepgfplotslibrary{statistics}
+%\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{compat=newest}
 \input{pgftablehighlight}
+
+\pgfplotsset{
+	cycle list={red\\yellow\\green\\},
+}
+
 \include{acsettings}

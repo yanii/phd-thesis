@@ -409,6 +409,7 @@
 	\caption[ResNet 50 ILSVRC]{\textbf{ResNet 50 ILSVRC}}
 	\label{table:resnet50imagenetresults}
 	%\resizebox{\columnwidth}{!}{
+	\tabcolsep=5pt
 	\centering
 	\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\data
 	%\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldata
@@ -467,6 +468,7 @@
 		\caption{\textbf{ResNet 50}. Filter groups in each convolutional layer.}
 		\label{table:resnet50config}
 		\centering
+		\tabcolsep=5pt
 		%\resizebox{\columnwidth}{!}{
 		\begin{tabular}{lcccccccccccc}
 			\toprule
@@ -494,7 +496,7 @@
 	
 \begin{figure}[tbp]
 	\centering
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.9\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -554,7 +556,7 @@
 		\label{fig:resnet5050param}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.9\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -609,7 +611,7 @@
 		\label{fig:resnet50ma}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.9\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -674,7 +676,7 @@
 		\label{fig:resnet5050gpuforward}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.9\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -791,7 +793,7 @@
 	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for ILSVRC 2012. For this network we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}, re-implementing more recent models~\citep{He2016}. Table \ref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with hierarchical filter groups have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer FLOPS and 44\% fewer parameters than ResNet 200.
 \begin{figure}[tbp]
 	\centering
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.95\textwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet200.csv}\datatable
 		\pgfplotsset{major grid style={dotted,red}}
 		
@@ -832,7 +834,7 @@
 		\label{fig:resnet200param}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{\columnwidth}
+	\begin{subfigure}[b]{0.95\textwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet200.csv}\datatable
 		\pgfplotsset{major grid style={dotted,red}}
 		
@@ -884,6 +886,7 @@
 		\caption[GoogLeNet ILSVRC]{\textbf{GoogLeNet ILSVRC}}
 		\label{table:googlenetimagenetresults}
 		%\resizebox{\columnwidth}{!}{
+		\tabcolsep=5pt
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\data
 		\pgfplotstableread[col sep=comma]{rootdata/googlenetmaall.csv}\alldata
@@ -943,6 +946,7 @@
 		\caption[GoogLeNet Architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer.}
 		\label{table:googlenetconfig}
 		\centering
+		\tabcolsep=5pt
 		%\resizebox{\columnwidth}{!}{
 		\begin{tabular}{lcccccccccccc}
 			\toprule

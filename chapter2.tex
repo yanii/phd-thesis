@@ -62,6 +62,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
+		thick,
 		width=\textwidth,
 		height=0.85\textwidth,
 		grid=major,
@@ -91,6 +92,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
+		thick,
 		width=\textwidth,
 		height=0.85\textwidth,
 		grid=major,
@@ -119,6 +121,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
+		thick,
 		width=\textwidth,
 		height=0.85\textwidth,
 		grid=major,
@@ -152,6 +155,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		]
 		\begin{axis}%
 		[
+		thick,
 		width=\textwidth,
 		height=0.85\textwidth,
 		grid=major,
@@ -174,6 +178,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		\end{axis}
 		\begin{axis}%
 		[
+		thick,
 		width=\textwidth,
 		height=0.85\textwidth,
 		grid=major,
@@ -222,11 +227,12 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 	\caption{\textbf{Vanishing Gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}
 	\label{fig:manylayers}
 \end{figure}
-
-\begin{eqnarray}
-	f_L(x) & = & (f_1 \circ f_2 \ldots \circ f_L) (x)\\
-	& = & x \, \prod^{L}_{l} \beta = x\, \beta^L
-\end{eqnarray}
+\begin{equation}
+\begin{aligned}
+	f_L(x) & = (f_1 \circ f_2 \ldots \circ f_L) (x)\\
+	& = x \, \prod^{L}_{l} \beta = x\, \beta^L
+\end{aligned}
+\end{equation}
 
 \[
 \lim_{L\to\infty} f_L(x) = 
@@ -242,19 +248,23 @@ Thus we want a random initialization of layers such that $\beta\approx 1$ to min
 
 In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initialization, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, Glorot et al.~\cite{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
 
-\begin{eqnarray}
-	\sigma_{\textrm{forwards}} &=& \frac{1}{\sqrt{n_{\text{out}}}},\\
-	\sigma_{\textrm{backwards}} &=& \frac{1}{\sqrt{n_{\text{in}}}},\\
-	\sigma_{\textrm{average}} &=& \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
-\end{eqnarray}
+\begin{equation}
+\begin{aligned}
+	\sigma_{\textrm{forwards}} &= \frac{1}{\sqrt{n_{\text{out}}}},\\
+	\sigma_{\textrm{backwards}} &= \frac{1}{\sqrt{n_{\text{in}}}},\\
+	\sigma_{\textrm{average}} &= \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+\end{aligned}
+\end{equation}
 
 For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{He2015delving}:
 
-\begin{eqnarray}
-	\sigma_{\textrm{forwards}} &=& \frac{2}{\sqrt{n_{\text{out}}}},\\
-	\sigma_{\textrm{backwards}} &=& \frac{2}{\sqrt{n_{\text{in}}}},\\
-	\sigma_{\textrm{average}} &=& \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
-\end{eqnarray}
+\begin{equation}
+\begin{aligned}
+	\sigma_{\textrm{forwards}} &= \frac{2}{\sqrt{n_{\text{out}}}},\\
+	\sigma_{\textrm{backwards}} &= \frac{2}{\sqrt{n_{\text{in}}}},\\
+	\sigma_{\textrm{average}} &= \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+\end{aligned}
+\end{equation}
 
 \subsection{Batch Normalization}
 Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by \citet{Ioffe2015}. Most state-of-the-art supervised deep networks now use both of these methods.
