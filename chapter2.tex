@@ -314,8 +314,6 @@ Like nearest neighbours, deep decision trees can easily achieve perfect training
 
 \subsection{Random Forests/Decision Forests}
 Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular Decision Forests (Random Forests)~\cite{journals/neco/AmitG97,breiman2001random}, were introduced as a form of boosting for decision trees.
-\subsection{Jungles/DAGs}
-\mynote{TODO}
 
 \section{The relationship between Decision Forests and Neural Networks}
 There has been work in the past exploring the relationship between decision forests and neural networks. Although this work has identified that neural networks are a generalisation of decision forests, it focused on exploiting tree training towards either the initialization or training of neural networks, rather than creating hybrid models of classifier exploiting the conditional computation in neural networks, while preserving end-to-end training found in state of the art deep neural networks.
@@ -327,7 +325,4 @@ The relationship between decision forests and neural networks was first describe
 \subsection{Casting Random Forests as Artificial Neural Networks}
 More recently this relationship was rediscovered~\cite{Welbl2014casting}, in a very similar manner a method of initializing a neural network with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network in order to avoid the neural network from over-fitting during stochastic gradient descent.
 
-\section{Object Recognition Datasets}
-\subsection{CIFAR 10/100}
-\subsection{Imagenet}
 \end{document}
