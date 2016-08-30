@@ -13,7 +13,7 @@
     This chapter focuses on reducing the computational complexity of the convolutional layers of CNNs by further sparsifying their connection structures.  Specifically, we show that by representing convolutional filters using a basis space comprising groups of filters of different spatial dimensions (examples shown in Fig.~\ref{fig:sparseconn}c and d), we can significantly reduce the computational complexity of existing state-of-the-art CNNs without compromising classification accuracy.
     
     %%% Figure
-    \begin{figure}[t] 
+    \begin{figure}[tbp] 
         \centerline{
             \includegraphics[width=0.95\textwidth]{sparseconn3}
         }
@@ -47,7 +47,7 @@
     \section{Using Low-Rank Filters in CNNs}
     
     %%% Figure
-    \begin{figure}[t] 
+    \begin{figure}[tbp] 
         \centering
         \begin{subfigure}[l]{0.38\textwidth}
             \includegraphics[width=\textwidth, page=1]{sparsification}
@@ -94,7 +94,7 @@
     This is illustrated in Fig.~\ref{fig:ourmethod}. Here, our composite layer contains horizontal $w\times 1$ and vertical $1\times h$ filters, the outputs of which are concatenated in the channel dimension, resulting in an intermediate $m$-channel feature map. These filter responses are then linearly combined by the next layer of $d$ $1\times 1$ filters to give a $d$-channel output feature map. In this case, the filters are applied on the input feature map with $c$ channels and followed by a set of $m$ 1$\times$1 filters over the $m$ output channels of the basis filters. If the number of horizontal and vertical filters is the same, the computational complexity is $\mathcal{O}( m(wc/2 +hc/2 + d))$.
     Interestingly, the configuration of Fig.~\ref{fig:ourmethod} gives rise to linear combinations of horizontal and vertical filters that are cross-shaped in the spatial domain. This is illustrated in Fig.~\ref{fig:conv1filters} for filters learned in the first convolutional layer of the`vgg-gmp-lr-join' model that is described in the Results section when it is trained using ILSVRC dataset.
     
-    \begin{figure}[tb] 
+    \begin{figure}[tbp] 
         \centering
         \begin{tabular}[c]{rl}
             &
@@ -179,7 +179,7 @@
     
     \paragraph{Weight Initialisation in Composite Layers.}
     %%% Figure
-    \begin{figure}[tb!]
+    \begin{figure}[tbp]
         \centering
         \includegraphics[width=0.7\textwidth]{composite}
         \caption[Composite Layer.]{{\bf A composite layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
