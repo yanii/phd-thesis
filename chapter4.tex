@@ -370,7 +370,7 @@
     
     For the \textbf{googlenet-lr} network, within only the inception modules we replaced each the $3\times 3$ filters with low-rank $3 \times 1$ and $1\times 3$ filters, and replaced the layer of $5\times 5$ filters with a set of low-rank $5 \times 1$ and $1\times 5$ filters. For the \textbf{googlenet-lr-conv1} network, we similarly replaced the first and second layer convolutional layers with $7 \times 1$~/~$1\times 7$ and $3 \times 1$~/~$1\times 3$ layers respectively.
     
-    Results are shown in Table~\ref{table:googlenetimagenetresults}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. Table~\ref{table:googlenetimagenetresults} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{jia2014caffe} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
+    Results are shown in Table~\ref{table:googlenetimagenetresultsch4}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. Table~\ref{table:googlenetimagenetresultsch4} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{jia2014caffe} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
     
     \begin{table}[tbp]
         \centering
@@ -405,7 +405,7 @@
         highlight col min ={\data}{Multiply-Acc.}, 
         col sep=comma]{\data}
 %        }
-        \label{table:googlenetimagenetresults}
+        \label{table:googlenetimagenetresultsch4}
     \end{table}
     
     \begin{figure}[tbp] 

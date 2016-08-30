@@ -399,7 +399,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 
 \end{tikzpicture}
 \caption{Training Loss: Percentage of pairs of hidden units that exhibit adverse co-adaption.}
-\label{fig:mnist_ablation_stats_train_loss}
+\label{fig:mnist_ablation_stats_train_loss_lt}
 \end{subfigure}
 
 \begin{subfigure}[b]{\linewidth}
@@ -431,7 +431,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 
 \end{tikzpicture}
 \caption{Training Loss: Percentage of pairs of hidden units that are independent.}
-\label{fig:mnist_ablation_stats_train_loss}
+\label{fig:mnist_ablation_stats_train_loss_eq}
 \end{subfigure}
 
 \begin{subfigure}[b]{\linewidth}
@@ -463,7 +463,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 
 \end{tikzpicture}
 \caption{Training Loss: Percentage of pairs of hidden units that are codependent.}
-\label{fig:mnist_ablation_stats_train_loss}
+\label{fig:mnist_ablation_stats_train_loss_gt}
 \end{subfigure}
 
 \caption{Number of pairs of hidden units in a single layer hidden MNIST classification network which under ablation, are adversely dependent ($\Delta L < 0$), independent ($\Delta L = 0$) or dependent ($\Delta L > 0$) for the training set.}
