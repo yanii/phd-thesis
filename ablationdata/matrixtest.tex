@@ -1,0 +1,76 @@
+\documentclass[tikz]{standalone}
+\usepackage{filecontents}
+\usepackage{pgfplots}
+    \begin{filecontents*}{temp.dat}
+        0 0 22.93
+        1 0 22.97
+        2 0 23.07
+        3 0 23.11
+        4 0 23.11
+
+        0 1 23.1
+        1 1 23.05
+        2 1 23.1
+        3 1 23.12
+        4 1 23.12
+
+        0 2 23.11
+        1 2 23.3
+        2 2 23.3
+        3 2 23.17
+        4 2 23.18
+
+        0 3 23.08
+        1 3 23.11
+        2 3 23.3
+        3 3 23.17
+        4 3 23.18
+
+        0 4 23.12
+        1 4 23.1
+        2 4 23.18
+        3 4 23.22
+        4 4 23.14
+    \end{filecontents*}
+\begin{document}
+    \begin{tikzpicture}
+        \begin{axis}[
+            view={0}{90},   % not needed for `matrix plot*' variant
+            xlabel=$x$,
+            ylabel=$y$,
+            colorbar,
+            colorbar style={
+                title=$^\circ \mathrm{C}$,
+                yticklabel style={
+                    /pgf/number format/.cd,
+                    fixed,
+                    precision=1,
+                    fixed zerofill,
+                },
+            },
+            title=data from infrared measurements,
+            %
+            % added these key-values
+            enlargelimits=false,
+            axis on top,
+            point meta min=22.9,
+            point meta max=23.3,
+            %
+            % uncomment me to show, that there are really no cells plotted
+            % when using the second variant (`surf, shader=flat corner')
+            %xmax=5,
+            %ymax=5,
+        ]
+            %% gives the mean temperature of the neighbouring cells (4x4 matrix)
+            %\addplot3 [surf] file {temp.dat};
+
+            %% gives the temperature of each point where the reference point
+            %% is the lower left corner of the cell (also a 4x4 matrix)
+            %% (I already asked the package author if this is intended or a bug)
+            %\addplot3 [surf,shader=flat corner] file {temp.dat};
+
+            % this should give the desired output (5x5 matrix)
+            \addplot [matrix plot*,point meta=explicit] file [meta=index 2] {ablation_train_top5_conv1_square.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{document}
