@@ -134,13 +134,13 @@
 	\subsection{Implicit Routing}
 	It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{implicit routing} \vs \emph{explicit routing}, where a router is used. 
 	
-	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in Fig.~\ref{fig:explicit} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
+	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in Fig.~\ref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
 	
 	\begin{equation}
 	y_1 = \{y_1^j\} \forall j\circleplus \vec r = \sum_j r_j \sigma(P^j \vec v_1^j ).
 	\end{equation}
 	
-	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and ReLU, \ie for Fig.~\ref{fig:implicit}, the output of $\vec v_2$,  is simply,
+	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and ReLU, \ie for Fig.~\ref{fig:implicitRouter}, the output of $\vec v_2$,  is simply,
 	
 	\begin{equation}
 	y_1 = \max (0, ~\sum_j v_1^j \sigma(P^j \vec v_0) ), 
