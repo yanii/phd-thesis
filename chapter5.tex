@@ -266,7 +266,7 @@
 	
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.48\columnwidth}
+		\begin{subfigure}[b]{0.95\columnwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			%\pgfplotstableread[col sep=comma]{rootdata/nincifar_col_s.csv}\cdatatable
@@ -275,7 +275,7 @@
 			
 			\centering
 			\begin{tikzpicture}
-			tikzstyle{every node}=[font=\scriptsize]
+			%tikzstyle{every node}=[font=\scriptsize]
 			\begin{axis}[
 			width=\columnwidth,
 			height=0.66\columnwidth,
@@ -297,6 +297,8 @@
 				/pgf/number format/fixed,
 				/pgf/number format/precision=1
 			},
+			legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
+			legend columns=4,
 			]
 			\addplot[mark=*,mark options={fill=red},
 			%nodes near coords,
@@ -320,13 +322,14 @@
 			only marks,
 			point meta=explicit symbolic,
 			] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
+			
+			\legend{NiN, Root, Tree}
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{Model Parameters \vs Error.}}
+			\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.48\columnwidth}
+		\begin{subfigure}[b]{0.95\columnwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			%\pgfplotstableread[col sep=comma]{rootdata/nincifar_col_s.csv}\cdatatable
@@ -335,7 +338,7 @@
 			
 			\centering
 			\begin{tikzpicture}
-			tikzstyle{every node}=[font=\scriptsize]
+			%tikzstyle{every node}=[font=\scriptsize]
 			\begin{axis}[
 			width=\columnwidth,
 			height=0.66\columnwidth,
@@ -383,10 +386,9 @@
 			point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
 			%\legend{NiN, Root, Column, Tree}
-			\legend{NiN, Root, Tree}
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{FLOPS (Multiply-Add) \vs Error.}}
+			\caption{\textbf{FLOPS (Multiply-Add) \vs Error.}}
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		
@@ -496,7 +498,7 @@
 	
 \begin{figure}[tbp]
 	\centering
-	\begin{subfigure}[b]{0.9\columnwidth}
+	\begin{subfigure}[b]{0.95\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -521,7 +523,7 @@
 		grid=major,
 		%xmin=0,
 		ytick={0.01,0.02,...,0.2},
-		ymin=0.08,ymax=0.12,
+		ymin=0.07,ymax=0.13,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
@@ -556,7 +558,7 @@
 		\label{fig:resnet5050param}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.9\columnwidth}
+	\begin{subfigure}[b]{0.95\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -577,7 +579,7 @@
 		grid=major,
 		%xmin=0,
 		ytick={0.01,0.02,...,0.2},
-		ymin=0.08,ymax=0.12,
+		ymin=0.07,ymax=0.13,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
@@ -611,7 +613,7 @@
 		\label{fig:resnet50ma}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.9\columnwidth}
+	\begin{subfigure}[b]{0.95\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -632,7 +634,7 @@
 		grid=major,
 		%xmin=0,
 		ytick={0.01,0.02,...,0.2},
-		ymin=0.08,ymax=0.12,
+		ymin=0.07,ymax=0.13,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
@@ -676,7 +678,7 @@
 		\label{fig:resnet5050gpuforward}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.9\columnwidth}
+	\begin{subfigure}[b]{0.95\columnwidth}
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldatatable
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
@@ -697,7 +699,7 @@
 		grid=major,
 		%xmin=0,
 		ytick={0.01,0.02,...,0.2},
-		ymin=0.08,ymax=0.12,
+		ymin=0.07,ymax=0.13,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
@@ -810,13 +812,13 @@
 		enlarge y limits=0.1,
 		grid=major,
 		%xmin=0,
-		ytick={0.01,0.02,...,0.2},
-		ymin=0.0,ymax=1,
+		ytick={0,1,2,...,10},
+		ymin=5,ymax=10,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
 		},
-		yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+		yticklabel={\pgfmathparse{\tick}\pgfmathprintnumber{\pgfmathresult}\%},style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=1
 		},
@@ -824,7 +826,8 @@
 		legend columns=3,
 		]
 		\addplot[mark=*,mark options={fill=red},
-		%nodes near coords,
+		nodes near coords, only marks,
+		every node near coord/.append style={inner sep=4pt},
 		only marks,
 		point meta=explicit symbolic,
 		] table[meta=name,x=param,y=top5,]{\datatable};
@@ -851,13 +854,13 @@
 		enlarge y limits=0.1,
 		grid=major,
 		%xmin=0,
-		ytick={0.01,0.02,...,0.2},
-		ymin=0.05,ymax=0.1,
+		ytick={0,1,2,...,10},
+		ymin=5,ymax=10,
 		xticklabel style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=3
 		},
-		yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+		yticklabel={\pgfmathparse{\tick}\pgfmathprintnumber{\pgfmathresult}\%},style={
 			/pgf/number format/fixed,
 			/pgf/number format/precision=1
 		},
@@ -865,7 +868,8 @@
 		legend columns=3,
 		]
 		\addplot[mark=*,mark options={fill=red},
-		%nodes near coords,
+		nodes near coords, only marks,
+		every node near coord/.append style={inner sep=4pt},
 		only marks,
 		point meta=explicit symbolic,
 		] table[meta=name,x=ma,y=top5,]{\datatable};
