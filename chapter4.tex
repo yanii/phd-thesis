@@ -379,7 +379,7 @@
     For the \textbf{googlenet-lr} network, within only the inception modules we replaced each the $3\times 3$ filters with low-rank $3 \times 1$ and $1\times 3$ filters, and replaced the layer of $5\times 5$ filters with a set of low-rank $5 \times 1$ and $1\times 5$ filters. For the \textbf{googlenet-lr-conv1} network, we similarly replaced the first and second layer convolutional layers with $7 \times 1$~/~$1\times 7$ and $3 \times 1$~/~$1\times 3$ layers respectively.
     
     \input{lrdata/googlenetplots}
-    Results are shown in Table~\ref{table:googlenetimagenetresultsch4}, and Fig.~\ref{fig:googlenetimagenetresults}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. Table~\ref{table:googlenetimagenetresultsch4} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{jia2014caffe} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
+    Results are shown in Table~\ref{table:googlenetimagenetresultsch4}, and Fig.~\ref{fig:googlenetimagenetresultsch4}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. Table~\ref{table:googlenetimagenetresultsch4} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{jia2014caffe} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
     
     \begin{table}[tbp]
         \centering
@@ -464,7 +464,7 @@
     \subsection{Network-in-Network for CIFAR-10 Object Classification}
     The CIFAR-10 dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the CIFAR-10 dataset, we used the Network in Network architecture~\citep{Lin2014}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state of the art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. 
     \input{lrdata/cifarplots}
-    The results of our CIFAR experiments are listed in Table~\ref{table:cifarresults} and plotted in Fig.~\ref{fig:cifarresults}.
+    The results of our CIFAR experiments are listed in Table~\ref{table:cifarresultsch4} and plotted in Fig.~\ref{fig:cifarresultsch4}.
     
     \begin{table}[tbp]
         \centering
@@ -496,7 +496,7 @@
         highlight col min ={\data}{Multiply-Acc.}, 
         col sep=comma]{\data}
         %}
-        \label{table:cifarresults}
+        \label{table:cifarresultsch4}
     \end{table}
     
     \begin{figure}[tbp] 
@@ -539,7 +539,7 @@
         \end{axis}
         \end{tikzpicture}
         \caption[Network-in-Network CIFAR-10 Results]{\textbf{Network-in-Network CIFAR-10 Results.} Multiply-accumulate operations \vs error for Network-in-Network derived models on CIFAR-10 object classification dataset.}
-        \label{fig:cifarresults}
+        \label{fig:cifarresultsch4}
     \end{figure}
     
     
