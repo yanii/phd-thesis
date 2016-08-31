@@ -1,0 +1,42 @@
+\begin{figure}[htbp] 
+\centering
+\pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\datatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\begin{tikzpicture}
+\begin{axis}[
+  width=\columnwidth,
+  height=0.33\columnwidth,
+  axis x line=bottom,
+  ylabel=Error,
+  xlabel=Multiply-Accumulate Operations,
+  axis lines=left,
+  enlarge x limits=0.10,
+  grid=major,
+  ytick={0.01,0.02,...,0.21},
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  ymin=0.07,ymax=0.1,
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=2,
+]
+\addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   x filter/.code={
+       \ifnum\coordindex>1\def\pgfmathresult{}\fi
+   }
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Accuracy} }]{\datatable};
+\addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   x filter/.code={
+       \ifnum\coordindex<2\def\pgfmathresult{}\fi
+   }
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Accuracy} }]{\datatable};
+\legend{Baseline Networks, Our Results}
+\end{axis}
+\end{tikzpicture}
+\caption[Network-in-Network CIFAR-10 Results]{\textbf{Network-in-Network CIFAR-10 Results.} Multiply-accumulate operations \vs error for Network-in-Network derived models on CIFAR-10 object classification dataset.}
+\label{fig:cifarresults}
+\end{figure}

@@ -1,0 +1,98 @@
+\section{VGG-derived Model Table}
+\label{vggmodeltable}
+Table \ref{table:vggarch} shows the architectual details of the VGG-11 derived models used in \S\ref{vggresults}.
+
+\begin{landscape}
+{\renewcommand{\arraystretch}{1.2}
+\begin{table*}[htbp!]
+\centering
+\caption[VGG Model Architectures.]{{\bf VGG Model Architectures}. Here ``3$\times$3, 32'' denotes 32 3$\times$3 filters, ``/2'' denotes stride 2, fc denotes fully-connected, and $\|$ denotes a concatenation within a composite layer.}
+\resizebox{0.9\columnwidth}{!}{
+\begin{tabular}{@{}|c||c|c|c|c|c|c|c|c|@{}}
+	\hline
+	Layer & VGG-11 & \textbf{GMP} & \textbf{GMP-SF} & \textbf{GMP-LR} & \textbf{GMP-LR-2X} & \textbf{GMP-LR-JOIN} & \textbf{GMP-LR-LDE} & \textbf{GMP-LR-JOIN-WFULL}\\
+	\hline
+	\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONV1
+	\textbf{conv1}& \multicolumn{2}{c|}{3$\times$3, 64} & 1$\times$3, 64 & 3$\times$1, 32 $\|$ 1$\times$3, 32 & 3$\times$1, 64 $\|$ 1$\times$3, 64 & \multicolumn{2}{c|}{3$\times$1, 32 $\|$ 1$\times$3, 32}& 3$\times$1, 24 $\|$ 1$\times$3, 24 $\|$ 3$\times$3, 16\\
+	\cline{4-4} \cline{7-9}	
+    & \multicolumn{2}{c|}{} & 3$\times$1, 64 & & & 1$\times$1, 64 & 1$\times$1, 32 & 1$\times$1, 64 \\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{2$\times$2 maxpool, /2}\\
+	\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONV2
+    \textbf{conv2} & \multicolumn{2}{c|}{3$\times$3, 128} & 1$\times$3, 128 & 3$\times$1, 64 $\|$ 1$\times$3, 64 & 3$\times$1, 128 $\|$ 1$\times$3, 128 & \multicolumn{2}{c|}{3$\times$1, 64 $\|$ 1$\times$3, 64} &  3$\times$1, 48 $\|$ 1$\times$3, 48 $\|$ 3$\times$3, 32\\
+    \cline{4-4} \cline{7-9}
+    & \multicolumn{2}{c|}{} & 3$\times$1, 128 & & & 1$\times$1, 128 & 1$\times$1, 64 & 1$\times$1, 128 \\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+    & \multicolumn{8}{c|}{2$\times$2 maxpool, /2}\\
+	\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONV3
+	\textbf{conv3} & \multicolumn{2}{c|}{3$\times$3, 256} & 1$\times$3, 256 & 3$\times$1, 128 $\|$ 1$\times$3, 128 & 3$\times$1, 256 $\|$ 1$\times$3, 256 & \multicolumn{2}{c|}{3$\times$1, 128 $\|$ 1$\times$3, 128} & 3$\times$1, 96 $\|$ 1$\times$3, 96 $\|$ 3$\times$3, 64 \\
+	\cline{4-4} \cline{7-9}
+    & \multicolumn{2}{c|}{} & 3$\times$1, 256 & & & 1$\times$1, 256 & 1$\times$1, 128 & 1$\times$1, 256\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{2}{c|}{3$\times$3, 256} & 1$\times$3, 256 & 3$\times$1, 128 $\|$ 1$\times$3, 128 & 3$\times$1, 256 $\|$ 1$\times$3, 256 &\multicolumn{2}{c|}{3$\times$1, 128 $\|$ 1$\times$3, 128} & 3$\times$1, 96 $\|$ 1$\times$3, 96 $\|$ 3$\times$3, 64 \\
+	\cline{4-4} \cline{7-9}	
+	& \multicolumn{2}{c|}{} & 3$\times$1, 256 & & & 1$\times$1, 256 & 1$\times$1, 128 & 1$\times$1, 256\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{2$\times$2 maxpool, /2}\\
+	\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONV4
+	\textbf{conv4} & \multicolumn{2}{c|}{3$\times$3, 512} & 1$\times$3, 512 & 3$\times$1, 256 $\|$ 1$\times$3, 256 & 3$\times$1, 512 $\|$ 1$\times$3, 512 &\multicolumn{2}{c|}{3$\times$1, 256 $\|$ 1$\times$3, 256} & 3$\times$1, 192 $\|$ 1$\times$3, 192 $\|$ 3$\times$3, 128\\
+	\cline{4-4} \cline{7-9}
+	& \multicolumn{2}{c|}{} & 3$\times$1, 512 & & & 1$\times$1, 512 & 1$\times$1, 256 & 1$\times$1, 512\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{2}{c|}{3$\times$3, 512} & 1$\times$3, 512 & 3$\times$1, 256 $\|$ 1$\times$3, 256 & 3$\times$1, 512 $\|$ 1$\times$3, 512 & \multicolumn{2}{c|}{3$\times$1, 256 $\|$ 1$\times$3, 256} & 3$\times$1, 192 $\|$ 1$\times$3, 192 $\|$ 3$\times$3, 128\\
+	\cline{4-4} \cline{7-9}
+	& \multicolumn{2}{c|}{} & 3$\times$1, 512 & & & 1$\times$1, 512 & 1$\times$1, 256 & 1$\times$1, 512\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{2$\times$2 maxpool, /2}\\
+	\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONV5
+    \textbf{conv5} & \multicolumn{2}{c|}{3$\times$3, 512} & 1$\times$3, 512 & 3$\times$1, 256 $\|$ 1$\times$3, 256 & 3$\times$1, 512 $\|$ 1$\times$3, 512 & \multicolumn{2}{c|}{3$\times$1, 256 $\|$ 1$\times$3, 256} & 3$\times$1, 192 $\|$ 1$\times$3, 192 $\|$ 3$\times$3, 128\\
+    \cline{4-4} \cline{7-9}
+    & \multicolumn{2}{c|}{} & 3$\times$1, 512 & & & 1$\times$1, 512 & 1$\times$1, 256 & 1$\times$1, 512\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& \multicolumn{2}{c|}{3$\times$3, 512} & 1$\times$3, 512 & 3$\times$1, 256 $\|$ 1$\times$3, 256 & 3$\times$1, 512 $\|$ 1$\times$3, 512 & \multicolumn{2}{c|}{3$\times$1, 256 $\|$ 1$\times$3, 256} & 3$\times$1, 192 $\|$ 1$\times$3, 192 $\|$ 3$\times$3, 128\\
+	\cline{4-4} \cline{7-9}
+    & \multicolumn{2}{c|}{} & 3$\times$1, 512 & & & 1$\times$1, 512 & 1$\times$1, 256 & 1$\times$1, 512\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \cline{2-9}
+	& 2$\times$2 maxpool, /2 & \multicolumn{7}{c|}{global maxpool}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FC
+	\hline
+	\textbf{fc6} & $7^2$ $\times$ 512 $\times$ 4096 & \multicolumn{7}{c|}{512 $\times$ 4096}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \hline
+	\textbf{fc7} & \multicolumn{8}{c|}{4096 $\times$ 4096}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{ReLU}\\
+    \hline
+	\textbf{fc8} & \multicolumn{8}{c|}{4096 $\times$ 1000}\\
+    \cline{2-9}
+	& \multicolumn{8}{c|}{softmax}\\
+    \hline
+\end{tabular}
+}
+\label{table:vggarch}
+\end{table*}
+}
+
+\end{landscape}

@@ -1,0 +1,89 @@
+\section{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.}
+
+\begin{figure}[tb] 
+\centering
+\pgfplotstableread[col sep=comma]{lrdata/matimings.csv}\datatable
+
+\resizebox{\columnwidth}{!}{
+\begin{tikzpicture}
+
+\begin{axis}[
+  width=\columnwidth,
+  height=0.33\columnwidth,
+  ybar,
+  bar width=0.5em,
+  axis x line=bottom,
+  axis y line=none,
+  xtick=data,
+  xticklabels from table={\datatable}{Layer},
+  x tick label style={xshift=1em, rotate=30,anchor=north east}],
+  xmin=-1,xmax=48,
+  xlabel=Convolutional Layer,
+]
+\addplot[style={mark=none,opacity=0},area legend] table[x expr=2*\coordindex,y expr={0}]{\datatable};
+\end{axis}
+
+\begin{axis}[
+  width=\columnwidth,
+  height=0.33\columnwidth,
+  ybar,
+  bar width=0.5em,
+  axis x line=none,
+  axis y line=left,
+  xmin=-1,xmax=48,
+  ymin=0,
+  xlabel=Convolutional Layer,
+  ylabel=Multiply-Acc.~Operations,
+  ylabel near ticks,
+  yticklabel pos=left,
+  color=blue!70!black,
+  %enlarge x limits=0.25,
+]
+\addplot[style={black,fill=green!50!black,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex,y=Multiply-Accumulate]{\datatable};\label{maaxis}
+\end{axis}
+
+\begin{axis}[
+  width=\columnwidth,
+  height=0.33\columnwidth,
+  ybar,
+  bar width=0.5em,
+  axis x line=none,
+  axis y line=right,
+  xmin=-1,xmax=48,
+  ymin=0,
+  ylabel=CPU Time (ms),
+  ylabel near ticks,
+  yticklabel pos=right,
+  color=green!30!black,
+]
+\addplot+[style={black,fill=blue!90!black,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex+1,y=CPU Timing]{\datatable};\label{cpuaxis}
+\end{axis}
+
+\begin{axis}[
+  width=\columnwidth,
+  height=0.33\columnwidth,
+  ybar,
+  bar width=0.5em,
+  axis x line=none,
+  axis y line=right,
+  xmin=-1,xmax=48,
+  ymin=0,
+  ylabel=GPU Time (ms),
+  ylabel near ticks,
+  yticklabel pos=right,
+  color=red!70!black,
+  ytick={0,1,...,5},
+  legend style={at={(0.98,0.98)},anchor=north east},
+]
+\pgfplotsset{every outer y axis line/.style={xshift=4em}, every tick/.style={xshift=4em}, every y tick label/.style={xshift=4em} }
+\addlegendimage{/pgfplots/refstyle=maaxis}\addlegendentry{M.A.}
+\addlegendimage{/pgfplots/refstyle=cpuaxis}\addlegendentry{CPU}
+\addplot[style={black,fill=red!90!black,opacity=0.5},area legend] table[x expr=3*\coordindex+2,y=GPU Timing]{\datatable};\label{gpuaxis}
+\addlegendentry{GPU}
+\end{axis}
+
+\end{tikzpicture}
+}
+\caption{\textbf{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.} For the forward pass of each convolutional layer in the `vgg-gmp-lr' network. Caffe CPU and GPU timings were well correlated with multiply-accumulate operations for most layers.}
+\label{fig:mavstimings}
+\end{figure}
