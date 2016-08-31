@@ -17,7 +17,7 @@
         \centerline{
             \includegraphics[width=0.95\textwidth]{sparseconn3}
         }
-        \caption[Image access map visualizing sparsity of convolutional filters.]{
+        \caption[Image access map visualizing sparsity of convolutional filters]{
             {\bf Network connection structure for convolutional layers.} An input image is transformed in one layer of an neural network into an output image of same size. Connection weight maps show pairwise dependencies between input and output pixels. In (a), each node is connected to all input pixels. For (b,c,d), output pixels depend only on a subset of input pixels (shared weights are represented by unique colours). Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
         }
         \label{fig:sparseconn}
@@ -69,7 +69,7 @@
             \caption{Our method, a learned basis space of vertical/horizontal rectangular filters and square filters. Filters of other shapes are also possible.}
             \label{fig:ourmethodfullrank}
         \end{subfigure}
-        \caption[Overview of methods of using low-rank filters.]{{\bf Methods of using low-rank filters in CNNs}. The activation function is not shown, coming after the last layer in each configuration.} 
+        \caption[Overview of methods of using low-rank filters]{{\bf Methods of using low-rank filters in CNNs}. The activation function is not shown, coming after the last layer in each configuration.} 
         \label{fig:separablemethods}
     \end{figure}
     %%%
@@ -111,7 +111,7 @@
                 \includegraphics[width=0.3\textwidth]{linearcombinations}
             }\\
         \end{tabular}
-        \caption[Learned Cross-Shaped Filters.]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}
+        \caption[Learned Cross-Shaped Filters]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}
         \label{fig:conv1filters}
     \end{figure}
     
@@ -182,7 +182,7 @@
     \begin{figure}[tbp]
         \centering
         \includegraphics[width=0.7\textwidth]{composite}
-        \caption[Composite Layer.]{{\bf A composite layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
+        \caption[Illustration of a composite layer]{{\bf A composite layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
         \label{fig:compositelayers}
     \end{figure}
     %%%
@@ -255,7 +255,7 @@
     We attempted to reduce the computational complexity of our `gmp-lr' network further in the \textbf{vgg-gmp-lr-lde} network by using a stride of 2 in the first convolutional layer, and adding low-dimensional embeddings, as in \citet{Lin2014,Szegedy2014going}. We reduced the number of output channels by half after each convolutional layer using $1 \times 1$ convolutional layers, as detailed in Appendix~\ref{vggmodeltable}, Table~\ref{table:vggarch}. While this reduces computation significantly, by approx.~86\% compared to our baseline, we saw a decrease in top-5 accuracy on ILSVRC of 1.2 percentage points. We do note however, that this network remains 2.5 percentage points more accurate than the original VGG-11 network, but is 87\% faster.
     
     \begin{table}[tbp]
-        \caption[VGG ILSVRC Results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this paper.}
+        \caption[Low-rank VGG ILSVRC results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this paper.}
         
         \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
         
@@ -333,13 +333,13 @@
         \legend{Baseline Networks, Our Results}
         \end{axis}
         \end{tikzpicture}
-        \caption{\textbf{VGG ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on ILSVRC object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}
+        \caption[Low-rank VGG ILSVRC results]{\textbf{VGG ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on ILSVRC object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}
         \label{fig:vggplots}
     \end{figure}
     
     \begin{table}[tbp]
         \centering
-        \caption[MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this paper. All networks were trained at stride 2 for the MIT Places dataset.
+        \caption[Low-rank MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this paper. All networks were trained at stride 2 for the MIT Places dataset.
         }
         %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/mitma.csv}\data
@@ -383,7 +383,7 @@
     
     \begin{table}[tbp]
         \centering
-        \caption[GoogLeNet ILSVRC Results]{{\bf GoogLeNet ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this paper.
+        \caption[Low-rank GoogLeNet ILSVRC results]{{\bf GoogLeNet ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this paper.
         }
 %        \resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/googlenetma.csv}\data
@@ -457,7 +457,7 @@
         \end{axis}
         \end{tikzpicture}
         
-        \caption{\textbf{GoogLeNet ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for GoogLeNet-derived models on ILSVRC object classification dataset.}
+        \caption[Low-Rank GoogLeNet ILSVRC results]{\textbf{GoogLeNet ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for GoogLeNet-derived models on ILSVRC object classification dataset.}
         \label{fig:googlenetimagenetresults}
     \end{figure}
     
@@ -468,7 +468,7 @@
     
     \begin{table}[tbp]
         \centering
-        \caption[CIFAR-10 Results.]{{\bf Network-in-Network CIFAR-10 Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline Network-in-Network model and more efficient versions created by the methods described in this paper.}
+        \caption[Low-rank CIFAR-10 results]{{\bf Network-in-Network CIFAR-10 Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline Network-in-Network model and more efficient versions created by the methods described in this paper.}
         %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\data
         \pgfplotstabletypeset[
@@ -538,7 +538,7 @@
         \legend{Baseline Networks, Our Results}
         \end{axis}
         \end{tikzpicture}
-        \caption[Network-in-Network CIFAR-10 Results]{\textbf{Network-in-Network CIFAR-10 Results.} Multiply-accumulate operations \vs error for Network-in-Network derived models on CIFAR-10 object classification dataset.}
+        \caption[Low-rank CIFAR-10 results]{\textbf{Network-in-Network CIFAR-10 Results.} Multiply-accumulate operations \vs error for Network-in-Network derived models on CIFAR-10 object classification dataset.}
         \label{fig:cifarresultsch4}
     \end{figure}
     
@@ -593,7 +593,7 @@
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
     	\end{tikzpicture}
-    	\caption{\textbf{Computational Complexity of Single State-of-the-Art ILSVRC Models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
+    	\caption[The computational complexity of single state-of-the-Art ILSVRC models]{\textbf{Computational Complexity of Single State-of-the-Art ILSVRC Models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
     	\label{fig:bigpicturema}
     \end{figure}
     
@@ -647,14 +647,14 @@
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
     	\end{tikzpicture}
-    	\caption{\textbf{Number of Parameters of State-of-the-Art ILSVRC Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
+    	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art ILSVRC Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
     	\label{fig:bigpictureparam}
     \end{figure}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     \begin{table}[tbp]
     	\centering
-    	\caption{{\bf State of the Art Single Models with Extra Augmentation.} Top-5 ILSVRC validation accuracy, single view and augmented test-time multiply-accumulate (M.A.) count, and number of parameters for various state of the art models \emph{with} various training and test-time augmentation methods. A multi-model ensemble of MSRA-C is the current state of the art network.}
+    	\caption[State-of-the-art single models with extra augmentation]{{\bf State of the Art Single Models with Extra Augmentation.} Top-5 ILSVRC validation accuracy, single view and augmented test-time multiply-accumulate (M.A.) count, and number of parameters for various state of the art models \emph{with} various training and test-time augmentation methods. A multi-model ensemble of MSRA-C is the current state of the art network.}
     	%\resizebox{\columnwidth}{!}{
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_aug.csv}\data
     	\pgfplotstabletypeset[

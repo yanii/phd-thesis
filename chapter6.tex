@@ -121,7 +121,7 @@ Figure \ref{fig:resnet50ablation_conv1_top5} shows the results of pairwise ablat
 \end{subfigure}
 
 %\input{resnet50fig.tex}
-\caption{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the ILSVRC training/validation set in \texttt{conv1} of ResNet-50.}
+\caption[Pairwise filter ablations in ResNet 50]{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the ILSVRC training/validation set in \texttt{conv1} of ResNet-50.}
 \label{fig:resnet50ablation_conv1_top5}
 \end{figure}
 
@@ -357,7 +357,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \end{subfigure}
 
 
-\caption{Maximum increase and decrease in training/test loss/accuracy for a single layer hidden MNIST classification network under pairwise ablation of the hidden units. Solid lines show the maximum decrease in loss or increase in accuracy for all pairs of neurons. Dotted lines show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}
+\caption[Pairwise filter ablation for MNIST]{Maximum increase and decrease in training/test loss/accuracy for a single layer hidden MNIST classification network under pairwise ablation of the hidden units. Solid lines show the maximum decrease in loss or increase in accuracy for all pairs of neurons. Dotted lines show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}
 \label{fig:mnist_ablation}
 \end{figure}
 
@@ -466,7 +466,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \label{fig:mnist_ablation_stats_train_loss_gt}
 \end{subfigure}
 
-\caption{Number of pairs of hidden units in a single layer hidden MNIST classification network which under ablation, are adversely dependent ($\Delta L < 0$), independent ($\Delta L = 0$) or dependent ($\Delta L > 0$) for the training set.}
+\caption[Pairwise filter ablation counts for MNIST]{Number of pairs of hidden units in a single layer hidden MNIST classification network which under ablation, are adversely dependent ($\Delta L < 0$), independent ($\Delta L = 0$) or dependent ($\Delta L > 0$) for the training set.}
 \label{fig:mnist_ablation_stats}
 \end{figure}
 
@@ -624,7 +624,7 @@ DP-Random}
 \label{fig:cifar_dropproject_test_acc}
 \end{subfigure}
 
-\caption{Training and test curves for a VGG network on CIFAR comparing dropout to dropproject.}
+\caption[Dropout \vs dropproject for VGG/CIFAR-10]{Training and test curves for a VGG network on CIFAR comparing dropout to dropproject.}
 \label{fig:cifar_dropproject}
 \end{figure}
 
