@@ -206,7 +206,7 @@
 	Here we present results of training from scratch re-structured (as described in \S\ref{method}) state-of-the-art network architectures for image classification on the CIFAR-10~\cite{CIFAR10} and ILSVRC~\citep{ILSVRC2015} datasets.
 	
 	\subsection{Improving Network in Network on CIFAR-10}
-	Network in Network (NiN)~\cite{Lin2014} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with low-dimensional embedding (1$\times$1) layers. We replicated the standard NiN network architecture as described by \citet{Lin2014}, but with state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015delving} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2014}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization.
+	Network in Network (NiN)~\cite{Lin2014} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with low-dimensional embedding (1$\times$1) layers. We replicated the standard NiN network architecture as described by \citet{Lin2014}, but with state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2014}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization.
 
 	\begin{table}[tbp]
 		\caption[Network-in-Network CIFAR10]{\textbf{Network-in-Network CIFAR10}}
@@ -406,7 +406,7 @@
 	\subsubsection{ResNet 50}
 	\label{resnet50results}
 	We chose to apply root filter hierarchies within the `ResNet 50' model~\citep{He2015}, the largest residual network model to fit onto 8 GPUs. ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
-	To aid training, we used the initialization of \citep{He2015delving} but modified for compound layers~\citep{Ioannou2016}, and batch normalization~\citep{Ioffe2015}.
+	To aid training, we used the initialization of \citep{He2015b} but modified for compound layers~\citep{Ioannou2016}, and batch normalization~\citep{Ioffe2015}.
 \begin{table}[tbp]
 	\caption[ResNet 50 ILSVRC]{\textbf{ResNet 50 ILSVRC}}
 	\label{table:resnet50imagenetresults}
@@ -971,7 +971,7 @@
 		%}
 	\end{table}
 	
-	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{jia2014caffe}). To train we used the initialization of \citep{He2015delving} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
+	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{jia2014caffe}). To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, described in Table~\ref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For some of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5), denoted \textbf{(s)} in Table \ref{table:googlenetimagenetresults}. For other networks, we grouped all filters, including the 1$\times$1.
 
