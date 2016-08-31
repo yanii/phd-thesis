@@ -545,6 +545,152 @@
     
     This architecture uses $5\times5$ filters in some layers. We found that we could replace all of these with $3\times 3$ filters, with comparable accuracy. As suggested by \citet{Simonyan2014verydeep}, stacked  $3\times 3$ filters have the effective receptive field of larger filters with less computational complexity. In this \textbf{nin-c3} network, we replaced the first convolutional layer with one $3\times 3$ layer, and the second convolutional layer with two $3\times 3$ layers. This network is 26\% faster than the standard NiN model, with only 54\% of the model parameters. Using our low-rank filters in this network, we trained the \textbf{nin-c3-lr} network, which is of similar accuracy (91.8\% \vs 91.9\%) but is approximately 54\% of the original network's computational complexity, with only 45\% of the model parameters.
     
+    \section{Comparing with State of the Art Networks for ILSVRC}
+    Figures ~\ref{fig:bigpicturema} and \ref{fig:bigpictureparam} compare published top-5 ILSVRC validation error \vs multiply-accumulate operations and number of model parameters (respectively) for several state-of-the-art networks~\citep{journals/corr/SimonyanZ14a,journals/corr/SzegedyLJSRAEVR14,journals/corr/HeZR015}. The error rates for these networks are only reported as obtained with different combinations of computationally expensive training and test time augmentation methods, including scale, photometric, ensembles (multi-model), and multi-view/dense oversampling. This can makes it difficult to compare model architectures, especially with respect to computational requirements.
+    
+    State-of-the-art networks, such as MSRA-C, VGG-19 and oversampled GoogLeNet are orders of magnitude larger in computational complexity than our networks. From Fig.~\ref{fig:bigpicturema}, where the multiply-accumulate operations are plotted on a log scale, increasing the model size and/or computational complexity of test-time augmentation of CNNs appears to have diminishing returns for decreasing validation error. Our models \emph{without} training or test time augmentation show comparable accuracy to networks such as VGG-13 \emph{with} training and test time augmentation, while having far less computational complexity and model size. In particular, the `googlenet-lr' model has a much smaller test-time model size than any network of comparable accuracy. 
+    
+    
+    \begin{figure}[tbp] 
+    	\centering
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture.csv}\datatable
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_ours.csv}\datatableours
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_aug.csv}\datatableaug
+    	\pgfplotsset{major grid style={dotted,red}}
+    	\pgfplotsset{minor grid style={dotted,red}}
+    	
+    	\begin{tikzpicture}
+    	\begin{axis}[
+    	width=\columnwidth,
+    	height=0.6\columnwidth,
+    	axis x line=bottom,
+    	ylabel=Top-5 Error,
+    	xlabel=$\log_{10}$(Multiply-Accumulate Operations),
+    	axis lines=left,
+    	enlarge x limits=0.05,
+    	enlarge y limits=0.05,
+    	grid=both,
+    	ytick={0.01,0.02,...,0.2},
+    	xmode=log,
+    	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+    		/pgf/number format/fixed,
+    		/pgf/number format/precision=1
+    	},
+    	legend style={at={(0.01,0.01)},anchor=south west},
+    	]
+    	\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+    	\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+    	\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	] table[meta=Network,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+    	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
+    	\end{axis}
+    	\end{tikzpicture}
+    	\caption{\textbf{Computational Complexity of Single State-of-the-Art ILSVRC Models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
+    	\label{fig:bigpicturema}
+    \end{figure}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{figure}[tbp]
+    	\centering
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture.csv}\datatable
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_ours.csv}\datatableours
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_aug.csv}\datatableaug
+    	\pgfplotsset{major grid style={dotted,red}}
+    	\pgfplotsset{minor grid style={dotted,red}}
+    	
+    	\begin{tikzpicture}
+    	\begin{axis}[
+    	width=\columnwidth,
+    	height=0.6\columnwidth,
+    	axis x line=bottom,
+    	ylabel=Top-5 Error,
+    	xlabel=$\log_{10}$(Number of Parameters),
+    	axis lines=left,
+    	enlarge y limits=0.05,
+    	grid=both,
+    	ytick={0.01,0.02,...,0.2},
+    	xmode=log,
+    	xmin=10e5,xmax=10e8,
+    	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+    		/pgf/number format/fixed,
+    		/pgf/number format/precision=1
+    	},
+    	legend style={at={(0.01,0.01)},anchor=south west},
+    	]
+    	\addplot[mark=*,mark options={fill=green!70!black},
+    	nodes near coords,
+    	only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+    	\addplot[mark=*,mark options={fill=blue},
+    	nodes near coords,
+    	only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+    	\addplot[mark=square*,mark options={fill=red},
+    	nodes near coords,
+    	only marks,
+    	point meta=explicit symbolic,
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={font=\tiny},
+    	] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+    	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
+    	\end{axis}
+    	\end{tikzpicture}
+    	\caption{\textbf{Number of Parameters of State-of-the-Art ILSVRC Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
+    	\label{fig:bigpictureparam}
+    \end{figure}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \begin{table}[tbp]
+    	\centering
+    	\caption{{\bf State of the Art Single Models with Extra Augmentation.} Top-5 ILSVRC validation accuracy, single view and augmented test-time multiply-accumulate (M.A.) count, and number of parameters for various state of the art models \emph{with} various training and test-time augmentation methods. A multi-model ensemble of MSRA-C is the current state of the art network.}
+    	%\resizebox{\columnwidth}{!}{
+    	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_aug.csv}\data
+    	\pgfplotstabletypeset[
+    	every head row/.style={
+    		before row=\toprule,after row=\midrule},
+    	every last row/.style={
+    		after row=\bottomrule},
+    	%dec sep align,      % Align at decimal point
+    	fixed zerofill,     % Fill numbers with zeros
+    	columns={Network, Multiply-Acc., Test Multiply-Acc., Param., Top-5 Acc.},
+    	column type/.add={lrrrrrr}{},
+    	columns/Multiply-Acc./.style={
+    		column name=Multiply-Acc. {\small $\times 10^{9}$},
+    		preproc/expr={{##1/1e9}}
+    	},
+    	columns/Test Multiply-Acc./.style={
+    		column name=Test M.A. w/ Aug. {\small $\times 10^{9}$},
+    		preproc/expr={{##1/1e9}}
+    	},
+    	columns/Param./.style={
+    		column name=Param. {\small $\times 10^{7}$},
+    		preproc/expr={{##1/1e7}}
+    	},
+    	columns/Network/.style={string type},
+    	columns/Stride/.style={precision=0},
+    	columns/Top-1 Acc./.style={precision=3},
+    	columns/Top-5 Acc./.style={precision=3},
+    	highlight col max ={\data}{Top-5 Acc.}, 
+    	highlight col min ={\data}{Param.}, 
+    	highlight col min ={\data}{Multiply-Acc.}, 
+    	highlight col min ={\data}{Test Multiply-Acc.}, 
+    	col sep=comma]{\data}
+    	
+    	\label{table:bigpicturetable}
+    \end{table}
+    
     \section{Discussion}
     %We found our network architecture, which learns a small set of $3 \times 3$ basis filters along with many $1\times 3$~/~$3\times 1$ basis filters, gave the most impressive results. Such a model, `vgg-lr-wfull', increased the top-5 center crop validation accuracy on ILSVRC by 1 percentage points in accuracy (89.7\% \vs 88.7\%) while reducing computation by 16\%, over our baseline network with global max-pooling. Although we did not try such a configuration of GoogLeNet, our `googlenet-lr' network using only $1\times 3$~/~$3\times 1$ and $1\times 5$~/~$5\times 1$ basis filters within the inception modules obtained the smallest model size while maintaining comparable accuracy, using 26\% less compute than GoogLeNet and 41\% less model parameters.`
     
