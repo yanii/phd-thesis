@@ -228,14 +228,6 @@ footnotes.}
     `preamble.tex'}}%
 
 
-% Deprecated option - use draft instead
-\DeclareOption{draftmode}{
-\ClassError{PhDThesisPSnPDF}{This option is deprecated. Use `draft' 
-  instead this option replaces `draftmode'. To use the classic version
-  of draft use `draftclassic`}
-\stop}% 
-
-
 % Line Numbers
 \newif\ifPHD@lineno\PHD@linenotrue
 \DeclareOption{lineno}{\PHD@linenotrue}
@@ -350,21 +342,39 @@ supported!}
 
 % Classic Draft Mode
 \ifsetDraftClassic
-% Disable figures in `draftmode'\
+% Disable figures in `draft'\
 \setkeys{Gin}{draft=true}
 \fi
 
 % If Draft Mode is active
 \ifsetDraft
-% Disable figures in `draftmode'\
+% Disable figures in `draft'\
 \setkeys{Gin}{draft=false}
 
 % Line numbering (can be switched off)
 \ifPHD@lineno
 \RequirePackage[switch,pagewise,mathlines]{lineno}
-\renewcommand{\frontmatter}{\nolinenumbers}
-\renewcommand{\mainmatter}{\linenumbers}
-\renewcommand{\backmatter}{\linenumbers}
+\renewcommand{\frontmatter}{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{roman}
+  \nolinenumbers
+}
+\renewcommand{\mainmatter}{%
+  \cleardoublepage
+  \@mainmattertrue
+  \pagenumbering{arabic}
+  \linenumbers
+}
+\renewcommand{\backmatter}{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \@mainmatterfalse
+  \linenumbers
+}
 
 % Fix display lineno issue in mathmode
 \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
@@ -452,23 +462,23 @@ supported!}
   }
 }
 
-% If NOT Draft Mode
+% If NOT Draft
 \else 
 
-\renewcommand\SetDraftText[1]{\ClassWarning{PhDThesisPSnPDF}{DraftMode is
-    inactive, to use SetDraftText include `draftmode' in the document 
+\renewcommand\SetDraftText[1]{\ClassWarning{PhDThesisPSnPDF}{Draft is
+    inactive, to use SetDraftText include `draft' in the document 
     class options.}}
 % Draft Version
-\renewcommand\SetDraftVersion[1]{\ClassWarning{PhDThesisPSnPDF}{DraftMode is
-    inactive, to use SetDraftVersion include `draftmode' in the document
+\renewcommand\SetDraftVersion[1]{\ClassWarning{PhDThesisPSnPDF}{Draft is
+    inactive, to use SetDraftVersion include `draft' in the document
     class options.}}
 % Draft Content
-\renewcommand\SetDraftWMPosition[1]{\ClassWarning{PhDThesisPSnPDF}{DraftMode
-    is inactive, to use SetDraftWMPosition include `draftmode' in the document
+\renewcommand\SetDraftWMPosition[1]{\ClassWarning{PhDThesisPSnPDF}{Draft
+    is inactive, to use SetDraftWMPosition include `draft' in the document
     class options.}}
 
-\renewcommand\SetDraftGrayScale[1]{\ClassWarning{PhDThesisPSnPDF}{DraftMode is
-    inactive, to use SetDraftWMPosition include `draftmode' in the document
+\renewcommand\SetDraftGrayScale[1]{\ClassWarning{PhDThesisPSnPDF}{Draft is
+    inactive, to use SetDraftWMPosition include `draft' in the document
     class options.}}
 \fi
 
