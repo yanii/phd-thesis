@@ -1,0 +1,34 @@
+\documentclass[]{article}
+
+%opening
+\title{Research Statement}
+\author{Yani Ioannou}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+
+%\end{abstract}
+
+\section{Research Statement}
+Deep learning has in recent years come to dominate the previously separate fields of research in machine learning, computer vision, natural language understanding and speech recognition. Despite the breakthroughs in training deep networks many relatively simple questions of learning in neural networks remain unanswered.
+
+This lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. Instead, the approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization – an approach that has found success in practice for accuracy, but leaves much to desire in efficiency.
+
+Instead, in our work, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and compute efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. We have described several such novel methods for creating computationally efficient and compact deep neural networks (CNNs) using several methods:
+
+- Using conditional computation for faster inference, by understanding the connections between two state of the art classifiers: neural networks and decision forests.
+
+- Exploiting our knowledge of the low-rank nature of most filters learned for image recognition by structuring a deep network to learn a low-rank basis for the spatial extents of filters.
+
+- A novel sparse connection structure for deep networks that allows a significant reduction in computational cost while increasing accuracy.
+\pagebreak
+
+\section{Research Proposal}
+Deep Neural Networks (DNNs) have been shown to have surprisingly good generalization for complex classification problems, however there remain serious issues in training DNNs. Due to the number of parameters in state-of-the-art deep networks (on the order of 100 million), the optimization methods that are feasible in practice are limited. At the same time, because of the number of parameters, optimization is also more challenging. 
+
+State-of-the-art models are trained with gradient descent (first order optimization), which does not consider the complex adverse co-adaptions that neurons can learn, or the complex error surface. 
+
+\end{document}
