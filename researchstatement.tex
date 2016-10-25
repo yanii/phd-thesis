@@ -13,9 +13,9 @@
 %\end{abstract}
 
 \section{Research Statement}
-Deep learning has in recent years come to dominate the previously separate fields of research in machine learning, computer vision, natural language understanding and speech recognition. Despite the breakthroughs in training deep networks many relatively simple questions of learning in neural networks remain unanswered.
+Deep learning has in recent years come to dominate the previously separate fields of research in machine learning, computer vision, natural language understanding and speech recognition. Despite breakthroughs in training deep networks, many relatively simple questions remain unanswered about the representations learned within these networks. In addition 
 
-This lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. Instead, the approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization – an approach that has found success in practice for accuracy, but leaves much to desire in efficiency.
+This lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. Instead, the approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization - an approach that has found success in practice for accuracy, but leaves much to desire in efficiency.
 
 Instead, in our work, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and compute efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. We have described several such novel methods for creating computationally efficient and compact deep neural networks (CNNs) using several methods:
 
@@ -27,8 +27,12 @@ Instead, in our work, we propose that carefully designing networks in considerat
 \pagebreak
 
 \section{Research Proposal}
-Deep Neural Networks (DNNs) have been shown to have surprisingly good generalization for complex classification problems, however there remain serious issues in training DNNs. Due to the number of parameters in state-of-the-art deep networks (on the order of 100 million), the optimization methods that are feasible in practice are limited. At the same time, because of the number of parameters, optimization is also more challenging. 
+\paragraph{Learning with Less: Deep Neural Networks for Learning Smaller Datasets}
+Deep neural networks (DNNs) are the driving force behind emerging technology such as self-driving cars, automatic image tagging, AI assistants such as Siri, and human-beating go playing AI. Recent breakthroughs in training DNNs have been responsible for vastly improved generalization in a range of tasking including image class recognition, segmentation and detection. There remain serious issues in training DNNs however, with a lack of understanding of the optimal structure or training methodology for a given problem/dataset. Training requires massive amounts of labeled data, which for many problems is difficult and/or expensive to obtain. For this reason, many image-based problems depend on pre-training on massive datasets that already exist, for example ImageNet with 1.2 million labelled images and 1000 classes. This currently prevents the application of DNNs for learning many real-world problems.
 
-State-of-the-art models are trained with gradient descent (first order optimization), which does not consider the complex adverse co-adaptions that neurons can learn, or the complex error surface. 
+Due to the increasing number of parameters in state-of-the-art deep networks (often more than 100 million), optimization of DNNs is increasingly more challenging. Our previous work has shown that re-structuring existing state of the art networks with fewer, more relevant parameters, can improve generalization while maintaining efficiency. We plan to take this concept further in answering some of the most pressing questions on the limitations of training DNNs. Can DNNs be structured with fewer parameters, so as to be trained with smaller datasets as effectively as large datasets? 
+%Can adverse neural co-adaption in DNNs be prevented by structured sparsity?
+
+
 
 \end{document}
