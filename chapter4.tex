@@ -2,11 +2,11 @@
 
 \begin{document}
 	
-	\chapter{Learning a Low-rank Basis for Filters in Convolutional Neural Networks}
+	\chapter{Learning a Basis for the Spatial Extents of Filters}
 	\label{lowrankfilters}
     
     \section{Introduction}
-    One promising aspect of CNNs, from a memory and computational efficiency standpoint, is their use of \emph{convolutional filters} (a.k.a.~kernels). Such filters usually have limited spatial extent and their learned weights are shared across the image spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
+    One promising aspect of CNNs, from a memory and computational efficiency standpoint, is their use of \emph{convolutional filters}. Such filters usually have limited spatial extents (\ie width and height, as opposed to channels) and their learned weights are shared across the image spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
     Thus, as illustrated in Fig.~\ref{fig:sparseconn}, in comparison with fully connected network layers (Fig.~\ref{fig:sparseconn}a), convolutional layers have a much sparser connection structure and use fewer parameters (Fig.~\ref{fig:sparseconn}b).
     This leads to faster training and test, better generalization, and higher accuracy.
     
@@ -40,7 +40,7 @@
     
     Both of these methods show that, at least for their respective applications, low rank approximations of full-rank filters learned in convolutional networks can increase test time efficiency significantly. However, being approximations of pre-trained networks, they are unlikely to improve test accuracy, and can only increase the computational requirements during training.
     
-    \paragraph{Learning Separable Filters.}
+    \paragraph{Learning Separable (Factorized) Filters.}
     \citet{mamalet2012simplifying} propose training networks with separable filters on the task of digit recognition with the MNIST dataset. They train networks with \emph{sequential} convolutional layers of horizontal and vertical 1D filters, achieving a speed-up factor of 1.6$\times$, but with a relative increase in test error of 13\% (1.45\% \vs 1.28\%).Our approach generalizes this, allowing both horizontal and vertical 1D filters (and other shapes too) at the same layer and avoiding issues with ordering.  We also demonstrate a decrease in error and on more challenging datasets.
     
     
@@ -79,7 +79,7 @@
     The convolutional layers of a CNN produce output `images' (usually called {\em feature maps}) by convolving input images with one or more learned filters. %The output images of convolutional layers are  to distinguish them from raw input images.
     In a typical convolutional layer, as illustrated in Fig.~\ref{fig:fullrank}, a $c$-channel input image of size $H \times W$ pixels is convolved with $d$ filters of size $h \times w \times c$ to create a $d$-channel output image. Each filter is represented by $h w c$ independent weights. Therefore the computational complexity for the convolution of the filter with a $c$-channel input image is $\mathcal{O}(d w h c)$ (per pixel in the output feature map).
     
-    In what follows, we describe schemes for modifying the architecture of the convolutional layers so as to reduce computational complexity. The idea is to replace full-rank convolutional layers with modified versions that represent the same number of filters by linear combinations of basis vectors, \ie as lower rank representations of the full rank originals.
+    In what follows, we describe schemes for modifying the architecture of the convolutional layers so as to reduce computational complexity. The idea is to replace expensive full spatial convolutional filters with modified versions that represent the same number of effective filters by linear combinations of smaller basis vectors. 
     
     \subsection{Sequential Separable Filters}
     \label{seqsep}
@@ -88,11 +88,14 @@
     Note that \citet{journals/corr/JaderbergVZ14} use this scheme to approximate existing full rank filters belonging to previously trained networks using a retrospective fitting step. In this work, by contrast,  we {\em train} networks containing convolutional layers with this architecture from scratch. In effect, we learn the separable basis filters and their combination weights simultaneously during network training.
     
     
-    \subsection{Filters as Linear Combinations of Bases}
+    \subsection{Filters as Linear Combinations of a Basis}
     In this work we introduce another scheme for reducing convolutional layer complexity. This works by representing convolutional filters as linear combinations of basis filters as illustrated in Fig.~\ref{fig:ourmethod}. This scheme uses \emph{composite layers} comprising several sets of filters where the filters in each set have different spatial dimensions (see Fig.~\ref{fig:compositelayers}). The outputs of these basis filters may be combined in a subsequent layer containing filters with spatial dimensions $1 \times 1$.
     
     This is illustrated in Fig.~\ref{fig:ourmethod}. Here, our composite layer contains horizontal $w\times 1$ and vertical $1\times h$ filters, the outputs of which are concatenated in the channel dimension, resulting in an intermediate $m$-channel feature map. These filter responses are then linearly combined by the next layer of $d$ $1\times 1$ filters to give a $d$-channel output feature map. In this case, the filters are applied on the input feature map with $c$ channels and followed by a set of $m$ 1$\times$1 filters over the $m$ output channels of the basis filters. If the number of horizontal and vertical filters is the same, the computational complexity is $\mathcal{O}( m(wc/2 +hc/2 + d))$.
-    Interestingly, the configuration of Fig.~\ref{fig:ourmethod} gives rise to linear combinations of horizontal and vertical filters that are cross-shaped in the spatial domain. This is illustrated in Fig.~\ref{fig:conv1filters} for filters learned in the first convolutional layer of the`vgg-gmp-lr-join' model that is described in the Results section when it is trained using ILSVRC dataset.
+    
+    The effective filters learned in our models are low-rank in that, although we only learn mostly basis filters much smaller than the original networks (\eg $1\times h$, $w\times 1$), the effective filter size when also using only a few full $w \times h$ basis filters is still a full 3$\times$3. Necessarily, some of the parameters in our effective filters are linear combinations of others, since the effective filter is a learned linear combinations of the low-rank basis filters.
+    
+    Interestingly, the configuration of Fig.~\ref{fig:ourmethod}, where we only use horizontal and vertical basis filters, gives rise to linear combinations of horizontal and vertical filters that are cross-shaped in the spatial domain. This is illustrated in Fig.~\ref{fig:conv1filters} for filters learned in the first convolutional layer of the`vgg-gmp-lr-join' model that is described in the Results section when it is trained using ILSVRC dataset.
     
     \begin{figure}[tbp] 
         \centering

@@ -10,11 +10,11 @@
 	
 	\section{On Methods of Discriminative Classification}
 	
-	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks have even replaced the research in local features (e.g. SIFT), providing end-to-end learning from pixels to objective. Much work has been done on improving both methods and exploring their applications - with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\cite{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep convolutional neural networks (\emph{CNNs}) on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\cite{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\cite{Sethi1990} showed that any decision tree can be represented as a neural network with one hidden layer, however the converse does not necessarily hold true.
+	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks have even replaced the research in local features (\eg SIFT), providing end-to-end learning from pixels to objective~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications - with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep convolutional neural networks (\emph{CNNs}) on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network with one hidden layer, however the converse does not necessarily hold true.
 	
 	Despite this fundamental relationship, decision forests and neural networks have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks can be trained with far more parameters than actual samples. At test time neural networks are opaque giving little understanding, while decision forests are more intuitive - each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time, due to sample routing only a small part of a tree need be computed, i.e. conditional computation, neural networks must on the other hand compute the response at every node even if many of these responses are approximately zero.
 	
-	\section{Generalising Neural Networks and Decision Trees}
+	\section{Generalizing Neural Networks and Decision Trees}
 	Here we explore the continuity of models between decision forests, with the objective of reducing the connectivity of deep neural networks trained with back-propagation, specifically convolutional neural networks, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
 	Towards this objective, we generalize neural networks and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr. Antonio Criminisi, and is not a contribution of this thesis. Some figures used with the permission of Dr. Antonio Criminisi/Microsoft Research.}.
@@ -76,7 +76,7 @@
 		\label{fig:projections}
 	\end{figure}
 	
-	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in Fig.~\ref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in Fig.~\ref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\cite{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in Fig.~\ref{fig:identitynotation}.
+	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in Fig.~\ref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in Fig.~\ref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in Fig.~\ref{fig:identitynotation}.
 	
 	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in Fig.~\ref{fig:selectionnotation}.
 	
@@ -149,20 +149,20 @@
 	and hence the 
 	
 	\subsection{Conditional Networks}
-	The generalisation, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
+	The generalization, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
 	
 	\section{Results}
 	
 	\subsection{Imagenet Large Scale Visual Recognition Challenge (ILSVRC)}
-	We first validate the use of conditional networks for image classification on the ILSVRC dataset~\cite{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\cite{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
+	We first validate the use of conditional networks for image classification on the ILSVRC dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\citep{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
 	
-	AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\cite{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
+	AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 	
-	We based our experiments on the VGG network~\cite{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\cite{He2015b}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe on a single Nvidia K40 GPU). It notably does not have any filter grouping, as found in AlexNet, or low-dimensional embeddings, as found in network-in-network. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
+	We based our experiments on the VGG network~\citep{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\citep{He2015b}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe~\citep{Jia2014} on a single Nvidia K40 GPU). It notably does not have any filter grouping, as found in AlexNet, or low-dimensional embeddings, as found in network-in-network. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
 	
 	\subsection{Global max-pooling to reduce model size}
 	We found that global {\em max}-pooling, like 
-	{\em average}-pooling (as used in~\cite{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy. In VGG11 the input to the first fully connected layer (\ie \texttt{fc7}) consists of a tensor of size 
+	{\em average}-pooling (as used in~\citep{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy. In VGG11 the input to the first fully connected layer (\ie \texttt{fc7}) consists of a tensor of size 
 	This suggests that preserving spatial information after the convolutional layers may not be as important as previously thought. 
 	We trained a new network (`VGG11-GMP') with such pooling, and achieved lower top-5 error than the baseline VGG11 
 	network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see Fig.~\ref{fig:VggPerLayerCost}).
@@ -181,24 +181,24 @@
 	introduces a DAG-like routed structure to split the filters in the convolutional section.
 	The assumption here is that each filter should only need to be applied to a small number of channels in the input feature map.
 	
-	Data routing is implemented via `filter groups', as originally used in~\cite{Krizhevsky2012imanet}. 
+	Data routing is implemented via `filter groups', as originally used in~\citep{Krizhevsky2012imanet}. 
 	Thus, at each level $\textrm{conv}\_n\_\{1,2\}, n=3\ldots 5$, the convolutional filters of VGG11-GMP are 
 	divided into $2^{(n-2)}$ groups. Each group depends only on the results of exactly 128 previous filters. 
 	The feature maps of the last convolutional layer are concatenated together, and globally max-pooled
 	before the fully-connected layers, which remain the same as those in VGG11-GMP.
 	
 	\subsection{Training}
-	We trained our conditional network with the same hyperparameters as in~\cite{Simonyan2014verydeep}, 
-	except for using the initialization strategy suggested of~\cite{He2015b}, and a learning schedule of 
+	We trained our conditional network with the same hyperparameters as in~\citep{Simonyan2014verydeep}, 
+	except for using the initialization strategy suggested of~\citep{He2015b}, and a learning schedule of 
 	$\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ 
-	are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\cite{Bottou2012sgdtricks}. 
+	are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. 
 	When the validation accuracy of the network levelled out, the learning rate was further decreased by a factor of 10, twice. 
 	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
 	training time given its higher efficiency.
 	
 	\subsection{Accuracy \vs efficiency results}
 	In order to compare different network architectures as fairly as possible, here we did not use any training
-	augmentation aside from that supported by Caffe (mirroring/random crops). Similarly we report test-time 
+	augmentation aside from that supported by Caffe~\citep{Jia2014} (mirroring/random crops). Similarly we report test-time 
 	accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
 	This reduces the overall accuracy (w.r.t.\ to state of the art), but constitutes a fairer test bed for 
 	teasing out the effects of different network architectures.
@@ -232,8 +232,8 @@
 	It shows top-5 error as a function of test-time 
 	cost\footnote{measured here as number of multiply-accumulate operations. We have observed this measure 
 		to correlate very well with CPU time.} and model size. 
-	The best network (closest to the origin) is GoogLeNet~\cite{Szegedy2014going} (in purple), it is very accurate and efficient. 
-	GoogLeNet and Alexnet~\cite{Krizhevsky2012imanet} (in light blue) are in fact instances of conditional networks 
+	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
+	GoogLeNet and Alexnet~\citep{Krizhevsky2012imanet} (in light blue) are in fact instances of conditional networks 
 	(though they were not presented that way). In both networks much of the compute saving is obtained by routing
 	subsets of features to different branches of the network.
 	In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very 
@@ -246,8 +246,8 @@
 	and almost one-fifth (21\%) of the parameters.
 	Although it is the second closest to the origin (after GoogLeNet) we believe that better results can be achieved 
 	by using routes of different (learned) cardinality, as well as incorporating low-dimensional embedding and multiple-loss training. This is left for future work. 
-	Note that the most efficient model in~\cite{He2015b} uses 1.9E+10 flops which is just outside the plot. 
-	More accurate versions of~\cite{He2015b} are more expensive still.
+	Note that the most efficient model in~\citep{He2015b} uses 1.9E+10 flops which is just outside the plot. 
+	More accurate versions of~\citep{He2015b} are more expensive still.
 	Finally, Fig.~\ref{fig:VggPerLayerCost} shows efficiency improvements achieved by our conditional network, layer by layer.
 	
 	%%% Figure ---------------
@@ -289,10 +289,10 @@
 	%\end{itemize}
 	
 	\section{CIFAR10}
-	Here we validate conditional networks for the classification of images in the CIFAR10 dataset~\cite{CIFAR10}. 
+	Here we validate conditional networks for the classification of images in the CIFAR10 dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state of the art Network in Network (NiN) model 
-	as a reference~\cite{Lin2013NiN}, and we build a conditional version of it to produce the architecture in Fig.~\ref{fig:Cifar_CondNet}. 
+	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in Fig.~\ref{fig:Cifar_CondNet}. 
 	Then we go on to show its increased efficiency compared to the original NiN model.
 	%\acnote{there is another net which is 0.1\% better.}
 	
@@ -320,7 +320,7 @@
 	
 	\subsection{Learning the optimal network architecture}
 	In this experiment we have optimized the network structure {\em automatically}, 
-	by using Bayesian optimization~\cite{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
+	by using Bayesian optimization~\citep{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
 	This has allowed us to search the large joint space of parameters and structures in a principled way, 
 	and come up with multiple reasonable networks to be tested. 
 	%\acnote{we have not done this in Imagenet because too big.}
@@ -334,9 +334,9 @@
 	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters. 
 	\ie we maximize $\alpha$ over $F_l = F_\textrm{orig}/2^i, \left\{i\in \mathbb{N} : 0 \le i \le 4\right\}$, where $F_\textrm{orig}$ is the number of filters in layer $l$ in NiN-64. 
 	
-	All networks were trained with the same hyperparameters as~\cite{Lin2013NiN}, 
-	except for using the initialization strategy of~\cite{He2015b}, 
-	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\cite{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
+	All networks were trained with the same hyperparameters as~\citep{Lin2013NiN}, 
+	except for using the initialization strategy of~\citep{He2015b}, 
+	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
 	We split the original CIFAR10 training set into 40,000 training images and 
 	10,000 validation images. 
 	The standard 10,000 held-out images are used for testing.

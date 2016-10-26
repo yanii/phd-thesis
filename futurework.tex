@@ -1,0 +1,22 @@
+\documentclass[thesis]{subfiles}
+
+\begin{document}
+%*******************************************************************************
+%*********************************** Future Work *****************************
+%*******************************************************************************
+
+\chapter{Future Work}  %Title of the First Chapter
+
+%********************************** %First Section  **************************************
+
+Here we outline the conference submissions I am currently targeting, and research directions I wish to pursue.
+
+\section{Deep Roots}
+The work presented in Chapter \ref{deeproots} is to be submitted to CVPR 2016 on November 15th, however with a re-worked motivation.
+	
+\section{Co-adaption}
+Chapter \ref{pairablation} presents the initial findings from on-going research investigating neural co-dependence in neural networks. The results presented for a CIFAR VGG network trained with dropout and our dropproject methods motivated further research into the salient action behind the increased generalization of networks using dropout. The first step is to reproduce these results on a state-of-the-art network for ImageNet, and I am currently running experiments on AlexNet and Inception v3, which both extensively use dropout.
+
+Assuming that further experiments confirm the findings, I plan to investigate more principled methods of random projection in deep neural networks, as a method to aid optimization. Given our insight into Dropout, the Johson-Lindenstrauss lemma gives us bounds on the minimum number of dimensions in which pairwise distances are preserved in random projection to a given maximum pairwise error $\epsilon$. This is equivalent to giving bounds on the appropriate dropout ratio for a given training set size.
+
+\end{document}

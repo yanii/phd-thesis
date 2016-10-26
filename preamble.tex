@@ -72,7 +72,8 @@
 % uncommenting the following line
 % This is for people stuck with older versions of texlive
 %\usepackage{sty/caption/subcaption}
-\usepackage{subcaption}
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 
 % ********************************** Tables ************************************
 \usepackage{booktabs} % For professional looking tables
