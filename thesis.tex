@@ -1,8 +1,8 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-%\documentclass[a4paper,12pt,times,print,index,custombib]{Classes/PhDThesisPSnPDF}
-\documentclass[a4paper,12pt,times,print,index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,print,index,custombib]{Classes/PhDThesisPSnPDF}
+%\documentclass[a4paper,12pt,times,print,index,authoryear]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -156,16 +156,18 @@
 \subfile{chapter2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METHODOLOGY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiments and Results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conditional Networks
 \subfile{chapter3}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiments and Results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Learning a Low-rank Basis
 \subfile{chapter4}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Future Work/Propsal
-%\subfile{chapter5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Deep Roots
+\subfile{chapter5}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Future Work/Propsal
-\subfile{chapter6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Dropout/Ablation
+%\subfile{chapter6}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Future Work/Propsal
 \subfile{futurework}
@@ -191,9 +193,10 @@
 
 %\bibliographystyle{apalike}
 %\bibliographystyle{unsrt} % Use for unsorted references  
-\bibliographystyle{plainnat} % use this to have URLs listed in References
+%\bibliographystyle{plainnat} % use this to have URLs listed in References
+%\bibliographystyle{abbrvnat} % use this to have URLs listed in References
 \cleardoublepage
-\bibliography{references} % Path to your References.bib file
+%\bibliography{references} % Path to your References.bib file
 
 
 % If you would like to use BibLaTeX for your references, pass `custombib' as
@@ -201,7 +204,7 @@
 % specified in the preamble.tex file in the custombib section.
 % Comment out the lines related to natbib above and uncomment the following line.
 
-%\printbibliography[heading=bibintoc, title={References}]
+\printbibliography[heading=bibintoc, title={References}]
 
 
 \end{spacing}
