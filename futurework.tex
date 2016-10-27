@@ -15,6 +15,7 @@ Here we outline the research directions I plan to pursue, planned conference sub
 \section{Future Research Topics}
 
 \subsection{Learning a Basis for Spatial and Channel Extents of Filters}
+\label{journalplan}
 The work of chapters \ref{lowrankfilters} and \ref{deeproots} explore learning more efficiently by reducing the learned parameters in the spatial and channel extents, respectively, of convolutional filters. These naturally lend themselves to being merged into a single effective method for training with low-rank basis filters. We plan to submit a journal article in which both methods are merged and explored in new results on state-of-the-art deep networks.
 
 \subsection{Random Low-Dimensional Projection in Deep Neural Network Optimization}
@@ -302,25 +303,31 @@ It has been observed empirically by \citet{Ioffe2015} and others that when used 
 
 \section{Research Schedule}
 %The work presented in Chapter \ref{deeproots} is to be submitted to CVPR 2016 on November 15th, while current ongoing work presented in 
-
+Note that in the following schedule, training time for state of the art deep networks for Imagenet should be considered:
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\begin{itemize}
+\item Training AlexNet takes 3--5 days on a single Titan X GPU
+\item Training Inception v3 takes 1--2 weeks on 8 Titan X GPUs
+\item Training Resnet-200 takes 2--3 weeks on 8 Titan X GPUs
+\end{itemize}
 
-\begin{table}
-\centering
-\begin{tabularx}{\textwidth}{lX}	
+
+%\begin{table}
+%\centering
+\begin{tabularx}{\textwidth}{lX}
 \toprule
-Oct.\ 2016 -- Nov.\ 2016	&  Work on submitting the work presented in chapter \ref{deeproots} to CVPR 2017\\
-%\hline 
-Dec.\ 2016 -- Feb.\ 2017 	&  Work on submitting the initial work presented in \S\ref{pairablation} to ICML 2017:\\
-& \tabitem Train AlexNet with dropout and drop project and control to compare training curves and results\\
-& \tabitem Train state of the art Inception v3 network with dropout and drop project\\
-& \tabitem Explore the application of more principled methods of random low-dimensional projection in deep neural network optimization.\\
-%	&  \\ 
-%	&  \\ 
-%	&  \\ 
-%	& 
+Oct.\ 2016 &  Write up research presented in chapter \ref{deeproots}, submit to NIPS 2017 as workshop paper (International Workshop on Efficient Methods for Deep Neural Networks) deadline: Oct.\ 23, and CVPR 2017 as conference paper, deadline: Nov.\ 14\\
+Dec.\ 2016 &  Work on submitting the initial work presented in \S\ref{pairablation} to ICML 2017 (Feb.\ 24):\\
+& \tabitem Train AlexNet with dropout, dropproject and control to compare training curves and results\\
+& \tabitem Train state of the art Inception v3 network with dropout and dropproject\\
+& \tabitem Explore the application of more principled methods of random low-dimensional projection in deep neural network optimization\\
+March 2017& Work towards merging ideas of chapters \ref{lowrankfilters} and \ref{deeproots} as described in \S\ref{journalplan} into a journal article to be submitted to the IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI) or similar publication:\\
+& \tabitem Train state of the art network with both methods simultaneously, likely ResNet 200\\
+& \tabitem Explore the usage of heterogeneous filter groups\\
+January 2018 & Begin PhD thesis write-up\\
+September 2018 & Submit PhD thesis\\
 \bottomrule
 \end{tabularx} 
-\end{table}
+%\end{table}
 
 \end{document}
