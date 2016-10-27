@@ -21,33 +21,72 @@ Neural networks with at least one \emph{hidden} layer have been proven to be a u
 We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of neural networks we refer the reader to the excellent reference of~\citet{Bishop1995}.
 
 \subsection{The Neuron}
-Each neuron consists of an input vector $\mathbf{x}$, activation function $f$, weights $\mathbf{w}$ and a bias $b$, the output of which is,
+At its simplest a neuron is a function of the weighted aggregation of many inputs,
 
 \begin{equation}
-y = f(\mathbf{w}^T\mathbf{x} + b).
+	y = \sum_{i}^{N} w_i x_i + b,
 \end{equation}
 
-In a classification setting, the weights and bias of a neuron parametrize a hyperplane (or line in two dimensions, or plane in 3 dimensions), and this represents a decision boundary.
-
-\subsection{Activation Functions}
-If all the activation functions $f$ in a multi-layer neural networks were defined as a linear function, a neural network of arbitrary complexity would still have the representational ability of a linear classifier. Activation functions are generally chosen to be a non-linearity. Classically chosen non-linearities were sigmoidal functions, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function: 
+where $i=0,\ldots,N$, $w_i$ is the weight of the input $x_i$, $b$ is the \emph{bias} and $f$ is an \emph{activation function}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, activation function $f$, weights $\mathbf{w}$ and a bias $b$, the output of which is,
 
 \begin{equation}
-	y = \frac{1}{1+e^{-a}},
+y = \mathbf{w}^T\mathbf{x} + b.
+\end{equation}
+
+This function also has a geometric interpretation. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$,
+
+\begin{equation}
+y = a x + c.
+\end{equation}
+
+In general a neuron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions.
+Neural networks are a discriminative classifier, and each neuron is a hyperplane functioning as a single decision boundary.
+
+\subsection{Activation Functions}
+Without an activation function, even a large multi-layer neural network would have the representational ability of a linear classifier. The \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions. %Although each neuron is still representing a hyperplane, the space in which it operates is non-linear
+
+\begin{equation}
+y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
+\end{equation}
+
+Activations were classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function: 
+
+\begin{equation}
+	f(x) = \frac{1}{1+e^{-x}},
 \end{equation}
 
 hyperbolic tangent:
 \begin{equation}
-	y = \tanh(a).
+	f(x) = \tanh(x).
 \end{equation}
-
-%\subsection{Back Propogation}
-%\mynote{todo}
 
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by~\citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
-Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications. 
+Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
+
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=0.66\columnwidth, page=1]{groupfig}
+	\caption[Illustration of convolutional layer]{\textbf{Convolution with $d$ filters of shape $h\times w\times c$.} Convolutional filters (yellow) have the same channel dimension $c$ as the input feature maps (gray) on which they operate. Each filter is convolved across the entire set of input featuremaps to produce a single output feature map. In this illustration we assume padding appropriate to preserve the spatial dimensions.}
+	\label{fig:convlayer}
+\end{figure}
+
+Figure \ref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ feature map for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the feature map $h^d$ at spatial location $i, j$ is given by,
+
+\begin{equation}
+	h^d_{i,j} = f\left( \left(W^d \convolution x \right)_{i,j} + b_d \right),
+\end{equation}
+
+where $\convolution$ is the convolution operator. The discrete convolution operator $(f \convolution g)$ is defined~\citep{damelin2011} for two 1D sequences $f, g$ as,
+\begin{equation}
+	(f \convolution g)[n] = \sum_{i=-\infty}^\infty f[i]\, g[n - i].
+\end{equation}
+
+This can be extended to 2D,
+\begin{equation}
+(f \convolution g)[m, n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i, j]\, g[m - i][n - j].
+\end{equation}
 
 The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
 
