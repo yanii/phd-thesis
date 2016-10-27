@@ -301,33 +301,46 @@ Both methods have close to identical effect on training loss/error, and are dras
 \subsubsection{Dropout and Batch Normalization.}
 It has been observed empirically by \citet{Ioffe2015} and others that when used with batch normalization, dropout is not as effective. In light of our understanding of dropout as being an optimization method for error surfaces with highly complex curvature, we can explain this. As explained by \citep{martens2010deep}, an important property of second order optimization methods is ``scale invariance'' -- robustness to any linear rescaling of the model parameters. For example, if we are in an elliptically shaped local minima of the error surface, ideally we would want different a higher learning rate for parameters in the direction of the major axis, as compared to those in the direction of the minor axis, as RMSprop attempts. When using batch normalization, the layer-wise error surface is whitened, reducing the importance of scale-invariance in optimization.
 
-\section{Research Schedule}
+\section{Proposed Research Schedule}
 %The work presented in Chapter \ref{deeproots} is to be submitted to CVPR 2016 on November 15th, while current ongoing work presented in 
-Note that in the following schedule, training time for state of the art deep networks for Imagenet should be considered:
+
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
-\begin{itemize}
-\item Training AlexNet takes 3--5 days on a single Titan X GPU
-\item Training Inception v3 takes 1--2 weeks on 8 Titan X GPUs
-\item Training Resnet-200 takes 2--3 weeks on 8 Titan X GPUs
-\end{itemize}
-
-
+\newcommand{\tabtabitem}{~~\llap{\textendash}~~}
 %\begin{table}
 %\centering
 \begin{tabularx}{\textwidth}{lX}
-\toprule
-Oct.\ 2016 &  Write up research presented in chapter \ref{deeproots}, submit to NIPS 2017 as workshop paper (International Workshop on Efficient Methods for Deep Neural Networks) deadline: Oct.\ 23, and CVPR 2017 as conference paper, deadline: Nov.\ 14\\
-Dec.\ 2016 &  Work on submitting the initial work presented in \S\ref{pairablation} to ICML 2017 (Feb.\ 24):\\
-& \tabitem Train AlexNet with dropout, dropproject and control to compare training curves and results\\
-& \tabitem Train state of the art Inception v3 network with dropout and dropproject\\
-& \tabitem Explore the application of more principled methods of random low-dimensional projection in deep neural network optimization\\
-March 2017& Work towards merging ideas of chapters \ref{lowrankfilters} and \ref{deeproots} as described in \S\ref{journalplan} into a journal article to be submitted to the IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI) or similar publication:\\
-& \tabitem Train state of the art network with both methods simultaneously, likely ResNet 200\\
-& \tabitem Explore the usage of heterogeneous filter groups\\
-January 2018 & Begin PhD thesis write-up\\
-September 2018 & Submit PhD thesis\\
-\bottomrule
+%\toprule
+\multicolumn{2}{l}{\textbf{2016}}\\ \cline{1-2}
+Oct.\ -- Dec. & \tabitem Submit short research paper based on chapter \ref{deeproots} as an EMDNN\footnote{International Workshop on Efficient Methods for Deep Neural Networks} workshop paper, held in conjunction with the NIPS\footnote{Neural Information Processing Systems} conference, \textbf{deadline: Oct.\ 23}\\
+& \tabitem Submit full research paper to CVPR\footnote{Computer Vision and Pattern Recognition} conference as a conference paper, \textbf{deadline: Nov.\ 14}\\
+& \tabitem Attend NIPS conference from Dec.\ 5--10th\\
+\multicolumn{2}{l}{\textbf{2017}}\\ \cline{1-2}
+Jan.\ -- Feb.& \tabitem Expand on initial work presented in \S\ref{pairablation}:\\
+& \tabtabitem Train AlexNet with dropout, dropproject and control to compare training curves and results\\
+& \tabtabitem Train state of the art Inception v3 network with dropout and dropproject\\
+& \tabtabitem Explore the application of more principled methods of random low-dimensional projection in deep neural network optimization\\
+& \tabtabitem Explore if we can train a network with a low-dimensional parametrization of a high dimensional parameter space as effectively, reducing the dimensionality of the error surface while potentially maintaining the ability to separate classes in high dimensions\\
+& \tabitem Submit findings to ICML\footnote{International Conference on Machine Learning} as conference paper (Feb.\ 24)\\
+Mar.\ -- Dec.& \tabitem Work towards merging ideas of chapters \ref{lowrankfilters} and \ref{deeproots} as described in \S\ref{journalplan}:\\
+& \tabtabitem Train state of the art network to learn a basis for filter spatial and channel extents simultaneously\\
+& \tabtabitem Explore the usage of heterogeneous filter groups\\
+& \tabtabitem Explore ideas towards automatic determination of shapes and numbers of basis filters\\
+& \tabitem Submit as journal article to the TPAMI\footnote{IEEE Transactions on Pattern Analysis and Machine Intelligence} or similar publication\\
+\multicolumn{2}{l}{\textbf{2018}}\\ \cline{1-2}
+Jan.\ -- Sep.& PhD thesis write-up (6 months)\\
+%\bottomrule
 \end{tabularx} 
 %\end{table}
+
+\subsection{Schedule Notes}
+Due to impending conference deadlines, and the lack of major conference submissions deadlines in the summer, I have prioritized expanding the initial findings of \S\ref{pairablation}, over working on \S\ref{journalplan} in the schedule, since journal submission timetables are more flexible.
+
+In the above schedule, the very long training times for single state of the art deep network models for Imagenet are considered. Many such models need to be trained in practice to find results for even straightforward experiments, and many more when exploring new ideas:
+
+\begin{description}
+	\item[AlexNet] 3--5 days on a single Titan X GPU
+	\item[Inception v3] 1--2 weeks on 8 Titan X GPUs
+	\item[Resnet-200] 2--3 weeks on 8 Titan X GPUs
+\end{description}
 
 \end{document}
