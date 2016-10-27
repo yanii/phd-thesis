@@ -4,10 +4,8 @@
 	
 	\chapter{Learning Filters with Limited Channel Extents}
 	\label{deeproots}
-	
-	
 	It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones -- as shown by recent research~\citep{Krizhevsky2012imanet,Szegedy2014going,Simonyan2014verydeep,He2015}.
-	This does not appear to be a limitation of finite capacity, since deep networks have been shown to be representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
+	This does not appear to be a limitation of finite capacity, since it has been proposed that at least some deep networks are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
 	
 	It has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting} (a property that many have attempted to exploit to make neural networks smaller and more computationally efficient~\cite{Szegedy2014going,Denton2014efficient}). It is unsurprising then that regularization is a critical part of training such networks using large training datasets~\cite{Krizhevsky2012imanet}. Without regularization (e.g. weight decay, dropout~\cite{Hinton2012}) deep networks are susceptible to severe over-fitting (see \S\ref{regularization}). Aside from different training methods, a carefully designed network connection structure can have a regularizing effect in and of itself. Convolutional Neural Networks (CNNs)~\citep{Fuk80,Lecun1998} embody this idea, exploiting prior knowledge of the locality of natural image structure to design neural architectures with more limited, but salient, connectivity than a fully-connected neural network, that is in turn easier to learn. More recently, learning CNNs with low rank filters was found to have a regularizing effect, improving generalization compared to a CNN with only full rank filters~\citep{Ioannou2016}.
 	
@@ -23,7 +21,7 @@
 	% Maybe we need something like this here too, don't know
 	%It has been shown that reducing the co-adaption of filters is beneficial to generalization in deep networks~\citep{Hinton2012,goodfellow2013maxout,Cogswell2016}. Co-adaption occurs when hidden layer filters (or neurons) rely on one another to fit training data, such that their outputs become highly correlated. However, instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use hierarchical filter groups (see \S\ref{regularizingstructure}) to allow the network itself to learn independent filters. By restricting the connectivity between filters on subsequent layers the network is forced to learn filters of limited dependence. We allow the standard network optimization (\eg SGD) to learn appropriate weights within this restricted architecture.
 	
-	In this paper we show that simple alterations to the architecture of state-of-the-art CNNs for image recognition can drastically reduce computational cost and model size while maintaining (or even increasing) accuracy, through structure-induced regularization, by reducing the connectivity in monolithic networks to reflect more closely the sparse, localized filter co-dependencies within.
+	In this chapter we show that simple alterations to the architecture of state-of-the-art CNNs for image recognition can drastically reduce computational cost and model size while maintaining (or even increasing) accuracy, through structure-induced regularization, by reducing the connectivity in monolithic networks to reflect more closely the sparse, localized filter co-dependencies within.
 	
 	\section{Related Work}
 	\label{previouswork}
@@ -69,7 +67,7 @@
 	\end{figure}
 	
 	\paragraph{AlexNet Filter Groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012imanet}~is the use of `filter groups' in the convolutional layers of a CNN (see Fig. \ref{fig:groupconfig}). While the use of filter groups was necessitated by the practical consideration of sub-dividing the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features vs. texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012imanet}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups (see Fig.~\ref{fig:alexnetplots}). This is due to the reduction in the input channel dimension of the grouped convolution filters.
-	Surprisingly, despite the large difference in the number of parameters between the models, both architectures achieve comparable error on ILSVRC -- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This paper builds upon and extends these findings to state-of-the-art networks.
+	Surprisingly, despite the large difference in the number of parameters between the models, both architectures achieve comparable error on ILSVRC -- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This chapter builds upon and extends these findings to state-of-the-art networks.
 	
 \begin{figure}[tb]
 	\centering
@@ -848,7 +846,7 @@
 		height=0.33\columnwidth,
 		axis x line=bottom,
 		ylabel=Top-5 Error,
-		xlabel=Model Parameters (\# Floats),
+		xlabel=FLOPS (Multiply-Add),
 		axis lines=left,
 		enlarge x limits=0.10,
 		enlarge y limits=0.1,
@@ -1221,10 +1219,10 @@
 	
 	Caffe presently parallelizes over filter groups by using multiple CUDA streams to run multiple CuBLAS matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling CuBLAS from the host can take approximately as long as the matrix computation itself. To avoid this overhead, CuBLAS provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using GPUs to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the CuBLAS batched calls.
 	%In the case of a set of contiguous stored homogeneous filter groups these pointers are trivial to calculate on the device given the initial pointer, number of filters and number of groups.
-	We have modified Caffe to use CuBLAS batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\% speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of CuBLAS-style batching into CuDNN could improve the performance of filter groups significantly.
+	We have modified Caffe to use CuBLAS batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\% speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this chapter), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of CuBLAS-style batching into CuDNN could improve the performance of filter groups significantly.
 	
 	\section{Future Work} 
-	In this paper we focused on using homogeneous filter groups (with a uniform division of filters in each group), however this may not be optimal. Heterogeneous filter groups may reflect better the filter co-dependencies found in deep networks. %Another interesting direction for future work is to exploit the independence of filter groups for model parallelism~\cite{krizhevsky2014one}.
+	In this chapter we focused on using homogeneous filter groups (with a uniform division of filters in each group), however this may not be optimal. Heterogeneous filter groups may reflect better the filter co-dependencies found in deep networks. %Another interesting direction for future work is to exploit the independence of filter groups for model parallelism~\cite{krizhevsky2014one}.
 	
 	\section{Conclusion}
 	We explored the effect of using complex hierarchical arrangements of filter groups in CNNs and show that imposing a structured decrease in the degree of filter grouping with depth -- a `root' (inverse tree) topology -- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
