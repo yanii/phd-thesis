@@ -971,7 +971,7 @@
 		%}
 	\end{table}
 	
-	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{jia2014caffe}). To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
+	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{Jia2014}. To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, described in Table~\ref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For some of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5), denoted \textbf{(s)} in Table \ref{table:googlenetimagenetresults}. For other networks, we grouped all filters, including the 1$\times$1.
 
