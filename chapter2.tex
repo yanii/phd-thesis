@@ -33,7 +33,7 @@ where $i=0,\ldots,N$, $w_i$ is the weight of the input $x_i$, $b$ is the \emph{b
 y = \mathbf{w}^T\mathbf{x} + b.
 \end{equation}
 
-This function also has a geometric interpretation. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$,
+This function also has a geometric interpretation~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$,
 
 \begin{equation}
 y = a x + c.
@@ -65,6 +65,9 @@ The earliest work on what are now termed \emph{Convolutional Neural Networks} (C
 
 Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
 
+The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+
+\subsubsection{Convolution Layers}
 \begin{figure}[tb]
 	\centering
 	\includegraphics[width=0.66\columnwidth, page=1]{groupfig}
@@ -83,12 +86,15 @@ where $\convolution$ is the convolution operator. The discrete convolution opera
 	(f \convolution g)[n] = \sum_{i=-\infty}^\infty f[i]\, g[n - i].
 \end{equation}
 
-This can be extended to 2D,
+This can be extended to 2D sequences,
 \begin{equation}
-(f \convolution g)[m, n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i, j]\, g[m - i][n - j].
+(f \convolution g)[m,\,n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i,\,j]\, g[m - i][n - j].
 \end{equation}
 
-The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+\subsubsection{Pooling Layers}
+Another key aspect of convolutional architectures is pooling, a form of non-linear spatial sub-sampling of the feature maps of a given layer. Pooling layers were designed to add translation invariance to CNNs by making the network less sensitive to small local changes in the spatial location of input pixels/convolutional responses, and also to reduce feature map spatial sizes with network depth. Reducing the feature map spatial size serves both to save computation, and to increase the size of the receptive field of successive convolutional layers. This allows successive convolutional layers to operate on progressively larger scales.
+
+Pooling layers divide the image into non-overlapping pooling regions, in which the spatial extents of the input image/feature map are aggregated into a single scalar. LeNet used the average to aggregate the pooling regions, \ie average pooling~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the feature map sizes~\citep{He2015}.
 
 \section{Contemporary Methods of Training Deep Neural Networks}
 \subsection{Rectified Linear Activation Function}
