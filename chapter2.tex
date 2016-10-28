@@ -357,7 +357,15 @@ In machine learning we are interested in automatically learning classifiers from
 Like nearest neighbours, deep decision trees can easily achieve perfect training set accuracy, but do not generalise well. 
 
 \subsection{Random Forests/Decision Forests}
-Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular Decision Forests (Random Forests)~\cite{journals/neco/AmitG97,breiman2001random}, were introduced as a form of ensemble for decision trees.
+Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular Decision Forests (Random Forests)~\cite{journals/neco/AmitG97,breiman2001random}, were introduced as an ensemble method for decision trees.
+
+Random forests exploit two forms of the bagging method~\cite{breiman1996bagging}. In a random forest composed of $N$ decision trees, a different random subset of the training set is used to train each of the individual decision trees. In a further bagging step, a subset of the input features are randomly selected to train each decision tree. After training the decision trees, regression predictions are made from the average of the individual decision tree predictions,
+
+\begin{equation}
+	f(x) = \frac{1}{N} \sum_{i=1}^{N} f_i(x),
+\end{equation}
+
+where $f$ is the random forest prediction, $x$ is the input, and $f_i$ are the individual decision trees.
 
 \section{The relationship between Decision Forests and Neural Networks}
 There has been work in the past exploring the relationship between decision forests and neural networks. Although this work has identified that neural networks are a generalisation of decision forests, it focused on exploiting tree training towards either the initialization or training of neural networks, rather than creating hybrid models exploiting the conditional computation in random forests, while preserving end-to-end training found in state of the art deep neural networks.
