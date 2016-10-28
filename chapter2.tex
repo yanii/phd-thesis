@@ -288,9 +288,9 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 
 where $(f \circ g)(x)$ is the composition $f(g(x))$.
 
-Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the 'vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by Glorot et al.~\cite{glorot2010understanding}. For random Gaussiaan initialization, and given the number of outgoing/incoming connections to each neuron, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
+Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the 'vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by Glorot et al.~\citep{glorot2010understanding}. For random Gaussiaan initialization, and given the number of outgoing/incoming connections to each neuron, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
 
-In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, Glorot et al.~\cite{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
+In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, Glorot et al.~\citep{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
 
 \begin{equation}
 \begin{aligned}
@@ -300,7 +300,7 @@ In practice however, most networks have layers of different numbers of neurons. 
 \end{aligned}
 \end{equation}
 
-For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\cite{He2015b}:
+For the more typically used rectified linear unit, a variation of this initialization was proposed by He et al.~\citep{He2015b}:
 
 \begin{equation}
 \begin{aligned}
@@ -352,14 +352,14 @@ In practice these residual layers greatly help optimize very deep networks, and 
 \subsection{Decision Trees}
 Decision trees have played a part in statistics, and machine learning, for a long time. They have their roots in classification trees, human generated versions of which have been commonly used for hierarchical classification of animal and plant species. As such they are conceptually amongst the simplest classification methods to understand. 
 
-In machine learning we are interested in automatically learning classifiers from training data. However, despite the simplicity of decision trees, in general learning an optimal decision tree for a given training set has been shown to be NP-hard~\cite{journals/iandc/HancockJLT96}. For this reason greedy training algorithms are used to train and grow trees from training data, based on various heuristics, typically measures of entropy or information gain at split nodes~\cite{breiman84}. 
+In machine learning we are interested in automatically learning classifiers from training data. However, despite the simplicity of decision trees, in general learning an optimal decision tree for a given training set has been shown to be NP-hard~\citep{journals/iandc/HancockJLT96}. For this reason greedy training algorithms are used to train and grow trees from training data, based on various heuristics, typically measures of entropy or information gain at split nodes~\citep{breiman84}. 
 
 Like nearest neighbours, deep decision trees can easily achieve perfect training set accuracy, but do not generalise well. 
 
 \subsection{Random Forests/Decision Forests}
-Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular Decision Forests (Random Forests)~\cite{journals/neco/AmitG97,breiman2001random}, were introduced as an ensemble method for decision trees.
+Interest in decision trees has recently been revived in machine learning since new methods for training decision trees can result in good generalization. In particular Decision Forests (Random Forests)~\citep{journals/neco/AmitG97,breiman2001random}, were introduced as an ensemble method for decision trees.
 
-Random forests exploit two forms of the bagging method~\cite{breiman1996bagging}. In a random forest composed of $N$ decision trees, a different random subset of the training set is used to train each of the individual decision trees. In a further bagging step, a subset of the input features are randomly selected to train each decision tree. After training the decision trees, regression predictions are made from the average of the individual decision tree predictions,
+Random forests exploit two forms of the bagging method~\citep{breiman1996bagging}. In a random forest composed of $N$ decision trees, a different random subset of the training set is used to train each of the individual decision trees. In a further bagging step, a subset of the input features are randomly selected to train each decision tree. After training the decision trees, regression predictions are made from the average of the individual decision tree predictions,
 
 \begin{equation}
 	f(x) = \frac{1}{N} \sum_{i=1}^{N} f_i(x),
@@ -372,9 +372,9 @@ There has been work in the past exploring the relationship between decision fore
 
 
 \subsection{Entropy Nets}
-The relationship between decision forests and neural networks was first described by Sethi~\cite{Sethi1990}, the primary intuition of which is that the decision boundaries which are explicitly expressed in a decision tree can also be represented by a three-layer neural network, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer.
+The relationship between decision forests and neural networks was first described by Sethi~\citep{Sethi1990}, the primary intuition of which is that the decision boundaries which are explicitly expressed in a decision tree can also be represented by a three-layer neural network, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer.
 
 \subsection{Casting Random Forests as Artificial Neural Networks}
-More recently this relationship was rediscovered~\cite{Welbl2014casting}, in a very similar manner a method of initializing a neural network with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network in order to avoid the neural network from over-fitting during stochastic gradient descent.
+More recently this relationship was rediscovered~\citep{Welbl2014casting}, in a very similar manner a method of initializing a neural network with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network in order to avoid the neural network from over-fitting during stochastic gradient descent.
 
 \end{document}
