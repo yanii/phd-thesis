@@ -2452,7 +2452,6 @@ title = {{Inverse perspective projection of a line segment pair}}
 	eprint = "1511.06068v4",
 	month = may,
 	title = "{Reducing Overfitting in Deep Networks by Decorrelating Representations}",
-	url = "http://arxiv.org/abs/1511.06068v4; http://arxiv.org/pdf/1511.06068v4",
 	year = "2016"
 }
 
@@ -2463,7 +2462,6 @@ title = {{Inverse perspective projection of a line segment pair}}
 	month = nov,
 	primaryclass = "cs.LG",
 	title = "{Surprising properties of dropout in deep networks}",
-	url = "http://arxiv.org/abs/1602.04484; http://arxiv.org/pdf/1602.04484",
 	year = "2016"
 }
 
@@ -2488,15 +2486,44 @@ title = {{Inverse perspective projection of a line segment pair}}
 	pages = "28--36",
 	publisher = "Curran Associates, Inc.",
 	title = "{Swapout: Learning an ensemble of deep architectures}",
-	url = "http://papers.nips.cc/paper/6205-swapout-learning-an-ensemble-of-deep-architectures.pdf",
 	year = "2016"
 }
 
 @article{rethinking2016,
-title = {Understanding deep learning requires rethinking generalization},
-author  = {Chiyuan Zhang and Samy Bengio and Moritz Hardt and Benjamin Recht and Oriol Vinyals},
-year  = 2016,
-URL = {https://arxiv.org/abs/1611.03530},
-journal = {arXiv}
+abstract = {Despite their massive size, successful deep artificial neural networks can exhibit a remarkably small difference between training and test performance. Conventional wisdom attributes small generalization error either to properties of the model family, or to the regularization techniques used during training. Through extensive systematic experiments, we show how these traditional approaches fail to explain why large neural networks generalize well in practice. Specifically, our experiments establish that state-of-the-art convolutional networks for image classification trained with stochastic gradient methods easily fit a random labeling of the training data. This phenomenon is qualitatively unaffected by explicit regularization, and occurs even if we replace the true images by completely unstructured random noise. We corroborate these experimental findings with a theoretical construction showing that simple depth two neural networks already have perfect finite sample expressivity as soon as the number of parameters exceeds the number of data points as it usually does in practice. We interpret our experimental findings by comparison with traditional models.},
+archivePrefix = {arXiv},
+arxivId = {1611.03530},
+author = {Zhang, Chiyuan and Bengio, Samy and Hardt, Moritz and Recht, Benjamin and Vinyals, Oriol},
+eprint = {1611.03530},
+journal = {arXiv},
+title = {{Understanding deep learning requires rethinking generalization}},
+year = {2016}
 }
 
+@inproceedings{Hardt2015,
+abstract = {We show that any model trained by a stochastic gradient method with few iterations has vanishing generalization error. We prove this by showing the method is algorithmically stable in the sense of Bousquet and Elisseeff. Our analysis only employs elementary tools from convex and continuous optimization. Our results apply to both convex and non-convex optimization under standard Lipschitz and smoothness assumptions. Applying our results to the convex case, we provide new explanations for why multiple epochs of stochastic gradient descent generalize well in practice. In the nonconvex case, we provide a new interpretation of common practices in neural networks, and provide a formal rationale for stability-promoting mechanisms in training large, deep models. Conceptually, our findings underscore the importance of reducing training time beyond its obvious benefit.},
+address = {New York, New York, USA},
+archivePrefix = {arXiv},
+arxivId = {1509.01240},
+author = {Hardt, Moritz and Recht, Benjamin and Singer, Yoram},
+booktitle = {Proceedings of the 33rd International Conference on Machine Learning (ICML 2016)},
+eprint = {1509.01240},
+isbn = {9781510829008},
+pages = {1--24},
+title = {{Train faster, generalize better: Stability of stochastic gradient descent}},
+year = {2015}
+}
+
+@inproceedings{icml2013_wan13, 
+    Publisher = {JMLR Workshop and Conference Proceedings}, 
+    Title = {Regularization of Neural Networks using DropConnect}, 
+    Booktitle = {Proceedings of the 30th International Conference on Machine Learning (ICML-13)}, 
+    Author = {Li Wan and Matthew Zeiler and Sixin Zhang and Yann L. Cun and Rob Fergus}, 
+    Number = {3}, 
+    Month = may, 
+    Volume = {28}, 
+    Editor = {Sanjoy Dasgupta and David Mcallester}, 
+    Year = {2013}, 
+    Pages = {1058-1066}, 
+    Abstract = {We introduce DropConnect, a generalization of DropOut, for regularizing large fully-connected layers within neural networks. When training with Dropout, a randomly selected subset of activations are set to zero within each layer. DropConnect instead sets a randomly selected subset of weights within the network to zero. Each unit thus receives input from a random subset of units in the previous layer. We derive a bound on the generalization performance of both Dropout and DropConnect. We then evaluate DropConnect on a range of datasets, comparing to Dropout, and show state-of-the-art results on several image recoginition benchmarks can be obtained by aggregating multiple DropConnect-trained models.}
+   }
