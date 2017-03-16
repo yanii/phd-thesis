@@ -1,5 +1,5 @@
-name, real name, ma, param, accuracy
-2, msrc-cifar-nin-4pad-funnel2-convonly, 163505546, 736586, 0.9195
-4, msrc-cifar-nin-4pad-funnel4-convonly, 123397514, 455498, 0.9202
-8, msrc-cifar-nin-4pad-funnel8-convonly, 103343498, 314954, 0.4959
-16, msrc-cifar-nin-4pad-funnel16-convonly, 93316490, 244682, 0.5018
+full name, name, real name, ma, param, accuracy, cpu, gpu
+root-2, 2, msrc-cifar-nin-4pad-funnel2-convonly, 163505546, 736586, 0.9209, 31.2421875, 0.550988281
+root-4, 4, msrc-cifar-nin-4pad-funnel4-convonly, 123397514, 455498, 0.9202, 27.622265625, 0.479592188
+root-8, 8, msrc-cifar-nin-4pad-funnel8-convonly-run2, 103343498, 314954, 0.9215, 24.383125, 0.482417188
+root-16, 16, msrc-cifar-nin-4pad-funnel16-convonly-run2, 93316490, 244682, 0.9167, 22.965546875, 0.474585156

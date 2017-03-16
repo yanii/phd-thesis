@@ -1,5 +1,5 @@
-name, real name, ma, param, accuracy
-2, msrc-cifar-nin-4pad-column2-convonly, 152888714, 570698, 0.5347
-4, msrc-cifar-nin-4pad-column4-convonly, 118089098, 372554, 0.55
-8, msrc-cifar-nin-4pad-column8-convonly, 73164170, 246602, 0.4975
-16, msrc-cifar-nin-4pad-column16-convonly, 91989386, 223946, 0.916
+full name, name, real name, ma, param, accuracy, cpu, gpu
+col-2, 2, msrc-cifar-nin-4pad-col2-convonly, 152888714, 570698, 0.9197, 28.80671875, 0.567590625
+col-4, 4, msrc-cifar-nin-4pad-col4-convonly, 118089098, 372554, 0.92, 26.148046875, 0.535548438
+col-8, 8, msrc-cifar-nin-4pad-col8-convonly, 100689290, 273482, 0.9192, 23.02796875, 0.475046094 
+col-16, 16, msrc-cifar-nin-4pad-col16-convonly, 91989386, 223946, 0.912, 22.7946875, 0.493595313

@@ -1,7 +1,7 @@
 Full Name, Network, Real Name, Batch Size, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc., GPU Forward, CPU Forward
-2 (s), 2, msrc-resnet-50-mirror-root2-ningroup1, 10, 3684566056, 25448680, 0.72714, 0.91208, 110.845, 5204 
-4 (s), 4, msrc-resnet-50-mirror-root4-ningroup1-mirror-earlylr, 10, 3366650920, 25126120, 0.73386, 0.9181, 113.309, 5655.73
-8 (s), 8, msrc-resnet-50-mirror-root8-ningroup1-earlylr, 10, 2860876840, 23195368, 0.73374, 0.91826, 107.08, 5192.95 
-16 (s), 16, msrc-resnet-50-mirror-root16-ningroup1-earlylr, 10, 2434581544, 18691048, 0.7324, 0.9176, 101.384, 4788.37
-32 (s), 32, msrc-resnet-50-mirror-root32-ningroup1-earlylr-fixedinit, 10, 2221433896, 16438888, 0.729218, 0.914684, 100.717, 4691.53
-64 (s), 64, msrc-resnet-50-mirror-root64-ningroup1-earlylr, 10, 2114860072, 15312808, 0.73194, 0.91534, 101.702, 4257.36
+root-2, 2, msrc-resnet-50-mirror-root2-ningroup1, 10, 3684566056, 25448680, 0.72714, 0.91208, 110.845, 5204 
+root-4, 4, msrc-resnet-50-mirror-root4-ningroup1-mirror-earlylr, 10, 3366650920, 25126120, 0.73386, 0.9181, 113.309, 5655.73
+root-8, 8, msrc-resnet-50-mirror-root8-ningroup1-earlylr, 10, 2860876840, 23195368, 0.73374, 0.91826, 107.08, 5192.95 
+root-16, 16, msrc-resnet-50-mirror-root16-ningroup1-earlylr, 10, 2434581544, 18691048, 0.7324, 0.9176, 101.384, 4788.37
+root-32, 32, msrc-resnet-50-mirror-root32-ningroup1-earlylr-fixedinit, 10, 2221433896, 16438888, 0.729218, 0.914684, 100.717, 4691.53
+root-64, 64, msrc-resnet-50-mirror-root64-ningroup1-earlylr, 10, 2114860072, 15312808, 0.73194, 0.91534, 101.702, 4257.36

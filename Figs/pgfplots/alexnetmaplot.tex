@@ -1,0 +1,44 @@
+\begin{figure}[t] 
+\centering
+\pgfplotstableread[col sep=comma]{data/alexnetma.csv}\datatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\begin{tikzpicture}
+\begin{axis}[
+  width=\columnwidth,
+  height=0.25\columnwidth,
+  axis x line=bottom,
+  ylabel=Top-5 Val.\ Error,
+  xlabel=Model Parameters (\# floats),
+  axis lines=left,
+  enlarge x limits=0.10,
+  enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.21},
+  ymin=0.18,ymax=0.2,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=2,
+]
+\addplot[mark=*,mark options={fill=black},nodes near coords,only marks,
+   point meta=explicit symbolic,
+%   x filter/.code={
+%       \ifnum\coordindex>2\def\pgfmathresult{}\fi
+%   },
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+%\addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
+%   point meta=explicit symbolic,
+%   x filter/.code={
+%       \ifnum\coordindex<3\def\pgfmathresult{}\fi
+%   },
+%] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+%\legend{Standard AlexNet}%, Alternate Filter Grouping}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC object classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}
+\label{fig:alexnetplots}
+\end{figure}
