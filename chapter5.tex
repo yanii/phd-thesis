@@ -33,13 +33,13 @@
 	\begin{figure}[tb]
 		\begin{subfigure}[b]{\linewidth}
 			\centering
-			\includegraphics[width=0.95\linewidth, page=1]{Figs/PDF/groupfig}
+			\includegraphics[width=0.45\linewidth, page=1]{Figs/PDF/groupfig}
 			\caption{Convolution.}
 			\label{fig:normalconv}
-		\end{subfigure}\\
+		\end{subfigure}~
 		\begin{subfigure}[b]{\linewidth}
 			\centering
-			\includegraphics[width=0.95\linewidth, page=2]{Figs/PDF/groupfig}
+			\includegraphics[width=0.45\linewidth, page=2]{Figs/PDF/groupfig}
 			\caption{Convolution with filter groups.}
 			\label{fig:groupedconv}
 		\end{subfigure}
@@ -105,7 +105,7 @@
 	Various authors have suggested approximating learned convolutional filters using tensor decomposition~\citep{journals/corr/JaderbergVZ14,journals/corr/LebedevGROL14,Kim2016}. For example, \citet{journals/corr/JaderbergVZ14} propose approximating the convolutional filters in a trained network with representations that are low-rank both in the spatial and the channel domains. This approach significantly decreases computational complexity, albeit at the expense of a small amount of accuracy. In this paper we are not approximating an existing model's weights but creating a new network architecture with explicit structural sparsity, which is then trained from scratch.
 	
 	\paragraph{Learning a Basis for Filters}
-	\begin{figure}[tb]
+	\begin{figure}[tp]
 		\centering
 		\includegraphics[width=\linewidth, page=3]{Figs/PDF/sparsification}
 		\caption{\textbf{Learning a (Spatial) Basis for Filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
@@ -124,18 +124,18 @@
 	
 	\begin{figure}[tb]
 		\centering
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{0.6\linewidth}
 			\centering
 			\includegraphics[width=\linewidth, page=4]{Figs/PDF/groupfig}
 			\caption{Convolution with $d$ filters of shape $h\times w\times c$.}
 			\label{fig:normalresnet}
 		\end{subfigure}\\
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{0.6\linewidth}
 			\includegraphics[width=\linewidth, page=5]{Figs/PDF/groupfig}
 			\caption{Root-2 Module: Convolution with $d$ filters in $g = 2$ filter groups, of shape $h\times w\times c/2$.}
 			\label{fig:rootresnet2}
 		\end{subfigure}
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{0.6\linewidth}
 			\includegraphics[width=\linewidth, page=6]{Figs/PDF/groupfig}
 			\caption{Root-4 Module: Convolution with $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.}
 			\label{fig:rootresnet4}
@@ -155,7 +155,7 @@
 	\subsection{Improving Network in Network on CIFAR-10}
 	Network in Network (NiN)~\cite{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by~\citet{Ioffe2015}.
 	
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption[Network in Network Architectures]{\textbf{Network-in-Network}. Filter groups in each convolutional layer.}
 		\label{table:ninconfig}
 		\centering
@@ -175,21 +175,23 @@
 		\end{tabular}
 		%}
 	\end{table}
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption[Network-in-Network CIFAR10]{\textbf{Network-in-Network CIFAR10}}
 		\label{table:nincifarresults}
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\codata
+		\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
+		\pgfplotstableread[col sep=comma]{rootdata/nincifar_col_s.csv}\cdatatable
 		\pgfplotstablevertcat{\data}{\codata}
+		\pgfplotstablevertcat{\data}{\tdatatable}
+		\pgfplotstablevertcat{\data}{\cdatatable}
 		%\resizebox{\linewidth}{!}{
 		\pgfplotstabletypeset[
-		every head row/.style={
-			before row=\toprule,after row=\midrule},
-		every last row/.style={
-			after row=\bottomrule},
-		every first row/.style={
-			after row=\midrule}, 
+		every head row/.style={before row=\toprule,after row=\midrule},
+		every last row/.style={after row=\bottomrule},
+		every row no 0/.style={after row=\midrule}, 
+		every nth row={4}{after row=\midrule}, 
 		fixed zerofill,     % Fill numbers with zeros
 		columns={full name, ma, param, accuracy, cpu, gpu},
 		columns/full name/.style={
@@ -226,7 +228,7 @@
 	\end{table}
 	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in Table~\ref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
 	We did not group filters in the first convolutional layer -- since it operates on the three-channel image space, it is of limited computational impact compared to other layers.
-	\begin{figure}[tbp]
+	\begin{figure}[tp]
 		\centering
 		\begin{subfigure}[b]{\linewidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
@@ -358,58 +360,337 @@
 	\end{figure}
 	Results are shown in Table~\ref{table:nincifarresults} and Fig.~\ref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \S\ref{gpuexplanation} for an explanation of the GPU timing disparity).
 	
-	\newcommand{\covarlabels}[1]{%
-		\vspace{0.75em}
-		\begin{tikzpicture}[remember picture]
-		\node [anchor=south west, inner sep=0pt] (c)
+	\newcommand{\covarlabels}[5]{%
+		\begin{tikzpicture}[anchor=south west]
+		\node [inner sep=0pt] (c)
 		{
-			#1
+			#5
 		};
+		\ifx\covarwidth\undefined
+		\newlength{\covarwidth}
+		\newlength{\covarheight}
+		\fi
+		\settowidth{\covarwidth}{#5}
+		\settoheight{\covarheight}{#5}
 		\path[use as bounding box] (c.south west) rectangle (c.north east);
 		\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
-		\node [anchor=south east, xshift=\linewidth, yshift=-0.2em] at (c.north west) {\footnotesize 192};
-		\node [anchor=south west, xshift=0.25em, yshift=-1.05\linewidth, rotate=90] at (c.north west) {\footnotesize 192};
-		\node [anchor=south, xshift=0.5\linewidth] at (c.north west) {\footnotesize\texttt{conv3a}};
-		\node [anchor=south, xshift=0.2em, yshift=-0.5\linewidth, rotate=90] at (c.north west) {\footnotesize \texttt{conv2c}};
+		\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
+		\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
+		\node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\footnotesize\texttt{#3}};
+		\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
 		\end{tikzpicture}%
 	}
 	
-	\begin{figure}[tb]
+	\afterpage{
+	\begin{landscape}
+		\begin{figure}[p]
+			\centering
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
+				\caption{Standard}
+				\label{fig:normalcovartestfull}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
+				\caption{Root-2}
+				\label{fig:root2corrfull}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
+				\caption{Root-4}
+				\label{fig:root4corrfull}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\vspace*{0.6em}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
+				\caption{Root-8}
+				\label{fig:root8corrfull}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\vspace*{0.6em}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
+				\caption{Root-16}
+				\label{fig:root16corrfull}
+			\end{subfigure}
+			~
+			\begin{subfigure}[b]{0.32\linewidth}
+				\centering
+				\vspace*{0.6em}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
+				\caption{Root-32}
+				\label{fig:root32corrfull}
+			\end{subfigure}
+			\caption{\textbf{Filter Inter-layer Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
+			\label{fig:covar}
+		\end{figure}
+	\end{landscape}}
+	
+	Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in Table~\ref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in Fig.~\ref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartest} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
+	
+	\subsection{Inter-Layer Covariance}
+	\label{interlayercovar}
+	To show the relationships between filters between adjacent convolutional layers, as illustrated in Fig.~1
+	%\ref{fig:normalconv}
+	, we calculate the covariance of the responses from two adjacent featuremaps, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
+	
+	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional featuremap for layer $i$. We consider each pixel across the two featuremaps to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two featuremaps have different spatial dimensions, due to pooling, we up-sample the smaller featuremap (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each featuremap.
+	
+	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent featuremaps, we calculate the inter-layer covariance,
+	
+	\begin{eqnarray}
+	cov(X_1, X_2) &=& E\left[X_1\,X_2^\textrm{T}\right],\\
+	&=& \frac{1}{N-1} X_1\,X_2^\textrm{T}.
+	\end{eqnarray}
+	
+	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.48\linewidth}
+		\begin{subfigure}[b]{0.45\linewidth}
 			\centering
-			\covarlabels{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
-			\caption{\textbf{Standard}}
-			\label{fig:normalcovartest}
+			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovar_conv8}}
+			\caption{Non-whitened responses}
+			\label{fig:notwhitened}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.48\linewidth}
+		\begin{subfigure}[b]{0.45\linewidth}
 			\centering
-			\covarlabels{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
-			\caption{\textbf{Root-4:} 2 filter groups}
-			\label{fig:root4}
+			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
+			\caption{Whitened responses}
+			\label{fig:whitened}
 		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.48\linewidth}
-			\centering
-			\covarlabels{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
-			\caption{\textbf{Root-8:} 4 filter groups}
-			\label{fig:root8corr}
-		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.48\linewidth}
-			\centering
-			\covarlabels{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
-			\caption{\textbf{Root-32:} 16 filter groups}
-			\label{fig:root32corr}
-		\end{subfigure}
-		\caption{\textbf{Inter-layer Filter Correlation.} The block-diagonal sparsity learned by a root-module is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
-		\label{fig:covar}
+		\caption{Covariance for between two layers in the root-32 Network-in-Network model with and without whitened responses}
+		\label{fig:whitevsnot}
 	\end{figure}
-	Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in Table~\ref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in Fig.~\ref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartest} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background. See \S\ref{interlayercovar} for more images, and an explanation of their derivation.
+	
+	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in Fig.~\ref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using ZCA~\cite{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
+	
+	\begin{equation}
+	cov(X, X) = \frac{1}{N-1} XX^\textrm{T},
+	\end{equation}
+	
+	The ZCA whitening transformation is given by,
+	\begin{equation}
+	W = \sqrt{N-1}\left(XX^\textrm{T}\right)^{-\frac{1}{2}}.
+	\end{equation}
+	
+	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie PCA),
+	\begin{eqnarray}
+	cov(X, X) &=& \frac{1}{N-1} XX^\textrm{T},\\
+	&=&\frac{1}{N-1} PDP^\textrm{T},\\
+	\end{eqnarray}
+	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in Appendix A of \cite{CIFAR10}),
+	
+	\begin{equation}
+	W = \sqrt{N-1}PD^{-\frac{1}{2}}P^\textrm{T},
+	\end{equation}
+	where $D^{-\frac{1}{2}}$ is simply D with an element-wise power of $-\frac{1}{2}$.
+	
+	The covariance between the whitened featuremap responses is then,
+	\begin{equation}
+	cov(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
+	\end{equation}
+	\afterpage{%
+		\begin{landscape}
+			\begin{figure}[p]
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv0}}
+					~
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv1}}
+					~
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv2}}
+					~
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv4}}
+					~
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv5}}
+					~
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv6}}
+					~
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv8}}
+					~
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv9}}
+					\label{fig:corrroot1}
+					\caption{\textbf{Network-in-Network.}}
+					\vspace*{0.6em}
+				\end{subfigure}
+				~
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
+					~
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv1}}
+					~
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv2}}
+					~
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv4}}
+					~
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv5}}
+					~
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv6}}
+					~
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv8}}
+					~
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv9}}
+					\caption{\textbf{Root-4.}}
+					\vspace*{0.6em}
+					\label{fig:corrroot4}
+				\end{subfigure}
+				~
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
+					~
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv1}}
+					~
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv2}}
+					~
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv4}}
+					~
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv5}}
+					~
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv6}}
+					~
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv8}}
+					~
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv9}}
+					\caption{\textbf{Root-8.}}
+					\vspace*{0.6em}
+					\label{fig:corrroot8}
+				\end{subfigure}
+				~
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
+					~
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv1}}
+					~
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv2}}
+					~
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv4}}
+					~
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv5}}
+					~
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv6}}
+					~
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv8}}
+					~
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv9}}
+					\caption{\textbf{Root-32.}}
+					\label{fig:corrroot32}
+				\end{subfigure}
+				\centering
+				\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
+				\caption{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
+				\label{fig:nincorr}
+			\end{figure}
+		\end{landscape}
+		\begin{landscape}
+			\begin{figure}[p]
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/nin/layercovarwhite_conv1}}
+					~
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/nin/layercovarwhite_conv2}}
+					~
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv4}}
+					~
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv5}}
+					~
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv6}}
+					~
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv8}}
+					~
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv9}}
+					~
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/nin/layercovarwhite_conv10}}
+					\caption{\textbf{Network-in-Network.}}
+					\vspace*{0.6em}
+					\label{fig:covaroot1}
+				\end{subfigure}
+				~
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
+					~
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv2}}
+					~
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv4}}
+					~
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv5}}
+					~
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv6}}
+					~
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv8}}
+					~
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv9}}
+					~
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv10}}
+					\caption{\textbf{Root-4.}}
+					\vspace*{0.6em}
+					\label{fig:covarroot4}
+				\end{subfigure}
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
+					~
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv2}}
+					~
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv4}}
+					~
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv5}}
+					~
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv6}}
+					~
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv8}}
+					~
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv9}}
+					~
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv10}}
+					\caption{\textbf{Root-8.}}
+					\vspace*{0.6em}
+					\label{fig:covarroot8}
+				\end{subfigure}
+				\begin{subfigure}[c]{\paperwidth}
+					\centering
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
+					~
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv2}}
+					~
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv4}}
+					~
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv5}}
+					~
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv6}}
+					~
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
+					~
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv9}}
+					~
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv10}}
+					\caption{\textbf{Root-32.}}
+					\label{fig:covarroot32}
+				\end{subfigure}
+				\caption{\textbf{Network-in-Network Inter-layer Absolute Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
+				\label{fig:suppcovariances}
+			\end{figure}
+		\end{landscape}
+	}%afterpage
+	
+	Figure \ref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters they correlate strongly with.
+	
+	Figure \ref{fig:covarfull} shows the complete, enlarged version of Fig.~\ref{fig:covar}, showing the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. Figure \ref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in Fig.~\ref{fig:suppcovariances}.
 	
 	\subsection{Grouping Degree with Network Depth}
-	\begin{figure*}[tb]
+	\begin{landscape}
+	\begin{figure}[tb]
 		\begin{subfigure}[c]{\linewidth}
 			\centering
 			\begin{tikzpicture}
@@ -506,11 +787,11 @@
 		\caption{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see Fig.\ref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
 		}
 		\label{fig:networktopology}
-	\end{figure*}
-	
+	\end{figure}
+	\end{landscape}
 	An interesting question concerns how the degree of grouping in our root modules should be varied as a function of depth in the network. For the NiN-like architectures described earlier, we might consider having the degree of grouping: (1) decrease with depth after the first convolutional layer, \eg 1--8--4 (`root'); (2) remain constant with depth after the first convolutional layer, \eg 1--4--4 (`column'); or (3) increase with depth, \eg 1--4--8 (`tree').
 	
-	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in Fig.~\ref{fig:nincifarplotsconvonly} (numerical results are included in \S\ref{nincifarfull}). The results show that the so-called root topology (illustrated in Fig.~\ref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of deep networks for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
+	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in Fig.~\ref{fig:nincifarplotsconvonly} (numerical results are included in \S\ref{nincifar}). The results show that the so-called root topology (illustrated in Fig.~\ref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of deep networks for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
 	
 	\subsection{Improving Residual Networks on ILSVRC}
 	Residual networks (ResNets)~\citep{He2015} are the state-of-the art network for ILSVRC. ResNets are more computationally efficient than the VGG architecture~\cite{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
@@ -519,7 +800,7 @@
 	\label{resnet50results}
 	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 GPUs with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
 	For training, we used the initialization scheme described by \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization~\citep{Ioffe2015}.
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption{\textbf{ResNet 50}. Filter groups in each conv.\ layer.}
 		\label{table:resnet50config}
 		\centering
@@ -539,7 +820,7 @@
 		\end{tabular}
 	\end{table}
 	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in Table~\ref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption[ResNet 50 ILSVRC Results]{\textbf{ResNet 50 Results.}}
 		\label{table:resnet50imagenetresults}
 		%\resizebox{\linewidth}{!}{
@@ -596,7 +877,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	\begin{figure}[tbp]
+	\begin{figure}[tp]
 		\centering
 		\begin{subfigure}[b]{\linewidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
@@ -817,7 +1098,7 @@
 	
 	\subsubsection{ResNet 200}
 	\label{resnet200results}
-	\begin{table}[tb]
+	\begin{table}[tp]
 		\caption[ResNet 200 ILSVRC Results]{\textbf{ResNet-200 Results}}
 		\label{table:resnet200imagenetresults}
 		%\resizebox{\columnwidth}{!}{
@@ -867,7 +1148,7 @@
 	
 	\subsection{Improving GoogLeNet on ILSVRC}
 	\label{googlenet50results}
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption[GoogLeNet ILSVRC Results]{\textbf{GoogLeNet Results.}}
 		\label{table:googlenetimagenetresults}
 		%\resizebox{\columnwidth}{!}{
@@ -924,7 +1205,7 @@
 		%}
 	\end{table}
 	
-	\begin{table}[tbp]
+	\begin{table}[tp]
 		\caption[GoogLeNet Architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and Inception module (\textit{incp}.)}
 		\label{table:googlenetconfig}
 		\centering
@@ -1172,398 +1453,6 @@
 	
 	We validated our method by using it to create more efficient variants of state-of-the-art Network-in-network, GoogLeNet, and ResNet architectures, which were evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For Network-in-Network on CIFAR10, our model has 33\% of the parameters of the original network, and approximately 37\% (23\%) faster CPU (GPU) timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
 	Even for the most efficient of the near state-of-the-art ILSVRC network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
-	
-	\renewcommand\bibname{\refname}
-	%\bibliographystyle{ieeetr}
-	{\small
-		%\bibliography{references}
-		\printbibliography
-	}
-	\cleardoublepage
-	\appendix
-	\section{Appendices}
-	\subsection{Full Network-in-Network Results}
-	\label{nincifarfull}
-	\begin{table}[htb]
-		\caption[Network-in-Network CIFAR10]{\textbf{Network-in-Network CIFAR10}}
-		\label{table:nincifarresultsfull}
-		\centering
-		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
-		\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\codata
-		\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
-		\pgfplotstableread[col sep=comma]{rootdata/nincifar_col_s.csv}\cdatatable
-		\pgfplotstablevertcat{\data}{\codata}
-		\pgfplotstablevertcat{\data}{\tdatatable}
-		\pgfplotstablevertcat{\data}{\cdatatable}
-		%\resizebox{\linewidth}{!}{
-		\pgfplotstabletypeset[
-		every head row/.style={before row=\toprule,after row=\midrule},
-		every last row/.style={after row=\bottomrule},
-		every row no 0/.style={after row=\midrule}, 
-		every nth row={4}{after row=\midrule}, 
-		fixed zerofill,     % Fill numbers with zeros
-		columns={full name, ma, param, accuracy, cpu, gpu},
-		columns/full name/.style={
-			column name=Model,
-			string type
-		},
-		columns/ma/.style={
-			column name=FLOPS {\small $\times 10^{8}$},
-			preproc/expr={{##1/1e8}}
-		},
-		columns/param/.style={
-			column name=Param. {\small $\times 10^{5}$},
-			preproc/expr={{##1/1e5}}
-		},
-		columns/accuracy/.style={
-			column name=Accuracy,
-			precision=4
-		},
-		columns/gpu/.style={
-			column name=GPU (ms),
-			precision=3
-		},
-		columns/cpu/.style={
-			column name=CPU (ms),
-			precision=1
-		},
-		%    column type/.add={@{}lrrrrrr@{}}{},
-		column type/.add={@{}lp{3em}p{3em}p{4em}p{3em}p{3em}p{3em}@{}}{},
-		highlight col max ={\data}{accuracy},
-		highlight col min ={\data}{param}, 
-		highlight col min ={\data}{ma}, 
-		col sep=comma]{\data}
-		%}
-	\end{table}
-	
-	Table \ref{table:nincifarresultsfull} shows the full results for the Network-in-Network experiments on CIFAR10 on various hierarchical network topologies.
-	
-	\subsection{Inter-Layer Covariance}
-	\label{interlayercovar}
-	To show the relationships between filters between adjacent convolutional layers, as illustrated in Fig.~1
-	%\ref{fig:normalconv}
-	, we calculate the covariance of the responses from two adjacent featuremaps, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
-	
-	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional featuremap for layer $i$. We consider each pixel across the two featuremaps to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two featuremaps have different spatial dimensions, due to pooling, we up-sample the smaller featuremap (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each featuremap.
-	
-	
-	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent featuremaps, we calculate the inter-layer covariance,
-	
-	\begin{eqnarray}
-	cov(X_1, X_2) &=& E\left[X_1\,X_2^\textrm{T}\right],\\
-	&=& \frac{1}{N-1} X_1\,X_2^\textrm{T}.
-	\end{eqnarray}
-	
-	\renewcommand{\covarlabels}[5]{%
-		\begin{tikzpicture}[anchor=south west]
-		\node [inner sep=0pt] (c)
-		{
-			#5
-		};
-		\ifx\covarwidth\undefined
-		\newlength{\covarwidth}
-		\newlength{\covarheight}
-		\fi
-		\settowidth{\covarwidth}{#5}
-		\settoheight{\covarheight}{#5}
-		\path[use as bounding box] (c.south west) rectangle (c.north east);
-		\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
-		\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
-		\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
-		\node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\footnotesize\texttt{#3}};
-		\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
-		\end{tikzpicture}%
-	}
-	
-	\begin{figure}[tbp]
-		\centering
-		\begin{subfigure}[b]{0.45\linewidth}
-			\centering
-			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovar_conv8}}
-			\caption{Non-whitened responses}
-			\label{fig:notwhitened}
-		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.45\linewidth}
-			\centering
-			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
-			\caption{Whitened responses}
-			\label{fig:whitened}
-		\end{subfigure}
-		\caption{Covariance for between two layers in the root-32 Network-in-Network model with and without whitened responses}
-		\label{fig:whitevsnot}
-	\end{figure}
-	
-	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in Fig.~\ref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using ZCA~\cite{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
-	
-	\begin{equation}
-	cov(X, X) = \frac{1}{N-1} XX^\textrm{T},
-	\end{equation}
-	
-	The ZCA whitening transformation is given by,
-	\begin{equation}
-	W = \sqrt{N-1}\left(XX^\textrm{T}\right)^{-\frac{1}{2}}.
-	\end{equation}
-	
-	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie PCA),
-	\begin{eqnarray}
-	cov(X, X) &=& \frac{1}{N-1} XX^\textrm{T},\\
-	&=&\frac{1}{N-1} PDP^\textrm{T},\\
-	\end{eqnarray}
-	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in Appendix A of \cite{CIFAR10}),
-	
-	\begin{equation}
-	W = \sqrt{N-1}PD^{-\frac{1}{2}}P^\textrm{T},
-	\end{equation}
-	where $D^{-\frac{1}{2}}$ is simply D with an element-wise power of $-\frac{1}{2}$.
-	
-	
-	The covariance between the whitened featuremap responses is then,
-	\begin{equation}
-	cov(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
-	\end{equation}
-	\afterpage{%
-		\begin{landscape}
-			\begin{figure}[p]
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv0}}
-					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv1}}
-					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv2}}
-					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv4}}
-					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv5}}
-					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv6}}
-					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv8}}
-					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv9}}
-					\label{fig:corrroot1}
-					\caption{\textbf{Network-in-Network.}}
-					\vspace*{0.6em}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
-					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv1}}
-					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv2}}
-					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv4}}
-					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv5}}
-					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv6}}
-					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv8}}
-					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv9}}
-					\caption{\textbf{Root-4.}}
-					\vspace*{0.6em}
-					\label{fig:corrroot4}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
-					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv1}}
-					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv2}}
-					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv4}}
-					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv5}}
-					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv6}}
-					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv8}}
-					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv9}}
-					\caption{\textbf{Root-8.}}
-					\vspace*{0.6em}
-					\label{fig:corrroot8}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
-					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv1}}
-					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv2}}
-					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv4}}
-					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv5}}
-					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv6}}
-					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv8}}
-					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv9}}
-					\caption{\textbf{Root-32.}}
-					\label{fig:corrroot32}
-				\end{subfigure}
-				\centering
-				\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
-				\caption{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
-				\label{fig:nincorr}
-			\end{figure}
-		\end{landscape}
-		\begin{landscape}
-			\begin{figure}[p]
-				\centering
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
-					\caption{Standard}
-					\label{fig:normalcovartestfull}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
-					\caption{Root-2}
-					\label{fig:root2corrfull}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
-					\caption{Root-4}
-					\label{fig:root4corrfull}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\vspace*{0.6em}
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
-					\caption{Root-8}
-					\label{fig:root8corrfull}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\vspace*{0.6em}
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
-					\caption{Root-16}
-					\label{fig:root16corrfull}
-				\end{subfigure}
-				~
-				\begin{subfigure}[b]{0.32\linewidth}
-					\centering
-					\vspace*{0.6em}
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
-					\caption{Root-32}
-					\label{fig:root32corrfull}
-				\end{subfigure}
-				\caption{\textbf{Filter Inter-layer Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
-				\label{fig:covarfull}
-			\end{figure}
-		\end{landscape}
-		
-		\begin{landscape}
-			\begin{figure}[p]
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/nin/layercovarwhite_conv1}}
-					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/nin/layercovarwhite_conv2}}
-					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv4}}
-					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv5}}
-					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv6}}
-					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv8}}
-					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv9}}
-					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/nin/layercovarwhite_conv10}}
-					\caption{\textbf{Network-in-Network.}}
-					\vspace*{0.6em}
-					\label{fig:covaroot1}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
-					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv2}}
-					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv4}}
-					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv5}}
-					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv6}}
-					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv8}}
-					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv9}}
-					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv10}}
-					\caption{\textbf{Root-4.}}
-					\vspace*{0.6em}
-					\label{fig:covarroot4}
-				\end{subfigure}
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
-					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv2}}
-					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv4}}
-					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv5}}
-					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv6}}
-					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv8}}
-					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv9}}
-					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv10}}
-					\caption{\textbf{Root-8.}}
-					\vspace*{0.6em}
-					\label{fig:covarroot8}
-				\end{subfigure}
-				\begin{subfigure}[c]{\paperwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
-					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv2}}
-					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv4}}
-					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv5}}
-					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv6}}
-					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
-					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv9}}
-					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv10}}
-					\caption{\textbf{Root-32.}}
-					\label{fig:covarroot32}
-				\end{subfigure}
-				\caption{\textbf{Network-in-Network Inter-layer Absolute Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
-				\label{fig:suppcovariances}
-			\end{figure}
-		\end{landscape}
-	}%afterpage
-	
-	Figure \ref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters they correlate strongly with.
-	
-	Figure \ref{fig:covarfull} shows the complete, enlarged version of Fig.~\ref{fig:covar}, showing the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. Figure \ref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in Fig.~\ref{fig:suppcovariances}.
 	
 	\subsection{The Affect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
