@@ -446,10 +446,10 @@
 	
 	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent featuremaps, we calculate the inter-layer covariance,
 	
-	\begin{eqnarray}
-	cov(X_1, X_2) &=& E\left[X_1\,X_2^\textrm{T}\right],\\
-	&=& \frac{1}{N-1} X_1\,X_2^\textrm{T}.
-	\end{eqnarray}
+	\begin{align}
+	cov(X_1, X_2) &= E\left[X_1\,X_2^\textrm{T}\right],\\
+	&= \frac{1}{N-1} X_1\,X_2^\textrm{T}.
+	\end{align}
 	
 	\begin{figure}[tbp]
 		\centering
@@ -482,10 +482,10 @@
 	\end{equation}
 	
 	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie PCA),
-	\begin{eqnarray}
-	cov(X, X) &=& \frac{1}{N-1} XX^\textrm{T},\\
-	&=&\frac{1}{N-1} PDP^\textrm{T},\\
-	\end{eqnarray}
+	\begin{align}
+	cov(X, X) &= \frac{1}{N-1} XX^\textrm{T},\\
+	&=\frac{1}{N-1} PDP^\textrm{T},\\
+	\end{align}
 	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in Appendix A of \cite{CIFAR10}),
 	
 	\begin{equation}
@@ -689,6 +689,7 @@
 	Figure \ref{fig:covarfull} shows the complete, enlarged version of Fig.~\ref{fig:covar}, showing the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. Figure \ref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in Fig.~\ref{fig:suppcovariances}.
 	
 	\subsection{Grouping Degree with Network Depth}
+	\afterpage{
 	\begin{landscape}
 	\begin{figure}[tb]
 		\begin{subfigure}[c]{\linewidth}
@@ -789,6 +790,7 @@
 		\label{fig:networktopology}
 	\end{figure}
 	\end{landscape}
+	}
 	An interesting question concerns how the degree of grouping in our root modules should be varied as a function of depth in the network. For the NiN-like architectures described earlier, we might consider having the degree of grouping: (1) decrease with depth after the first convolutional layer, \eg 1--8--4 (`root'); (2) remain constant with depth after the first convolutional layer, \eg 1--4--4 (`column'); or (3) increase with depth, \eg 1--4--8 (`tree').
 	
 	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in Fig.~\ref{fig:nincifarplotsconvonly} (numerical results are included in \S\ref{nincifar}). The results show that the so-called root topology (illustrated in Fig.~\ref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of deep networks for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
