@@ -1,0 +1,47 @@
+\begin{table}[t]
+\footnotesize
+\caption{\textbf{Results}}
+\label{table:resnet200imagenetresults}
+%\resizebox{\columnwidth}{!}{
+\centering
+\pgfplotstableread[col sep=comma]{../data/resnet200.csv}\data
+\pgfplotstabletypeset[
+    every head row/.style={
+    before row=\toprule,after row=\midrule},
+    every last row/.style={
+    after row=\bottomrule},
+    every first row/.style={
+    after row=\midrule}, 
+    columns={full name, ma, param, top1, top5},
+    columns/full name/.style={
+        column name=Model,
+        string type
+    },
+    columns/ma/.style={
+        column name=FLOPS~{\small$\times 10^{12}$},
+        fixed zerofill,
+        preproc/expr={{##1/1e12}},
+    },
+    columns/param/.style={
+        column name=Param.~{\small$\times 10^{7}$},
+        fixed zerofill,
+        preproc/expr={{##1/1e7}},
+    },
+    columns/top1/.style={
+        precision=4,
+        column name=Top-1 Err.,
+        fixed zerofill,
+    },
+    columns/top5/.style={
+        precision=4,
+        column name=Top-5 Err.,
+        fixed zerofill,
+    },
+    column type/.add={@{}lrrrrrr@{}}{},
+    highlight col min ={\data}{top1},
+    highlight col min ={\data}{top5}, 
+    highlight col min ={\data}{param}, 
+    highlight col min ={\data}{ma}, 
+    col sep=comma]{\data}
+%}
+\end{table}

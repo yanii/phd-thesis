@@ -1,0 +1,223 @@
+\begin{figure}[t]
+\footnotesize
+\begin{subfigure}[b]{0.48\linewidth}
+\pgfplotstableread[col sep=comma]{../data/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../data/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\pgfplotstableset{
+    create on use/singlecpu/.style={
+        create col/expr={\thisrow{CPU Forward} / \thisrow{Batch Size}}},
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=Model Parameters (\# Floats),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:0.0,.5)},anchor=south},
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(1.3,1.25)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
+\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{Model Param.\ \vs Top-5 Error.}}
+\label{fig:resnet5050param}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.48\linewidth}
+\pgfplotstableread[col sep=comma]{../data/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../data/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  %ylabel=Top-5 Error,
+  xlabel=FLOPS (Multiply-Add),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:-0.05,.5)},anchor=south},
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{FLOPS \vs Top-5 Error.}}
+\label{fig:resnet50ma}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.48\linewidth}
+\pgfplotstableread[col sep=comma]{../data/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../data/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=GPU Forward (ms),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:0.0,.5)},anchor=south},
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} }
+]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\codatatable};
+%\legend{ResNet 50, All Filters, Spatial Filters}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{GPU Forward \vs Top-5 Error.}}
+\label{fig:resnet5050gpuforward}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.48\linewidth}
+\pgfplotstableread[col sep=comma]{../data/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../data/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  %ylabel=Top-5 Error,
+  xlabel=CPU Forward (ms),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:-0.05,.5)},anchor=south},
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\codatatable};
+%\legend{ResNet 50, All Filters, Spatial Filters}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{CPU Forward \vs Top-5 Error.}}
+\label{fig:resnet5050cpuforward}
+\end{subfigure}
+
+\caption{\textbf{ResNet-50 Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+\label{fig:resnet50plots}
+\end{figure}

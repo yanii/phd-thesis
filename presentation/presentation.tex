@@ -1,0 +1,567 @@
+\documentclass[t,xcolor=dvipsnames]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Packages/includes
+\usepackage[english]{babel}
+%\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage{pgfpages}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+\usepackage{subcaption}
+% Antonio's macros
+\input{../acsettings}
+\input{../pgftablehighlight}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,matrix,scopes,calc,tikzmark,decorations.pathreplacing,shapes,decorations.markings,calc}
+\tikzstyle{every picture}+=[remember picture]
+
+%%%%%%%%%%%%%%%%%%%%%%%% Bibliography
+\usepackage[backend=bibtex,style=authortitle]{biblatex}
+\AtEveryCitekey{\iffootnote{\color{black}\tiny}{\color{black}}}
+\addbibresource{../references.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Beamer Mode
+
+%\setbeameroption{hide notes}
+%\setbeameroption{show notes}
+%\setbeameroption{show notes on second screen=right}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% Beamer Options/Settings
+
+\mode<presentation>
+{
+  \usetheme{default}
+  \setbeamercovered{transparent}
+}
+
+%\setbeamertemplate{note page}[plain]
+
+% Get rid of the annoying symbol list
+\beamertemplatenavigationsymbolsempty
+% don't show bookmarks on initial view
+\hypersetup{pdfpagemode=UseNone}
+
+% Show page number in lower right
+\setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[\paperwidth]{\hfill\makebox[20pt]{\color{gray}
+          \scriptsize\insertframenumber}}}\hspace*{5pt}}
+
+
+\addtobeamertemplate{frametitle}{}{%
+    \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,yshift=2pt] at (current page.north east) {\includegraphics[height=1em]{uc-cmyk}};
+    \end{tikzpicture}}
+
+\definecolor{filtercolor}{RGB}{255,230,153}
+\definecolor{filtershade}{RGB}{205,185,123}
+\definecolor{fmcolor}{RGB}{231,230,230}
+\definecolor{fmshade}{RGB}{186,185,185}
+
+\setbeamercolor{title}{fg=White}
+\setbeamercolor{author}{fg=White}
+\setbeamercolor{institute}{fg=White}
+\setbeamercolor{date}{fg=White}
+%\setbeamercolor{section in head/foot}{fg=White}
+%\setbeamercolor{author in head/foot}{fg=White}
+%\setbeamercolor{date in head/foot}{fg=White}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% Title Page Setup
+\title[Conditional Computation and Restricted Connectivity in Deep Neural Networks] % (optional, use only with long paper titles)
+{Conditional Computation and Restricted Connectivity in Deep Neural Networks}
+%\subtitle
+%{Improving CNN
+%Generalization and
+%Efficiency}
+
+\author[Yani Ioannou]
+{{\bf Yani Ioannou}}
+
+\institute[University of Cambridge] % (optional, but mostly needed)
+{University of Cambridge}
+
+%\date[5CF3] % (optional)
+%{5CF3: Information Engineering}
+
+%\pgfdeclareimage[height=0.5cm]{university-logo}{uc-cmyk}
+%\logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%% TITLE Frame
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.95, at=(current page.center)] {
+   \includegraphics[height=\paperheight,width=\paperwidth]{background}};
+}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\usebackgroundtemplate{}
+
+%\begin{frame}{Outline}
+%  \tableofcontents
+  % You might wish to add the option [pausesections]
+%\end{frame}
+
+
+% Since this a solution template for a generic talk, very little can
+% be said about how it should be structured. However, the talk length
+% of between 15min and 45min and the theme suggest that you stick to
+% the following rules:  
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+\section{Introduction}
+\begin{frame}{About Me}
+\begin{itemize}
+\item Ph.D.\ student in the Department of Engineering at the University of Cambridge.
+%\item Funded by a Microsoft Research PhD Scholarship
+\item Supervised by Professor Roberto Cipolla, head of the Computer Vision and Robotics group in the Machine Intelligence Lab, and Dr. Antonio Criminisi, a principal researcher at Microsoft Research.
+\end{itemize}
+\centering
+\includegraphics[width=0.207\linewidth]{antonio}~
+\includegraphics[width=0.2\linewidth]{roberto}
+\end{frame}
+
+\section{Areas of Research}
+\begin{frame}{Collaborative Research @ MSR}
+\begin{itemize}
+    \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\MICCAI-BRATS 2014}
+    \item Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\NIPS 2016}
+    \item Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
+S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{First Author Publications during PhD}
+\begin{itemize}
+    \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report} 
+    \item Training CNNs with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
+    \item Deep roots: Improving CNN efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.\\CVPR 2017}
+    
+\end{itemize}
+\end{frame}
+\section{Motivation}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{ILSVRC}{Imagenet Large-Scale Visual Recognition Challenge}
+
+\begin{figure}
+    \includegraphics[width=0.4\textwidth]{imagenetlogo}
+\end{figure}
+\begin{itemize}
+    \item Imagenet Large-Scale Visual Recognition Challenge.
+    \item 1.2 Million Training Images, 1000 classes.
+    \item 50,000 image validiation/test set.
+    \begin{itemize}
+        \item In 2012 Alex Krizhevsky won challenge with CNN.
+        \item `Alexnet' was 26.2\% better than second best, 15.3\%.
+    \end{itemize}
+    \item State-of-the-art beats human error (5\%).
+\end{itemize}    
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Typical Convolutional Layer}
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
+%   \caption{A full rank convolutional layer.}
+\end{figure}
+\begin{figure}
+
+   \resizebox {0.5\textwidth} {!} {
+   \begin{tikzpicture}[
+       decoration={
+          markings,
+          mark=at position 1 with {\arrow[scale=2,gray]{latex}};
+        }]
+        % draw featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw (1, -0.7) node {\LARGE$*$};
+        
+        % draw filter
+        \pgfmathsetmacro{\cubex}{0.3}
+        \pgfmathsetmacro{\cubey}{0.3}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=filtershade] (2,-0.7,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (2.2, -2.5) node {filter};
+            
+        % draw output featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{0.1}
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (6,0,-0.75) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw[gray,postaction={decorate}] (2.7,-0.7) -- (3.8, -0.7);
+        
+        \draw (5.2, -2.5) node {output featuremap};
+    \end{tikzpicture}
+    }
+\end{figure}
+    \note[item]{We show here a typical convolutional layer.}
+    \note[item]{Yellow blocks are filters.}
+    \note[item]{Grey blocks are images or feature maps.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AlexNet Filter Grouping}
+\begin{figure}
+\includegraphics[width=\columnwidth]{alexnet}
+\end{figure}
+\begin{itemize}
+\item Uses 2 filter groups in most of the convolutional layers
+\item Allowed training across two GPUs (model parallelism)
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Grouped Convolutional Layer}
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=2]{../Figs/PDF/groupfig}
+%   \caption{A full rank convolutional layer.}
+\end{figure}
+\begin{figure}
+
+   \resizebox {0.5\textwidth} {!} {
+   \begin{tikzpicture}[
+       decoration={
+          markings,
+          mark=at position 1 with {\arrow[scale=2,gray]{latex}};
+        }]
+        % draw featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw (1, -0.7) node {\LARGE$*$};
+        
+        % draw filter
+        \pgfmathsetmacro{\cubex}{0.3}
+        \pgfmathsetmacro{\cubey}{0.3}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=filtershade] (2,-0.7,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (2.2, -2.5) node {filter};
+            
+        % draw output featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{0.1}
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (6,0,-0.75) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw[gray,postaction={decorate}] (2.7,-0.7) -- (3.8, -0.7);
+        
+        \draw (5.2, -2.5) node {output featuremap};
+    \end{tikzpicture}
+    }
+\end{figure}
+    \note[item]{We show here a grouped convolutional layer.}
+    \note[item]{Yellow blocks are filters.}
+    \note[item]{Grey blocks are images or feature maps.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Network-in-Network}
+            \centering
+			\begin{tikzpicture}[ampersand replacement=\&]
+			\begin{scope}[]
+			\matrix[column sep=0em]{
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=15]{../Figs/PDF/groupfig}
+				};\&
+				\node (1b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\& 
+				\node (1c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1cdots) {
+					{\Large $\cdots$}
+				};\\
+				\draw node{{\footnotesize \textit{input}} \hspace{0.05em} {\footnotesize \textit{conv1a}}};\&
+				\draw node{\footnotesize \textit{conv1b}};\&
+				\draw node{\footnotesize \textit{conv1c}};\\
+				\node (2adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (2a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (2b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2cdots) {
+					{\Large $\cdots$}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv2a}};\&
+				\draw node{\footnotesize \textit{conv2b}};\&
+				\draw node{\footnotesize \textit{conv2c}};\\
+				\node (3adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (3a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (3b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (3c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=20]{../Figs/PDF/groupfig}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv3a}};\&
+				\draw node{\footnotesize \textit{conv3b}};\&
+				\draw node{\footnotesize \textit{conv3c}};\&
+				\draw node{\footnotesize \textit{pool} \hspace{0.08em} {\footnotesize \textit{output}}};\\
+			};
+			\end{scope}
+			\end{tikzpicture}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Root Architectures}
+			\begin{tikzpicture}[ampersand replacement=\&]
+			\begin{scope}[]
+			\matrix[column sep=0em]{
+				\node (4) {
+					{\Large $\cdots$}
+				};\&
+				\node (1c) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\& 
+				\node (2a) {
+				    \includegraphics[height=0.09\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (2b) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2c) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (3a) {
+				    \includegraphics[height=0.09\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (3b) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (4) {
+					{\Large $\cdots$}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv1c}};\&
+				\draw node{\footnotesize \textit{conv2a}};\&
+				\draw node{\footnotesize \textit{conv2b}};\&
+				\draw node{\footnotesize \textit{conv2c}};\&
+				\draw node{\footnotesize \textit{conv3a}};\&
+				\draw node{\footnotesize \textit{conv3b}};\\
+			};
+			\end{scope}
+			\end{tikzpicture}
+			~
+			\begin{tikzpicture}[ampersand replacement=\&]
+			\begin{scope}[]
+			\matrix[column sep=0em]{
+				\node (4) {
+					{\Large $\cdots$}
+				};\&
+				\node (1c) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\& 
+				\node (2a) {
+					\includegraphics[height=0.15\linewidth, page=19]{../Figs/PDF/groupfig}
+				};\&
+				\node (2b) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2c) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (3a) {
+					\includegraphics[height=0.09\linewidth, page=18]{../Figs/PDF/groupfig}
+				};\&
+				\node (3b) {
+					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (4) {
+					{\Large $\cdots$}
+				};\\
+			};
+			\draw[decorate,decoration={brace,mirror},](2a.south west) -- node[below=3pt] {\small root-4 module} ++(3.5, 0);
+			\draw[decorate,decoration={brace,mirror},yshift=-2em](3a.south west) + (0, -0.5) -- node[below=3pt] {\small root-2 module} ++(3.5, -0.5);
+			\end{scope}
+			\end{tikzpicture}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Hierarchical Filter Group Topologies}
+
+\begin{figure}
+\includegraphics[width=\columnwidth, page=3]{../Figs/PDF/networktopology}
+   \caption{Columnar-4 topology}
+   \label{fig:columntopology}
+\end{figure}
+\begin{itemize}
+\item Similar to AlexNet
+\item Columnar topologies assume filters should be equally correlated with depth
+\end{itemize}
+\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Hierarchical Filter Group Topologies}
+
+\begin{figure}
+\includegraphics[width=\columnwidth, page=2]{../Figs/PDF/networktopology}
+   \caption{Tree-2 topology}
+   \label{fig:treetopology}
+\end{figure}
+\begin{itemize}
+\item Used in Conditional Networks
+\item Tree topologies assume filters become less correlated with depth
+\end{itemize}
+\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Hierarchical Filter Group Topologies}
+
+\begin{figure}
+    \includegraphics[width=\columnwidth, page=1]{../Figs/PDF/networktopology}
+    \caption{Root-8 topology}
+    \label{fig:roottopology}
+\end{figure}
+\begin{itemize}
+\item Root topologies assume that filters should be more correlated with depth
+\item Matches intuition of deep CNNs subsuming deformable parts models
+\end{itemize}
+\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\section*{Results}
+
+%\input{cifarninmaplot}
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Results - Best CIFAR10 Results}
+%\input{cifarninmatable}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%\input{googlenetmaplot}
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{ILSVRC GoogLeNet}
+%\input{googlenetmatable}
+
+\begin{itemize}
+    \item Root-8 (s) GoogLeNet
+    \begin{itemize}
+        \item 7\% fewer parameters 
+        \item 21\% faster CPU timings
+        \item 16\% faster GPU timings
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%\input{resnet50maplot}
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{ILSVRC ResNet 50}
+
+%\input{resnet50matable}
+\begin{itemize}
+\item Root-64 (s) ResNet 50
+    \begin{itemize}
+        \item 40\% fewer parameters
+        \item 45\% fewer floating point operations
+        \item 31\% faster CPU timings
+        \item 12\% faster GPU timings
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\section*{Summary}
+
+\begin{frame}{Summary}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+	%\item Separable filter model show surprisingly high accuracy on what are considered challenging problems -- approx.\ 88\% top-5 accuracy on ILSVRC.
+	\item Using a hierarchical set of grouped convolutions:
+	\begin{itemize}
+    	\item Our models are \alert{less computationally complex}.
+	    \item They also use \alert{less parameters}.
+	    \item Initial results indicate they may significantly help generalization in deeper residual networks.
+	\end{itemize}
+	\item Are amenable to \alert{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
+	\begin{itemize}
+	    \item State of the art models require 4-8 GPUs to train
+	    \item Commerical services using CNNs for inference are distributed.
+	\end{itemize}
+	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent over-fitting.
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
+
+

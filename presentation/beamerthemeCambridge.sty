@@ -1,0 +1,117 @@
+% this style was created by Philippe Dreuw and Thomas Deselaers
+\ProvidesPackage{beamerthemeCambridge} 
+\RequirePackage{cambridgecolours}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\selectcolormodel{cmyk}
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamercolor{headline}{fg=black,bg=CambridgeCoreBlue}
+\setbeamercolor{footline}{fg=black,bg=CambridgeCoreBlue}
+\setbeamerfont{footline}{size=\Large,series=\tt}
+\setbeamercolor{separation line}{bg=CambridgeLightBlue}
+\setbeamercolor{title in headline}{fg=white}
+\setbeamercolor{author in headline}{fg=white}
+\setbeamercolor{institute in headline}{fg=white}
+
+\setbeamercolor{framesubtitle}{fg=white, bg=CambridgeCoreBlue}
+\setbeamercolor{author in head/foot}{fg=white, bg=black}
+\setbeamercolor{title in head/foot}{fg=white, bg=black}
+
+\setbeamercolor*{normal text}{fg=CambridgeCoreBlue, bg=CambridgeLightBlue!20!white}%transparent!0}
+\setbeamercolor*{block body}{bg=transparent!0,fg=black}
+\setbeamercolor*{block title}{fg=white,bg=CambridgeCoreBlue}
+\setbeamerfont{block title}{size=\large,series=\bf}
+\setbeamercolor{upper separation line head}{bg=CambridgeLightBlue}
+\setbeamercolor{lower separation line head}{bg=CambridgeLightBlue}
+\setbeamercolor{upper separation line foot}{bg=CambridgeLightBlue}
+\setbeamercolor{lower separation line foot}{bg=CambridgeLightBlue}
+
+\setbeamercolor*{example body}{fg=black,bg=transparent!0}
+\setbeamercolor*{example text}{fg=black,bg=transparent!0}
+\setbeamercolor*{example title}{bg=white, fg=black}
+
+\setbeamercolor{alerted text}{fg=CambridgeCoreOrange}
+
+\setbeamercolor{structure}{fg=CambridgeCoreOrange}
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{navigation symbols}{}  % no navigation on a poster
+
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{block begin}{
+  \vskip.75ex
+  \begin{beamercolorbox}[rounded=true,shadow=true,leftskip=1cm,colsep*=.75ex]{block title}%
+    \usebeamerfont*{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[rounded=true,shadow=true,colsep*=.75ex,sep=.75ex,vmode]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+  }
+  \setbeamertemplate{block end}{
+  \end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{headline}{  
+  \leavevmode
+  %\begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
+  %  \rule{0pt}{20pt}
+  %\end{beamercolorbox}
+  \begin{beamercolorbox}[sep=0.5cm,wd=\paperwidth]{headline}
+  \begin{columns}
+      \begin{column}{0.02\paperwidth}
+      \end{column}
+      \begin{column}{0.65\paperwidth}
+          %\hspace{3em}
+          \usebeamercolor{title in headline}{\raggedright\color{fg}\textbf{\huge{\inserttitle}}\\[1ex]}
+          \usebeamercolor{subtitle in headline}{\raggedright\color{fg}\textbf{\LARGE{\insertsubtitle}}\\[1ex]}
+          %\hspace{6em}
+          \usebeamercolor{author in headline}{\raggedright\color{fg}\LARGE{\insertauthor}\\[1ex]}
+          %\hspace{6em}
+          \usebeamercolor{institute in headline}{\raggedright\color{fg}\LARGE{\insertinstitute}\\[1ex]}
+      \end{column}
+      \begin{column}{0.16\paperwidth}
+          \includegraphics[width=0.14\paperwidth]{msr-rev-logo}
+      \end{column}
+       \begin{column}{0.18\paperwidth}
+          \includegraphics[width=0.16\paperwidth]{uc-rev-cmyk}
+      \end{column}
+      \begin{column}{0.02\paperwidth}
+      \end{column}
+  \end{columns}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+    \rule{0pt}{20pt}
+  \end{beamercolorbox}%
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{20pt}
+  \end{beamercolorbox}
+  \leavevmode%
+  \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{footline}%
+    \usebeamercolor{author in head/foot}{\color{fg}\bf\texttt{http://mi.eng.cam.ac.uk/{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}yai20}}
+    \hfill
+    \usebeamercolor{author in head/foot}{\color{fg}\bf\texttt{yai20@cam.ac.uk}}
+    \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt%
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Display a grid to help align images ... and it looks nice with this color scheme
+%\beamertemplategridbackground[1cm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<all>

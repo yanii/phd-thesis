@@ -1,0 +1,108 @@
+\begin{figure}[t]
+\footnotesize
+\begin{subfigure}[t]{0.49\linewidth}
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar.csv}\datatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_root_s.csv}\rdatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\begin{tikzpicture}
+%\tikzstyle{every node}=[font=\footnotesize]
+\begin{axis}[
+  width=0.95\linewidth,
+  height=0.5\linewidth,
+  axis x line=bottom,
+  ylabel=Error,
+  xlabel=Model Parameters,
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=major,
+  %xmin=0,
+  ytick={0.002,0.004,...,1.0},
+  ymin=0.075,ymax=0.088,
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:-0.05,.5)},anchor=south},
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(1.2,1.2)}, anchor=south east, column sep=0.2em},
+  legend columns=4,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   error bars/y dir=both,
+   error bars/y fixed=0.00131497782,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\datatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
+\legend{NiN, Root}
+\end{axis}
+\end{tikzpicture}
+%\caption{\textbf{Model Parameters \vs Error.}}
+%\label{fig:nincifarparamconvonly}
+\end{subfigure}
+~
+\begin{subfigure}[t]{0.49\linewidth}
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar.csv}\datatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_root_s.csv}\rdatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\begin{tikzpicture}
+%\tikzstyle{every node}=[font=\footnotesize]
+\begin{axis}[
+  width=0.95\linewidth,
+  height=0.5\linewidth,
+  axis x line=bottom,
+  %ylabel=Error,
+  xlabel=FLOPS (Multiply-Add),
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=major,
+  %xmin=0,
+  ytick={0.002,0.004,...,1.0},
+  x label style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  y label style={at={(axis description cs:-0.05,.5)},anchor=south},
+  ymin=0.075,ymax=0.088,
+  xticklabel style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+  yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   error bars/y dir=both,
+   error bars/y fixed=0.00131497782,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\datatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
+\end{axis}
+\end{tikzpicture}
+%\caption{\textbf{FLOPS (Multiply-Add) \vs Error.}}
+%\label{fig:nincifarmaconvonly}
+\end{subfigure}
+
+\caption{\textbf{Network-in-Network CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
+%(left) Parameters \vs Error, (right) FLOPS \vs Error.
+}
+\label{fig:nincifarplotsconvonly}
+\end{figure}

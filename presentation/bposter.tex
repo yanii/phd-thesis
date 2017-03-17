@@ -1,0 +1,488 @@
+\documentclass[final]{beamer}
+%\documentclass[final,hyperref={pdfpagelabels=false}]{beamer} % beamer 3.07: get rid of beamer warnings
+\mode<presentation> {  %% check http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php for examples
+\usetheme{Cambridge}    %% you should define your own theme e.g. for big headlines using your own logos 
+}
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\usefonttheme[onlymath]{serif}
+%\boldmath
+
+%\usepackage[size=custom,width=24in,height=16in,scale=1.2]{beamerposter}                       % e.g. for DIN-A0 poster
+\usepackage[orientation=portrait,size=a0,scale=1]{beamerposter}                  % e.g. for DIN-A1 poster, with optional grid and debug output
+%\usepackage[size=custom,width=200,height=120,scale=2,debug]{beamerposter}                     % e.g. for custom size poster
+%\usepackage[orientation=portrait,size=a0,scale=1.0,printer=rwth-glossy-uv.df]{beamerposter}   % e.g. for DIN-A0 poster with rwth-glossy-uv printer check
+% ...
+%
+  
+%%%%%%%%%%%%%%%%%%%%%%%% Packages/includes
+\usepackage[english]{babel}
+%\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage{pgfpages}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+\usepackage[compatibility=false]{caption}
+\usepackage{subcaption}
+
+% Antonio's macros
+\input{ACsettings}
+\input{../pgftablehighlight}
+
+\definecolor{filtercolor}{RGB}{255,230,153}
+\definecolor{filtershade}{RGB}{205,185,123}
+\definecolor{fmcolor}{RGB}{231,230,230}
+\definecolor{fmshade}{RGB}{186,185,185}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,calc,tikzmark,decorations.pathreplacing}
+%\usetikzlibrary{arrows,shapes,decorations.markings,calc,fadings}
+\tikzstyle{every picture}+=[remember picture]
+
+%\pgfdeclareimage{shield}{shieldbw}
+%\begin{tikzfadingfrompicture}[name=shieldfading,inner sep=0]
+%  \node [fill=transparent!0,opacity=0.3,rotate=45,scale=25] {\pgfuseimage{shield}};
+%\end{tikzfadingfrompicture}
+
+%\usebackgroundtemplate{%
+%\begin{tikzpicture}[inner sep=0]
+ % Watermark using transparent image 
+  %  \node[fill=transparent!0,opacity=0.1,rotate=45,scale=25,anchor=west] {\pgfuseimage{shield}};
+ 
+ % Watermark using fadings 
+  %\node[fill=white,minimum width=\paperwidth,minimum height=\paperheight,anchor=west]{};
+  % fill the same region with yellow but using a fading as mask
+  %\path[scope fading=shieldfading,fit fading=true];
+  %\node[fill=CambridgeCoreTeal,minimum width=\paperwidth,minimum height=\paperheight,anchor=west]{};
+%\end{tikzpicture}
+%}
+
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[table]{labelformat=empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Bibliography
+\usepackage[backend=bibtex,style=ieee,natbib=true,url=false,doi=false]{biblatex}
+%\AtEveryCitekey{\iffootnote{\color{black}\tiny}{\color{black}}}
+\addbibresource{../references.bib}
+  
+\newcommand{\covarlabels}[5]{%
+\begin{tikzpicture}[anchor=south west]
+    \node [inner sep=0pt] (c)
+    {
+        #5
+    };
+    \ifx\covarwidth\undefined
+    \newlength{\covarwidth}
+    \newlength{\covarheight}
+    \fi
+    \settowidth{\covarwidth}{#5}
+    \settoheight{\covarheight}{#5}
+    \path[use as bounding box] (c.south west) rectangle (c.north east);
+    \node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
+    \node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
+    \node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
+    \node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\footnotesize\texttt{#3}};
+    \node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
+\end{tikzpicture}%
+}
+  
+%%%%%%%%%%%%%%%%%%%%%%%% Title Page Setup
+\title % (optional, use only with long paper titles)
+{Deep Roots}
+\subtitle{Improving CNN Efficiency with Hierarchical Filter Groups}
+
+\author[Y. Ioannou, D. Robertson, R. Cipolla and A. Criminisi]
+{Yani Ioannou\inst{1} \and Duncan Robertson\inst{2} \and Roberto Cipolla\inst{1} \and Antonio Criminisi\inst{2}}
+
+\institute[University of Cambridge and Microsoft Research] % (optional, but mostly needed)
+{\inst{1} University of Cambridge, \inst{2} Microsoft Research, Cambridge}
+
+\date
+
+\begin{document}
+
+%\addtobeamertemplate{headline}{} 
+%{
+%\begin{tikzpicture}[remember picture,overlay] 
+%\node [shift={(-10 cm,-5cm)}] at (current page.north east) {\includegraphics[height=3cm]{uc-rev-cmyk}}; 
+%\end{tikzpicture} 
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\begin{columns}[t]
+
+\begin{column}{0.32\paperwidth}
+
+\begin{block}{Summary}
+  \begin{itemize}
+	\item We train CNNs with `root modules', a novel sparse connection structure that resembles a tree root
+    \item In effect our networks learn a basis for the channel extents of filters, based on compact filter groups
+	\item Our models are \alert{faster} and use \alert{fewer parameters}, while maintaining \alert{accuracy}
+      \item For \alert{ResNet 50}, our model has \alert{40\%} fewer parameters, \alert{45\%} fewer FLOPS, and is 31\% (12\%) faster on a CPU (GPU)
+      \item For \alert{ResNet 200}, our model has \alert{44\%} fewer parameters and \alert{25\%} fewer FLOPS
+      \item For GoogLeNet, our model has 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU)
+  \end{itemize}
+\end{block}
+
+\begin{block}{Previous Work: Learning a Basis Space for Filters}{}
+\begin{itemize}
+   \item In \citep{Ioannou2016}, linear combination of low-rank filters is learned, \ie a basis space for filters:
+\end{itemize}
+
+\vspace{1em}
+
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=3]{../figs/sparsification}
+\end{figure}
+
+\vspace{1em}
+
+\begin{itemize}
+    \item A set of filters of different shape (similar to `Inception', but low-rank and of different orientation~\cite{Szegedy2014going})
+    \item On the following layer, use $d\times [1 \times 1 \times m]$ filters to linearly combine
+    \item Only learning a low-rank filter in the spatial dimensions -- filters maintain full channel depth
+\end{itemize}
+\end{block}
+
+\begin{block}{Filter Groups}
+
+\begin{figure}[t]
+\begin{subfigure}[t]{0.65\linewidth}
+\centering
+\includegraphics[width=0.9\linewidth, page=1]{../figs/groupfig}
+    \caption{Convolution.}
+   \label{fig:normalconv}
+\end{subfigure}
+~
+\begin{subfigure}[t]{0.65\linewidth}
+\centering
+\includegraphics[width=0.9\linewidth, page=2]{../figs/groupfig}
+   \caption{Convolution with filter groups.}
+   \label{fig:groupedconv}
+\end{subfigure}
+\label{fig:groupconfig}
+\end{figure}
+\begin{itemize}
+    \item Convolutional filters (yellow) typically have the same channel dimension ($c_1$) as the input feature maps (gray)
+    \item With convolutional filter groups~\citep{Krizhevsky2012}, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels
+    \item This reduces filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$
+    \item This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.
+\end{itemize}
+\end{block}
+
+
+\begin{block}{Root Module}
+\begin{figure}[t]
+\centering
+\begin{subfigure}[b]{0.95\linewidth}
+\centering
+\includegraphics[width=\linewidth, page=4]{../figs/groupfig}
+   \caption{Convolution with $d$ filters of shape $h\times w\times c$.}
+   \label{fig:normalresnet}
+\end{subfigure}\\
+\begin{subfigure}[b]{0.95\linewidth}
+\includegraphics[width=\linewidth, page=5]{../figs/groupfig}
+   \caption{Root-2 Module: $d$ filters in $g = 2$ filter groups, of shape $h\times w\times c/2$.}
+   \label{fig:rootresnet2}
+\end{subfigure}
+\begin{subfigure}[b]{0.95\linewidth}
+\includegraphics[width=\linewidth, page=6]{../figs/groupfig}
+   \caption{Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.}
+   \label{fig:rootresnet4}
+\end{subfigure}
+%\caption{\textbf{Root Modules.} Root modules (b), (c) compared to a typical set of convolutional layers (a) found in ResNet and other modern architectures. Grey blocks represent the feature maps over which a layer's filters operate, while colored blocks represent the filters of each layer. 
+%}
+\label{fig:rootmodule}
+\end{figure}
+\begin{itemize}
+    \item (a) shows the typical set of conv.\ layers found in ResNet and other modern architectures
+    \item Root modules (b), (c) have a given number of filter groups, with fewer connections to the previous layer's outputs
+    \item Spatial convolutional layer is followed by a 1$\times$1 convolution. Like in \citep{Ioannou2016}, this learns a linear combination of the basis filters (filter groups), implicitly representing a filter of full channel depth, but with limited filter dependence.
+\end{itemize}
+\end{block}
+\end{column}
+
+\begin{column}{0.66\paperwidth}
+
+\begin{block}{Root: Network-in-Network}
+
+\begin{figure}[t]
+\begin{subfigure}[t]{0.9\linewidth}
+\hspace*{-2cm}
+\begin{tikzpicture}
+    \begin{scope}[]
+     \matrix[column sep=0em, ampersand replacement=\&]{
+     \node (1a) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=15]{../figs/groupfig}}
+     };\&
+    \node (1b) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (1c) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (2a) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{../figs/groupfig}}
+    };\&
+    \node (2b) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (2c) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (3a) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{../figs/groupfig}}
+    };\&
+    \node (3b) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (3c) {
+        \raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}}
+    };\&
+    \node (7) {
+        {\LARGE$\cdots$}
+    };\\
+    \draw node{{\footnotesize \textit{input image}} \hspace{0.7em} {\footnotesize \textit{conv1a}}};\&
+    \draw node{\footnotesize \textit{conv1b}};\&
+    \draw node{\footnotesize \textit{conv1c}};\&
+    \draw node{\footnotesize \textit{conv2a}};\&
+    \draw node{\footnotesize \textit{conv2b}};\&
+    \draw node{\footnotesize \textit{conv2c}};\&
+    \draw node{\footnotesize \textit{conv3a}};\&
+    \draw node{\footnotesize \textit{conv3b}};\&
+    \draw node{\footnotesize \textit{conv3c}};\\
+     };
+    \end{scope}
+\end{tikzpicture}
+    \caption{Standard}
+    \label{fig:standardtopology}
+\end{subfigure}
+~
+\begin{subfigure}[t]{0.9\linewidth}
+\hspace*{-2cm}
+\begin{tikzpicture}
+    \begin{scope}[]
+    \matrix[column sep=0em, ampersand replacement=\&]{
+    \node (1a) {
+        \includegraphics[height=0.08\linewidth, page=15]{../figs/groupfig}
+    };\&
+    \node (1b) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\& 
+    \node (1c) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\& 
+    \node (2a) {
+        \includegraphics[height=0.15\linewidth, page=19]{../figs/groupfig}
+    };\&
+    \node (2b) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\&
+    \node (2c) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\&
+    \node (3a) {
+        \includegraphics[height=0.09\linewidth, page=18]{../figs/groupfig}
+    };\&
+    \node (3b) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\&
+    \node (3c) {
+        \includegraphics[height=0.11\linewidth, page=17]{../figs/groupfig}
+    };\&
+    \node (4) {
+        {\LARGE$\cdots$}
+    };\\
+    };
+    \draw[decorate,decoration={brace,mirror},](2a.south west) -- node[below=3pt] {\small root-4 module} ++(10, 0);
+    \draw[decorate,decoration={brace,mirror},yshift=-2em](3a.south west) + (0, -1.5) -- node[below=3pt] {\small root-2 module} ++(10.5, -1.5);
+    \end{scope}
+\end{tikzpicture}
+\caption{Root-4 Architecture}
+\label{fig:root4topology}
+\end{subfigure}
+\end{figure}
+\end{block}
+
+\vspace{-1.1em}
+\begin{columns}[t]
+\begin{column}{0.32\paperwidth}
+
+
+\begin{block}{Results: Network-in-Network (CIFAR10)}
+
+\input{cifarninmatable}
+\input{cifarninmaplot}
+\end{block}
+
+\begin{block}{Results: ResNet 50 (Imagenet)}
+\input{resnet50matable}
+\input{resnet50maplot}
+\end{block}
+
+
+\begin{block}{Results: ResNet 200 (Imagenet)}
+\input{resnet200matable}
+\begin{itemize}
+\item Recently these results were extended upon by \citep{2016arXiv161105431X} to improve the accuracy of ResNet significantly, in ResNeXt, which placed 2nd in the ILSVRC 2016 challenge.
+\end{itemize}
+\end{block}
+
+\begin{block}{More Information}
+\vspace{-1em}
+\begin{center}
+    \tikz\node[opacity=1, anchor=north]{\includegraphics[width=0.06\textheight]{qrcodeblue}};
+\end{center}
+\end{block}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{column}{0.32\paperwidth}
+
+\begin{block}{Analysis: Inter-Layer Response Covariance}
+\begin{figure}[t]
+\centering
+\begin{subfigure}[c]{0.48\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.5\linewidth]{../figs/ninroot32/layercovar_conv8-pdf.pdf}}
+    \caption{Non-whitened}
+    \label{fig:notwhitened}
+\end{subfigure}
+~
+\begin{subfigure}[c]{0.48\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.5\linewidth]{../figs/ninroot32/layercovarwhite_conv8-pdf.pdf}}
+    \caption{Whitened responses}
+    \label{fig:whitened}
+\end{subfigure}
+\caption{Inter-layer covariance of root-32 NiN model}
+\label{fig:whitevsnot}
+\end{figure}
+\begin{itemize}
+\item To show the dependencies between filters on adjacent layers, we show the covariance between responses of the layers over the training set.
+\item However, without whitening the responses of each layer, these are conflated with existing covariances from the data/other layers
+%\item Instead, the (absolute) covariance of the whitened responses for the training set are shown
+\end{itemize}
+\end{block}
+
+\begin{block}{Analysis: Network-in-Network}
+\begin{figure}[t]
+\begin{subfigure}[c]{0.46\linewidth}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.45\textwidth]{../figs/nin/corrcoef_conv6-pdf.pdf}}
+~
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.45\textwidth]{../figs/nin/corrcoef_conv8-pdf.pdf}}
+\label{fig:corrroot1}
+\caption{\textbf{Network-in-Network}}
+\vspace*{0.6em}
+\end{subfigure}
+~
+\begin{subfigure}[c]{0.46\linewidth}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot4/corrcoef_conv6-pdf.pdf}}
+~
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot4/corrcoef_conv8-pdf.pdf}}
+\caption{\textbf{Root-4}}
+\vspace*{0.6em}
+\label{fig:corrroot4}
+\end{subfigure}
+~
+\begin{subfigure}[c]{0.46\linewidth}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot8/corrcoef_conv6-pdf.pdf}}
+~
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot8/corrcoef_conv8-pdf.pdf}}
+\caption{\textbf{Root-8}}
+\vspace*{0.6em}
+\label{fig:corrroot8}
+\end{subfigure}
+~
+\begin{subfigure}[c]{0.46\linewidth}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot32/corrcoef_conv6-pdf.pdf}}
+~
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.45\textwidth]{../figs/ninroot32/corrcoef_conv8-pdf.pdf}}
+\caption{\textbf{Root-32}}
+\label{fig:corrroot32}
+\end{subfigure}
+\centering
+\includegraphics[width=0.4\linewidth]{../figs/colorbar}
+\caption{\textbf{Intra-Layer Correlation.} Absolute Correlation of filters within each layer.}
+\label{fig:nincorr}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{../figs/msrc-cifar-nin-4pad-conv8-corr-pdf.pdf}}
+    \caption{Standard}
+    \label{fig:normalcovartestfull}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../figs/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr-pdf.pdf}}
+    \caption{Root-2}
+    \label{fig:root2corrfull}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../figs/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr-pdf.pdf}}
+    \caption{Root-4}
+    \label{fig:root4corrfull}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \vspace*{0.6em}
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../figs/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr-pdf.pdf}}
+    \caption{Root-8}
+    \label{fig:root8corrfull}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \vspace*{0.6em}
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../figs/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr-pdf.pdf}}
+    \caption{Root-16}
+    \label{fig:root16corrfull}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.3\linewidth}
+\centering
+    \vspace*{0.6em}
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../figs/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr-pdf.pdf}}
+    \caption{Root-32}
+    \label{fig:root32corrfull}
+\end{subfigure}
+\caption{\textbf{Filter Inter-layer Covariance conv2c--conv3a}}
+\label{fig:covarfull}
+\end{figure}
+\begin{itemize}
+\item The block-diagonal sparsity learned by a root module is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network
+\item Rather than a random appearing structure of dependence seen in (a), root modules have more structured dependence, where well correlated filters are grouped close to the related filters on the previous layer
+\end{itemize}
+\end{block}
+
+\begin{block}{References}
+{
+\renewcommand*{\bibfont}{\scriptsize}
+%\vspace{-1em}
+\printbibliography
+}
+\end{block}
+
+%\tikz\node[opacity=0.6, anchor=north] at (current page.center){\includegraphics[width=15em]{qrcodeblue}};
+
+\end{column}
+
+\end{columns}
+\end{column}
+\end{columns}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{frame}
+
+\end{document}
+

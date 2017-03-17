@@ -1,0 +1,79 @@
+\begin{table}[t]
+\footnotesize
+\begin{subtable}[b]{0.48\linewidth}
+\caption{\textbf{Filter groups per layer}}
+\label{table:resnet50config}
+\centering
+\begin{tabular}{@{}lm{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}@{}}
+%\begin{tabular}{@{}lcccccccccccc@{}}
+\toprule
+    Model &{\tiny conv1} & \multicolumn{2}{c}{\tiny res2\{a--c\}} & \multicolumn{2}{c}{\tiny res3\{a--d\}} & \multicolumn{2}{c}{\tiny res4\{a--f\}} & \multicolumn{2}{c}{\tiny res5\{a--c\}} \\
+     & \textit{\tiny7$\times$7} & \textit{\tiny1$\times$1} & \textit{\tiny3$\times$3} & \textit{\tiny1$\times$1} & \textit{\tiny3$\times$3} & \textit{\tiny1$\times$1} & \textit{\tiny3$\times$3} & \textit{\tiny1$\times$1} & \textit{\tiny3$\times$3} \\
+    \midrule
+    Orig. & 1 & 1 & 1 & 1 &  1 & 1 &  1 & 1 & 1 \\
+    \midrule
+    root-2 & 1 & 1 & 2 & 1 &  1 & 1 &  1 & 1 & 1 \\
+    root-4 & 1 & 1 & 4 & 1 &  2 & 1 &  1 & 1 & 1 \\
+    root-8 & 1 & 1 & 8 & 1 &  4 & 1 &  2 & 1 & 1 \\
+    root-16 & 1 & 1 & 16 & 1 &  8 & 1 &  4 & 1 & 2 \\
+    root-32 & 1 & 1 & 32 & 1 & 16 & 1 &  8 & 1 & 4 \\
+    root-64 & 1 & 1 & 64 & 1 & 32 & 1 & 16 & 1 & 8 \\
+    \bottomrule
+\end{tabular}
+\end{subtable}
+\begin{subtable}[b]{0.48\linewidth}
+\caption{\textbf{Results}}
+\label{table:resnet50imagenetresults}
+%\resizebox{\linewidth}{!}{
+\centering
+\pgfplotstableread[col sep=comma]{../data/resnet50ma.csv}\data
+\pgfplotstableread[col sep=comma]{../data/resnet50maconvonly.csv}\codata
+\pgfplotstablevertcat{\data}{\codata}
+\pgfplotstableset{
+    create on use/singlegpu/.style={
+        create col/expr={\thisrow{GPU Forward} / \thisrow{Batch Size}}},
+}
+\pgfplotstableset{
+    create on use/singlecpu/.style={
+        create col/expr={\thisrow{CPU Forward} / \thisrow{Batch Size}}},
+}
+\pgfplotstabletypeset[
+    every head row/.style={
+    before row=\toprule,after row=\midrule},
+    every last row/.style={
+    after row=\bottomrule},
+    every first row/.style={
+    after row=\midrule}, 
+    fixed zerofill,     % Fill numbers with zeros
+    columns={Full Name, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc., singlecpu, singlegpu},
+    columns/Full Name/.style={
+        column name=Model,
+        string type
+    },
+    columns/singlegpu/.style={
+        column name=GPU (ms),
+        precision=1
+    },
+    columns/singlecpu/.style={
+        column name=CPU (ms),
+        precision=0
+    },
+    columns/Multiply-Acc./.style={
+        column name=FLOPS {\small $\times 10^{9}$},
+        preproc/expr={{##1/1e9}}
+    },
+    columns/Param./.style={
+        column name=Param. {\small $\times 10^{7}$},
+        preproc/expr={{##1/1e7}}
+    },
+    columns/Top-1 Acc./.style={precision=3},
+    columns/Top-5 Acc./.style={precision=3},
+    highlight col max ={\data}{Top-1 Acc.},
+    highlight col max ={\data}{Top-5 Acc.}, 
+    highlight col min ={\data}{Param.}, 
+    highlight col min ={\data}{Multiply-Acc.}, 
+    column type/.add={@{}lp{2.9em}p{2.5em}p{2.5em}p{2.5em}p{2.1em}p{2.1em}@{}}{},
+    col sep=comma]{\data}
+%}
+\end{subtable}
+\end{table}

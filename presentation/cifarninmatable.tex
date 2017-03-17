@@ -1,0 +1,71 @@
+\begin{table}[t]
+\footnotesize
+\begin{subtable}[b]{0.48\linewidth}
+\caption{\textbf{Filter groups per layer}}
+\label{table:ninconfig}
+%\resizebox{\linewidth}{!}{
+\begin{tabular}{@{}lm{1.2em}m{1.2em}m{1.2em}m{1.2em}m{1.2em}m{1.2em}m{1.2em}m{1.2em}m{1.2em}@{}}
+\toprule
+    Model & \multicolumn{3}{c}{conv1} & \multicolumn{3}{c}{conv2} & \multicolumn{3}{c}{conv3} \\
+%     & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} \\
+     & \textit{\tiny5$\times$5} & \textit{\tiny1$\times$1} & \textit{\tiny1$\times$1} & \textit{\tiny5$\times$5} & \textit{\tiny1$\times$1} & \textit{\tiny1$\times$1} & \textit{\tiny3$\times$3} & \textit{\tiny1$\times$1} & \textit{\tiny1$\times$1} \\
+    \midrule
+    Orig. & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+    \midrule
+    root-2 & 1 & 1 & 1 & 2 & 1 & 1 & 1 & 1 & 1\\
+    root-4 & 1 & 1 & 1 & 4 & 1 & 1 & 2 & 1 & 1\\
+    root-8 & 1 & 1 & 1 & 8 & 1 & 1 & 4 & 1 & 1\\
+    root-16 & 1 & 1 & 1 & 16 & 1 & 1 & 8 & 1 & 1\\
+    \bottomrule
+\end{tabular}
+%}
+\end{subtable}
+\begin{subtable}[b]{0.48\linewidth}
+\caption{\textbf{Results}}
+\label{table:nincifarresults}
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar.csv}\data
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_root_s.csv}\codata
+\pgfplotstablevertcat{\data}{\codata}
+%\resizebox{\linewidth}{!}{
+\pgfplotstabletypeset[
+    every head row/.style={
+    before row=\toprule,after row=\midrule},
+    every last row/.style={
+    after row=\bottomrule},
+    every first row/.style={
+    after row=\midrule}, 
+    fixed zerofill,     % Fill numbers with zeros
+    columns={full name, ma, param, accuracy, cpu, gpu},
+    columns/full name/.style={
+        column name=Model,
+        string type
+    },
+    columns/ma/.style={
+        column name=FLOPS {\small $\times 10^{8}$},
+        preproc/expr={{##1/1e8}}
+    },
+    columns/param/.style={
+        column name=Param. {\small $\times 10^{5}$},
+        preproc/expr={{##1/1e5}}
+    },
+    columns/accuracy/.style={
+        column name=Acc.,
+        precision=4
+    },
+    columns/gpu/.style={
+        column name=GPU (ms),
+        precision=3
+    },
+    columns/cpu/.style={
+        column name=CPU (ms),
+        precision=1
+    },
+%    column type/.add={@{}lrrrrrr@{}}{},
+    column type/.add={@{}lp{3em}p{3em}p{3em}p{3em}p{3em}p{3em}@{}}{},
+    highlight col max ={\data}{accuracy},
+    highlight col min ={\data}{param}, 
+    highlight col min ={\data}{ma}, 
+    col sep=comma]{\data}
+%}
+\end{subtable}
+\end{table}

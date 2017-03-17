@@ -1,0 +1,53 @@
+\resizebox{\columnwidth}{!}{
+\centering
+\pgfplotstableread[col sep=comma]{../data/googlenetma.csv}\data
+\pgfplotstableread[col sep=comma]{../data/googlenetmaall.csv}\alldata
+\pgfplotstableread[col sep=comma]{../data/googlenetmaconvonly.csv}\codata
+\pgfplotstablevertcat{\data}{\alldata}
+\pgfplotstablevertcat{\data}{\codata}
+\pgfplotstableset{
+    create on use/singlegpu/.style={
+        create col/expr={\thisrow{GPU Forward} / \thisrow{Batch Size}}},
+}
+\pgfplotstableset{
+    create on use/singlecpu/.style={
+        create col/expr={\thisrow{CPU Forward} / \thisrow{Batch Size}}},
+}
+\pgfplotstabletypeset[
+    every head row/.style={
+    before row=\toprule,after row=\midrule},
+    every last row/.style={
+    after row=\bottomrule},
+    every first row/.style={
+    after row=\bottomrule}, 
+    fixed zerofill,     % Fill numbers with zeros
+    columns={Full Name, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc., singlecpu, singlegpu},
+    columns/Full Name/.style={
+        column name=Root,
+        string type
+    },
+    columns/singlegpu/.style={
+        column name=GPU (ms),
+        precision=2
+    },
+    columns/singlecpu/.style={
+        column name=CPU (ms),
+        precision=0
+    },
+    columns/Multiply-Acc./.style={
+        column name=FLOPS {\small $\times 10^{9}$},
+        preproc/expr={{##1/1e9}}
+    },
+    columns/Param./.style={
+        column name=Param. {\small $\times 10^{7}$},
+        preproc/expr={{##1/1e7}}
+    },
+    columns/Top-1 Acc./.style={precision=3},
+    columns/Top-5 Acc./.style={precision=3},
+    highlight col max ={\data}{Top-1 Acc.},
+    highlight col max ={\data}{Top-5 Acc.}, 
+    highlight col min ={\data}{Param.}, 
+    highlight col min ={\data}{Multiply-Acc.}, 
+    column type/.add={lrrrrrr}{},
+    col sep=comma]{\data}
+}
