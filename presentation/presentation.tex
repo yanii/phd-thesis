@@ -77,13 +77,12 @@
 %Efficiency}
 
 \author[Yani Ioannou]
-{{\bf Yani Ioannou}}
+{Yani Ioannou}
 
 \institute[University of Cambridge] % (optional, but mostly needed)
 {University of Cambridge}
 
-%\date[5CF3] % (optional)
-%{5CF3: Information Engineering}
+\date{March 21, 2017}
 
 %\pgfdeclareimage[height=0.5cm]{university-logo}{uc-cmyk}
 %\logo{\pgfuseimage{university-logo}}
@@ -116,7 +115,11 @@
   \titlepage
 \end{frame}
 
-\usebackgroundtemplate{}
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+   \includegraphics[height=\paperheight,width=\paperwidth]{background}};
+}
 
 %\begin{frame}{Outline}
 %  \tableofcontents
@@ -146,6 +149,8 @@
 \includegraphics[width=0.2\linewidth]{roberto}
 \end{frame}
 
+\usebackgroundtemplate{}
+
 \section{Areas of Research}
 \begin{frame}{Collaborative Research @ MSR}
 \begin{itemize}
@@ -153,6 +158,22 @@
     \item Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\NIPS 2016}
     \item Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
 S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Segmentation of brain tumor tissues with convolutional neural networks.}\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\MICCAI-BRATS 2014}
+\begin{itemize}
+    \item One of the first papers using deep learning for volumetric/medical imagery
+    \item Biggest challenge for training was the class-imbalanced training data
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Measuring Neural Net Robustness with Constraints.}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\NIPS 2016}
+\begin{itemize}
+    \item Showed that contemporary methods of finding adversarial examples were limited in their coverage
+    \item Found that not all adversarial images can be used to improve network robustness
 \end{itemize}
 \end{frame}
 
@@ -182,6 +203,15 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
         \item `Alexnet' was 26.2\% better than second best, 15.3\%.
     \end{itemize}
     \item State-of-the-art beats human error (5\%).
+\end{itemize}    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{AlexNet Complexity}
+
+\begin{itemize}
+    \item TODO
 \end{itemize}    
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -375,8 +405,8 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 \begin{frame}{Root Architectures}
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
-			\matrix[column sep=0em]{
-				\node (4) {
+			\matrix[column sep=0em, row sep=2em]{
+				\node (1) {
 					{\Large $\cdots$}
 				};\&
 				\node (1c) {
@@ -400,98 +430,43 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 				\node (4) {
 					{\Large $\cdots$}
 				};\\
-				\&
-				\draw node{\footnotesize \textit{conv1c}};\&
-				\draw node{\footnotesize \textit{conv2a}};\&
-				\draw node{\footnotesize \textit{conv2b}};\&
-				\draw node{\footnotesize \textit{conv2c}};\&
-				\draw node{\footnotesize \textit{conv3a}};\&
-				\draw node{\footnotesize \textit{conv3b}};\\
-			};
-			\end{scope}
-			\end{tikzpicture}
-			~
-			\begin{tikzpicture}[ampersand replacement=\&]
-			\begin{scope}[]
-			\matrix[column sep=0em]{
-				\node (4) {
+				%%%%%%%%%%%%%%%%%%
+			    
+				%%%%%%%%%%%%%%%%%%
+				\node (r1) {
 					{\Large $\cdots$}
 				};\&
-				\node (1c) {
+				\node (r1c) {
 					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
 				};\& 
-				\node (2a) {
+				\node (r2a) {
 					\includegraphics[height=0.15\linewidth, page=19]{../Figs/PDF/groupfig}
 				};\&
-				\node (2b) {
+				\node (r2b) {
 					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
 				};\&
-				\node (2c) {
+				\node (r2c) {
 					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
 				};\&
-				\node (3a) {
+				\node (r3a) {
 					\includegraphics[height=0.09\linewidth, page=18]{../Figs/PDF/groupfig}
 				};\&
-				\node (3b) {
+				\node (r3b) {
 					\includegraphics[height=0.11\linewidth, page=17]{../Figs/PDF/groupfig}
 				};\&
-				\node (4) {
+				\node (r4) {
 					{\Large $\cdots$}
 				};\\
 			};
-			\draw[decorate,decoration={brace,mirror},](2a.south west) -- node[below=3pt] {\small root-4 module} ++(3.5, 0);
-			\draw[decorate,decoration={brace,mirror},yshift=-2em](3a.south west) + (0, -0.5) -- node[below=3pt] {\small root-2 module} ++(3.5, -0.5);
+			\draw[->] (2a) edge (r2a);
+			\draw[->] (3a) edge (r3a);
+			
+			\draw[decorate,decoration={brace,mirror},](r2a.south west) -- node[below=3pt] {\small root-4 module} ++(3.5, 0);
+			\draw[decorate,decoration={brace,mirror},yshift=-2em](r3a.south west) + (0, -0.5) -- node[below=3pt] {\small root-2 module} ++(3.5, -0.5);
 			\end{scope}
 			\end{tikzpicture}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Hierarchical Filter Group Topologies}
-
-\begin{figure}
-\includegraphics[width=\columnwidth, page=3]{../Figs/PDF/networktopology}
-   \caption{Columnar-4 topology}
-   \label{fig:columntopology}
-\end{figure}
-\begin{itemize}
-\item Similar to AlexNet
-\item Columnar topologies assume filters should be equally correlated with depth
-\end{itemize}
-\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Hierarchical Filter Group Topologies}
-
-\begin{figure}
-\includegraphics[width=\columnwidth, page=2]{../Figs/PDF/networktopology}
-   \caption{Tree-2 topology}
-   \label{fig:treetopology}
-\end{figure}
-\begin{itemize}
-\item Used in Conditional Networks
-\item Tree topologies assume filters become less correlated with depth
-\end{itemize}
-\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Hierarchical Filter Group Topologies}
-
-\begin{figure}
-    \includegraphics[width=\columnwidth, page=1]{../Figs/PDF/networktopology}
-    \caption{Root-8 topology}
-    \label{fig:roottopology}
-\end{figure}
-\begin{itemize}
-\item Root topologies assume that filters should be more correlated with depth
-\item Matches intuition of deep CNNs subsuming deformable parts models
-\end{itemize}
-\note[item]{Topologies of filter groups explored, as illustrated in a VGG-style deep network. Grey blocks represent the input range over which a layer's filters operate, while coloured blocks represent the stacked feature maps of the filter groups within each layer.}
-
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \section*{Results}
