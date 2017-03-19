@@ -358,10 +358,6 @@ $\approx$ 96\% in fully connected layers
 \end{tikzpicture}
 \end{figure}
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Contemporary Complexity}
-TODO: show graph of contemporary model complexity
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Hinton Philosophy}
@@ -380,6 +376,112 @@ TODO: show graph of contemporary model complexity
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\begin{frame}{}
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Multiply-Accumulate Operations),
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.00,0.02,...,0.22},
+  xmode=log, 
+  %ymin=0,ymax=0.2,
+  %xmin=10e8,xmax=10e10,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+%\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
+%   point meta=explicit symbolic,
+%   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+%] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\legend{Crop \& Mirror Aug., Extra Augmentation}
+\end{axis}
+\end{tikzpicture}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{}
+\begin{figure}
+\centering
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Number of Parameters),
+  axis lines=left,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.01,0.02,...,0.2},
+  xmode=log,
+  xmin=10e5,xmax=10e8,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+%\addplot[mark=*,mark options={fill=green!70!black},
+%   nodes near coords,
+%   only marks,
+%   point meta=explicit symbolic,
+%   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+%] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\addplot[mark=*,mark options={fill=blue},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+   every node near coord/.append style={font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\legend{Crop \& Mirror Aug., Extra Augmentation}
+\end{axis}
+\end{tikzpicture}
+}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Hinton Philosophy}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
 \begin{itemize}
@@ -392,29 +494,183 @@ TODO: show graph of contemporary model complexity
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Alternative Philosophy}
+\begin{columns}
+\begin{column}{0.66\textwidth}
 \begin{itemize}
-    \item Deep networks need many more parameters than data points because they aren't just learning to model data, but also learning what \emph{not} to learn. 
+    \item Deep networks need many more parameters than data points because they aren't just learning to model data, but also learning what \emph{\color{blue}not} to learn. 
     %\begin{itemize}
     %    \item Isn't this what regularization is for? Yes, but it's more like using a sledgehammer on a small nail.
     %\end{itemize}
     % Sort of like regularization, but regularization is like using a sledge hammer on a nail, it affect a lot more than what you want
-    \item Idea: Why don't we tell the network, through structural priors, not to learn things it doesn't need to?
+    \item Idea: Why don't we help the network, through structural priors, not to learn things it doesn't need to?
     %\item Let's separate learning into two distinct functions:
     %\begin{itemize}
     %    \item Learning weights such that a filter responds to a stimulus
     %    \item Learning what to ignore
     %\end{itemize}
-    \item Best example of this idea is a CNN!
+\end{itemize}
+\end{column}
+\begin{column}{0.34\textwidth}
+\includegraphics[width=\textwidth]{statue}\\
+\tiny \flushright 
+The Atlas Slave\\(Accademia, Florence)
+\end{column}
+\end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Typical Convolutional Layer}
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
+%   \caption{A full rank convolutional layer.}
+\end{figure}
+    Best example of this idea is a CNN!
     \begin{itemize}
         \item Shared parameters: filter learned for one part of the image should apply to the whole image.
         \item Filters: natural images are highly correlated locally
     \end{itemize}
     %\item A fully-connected network could theoretically learn the same thing, but in practice it never will.
+
+    \note[item]{We show here a typical convolutional layer.}
+    \note[item]{Yellow blocks are filters.}
+    \note[item]{Grey blocks are images or feature maps.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Typical Convolutional Layer}
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
+%   \caption{A full rank convolutional layer.}
+\end{figure}
+\begin{figure}
+
+   \resizebox {0.5\textwidth} {!} {
+   \begin{tikzpicture}[
+       decoration={
+          markings,
+          mark=at position 1 with {\arrow[scale=2,gray]{latex}};
+        }]
+        % draw featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw (1, -0.7) node {\LARGE$*$};
+        
+        % draw filter
+        \pgfmathsetmacro{\cubex}{0.3}
+        \pgfmathsetmacro{\cubey}{0.3}
+        \pgfmathsetmacro{\cubez}{1.5}
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=filtershade] (2,-0.7,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=filtercolor] (2,-0.7,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (2.2, -2.5) node {filter};
+            
+        % draw output featuremap
+        \pgfmathsetmacro{\cubex}{2}
+        \pgfmathsetmacro{\cubey}{2}
+        \pgfmathsetmacro{\cubez}{0.1}
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+        \draw[black,fill=fmshade] (6,0,-0.75) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+        \draw[black,fill=fmcolor] (6,0,-0.75) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+        \draw (-0.7, -2.5) node {image/feature map};
+        
+        \draw[gray,postaction={decorate}] (2.7,-0.7) -- (3.8, -0.7);
+        
+        \draw (5.2, -2.5) node {output featuremap};
+    \end{tikzpicture}
+    }
+\end{figure}
+    \note[item]{We show here a typical convolutional layer.}
+    \note[item]{Yellow blocks are filters.}
+    \note[item]{Grey blocks are images or feature maps.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Sparsity of Convolution}
+\begin{figure}
+    \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn3}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Convolution is Expensive}{Can we use Separable Filters?}
+\begin{itemize}
+    \item In image processing, we can often use separable filters instead.
+    \begin{itemize}
+        \item Factorizes a $k\times k$ filter into $1\times k$ and $k \times 1$ smaller filters.
+        \item Only works if we can factorize a matrix into such an outer product $\Rightarrow$ rank-1 matrix    \item \eg $\begin{bmatrix} 1 \\ 2 \\ 1\end{bmatrix} \begin{bmatrix} -1 & 0 & 1\end{bmatrix}  = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1\end{bmatrix}$.
+    \end{itemize}
+    
+    % The following outlook is optional.
+    \vskip0pt plus.5fill
+    \item Much faster - $\mathcal{O}(k+k)$ \vs $\mathcal{O}(k^2)$.
+    \note[item]{We can do this because convolution is associative, \ie $f*(v*h) = (f*v)*h$.}
 \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
-TODO - INSERT LOW RANK STUFF HERE
+\begin{frame}{Separable Layer}
+\vspace{-1em}
+\begin{itemize}
+    \item Use sequential filters of differing orientation\footcite{mamalet2012simplifying,journals/corr/JaderbergVZ14}.
+\end{itemize}
+\begin{figure}
+    \begin{tikzpicture}
+        \node at (0, 4.2) (n1) {
+            \includegraphics[width=0.4\textwidth, page=1]{../Figs/PDF/sparsification}
+        };
+        \node at (0, 1) (t1) {
+            \includegraphics[width=0.9\textwidth, page=2]{../Figs/PDF/sparsification}
+        };
+        \path[->]<1-> (n1) edge (t1);
+    \end{tikzpicture}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Separable Layer -- Issues}
+\begin{figure}
+\includegraphics[width=\textwidth, page=2]{../Figs/PDF/sparsification}
+%   \caption{Sequential separable filters.}
+%   \label{fig:separableseq}
+\end{figure}
+\begin{itemize}
+    \item Order of filter orientations gives different results (!).
+    \note[item]{Vertical first was more accurate\footcite{mamalet2012simplifying}}
+    \note[item]{Second orientation has $64\times$ the param, overfits differently?}
+    \item Complexity of each filter:
+    \begin{itemize}
+        \item before: filter is $\mathcal{O}(d \times [h\times w \times c])$.
+        \item after: $\mathcal{O}(d\times [h\times \mathbf{m}] + \mathbf{m} [w \times c])$,
+    \end{itemize}
+    \item However, in practice was not trainable for large networks.
+    \item New initialization proposed allows us to train this.
+    \note[item]{Get vanishing/exploding gradients if we tried to train these networks.}
+    \note[item]{in most CNNs, $d \geq m \gg c$, so still not that cheap.}
+    \note[item]{Second orientation has $64\times$ the param, so much more expensive that you'd think.}
+    \note[item]{Still has compute savings.}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Proposed Method}{Learning a basis space for filters.}
+\begin{figure}
+   \includegraphics[width=\textwidth, page=4]{../Figs/PDF/sparsification}
+\end{figure}
+\begin{itemize}
+    \item A learned basis space of vertical/horizontal rectangular filters and square filters!
+    \item Shape of learned filters is a full $w \times h \times c$.
+    \item But what can be effectively learned is limited by the number and complexity of the components.
+\end{itemize}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -776,6 +1032,58 @@ TODO - INSERT LOW RANK STUFF HERE
   \end{itemize}
 \end{frame}
 
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\centering
+Extra Slides
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Vanishing/Exploding Gradients}{}
+\vspace{-2em}
+\begin{figure}
+%\begin{tikzpicture}
+    %\node[inner sep=0pt] (1) at (0,0)
+    %{
+    \includegraphics[width=0.2\textwidth, page=1, bb = 0 0 440 600, clip=true]{../Figs/PDF/sparsification}
+    \includegraphics[width=0.2\textwidth, page=1, bb = 0 0 440 600, clip=true]{../Figs/PDF/sparsification}
+    \includegraphics[width=0.2\textwidth, page=1, bb = 0 0 440 600, clip=true]{../Figs/PDF/sparsification}
+    %};
+    %\node[inner sep=0pt] (2) at (5,0)
+    %{
+    $\cdots$
+    \includegraphics[width=0.2\textwidth, page=1, bb = 0 0 400 600, clip=true]{../Figs/PDF/sparsification}
+    %};
+    %\node at ($(1.south east)!.5!(2.south west)$) {\ldots};
+%\end{tikzpicture}
+\end{figure}
+
+\begin{itemize}
+    \item Incorrect initialization scales the forward signal by $\beta$.
+    \item After $L$ layers, this becomes a scaling of $\beta^L$.
+    \item For \alert{$\beta > 1$}, signal $\rightarrow\infty$, training \alert{diverges}.
+    \item For \alert{$\beta < 1$}, signal $\rightarrow 0$, training \alert{stalls}.
+    \item Want $\beta\approx 1$ in all layers to prevent this.
+\end{itemize}
+\note[item]{at the end of this layer, have a softmax!}
+\note[item]{$\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}$.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Convolutional Layer - Initialization}
+\begin{figure}
+\includegraphics[width=0.7\textwidth, page=1]{../Figs/PDF/sparsification}
+\end{figure}
+For a sigmoid non-linearity\footcite{glorot2010understanding}:
+\begin{eqnarray*}
+\sigma &=& \sqrt{\frac{1}{n^{\textrm{ out}}}} = \sqrt{\frac{2}{w^{[i]} h^{[i]} d^{[i]}}}.
+\end{eqnarray*}
+For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
+\begin{equation*}
+\sigma = \sqrt{\frac{2}{n^{\textrm{ out}}}}.
+\end{equation*}
+\end{frame}
 
 \end{document}
 
