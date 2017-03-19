@@ -194,6 +194,7 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
     
 \end{itemize}
 \end{frame}
+
 \section{Motivation}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -494,10 +495,11 @@ $\approx$ 96\% in fully connected layers
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Alternative Philosophy}
-\begin{columns}
-\begin{column}{0.66\textwidth}
+\begin{columns}[onlytextwidth,T]
+\begin{column}{0.65\textwidth}
 \begin{itemize}
     \item Deep networks need many more parameters than data points because they aren't just learning to model data, but also learning what \emph{\color{blue}not} to learn. 
+    %\item At each level in a CNN, the transformed data exists both as weights and spatial/channel information.
     %\begin{itemize}
     %    \item Isn't this what regularization is for? Yes, but it's more like using a sledgehammer on a small nail.
     %\end{itemize}
@@ -600,6 +602,10 @@ The Atlas Slave\\(Accademia, Florence)
 
 %%%%%%%%%%%%%%%%%%%%
 
+Chiseling out the spatial
+
+%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}{Convolution is Expensive}{Can we use Separable Filters?}
 \begin{itemize}
     \item In image processing, we can often use separable filters instead.
@@ -670,6 +676,112 @@ The Atlas Slave\\(Accademia, Florence)
     \item Shape of learned filters is a full $w \times h \times c$.
     \item But what can be effectively learned is limited by the number and complexity of the components.
 \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\begin{frame}{State-of-the-Art Models}%{The Cost of Increasing Accuracy}
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Multiply-Accumulate Operations),
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.00,0.02,...,0.22},
+  xmode=log, 
+  %ymin=0,ymax=0.2,
+  %xmin=10e8,xmax=10e10,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
+\end{axis}
+\end{tikzpicture}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{}
+\begin{figure}
+\centering
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Number of Parameters),
+  axis lines=left,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.01,0.02,...,0.2},
+  xmode=log,
+  xmin=10e5,xmax=10e8,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+\addplot[mark=*,mark options={fill=blue},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+   every node near coord/.append style={font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\addplot[mark=*,mark options={fill=green!70!black},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
+\end{axis}
+\end{tikzpicture}
+}
+\end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
