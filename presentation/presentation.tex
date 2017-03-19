@@ -8,6 +8,7 @@
 \usepackage{pgfplotstable}
 \usepackage{booktabs}
 \usepackage{subcaption}
+\usepackage{epigraph}
 % Antonio's macros
 \input{../acsettings}
 \input{../pgftablehighlight}
@@ -177,6 +178,14 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Refining Architectures of Deep Convolutional Neural Networks.}\\{\footnotesize S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
+\begin{itemize}
+    \item A method for adapting network architectures optimized for large datasets for smaller datasets
+    \item Attempts to answer the common problem of adapting contemporary research to real-world problems
+\end{itemize}
+\end{frame}
+
 \begin{frame}{First Author Publications during PhD}
 \begin{itemize}
     \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report} 
@@ -209,11 +218,204 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{AlexNet Complexity}
-
+\includegraphics[width=\columnwidth]{alexnet}
 \begin{itemize}
-    \item TODO
-\end{itemize}    
+\item $\approx$ 61 million parameters %60,965,224
+\item $\approx$ 724 million FLOPS (per-sample) % 724,417,384
+\item Imagenet has 1.28 million training samples ($227 \times 227 \times 3$) %227×227×3×1281167
+\item Images of dimensions  ($227 \times 227 \times 3$) $\approx$ 200 billion pixels % %227×227×3×1281167 = 198,051,763,029
+\end{itemize}
 \end{frame}
+
+\begin{frame}{AlexNet Complexity - FLOPS}
+\centering
+\includegraphics[width=0.9\columnwidth]{alexnet}
+\tikzstyle{every node}=[font=\tiny]
+\pgfplotstableread[col sep=comma]{alexnetma.csv}\datatable
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=\linewidth,
+    height=0.4\linewidth,
+    enlarge x limits=0.1,
+    ylabel=FLOPS,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xticklabels from table={\datatable}{layer},
+    xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
+    xtick=data,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=ma]{\datatable};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{AlexNet Complexity - Parameters}
+\centering
+\includegraphics[width=0.9\columnwidth]{alexnet}
+\tikzstyle{every node}=[font=\tiny]
+\pgfplotstableread[col sep=comma]{alexnetma.csv}\datatable
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=\linewidth,
+    height=0.4\linewidth,
+    enlarge x limits=0.1,
+    ylabel=Parameters,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xticklabels from table={\datatable}{layer},
+    xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
+    xtick=data,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
+\end{axis}
+\end{tikzpicture}
+$\approx$ 96\% in fully connected layers
+%0.961714567
+%0.038285433
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AlexNet Complexity}
+\begin{figure}[tbp]
+\centering
+\tikzstyle{every node}=[font=\tiny]
+\pgfplotstableread[col sep=comma]{alexnetma.csv}\datatable
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=0.9\linewidth,
+    height=0.33\linewidth,
+    enlarge x limits=0.1,
+    ylabel=FLOPS,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xmajorticks=false,
+    legend style={at={(0.5,1.2)},
+    draw=none, anchor=north,legend columns=-1},
+    area legend,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=ma]{\datatable};
+\end{axis}
+\end{tikzpicture}
+~
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=0.9\linewidth,
+    height=0.33\linewidth,
+    enlarge x limits=0.1,
+    ylabel=Parameters,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xticklabels from table={\datatable}{layer},
+    xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
+    xtick=data,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Contemporary Complexity}
+TODO: show graph of contemporary model complexity
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Hinton Philosophy}
+% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
+    %\item Standard practice: Create a model of appropriate size for our data and the problem at hand.
+    %\item Hinton philosophy on neural network design: Create a massively overparameterized network, and regularize like crazy to prevent overfitting.
+    %\item Why is the latter needed in practice?
+    %\item ``If you give me any sized dataset, what you ought to do if you want good generalization is get yourself into the small data regime. That is, however big your dataset, you ought to make a much bigger model so that that's small data. So, I think what the brain is doing is making sure that big data is small data and then regularizing the hell out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model. And you can think of it as, it's just and efficient way of averaging many, many small models, which is a good way to use argback??, but something a bit more efficient than just doing a normal ensemble. So you should always, if you can, be in the small data regime by having a really big computer. And that's certainly where we live, because we have a limited lifetime so the amount of data we get is limited.''
+
+\begin{quote}
+``If you give me any sized dataset, what you ought to do \textbf{if you want good generalization} is get yourself into the small data regime. That is, however big your dataset, you ought to \textbf{make a much bigger model} so that that's small data.''\\
+
+``So, I think what the brain is doing is \ldots \textbf{regularizing the hell} out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model.'' \\
+\flushright{\normalfont Geoffery Hinton\\Cambridge, June 2015}
+\end{quote}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Hinton Philosophy}
+% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
+\begin{itemize}
+    \item Hinton philosophy on neural network design: Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
+    \item This seems to work well in practice for networks such as AlexNet, VGG, and MSRA
+    \item But there is something that feels fundamentally wrong about this (and I'm not a statistician!)
+    \item This feeling is backed up not only by my work, but by recent work showing that regularization in deep networks is not as effective as the community thought.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Alternative Philosophy}
+\begin{itemize}
+    \item Deep networks need many more parameters than data points because they aren't just learning to model data, but also learning what \emph{not} to learn. 
+    %\begin{itemize}
+    %    \item Isn't this what regularization is for? Yes, but it's more like using a sledgehammer on a small nail.
+    %\end{itemize}
+    % Sort of like regularization, but regularization is like using a sledge hammer on a nail, it affect a lot more than what you want
+    \item Idea: Why don't we tell the network, through structural priors, not to learn things it doesn't need to?
+    %\item Let's separate learning into two distinct functions:
+    %\begin{itemize}
+    %    \item Learning weights such that a filter responds to a stimulus
+    %    \item Learning what to ignore
+    %\end{itemize}
+    \item Best example of this idea is a CNN!
+    \begin{itemize}
+        \item Shared parameters: filter learned for one part of the image should apply to the whole image.
+        \item Filters: natural images are highly correlated locally
+    \end{itemize}
+    %\item A fully-connected network could theoretically learn the same thing, but in practice it never will.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+TODO - INSERT LOW RANK STUFF HERE
+
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Typical Convolutional Layer}
@@ -279,6 +481,44 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 \item Allowed training across two GPUs (model parallelism)
 \end{itemize}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{AlexNet Filter Grouping}
+	\centering
+    \begin{figure}
+    \includegraphics[width=0.9\columnwidth]{alexnet}
+    \end{figure}
+	\pgfplotstableread[col sep=comma]{../rootdata/alexnetma.csv}\datatable
+	\pgfplotsset{major grid style={dotted,red}}
+	
+	\begin{tikzpicture}
+	\begin{axis}[
+	width=\linewidth,
+	height=0.4\linewidth,
+	axis x line=bottom,
+	ylabel=Top-5 Val.\ Error,
+	xlabel=Model Parameters (\# floats),
+	axis lines=left,
+	enlarge x limits=0.12,
+	enlarge y limits=0.1,
+	grid=major,
+	%xmin=0,
+	ytick={0.01,0.02,...,0.21},
+	ymin=0.18,ymax=0.2,
+	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+		/pgf/number format/fixed,
+		/pgf/number format/precision=1
+	},
+	legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+	legend columns=2,
+	]
+	\addplot[mark=*,mark options={fill=black},nodes near coords,only marks,
+	point meta=explicit symbolic,
+	] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+	\end{axis}
+	\end{tikzpicture}
+	\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -471,11 +711,11 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
 %%%%%%%%%%%%%%%%%%%%
 \section*{Results}
 
-%\input{cifarninmaplot}
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Results - Best CIFAR10 Results}
+%\begin{frame}{Results - Best CIFAR10 Results}
+%\input{cifarninmaplot}
 %\input{cifarninmatable}
-\end{frame}
+%\end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
