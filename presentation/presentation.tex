@@ -205,12 +205,12 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
     \includegraphics[width=0.4\textwidth]{imagenetlogo}
 \end{figure}
 \begin{itemize}
-    \item Imagenet Large-Scale Visual Recognition Challenge.
+    \item Imagenet Large-Scale Visual Recognition Challenge\footcite{ILSVRC2015}.
     \item 1.2 Million Training Images, 1000 classes.
     \item 50,000 image validiation/test set.
     \begin{itemize}
-        \item In 2012 Alex Krizhevsky won challenge with CNN.
-        \item `Alexnet' was 26.2\% better than second best, 15.3\%.
+        \item In 2012 Alex Krizhevsky won challenge with CNN\footcite{Krizhevsky2012}.
+        \item `AlexNet' was 26.2\% better than second best, 15.3\%.
     \end{itemize}
     \item State-of-the-art beats human error (5\%).
 \end{itemize}    
@@ -372,7 +372,7 @@ $\approx$ 96\% in fully connected layers
 ``If you give me any sized dataset, what you ought to do \textbf{if you want good generalization} is get yourself into the small data regime. That is, however big your dataset, you ought to \textbf{make a much bigger model} so that that's small data.''\\
 
 ``So, I think what the brain is doing is \ldots \textbf{regularizing the hell} out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model.'' \\
-\flushright{\normalfont Geoffery Hinton\\Cambridge, June 2015}
+\flushright{\normalfont Geoffery Hinton\\\footnote{\url{http://sms.cam.ac.uk/media/2017973}}Cambridge, June 2015}
 \end{quote}
 \end{frame}
 
@@ -601,8 +601,27 @@ The Atlas Slave\\(Accademia, Florence)
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+\section{Spatial Structural Priors}
 
-Chiseling out the spatial
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{lrpaper.pdf}
+   }
+   };
+}
+
+\begin{frame}
+\vfill
+\centering
+%\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+\usebeamerfont{title}Spatial Structural Priors\par%
+%\end{beamercolorbox}
+\vfill
+%Chiseling out the spatial
+\end{frame}
+
+\usebackgroundtemplate{}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -786,6 +805,28 @@ Chiseling out the spatial
 
 %%%%%%%%%%%%%%%%%%%%
 
+\section{Channel-wise Structural Priors}
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{deeproots.pdf}
+   }
+   };
+}
+
+\begin{frame}
+\vfill
+\centering
+%\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+\usebeamerfont{title}Channel-wise Structural Priors\par%
+%\end{beamercolorbox}
+\vfill
+\end{frame}
+
+\usebackgroundtemplate{}
+
+%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Typical Convolutional Layer}
 \begin{figure}
    \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
@@ -1010,7 +1051,21 @@ Chiseling out the spatial
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Root Architectures}
+\begin{frame}{Root Modules}
+%\includegraphics[width=0.7\linewidth, page=4]{../Figs/PDF/groupfig}
+%   \caption{Convolution with $d$ filters of shape $h\times w\times c$.}
+%   \label{fig:normalresnet}
+%\end{subfigure}\\
+%\begin{subfigure}[t]{\linewidth}
+\centering
+\includegraphics[width=0.9\linewidth, page=5]{../Figs/PDF/groupfig}\\
+Root-2 Module: $d$ filters in $g = 2$ filter groups, of shape $h\times w\times c/2$.
+\includegraphics[width=0.9\linewidth, page=6]{../Figs/PDF/groupfig}\\
+Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{NiN Root Architectures}
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em, row sep=2em]{
@@ -1069,28 +1124,319 @@ Chiseling out the spatial
 			\draw[->] (2a) edge (r2a);
 			\draw[->] (3a) edge (r3a);
 			
-			\draw[decorate,decoration={brace,mirror},](r2a.south west) -- node[below=3pt] {\small root-4 module} ++(3.5, 0);
-			\draw[decorate,decoration={brace,mirror},yshift=-2em](r3a.south west) + (0, -0.5) -- node[below=3pt] {\small root-2 module} ++(3.5, -0.5);
+			\draw[decorate,decoration={brace,mirror},](r2a.south west) -- node[below=3pt] {\small root-4 module} ++(2.3, 0);
+			\draw[decorate,decoration={brace,mirror},yshift=-2em](r3a.south west) + (0, -0.4) -- node[below=3pt] {\small root-2 module} ++(2.5, -0.4);
 			\end{scope}
 			\end{tikzpicture}
 \end{frame}
 
-
 %%%%%%%%%%%%%%%%%%%%
 \section*{Results}
 
-%%%%%%%%%%%%%%%%%%%%
-%\begin{frame}{Results - Best CIFAR10 Results}
-%\input{cifarninmaplot}
-%\input{cifarninmatable}
-%\end{frame}
-%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{NiN Root Architectures}
+\centering
+\textbf{Network-in-Network}. Filter groups in each convolutional layer.
+\vfill
+%\resizebox{\linewidth}{!}{
+\begin{tabular}{@{}lm{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}@{}}
+\toprule
+    Model & \multicolumn{3}{c}{conv1} & \multicolumn{3}{c}{conv2} & \multicolumn{3}{c}{conv3} \\
+     & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} \\
+     & \textit{\footnotesize5$\times$5} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize5$\times$5} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize3$\times$3} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize1$\times$1} \\
+    Orig. & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+    \midrule
+    root-2 & 1 & 1 & 1 & 2 & 1 & 1 & 1 & 1 & 1\\
+    root-4 & 1 & 1 & 1 & 4 & 1 & 1 & 2 & 1 & 1\\
+    root-8 & 1 & 1 & 1 & 8 & 1 & 1 & 4 & 1 & 1\\
+    root-16 & 1 & 1 & 1 & 16 & 1 & 1 & 8 & 1 & 1\\
+    \bottomrule
+\end{tabular}
+\vfill
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%
-%\input{googlenetmaplot}
+\begin{frame}{CIFAR10: Model Parameters \vs Error}
+\footnotesize
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar.csv}\datatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_root_s.csv}\rdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_tree_s.csv}\tdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_col_s.csv}\cdatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+%\tikzstyle{every node}=[font=\footnotesize]
+\begin{axis}[
+  width=\linewidth,
+  height=0.66\linewidth,
+  axis x line=bottom,
+  ylabel=Error,
+  xlabel=Model Parameters,
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=major,
+  %xmin=0,
+  ytick={0.002,0.004,...,1.0},
+  %ymin=0.075,ymax=0.09,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(1,0.95)}, anchor=south east, column sep=0.2em, font=\small},
+  legend columns=4,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   error bars/y dir=both,
+   error bars/y fixed=0.00131497782,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\datatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
+\addplot[mark=triangle*,mark options={fill=blue},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
+\addplot[mark=diamond*,mark options={fill=yellow},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\cdatatable};
+\legend{NiN, Root, Tree, Column}
+\end{axis}
+\end{tikzpicture}
+%\caption{\textbf{Model Parameters \vs Error.}}
+%\label{fig:nincifarparamconvonly}
+{\tiny NiN: mean and standard deviation (error bars) are shown over 5 different random initializations.}
+\end{frame}
+
+\begin{frame}{CIFAR10: FLOPS (Multiply-Add) \vs Error.}
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar.csv}\datatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_root_s.csv}\rdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_tree_s.csv}\tdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/nincifar_col_s.csv}\cdatatable
+\pgfplotsset{major grid style={dotted,red}}
+\footnotesize
+
+\centering
+\begin{tikzpicture}
+%\tikzstyle{every node}=[font=\footnotesize]
+\begin{axis}[
+  width=\linewidth,
+  height=0.66\linewidth,
+  axis x line=bottom,
+  ylabel=Error,
+  xlabel=FLOPS (Multiply-Add),
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=major,
+  %xmin=0,
+  ytick={0.002,0.004,...,1.0},
+  %ymin=0.075,ymax=0.09,
+  xticklabel style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+  yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed zerofill,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(1,0.95)}, anchor=south east, column sep=0.2em, font=\small},
+  legend columns=4,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   error bars/y dir=both,
+   error bars/y fixed=0.00131497782,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\datatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
+\addplot[mark=triangle*,mark options={fill=blue},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
+\addplot[mark=diamond*,mark options={fill=yellow},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   point meta=explicit symbolic,
+] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\cdatatable};
+\legend{NiN, Root, Tree, Column}
+\end{axis}
+\end{tikzpicture}
+{\tiny NiN: mean and standard deviation (error bars) are shown over 5 different random initializations.}
+%\caption{\textbf{FLOPS (Multiply-Add) \vs Error.}}
+%\label{fig:nincifarmaconvonly}
+
+%\caption{\textbf{Network-in-Network CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. 
+%(left) Parameters \vs Error, (right) FLOPS \vs Error.}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\covarlabels}[1]{%
+\tiny
+\vspace{0.75em}
+\begin{tikzpicture}[remember picture]
+\node [anchor=south west, inner sep=0pt] (c)
+    {
+        #1
+    };
+    \path[use as bounding box] (c.south west) rectangle (c.north east);
+    \node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
+    \node [anchor=south east, xshift=\linewidth, yshift=-0.2em] at (c.north west) {\footnotesize 192};
+    \node [anchor=south west, xshift=0.25em, yshift=-1.05\linewidth, rotate=90] at (c.north west) {\footnotesize 192};
+    \node [anchor=south, xshift=0.5\linewidth] at (c.north west) {\footnotesize\texttt{conv3a}};
+    \node [anchor=south, xshift=0.2em, yshift=-0.5\linewidth, rotate=90] at (c.north west) {\footnotesize \texttt{conv2c}};
+\end{tikzpicture}%
+}
+
+\begin{frame}{Inter-layer Filter Covariance}
+
+\begin{figure}[tb]
+\centering
+\begin{subfigure}[b]{0.31\linewidth}
+\centering
+    \covarlabels{\includegraphics[width=\linewidth]{../Figs/Raster/msrc-cifar-nin-4pad-conv8-corr}}
+    \caption{\textbf{Standard:} $g=1$}
+    \label{fig:normalcovartest}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.31\linewidth}
+\centering
+    \covarlabels{\includegraphics[width=\linewidth]{../Figs/Raster/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
+    \caption{\textbf{Root-4:} $g=2$}
+    \label{fig:root4}
+\end{subfigure}
+%~
+%\begin{subfigure}[b]{0.24\linewidth}
+%\centering
+%    \covarlabels{\includegraphics[width=\linewidth]{../Figs/Raster/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
+%    \caption{\textbf{Root-8:} 4 filter groups}
+%    \label{fig:root8corr}
+%\end{subfigure}
+~
+\begin{subfigure}[b]{0.31\linewidth}
+\centering
+    \covarlabels{\includegraphics[width=\linewidth]{../Figs/Raster/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
+    \caption{\textbf{Root-32:} $g=16$}
+    \label{fig:root32corr}
+\end{subfigure}
+\caption{The block-diagonal sparsity learned by a root-module is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
+\label{fig:covar}
+\end{figure}
+%Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in Table~\ref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in Fig.~\ref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartest} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background. See \S\ref{interlayercovar} for more images, and an explanation of their derivation.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\covarlabels}[5]{%
+\begin{tikzpicture}[anchor=south west]
+    \tikzstyle{every node}=[font=\tiny]
+    \node [inner sep=0pt] (c)
+    {
+        #5
+    };
+    \ifx\covarwidth\undefined
+    \newlength{\covarwidth}
+    \newlength{\covarheight}
+    \fi
+    \settowidth{\covarwidth}{#5}
+    \settoheight{\covarheight}{#5}
+    \path[use as bounding box] (c.south west) rectangle (c.north east);
+    %\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
+    %\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
+    %\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
+    \node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\tiny\texttt{#3}};
+    %\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
+\end{tikzpicture}%
+}
+
+\begin{frame}[fragile]{Intra-layer Filter Correlation}
+\centering
+\tiny
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv1.png}}
+%~
+    \covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv2.png}}
+    \covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv4.png}}
+    \covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv5.png}}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv6.png}}
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv8.png}}
+    \covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv9.png}}\\
+\textbf{Network-in-Network.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv9.png}\\
+\textbf{Root-4.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv9.png}\\
+\textbf{Root-8.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv9.png}\\
+\textbf{Root-32.}\\
+\includegraphics[width=0.4\linewidth]{../Figs/PDF/colorbar}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ILSVRC GoogLeNet}
-%\input{googlenetmatable}
 
 \begin{itemize}
     \item Root-8 (s) GoogLeNet
@@ -1197,6 +1543,50 @@ For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
 \end{equation*}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\covarlabels}[5]{%
+\begin{tikzpicture}[anchor=south west]
+    \node [inner sep=0pt] (c)
+    {
+        #5
+    };
+    \ifx\covarwidth\undefined
+    \newlength{\covarwidth}
+    \newlength{\covarheight}
+    \fi
+    \settowidth{\covarwidth}{#5}
+    \settoheight{\covarheight}{#5}
+    \path[use as bounding box] (c.south west) rectangle (c.north east);
+    \node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
+    \node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
+    \node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
+    \node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\footnotesize\texttt{#3}};
+    \node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
+\end{tikzpicture}%
+}
+
+\begin{frame}{Whitening for Covariance Analysis}
+
+\begin{figure}[tbp]
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../Figs/Raster/ninroot32/layercovar_conv8.png}}
+    \caption{Non-whitened responses}
+    \label{fig:notwhitened}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.45\linewidth}
+\centering
+    \covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{../Figs/Raster/ninroot32/layercovarwhite_conv8.png}}
+    \caption{Whitened responses}
+    \label{fig:whitened}
+\end{subfigure}
+\caption{Covariance between layers is conflated with the inherent covariances within $X_1$ and $X_2$ from the data. We can more clearly show the covariance between layers by first whitening (using ZCA~\cite{CIFAR10}) the samples in $X_1$ and $X_2$.}
+\label{fig:whitevsnot}
+\end{figure}
+\end{frame}
 \end{document}
 
 
