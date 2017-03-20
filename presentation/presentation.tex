@@ -805,6 +805,30 @@ The Atlas Slave\\(Accademia, Florence)
 
 %%%%%%%%%%%%%%%%%%%%
 
+\usebackgroundtemplate{
+\tikz[overlay,remember picture] \node[opacity=0.5, at=(current page.center), yshift=-1cm] {
+\centering
+   \setlength{\fboxsep}{0pt}\setlength\fboxrule{0.5pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{inceptionv3.pdf}
+   }
+   };
+}
+
+\begin{frame}
+\vfill
+\centering
+\colorbox{white}{
+\setlength{\fboxsep}{0pt}\fbox{
+\begin{minipage}{0.6\paperwidth}
+   \includegraphics[width=0.6\paperwidth,page=1]{inceptionv3-filterconfig.pdf}
+\end{minipage}}}
+\end{frame}
+
+\usebackgroundtemplate{}
+
+
+%%%%%%%%%%%%%%%%%%%%
+
 \section{Channel-wise Structural Priors}
 
 \usebackgroundtemplate{%             declare it
@@ -1436,27 +1460,225 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{ILSVRC GoogLeNet}
+
+\begin{frame}
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\pgfplotstableset{
+    create on use/singlecpu/.style={
+        create col/expr={\thisrow{CPU Forward} / \thisrow{Batch Size}}},
+}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=Model Parameters (\# Floats),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
+\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
+\end{axis}
+\end{tikzpicture}
+
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=FLOPS (Multiply-Add),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
+\end{axis}
+\end{tikzpicture}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=GPU Forward (ms),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} }
+]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\codatatable};
+%\legend{ResNet 50, All Filters, Spatial Filters}
+\end{axis}
+\end{tikzpicture}
+
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50ma.csv}\gdatatable
+\pgfplotstableread[col sep=comma]{../rootdata/resnet50maconvonly.csv}\codatatable
+\pgfplotsset{major grid style={dotted,red}}
+
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.45\linewidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=CPU Forward (ms),
+  axis lines=left,
+  enlarge x limits=0.05,
+  %enlarge y limits=0.1,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.2},
+  ymin=0.07,ymax=0.1,
+  xticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+  },
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+  legend columns=3,
+]
+\addplot[mark=*,mark options={fill=red},
+   %nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\gdatatable};
+\addplot[mark=square*,mark options={fill=green},
+   nodes near coords, nodes near coords align = {below}, only marks,
+   every node near coord/.append style={inner sep=4pt},
+   only marks,
+   point meta=explicit symbolic,
+] table[meta=Network,
+    x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+    y expr={1 - \thisrow{Top-5 Acc.} },
+]{\codatatable};
+%\legend{ResNet 50, All Filters, Spatial Filters}
+\end{axis}
+\end{tikzpicture}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Imagenet Results}
 
 \begin{itemize}
-    \item Root-8 (s) GoogLeNet
+    \item Root-8 GoogLeNet
     \begin{itemize}
         \item 7\% fewer parameters 
         \item 21\% faster CPU timings
         \item 16\% faster GPU timings
     \end{itemize}
 \end{itemize}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-%\input{resnet50maplot}
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{ILSVRC ResNet 50}
-
-%\input{resnet50matable}
 \begin{itemize}
-\item Root-64 (s) ResNet 50
+\item Root-64 ResNet 50
     \begin{itemize}
         \item 40\% fewer parameters
         \item 45\% fewer floating point operations
@@ -1466,6 +1688,37 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 \end{itemize}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\usebackgroundtemplate{
+\tikz[overlay,remember picture] \node[opacity=0.5, at=(current page.center), yshift=-1cm] {
+\centering
+   \setlength{\fboxsep}{0pt}\setlength\fboxrule{0.5pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{resnext.pdf}
+   }
+   };
+}
+
+\begin{frame}
+\vfill
+\centering
+\colorbox{white}{
+\setlength{\fboxsep}{0pt}\fbox{
+\begin{minipage}{0.6\paperwidth}
+   \includegraphics[width=0.6\paperwidth,page=1]{resnext-filterconfig.pdf}
+   
+   \begin{quote}
+   \footnotesize
+   ``Moreover, increasing cardinality is more effective than going deeper or wider when we increase the capacity.''
+   \end{quote}
+\end{minipage}
+}
+}
+\end{frame}
+
+\usebackgroundtemplate{}
+
 %%%%%%%%%%%%%%%%%%%%
 
 \section*{Summary}
@@ -1479,13 +1732,9 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 	\begin{itemize}
     	\item Our models are \alert{less computationally complex}.
 	    \item They also use \alert{less parameters}.
-	    \item Initial results indicate they may significantly help generalization in deeper residual networks.
+	    \item They significantly help generalization in deeper residual networks.
 	\end{itemize}
 	\item Are amenable to \alert{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
-	\begin{itemize}
-	    \item State of the art models require 4-8 GPUs to train
-	    \item Commerical services using CNNs for inference are distributed.
-	\end{itemize}
 	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent over-fitting.
   \end{itemize}
 \end{frame}
