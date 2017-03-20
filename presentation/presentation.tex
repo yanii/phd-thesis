@@ -37,6 +37,24 @@
   \setbeamercovered{transparent}
 }
 
+\AtBeginSection[]{
+  \usebackgroundtemplate{
+  \tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+  \includegraphics[height=\paperheight,width=\paperwidth]{background}};
+  }
+
+  \begin{frame}
+  \vfill
+  \centering
+  %\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  %\end{beamercolorbox}
+  \vfill
+  \end{frame}
+  
+  \usebackgroundtemplate{}
+}
+
 %\setbeamertemplate{note page}[plain]
 
 % Get rid of the annoying symbol list
@@ -133,12 +151,17 @@
 % of between 15min and 45min and the theme suggest that you stick to
 % the following rules:  
 
+\begin{frame}{Overview}
+\tableofcontents
+\end{frame}
+
 % - Exactly two or three sections (other than the summary).
 % - At *most* three subsections per section.
 % - Talk about 30s to 2min per frame. So there should be between about
 %   15 and 30 frames, all told.
 
 \section{Introduction}
+
 \begin{frame}{About Me}
 \begin{itemize}
 \item Ph.D.\ student in the Department of Engineering at the University of Cambridge.
@@ -152,11 +175,15 @@
 
 \usebackgroundtemplate{}
 
-\section{Areas of Research}
+\section{Research Overview}
+\subsection{Collaborative Research}
 \begin{frame}{Collaborative Research @ MSR}
 \begin{itemize}
-    \item \textbf{Medical Computer Vision}\\Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
-    Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+    \item \textbf{Medical Computer Vision}
+    \begin{itemize}
+        \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
+        \item Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+    \end{itemize}
     \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
     \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
 S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{CVPR 2016}}
@@ -228,6 +255,8 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 
 \usebackgroundtemplate{}
 
+\subsection{PhD Research}
+
 \begin{frame}{First Author Publications during PhD}
 \begin{itemize}
     \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report} 
@@ -237,7 +266,8 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \end{itemize}
 \end{frame}
 
-\section{Motivation}
+\section{Structural Priors}
+\subsection{Motivation}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -659,7 +689,7 @@ The Atlas Slave\\(Accademia, Florence)
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-\section{Spatial Structural Priors}
+\subsection{Spatial Structural Priors}
 
 \usebackgroundtemplate{%             declare it
 \tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
@@ -887,7 +917,7 @@ The Atlas Slave\\(Accademia, Florence)
 
 %%%%%%%%%%%%%%%%%%%%
 
-\section{Channel-wise Structural Priors}
+\subsection{Channel-wise Structural Priors}
 
 \usebackgroundtemplate{%             declare it
 \tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
@@ -1778,23 +1808,54 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 \usebackgroundtemplate{}
 
 %%%%%%%%%%%%%%%%%%%%
+\section{Summary/Future Work}
 
-\section*{Summary}
-
+%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Summary}
 
   % Keep the summary *very short*.
   \begin{itemize}
 	%\item Separable filter model show surprisingly high accuracy on what are considered challenging problems -- approx.\ 88\% top-5 accuracy on ILSVRC.
-	\item Using a hierarchical set of grouped convolutions:
+	\item Using structural priors:
 	\begin{itemize}
-    	\item Our models are \alert{less computationally complex}.
-	    \item They also use \alert{less parameters}.
-	    \item They significantly help generalization in deeper residual networks.
+    	\item Models are \alert{less computationally complex}
+	    \item They also use \alert{less parameters}
+	    \item They significantly help generalization in \alert{deeper networks}
+        \item They significantly help generalization with \alert{larger datasets}
 	\end{itemize}
 	\item Are amenable to \alert{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
 	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent over-fitting.
   \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Future Work: Research}
+    \begin{itemize}
+        \item Structural priors help in both the efficiency and generalization of DNN
+        \item But we don't always have enough knowledge of the domain to propose good structural priors
+        \item Our results (and follow up work) do show however that current methods of training/regularization seem to have limited effectiveness in DNNs learning such priors themselves
+        \item How can we otherwise learn structural priors?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Future Work: Applications}
+    Both of these methods have application within Microsoft:
+    \begin{itemize}
+        \item Smaller model state -- easier storage and synchronization
+        \item Faster training and test of models behind ML cloud services
+        \item Embedded devices (HoloLens)/Tensor processing units
+    \end{itemize}
+    And more specific to each method
+    \begin{itemize}
+        \item Low-rank filters
+        \begin{itemize}
+            \item Even larger impact for volumetric imagery (Microsoft Radiomics)
+        \end{itemize}
+        \item Root Modules
+        \begin{itemize}
+            \item Model parallelization (Azure)
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
