@@ -155,36 +155,78 @@
 \section{Areas of Research}
 \begin{frame}{Collaborative Research @ MSR}
 \begin{itemize}
-    \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\MICCAI-BRATS 2014}
-    \item Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\NIPS 2016}
-    \item Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
-S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
+    \item \textbf{Medical Computer Vision}\\Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
+    Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+    \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
+    \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
+S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{CVPR 2016}}
 \end{itemize}
 \end{frame}
 
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=2]{darkobrats.pdf}
+   }
+   };
+}
+
 \begin{frame}{Collaborative Research @ MSR}
-\textbf{Segmentation of brain tumor tissues with convolutional neural networks.}\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\MICCAI-BRATS 2014}
+\textbf{Segmentation of brain tumor tissues with convolutional neural networks}\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\\textit{MICCAI-BRATS 2014}}
 \begin{itemize}
     \item One of the first papers using deep learning for volumetric/medical imagery
-    \item Biggest challenge for training was the class-imbalanced training data
+    %\item Biggest challenge for training was the class-imbalanced training data
 \end{itemize}
+\vfill
 \end{frame}
 
+\usebackgroundtemplate{}
+
 \begin{frame}{Collaborative Research @ MSR}
-\textbf{Measuring Neural Net Robustness with Constraints.}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\NIPS 2016}
+\textbf{Using CNNs for Malaria Diagnosis}\\{\footnotesize Intellectual Ventures/Gates Foundation}
 \begin{itemize}
-    \item Showed that contemporary methods of finding adversarial examples were limited in their coverage
+    \item Design and train CNN for the classification of malaria parasites in blood smears.
+\end{itemize}
+\vfill
+\includegraphics[width=0.45\linewidth]{malarianegative}\hfill\includegraphics[width=0.45\linewidth]{malariapositive}
+\end{frame}
+
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{osbertnips.pdf}
+   }
+   };
+}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Measuring Neural Net Robustness with Constraints}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\\textit{NIPS 2016}}
+\begin{itemize}
+    %\item Showed that contemporary methods of finding adversarial examples were limited in their coverage
     \item Found that not all adversarial images can be used to improve network robustness
 \end{itemize}
 \end{frame}
 
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{sukritcvpr.pdf}
+   }
+   };
+}
+
 \begin{frame}{Collaborative Research @ MSR}
-\textbf{Refining Architectures of Deep Convolutional Neural Networks.}\\{\footnotesize S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\CVPR 2016}
+\textbf{Refining Architectures of Deep Convolutional Neural Networks}\\{\footnotesize S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\\textit{CVPR 2016}}
 \begin{itemize}
-    \item A method for adapting network architectures optimized for large datasets for smaller datasets
-    \item Attempts to answer the common problem of adapting contemporary research to real-world problems
+    \item A method for adapting network architectures optimized for one dataset to another
+    %\item Attempts to answer the common problem of adapting contemporary research to real-world problems
 \end{itemize}
 \end{frame}
+
+\usebackgroundtemplate{}
 
 \begin{frame}{First Author Publications during PhD}
 \begin{itemize}
@@ -483,16 +525,32 @@ $\approx$ 96\% in fully connected layers
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Hinton Philosophy}
+\begin{frame}{The Problem}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
 \begin{itemize}
-    \item Hinton philosophy on neural network design: Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
-    \item This seems to work well in practice for networks such as AlexNet, VGG, and MSRA
-    \item But there is something that feels fundamentally wrong about this (and I'm not a statistician!)
-    \item This feeling is backed up not only by my work, but by recent work showing that regularization in deep networks is not as effective as the community thought.
+    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
+    \item This seems to work well in practice for training networks such as AlexNet, VGG, and MSRA
+    \item Training time: Translates into 2-3 weeks of training on 8 GPUs!
+    \item Test time: 100 ms/ $227^2$ image on CPU
+\end{itemize}
+\vfill
+But what about the practicalities of using deep learning:
+\begin{itemize}
+    \item on embedded devices
+    \item realtime applications
+    \item backed by distributed/cloud computing
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Compression/Representation}
+Isn't that already being addressed?
+\begin{itemize}
+\item Approximation (compression/pruning) of neural networks
+\item Reduced representation (8-bit floats/binary!)
+\end{itemize}
+\vfill
+\textit{These methods will still apply to any network.} Instead, let's try to  address the fundamental problem of over-parameterization.
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Alternative Philosophy}
 \begin{columns}[onlytextwidth,T]
