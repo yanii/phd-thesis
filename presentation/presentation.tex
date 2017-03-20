@@ -229,7 +229,7 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 }
 
 \begin{frame}{Collaborative Research @ MSR}
-\textbf{Measuring Neural Net Robustness with Constraints}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\\textit{NIPS 2016}}
+\textbf{Measuring Neural Net Robustness with Constraints}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\\textit{NIPS 2016}}
 \begin{itemize}
     %\item Showed that contemporary methods of finding adversarial examples were limited in their coverage
     \item Found that not all adversarial images can be used to improve network robustness
@@ -259,7 +259,7 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 
 \begin{frame}{First Author Publications during PhD}
 \begin{itemize}
-    \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report} 
+    \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report 2015} 
     \item Training CNNs with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
     \item Deep roots: Improving CNN efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.\\CVPR 2017}
     
@@ -271,27 +271,8 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{ILSVRC}{Imagenet Large-Scale Visual Recognition Challenge}
-
-\begin{figure}
-    \includegraphics[width=0.4\textwidth]{imagenetlogo}
-\end{figure}
-\begin{itemize}
-    \item Imagenet Large-Scale Visual Recognition Challenge\footcite{ILSVRC2015}.
-    \item 1.2 Million Training Images, 1000 classes.
-    \item 50,000 image validiation/test set.
-    \begin{itemize}
-        \item In 2012 Alex Krizhevsky won challenge with CNN\footcite{Krizhevsky2012}.
-        \item `AlexNet' was 26.2\% better than second best, 15.3\%.
-    \end{itemize}
-    \item State-of-the-art beats human error (5\%).
-\end{itemize}    
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}{AlexNet Complexity}
-\includegraphics[width=\columnwidth]{alexnet}
+\includegraphics[width=\columnwidth]{alexnet}\footcite{Krizhevsky2012}
 \begin{itemize}
 \item $\approx$ 61 million parameters %60,965,224
 \item $\approx$ 724 million FLOPS (per-sample) % 724,417,384
@@ -370,69 +351,6 @@ $\approx$ 96\% in fully connected layers
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{AlexNet Complexity}
-\begin{figure}[tbp]
-\centering
-\tikzstyle{every node}=[font=\tiny]
-\pgfplotstableread[col sep=comma]{alexnetma.csv}\datatable
-\begin{tikzpicture}
-\begin{axis}[
-    axis x line=bottom,
-    axis y line=left,
-    ybar=0pt,
-    bar width=1em,
-    width=0.9\linewidth,
-    height=0.33\linewidth,
-    enlarge x limits=0.1,
-    ylabel=FLOPS,
-    y label style={at={(axis description cs:0.09,.5)},anchor=south},
-    y tick label style={
-        /pgf/number format/.cd,
-            fixed,
-            fixed zerofill,
-            precision=1,
-        /tikz/.cd
-    },
-    ymin=0,
-    xmajorticks=false,
-    legend style={at={(0.5,1.2)},
-    draw=none, anchor=north,legend columns=-1},
-    area legend,
-]
-\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=ma]{\datatable};
-\end{axis}
-\end{tikzpicture}
-~
-\begin{tikzpicture}
-\begin{axis}[
-    axis x line=bottom,
-    axis y line=left,
-    ybar=0pt,
-    bar width=1em,
-    width=0.9\linewidth,
-    height=0.33\linewidth,
-    enlarge x limits=0.1,
-    ylabel=Parameters,
-    y label style={at={(axis description cs:0.09,.5)},anchor=south},
-    y tick label style={
-        /pgf/number format/.cd,
-            fixed,
-            fixed zerofill,
-            precision=1,
-        /tikz/.cd
-    },
-    ymin=0,
-    xticklabels from table={\datatable}{layer},
-    xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
-    xtick=data,
-]
-\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
-\end{axis}
-\end{tikzpicture}
-\end{figure}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Hinton Philosophy}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
     %\item Standard practice: Create a model of appropriate size for our data and the problem at hand.
@@ -461,23 +379,23 @@ $\approx$ 96\% in fully connected layers
 \begin{tikzpicture}
 \begin{axis}[
   width=1.2\textwidth,
-  height=1.1\textheight,
+  height=1.3\textheight,
   axis x line=bottom,
   ylabel=Top-5 Error,
   xlabel=$\log_{10}$(Multiply-Accumulate Operations),
   axis lines=left,
-  enlarge x limits=0.05,
-  enlarge y limits=0.05,
+%  enlarge x limits=0.05,
+%  enlarge y limits=0.05,
   grid=both,
   ytick={0.00,0.02,...,0.22},
   xmode=log, 
   %ymin=0,ymax=0.2,
-  %xmin=10e8,xmax=10e10,
+  xmin=10e7,xmax=10e13,
   yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
         /pgf/number format/fixed,
         /pgf/number format/precision=1
   },
-  legend style={at={(0.01,0.01)},anchor=south west},
+  legend style={at={(0.99,0.99)},anchor=north east},
 ]
 %\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
 %   point meta=explicit symbolic,
@@ -521,12 +439,12 @@ $\approx$ 96\% in fully connected layers
   grid=both,
   ytick={0.01,0.02,...,0.2},
   xmode=log,
-  xmin=10e5,xmax=10e8,
+  xmin=10e6,xmax=10e8,
   yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
         /pgf/number format/fixed,
         /pgf/number format/precision=1
   },
-  legend style={at={(0.01,0.01)},anchor=south west},
+  legend style={at={(0.99,0.99)},anchor=north east},
 ]
 %\addplot[mark=*,mark options={fill=green!70!black},
 %   nodes near coords,
@@ -558,10 +476,12 @@ $\approx$ 96\% in fully connected layers
 \begin{frame}{The Problem}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
 \begin{itemize}
-    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
-    \item This seems to work well in practice for training networks such as AlexNet, VGG, and MSRA
-    \item Training time: Translates into 2-3 weeks of training on 8 GPUs!
-    \item Test time: 100 ms/ $227^2$ image on CPU
+%    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
+%    \item This seems to work well in practice for increasing generalization in networks such as VGG, and MSRA
+    \item Creating a massively over-parameterized network, has consequences
+    \item Training time: Translates into 2-3 weeks of training on 8 GPUs! (ResNet 200)
+    \item Forward pass (ResNet 50): 12 ms GPU, 621 ms CPU
+    \item Forward pass (GoogLeNet): 4.4 ms GPU, 300 ms CPU
 \end{itemize}
 \vfill
 But what about the practicalities of using deep learning:
@@ -577,7 +497,9 @@ Isn't that already being addressed?
 \begin{itemize}
 \item Approximation (compression/pruning) of neural networks
 \item Reduced representation (8-bit floats/binary!)
+%\item Conditional computation
 \end{itemize}
+Allow us to have a trade off in compute \vs accuracy.
 \vfill
 \textit{These methods will still apply to any network.} Instead, let's try to  address the fundamental problem of over-parameterization.
 \end{frame}
@@ -598,6 +520,7 @@ Isn't that already being addressed?
     %    \item Learning weights such that a filter responds to a stimulus
     %    \item Learning what to ignore
     %\end{itemize}
+    %\item But is that deep? Yann LeCun says not to hand design, learn end-to-end!
 \end{itemize}
 \end{column}
 \begin{column}{0.34\textwidth}
@@ -607,24 +530,7 @@ The Atlas Slave\\(Accademia, Florence)
 \end{column}
 \end{columns}
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Typical Convolutional Layer}
-\begin{figure}
-   \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
-%   \caption{A full rank convolutional layer.}
-\end{figure}
-    Best example of this idea is a CNN!
-    \begin{itemize}
-        \item Shared parameters: filter learned for one part of the image should apply to the whole image.
-        \item Filters: natural images are highly correlated locally
-    \end{itemize}
-    %\item A fully-connected network could theoretically learn the same thing, but in practice it never will.
-
-    \note[item]{We show here a typical convolutional layer.}
-    \note[item]{Yellow blocks are filters.}
-    \note[item]{Grey blocks are images or feature maps.}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%
 
@@ -696,7 +602,7 @@ networks which are interconnected in very specific ways.''\\
 \flushright{\normalfont Marvin Minsky\\Perceptrons (1988 edition)}
 \end{quote}
 \begin{itemize}
-    \item Deep networks are largely monolithic and symmetric, with only one notable exception -- GoogLeNet
+    \item Deep networks are largely monolithic (uniformly connected), with few exceptions
     \item Why don't we try to structure our networks closer to the specialized components required for learning images?
 \end{itemize}
 \end{frame}
@@ -725,185 +631,111 @@ networks which are interconnected in very specific ways.''\\
 \usebackgroundtemplate{}
 
 %%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Convolution is Expensive}{Can we use Separable Filters?}
-\begin{itemize}
-    \item In image processing, we can often use separable filters instead.
-    \begin{itemize}
-        \item Factorizes a $k\times k$ filter into $1\times k$ and $k \times 1$ smaller filters.
-        \item Only works if we can factorize a matrix into such an outer product $\Rightarrow$ rank-1 matrix    \item \eg $\begin{bmatrix} 1 \\ 2 \\ 1\end{bmatrix} \begin{bmatrix} -1 & 0 & 1\end{bmatrix}  = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1\end{bmatrix}$.
-    \end{itemize}
-    
-    % The following outlook is optional.
-    \vskip0pt plus.5fill
-    \item Much faster - $\mathcal{O}(k+k)$ \vs $\mathcal{O}(k^2)$.
-    \note[item]{We can do this because convolution is associative, \ie $f*(v*h) = (f*v)*h$.}
-\end{itemize}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Separable Layer}
-\vspace{-1em}
-\begin{itemize}
-    \item Use sequential filters of differing orientation\footcite{mamalet2012simplifying,journals/corr/JaderbergVZ14}.
-\end{itemize}
-\begin{figure}
-    \begin{tikzpicture}
-        \node at (0, 4.2) (n1) {
-            \includegraphics[width=0.4\textwidth, page=1]{../Figs/PDF/sparsification}
-        };
-        \node at (0, 1) (t1) {
-            \includegraphics[width=0.9\textwidth, page=2]{../Figs/PDF/sparsification}
-        };
-        \path[->]<1-> (n1) edge (t1);
-    \end{tikzpicture}
-\end{figure}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Separable Layer -- Issues}
-\begin{figure}
-\includegraphics[width=\textwidth, page=2]{../Figs/PDF/sparsification}
-%   \caption{Sequential separable filters.}
-%   \label{fig:separableseq}
-\end{figure}
-\begin{itemize}
-    \item Order of filter orientations gives different results (!).
-    \note[item]{Vertical first was more accurate\footcite{mamalet2012simplifying}}
-    \note[item]{Second orientation has $64\times$ the param, overfits differently?}
-    \item Complexity of each filter:
-    \begin{itemize}
-        \item before: filter is $\mathcal{O}(d \times [h\times w \times c])$.
-        \item after: $\mathcal{O}(d\times [h\times \mathbf{m}] + \mathbf{m} [w \times c])$,
-    \end{itemize}
-    \item However, in practice was not trainable for large networks.
-    \item New initialization proposed allows us to train this.
-    \note[item]{Get vanishing/exploding gradients if we tried to train these networks.}
-    \note[item]{in most CNNs, $d \geq m \gg c$, so still not that cheap.}
-    \note[item]{Second orientation has $64\times$ the param, so much more expensive that you'd think.}
-    \note[item]{Still has compute savings.}
-\end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Proposed Method}{Learning a basis space for filters.}
+\begin{frame}{Proposed Method}{Learning a basis for filters.}
 \begin{figure}
    \includegraphics[width=\textwidth, page=4]{../Figs/PDF/sparsification}
 \end{figure}
 \begin{itemize}
-    \item A learned basis space of vertical/horizontal rectangular filters and square filters!
+    \item A learned basis of vertical/horizontal rectangular filters and square filters!
     \item Shape of learned filters is a full $w \times h \times c$.
     \item But what can be effectively learned is limited by the number and complexity of the components.
 \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
-\pgfplotsset{major grid style={dotted,red}}
-\pgfplotsset{minor grid style={dotted,red}}
-
-\begin{frame}{State-of-the-Art Models}%{The Cost of Increasing Accuracy}
-\resizebox {\textwidth} {!} {
-\begin{tikzpicture}
-\begin{axis}[
-  width=1.2\textwidth,
-  height=1.1\textheight,
-  axis x line=bottom,
-  ylabel=Top-5 Error,
-  xlabel=$\log_{10}$(Multiply-Accumulate Operations),
-  axis lines=left,
-  enlarge x limits=0.05,
-  enlarge y limits=0.05,
-  grid=both,
-  ytick={0.00,0.02,...,0.22},
-  xmode=log, 
-  %ymin=0,ymax=0.2,
-  %xmin=10e8,xmax=10e10,
-  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-        /pgf/number format/fixed,
-        /pgf/number format/precision=1
-  },
-  legend style={at={(0.01,0.01)},anchor=south west},
-]
-\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
-   point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
-\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
-   point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-] table[meta=Network,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
-\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
-   point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
-\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
-\end{axis}
-\end{tikzpicture}
-}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{}
-\begin{figure}
+\begin{frame}{VGG/Imagenet Results}
 \centering
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
-\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotstableread[col sep=comma]{../lrdata/vggma.csv}\datatable
 \pgfplotsset{major grid style={dotted,red}}
-\pgfplotsset{minor grid style={dotted,red}}
 
-\resizebox {\textwidth} {!} {
+\tikzstyle{every node}=[font=\footnotesize]
 \begin{tikzpicture}
 \begin{axis}[
-  width=1.2\textwidth,
-  height=1.1\textheight,
+  width=\textwidth,
+  height=0.4\textwidth,
   axis x line=bottom,
   ylabel=Top-5 Error,
-  xlabel=$\log_{10}$(Number of Parameters),
+  xlabel=Multiply-Accumulate Operations,
   axis lines=left,
-  enlarge y limits=0.05,
-  grid=both,
-  ytick={0.01,0.02,...,0.2},
-  xmode=log,
-  xmin=10e5,xmax=10e8,
+  enlarge x limits=0.10,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.21},
+  ymin=0.1,ymax=0.15,
   yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
         /pgf/number format/fixed,
         /pgf/number format/precision=1
   },
-  legend style={at={(0.01,0.01)},anchor=south west},
+  legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
+  legend columns=2,
 ]
-\addplot[mark=*,mark options={fill=blue},
-   nodes near coords,
-   only marks,
+\addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
    point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
-\addplot[mark=square*,mark options={fill=red},
-   nodes near coords,
-   only marks,
+   x filter/.code={
+       \ifnum\coordindex>2\def\pgfmathresult{}\fi
+   },
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+\addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
    point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-   every node near coord/.append style={font=\tiny},
-] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
-\addplot[mark=*,mark options={fill=green!70!black},
-   nodes near coords,
-   only marks,
-   point meta=explicit symbolic,
-   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
-] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
-\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
+   x filter/.code={
+       \ifnum\coordindex<3\def\pgfmathresult{}\fi
+   },
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+\legend{Baseline Networks, Our Results}
 \end{axis}
 \end{tikzpicture}
-}
-\end{figure}
-\end{frame}
+\begin{tikzpicture}
+\begin{axis}[
+  width=\textwidth,
+  height=0.4\textwidth,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=Parameters,
+  axis lines=left,
+  enlarge x limits=0.10,
+  grid=major,
+  %xmin=0,
+  ytick={0.01,0.02,...,0.21},
+  ymin=0.1,ymax=0.15,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
+  legend columns=2,
+]
+\addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   x filter/.code={
+       \ifnum\coordindex>2\def\pgfmathresult{}\fi
+   },
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+\addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   x filter/.code={
+       \ifnum\coordindex<3\def\pgfmathresult{}\fi
+   },
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+%\legend{Baseline Networks, Our Results}
+\end{axis}
+\end{tikzpicture}
+%\caption{\textbf{VGG ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on ILSVRC object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}
 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Imagenet Results}
+
+%Applying our method to an improved version of VGG-11 network using global max-pooling, we achieve comparable validation accuracy using 41% less compute and only 24% of the original VGG-11 model parameters; another variant of our method gives a 1 percentage point increase in accuracy over our improved VGG-11 model, giving a top-5 center-crop validation accuracy of 89.7% while reducing computation by 16% relative to the original VGG-11 model. Applying our method to the GoogLeNet architecture for ILSVRC, we achieved comparable accuracy with 26% less compute and 41% fewer model parameters.
+%Applying our method to a near state-of-the-art network for CIFAR, we achieved comparable accuracy with 46% less compute and 55% fewer parameters. Networks with root modules have similar or higher accuracy than the baseline architectures with much less computation.
+\begin{itemize}
+    \item VGG-11 (low-rank): \textbf{24\%} smaller, \textbf{41\%} fewer FLOPS
+    \item VGG-11 (low-rank/full-rank mix): \textbf{16\%} fewer FLOPS with \textbf{1\% lower error} on ILSRVC val, but 16\% larger.
+    \item GoogLeNet: \textbf{41\%} smaller, \textbf{26\%} fewer FLOPS
+\end{itemize}
+\vfill
+Or better results if you tune it on GoogLeNet more\ldots
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 \usebackgroundtemplate{
@@ -926,7 +758,6 @@ networks which are interconnected in very specific ways.''\\
 \end{frame}
 
 \usebackgroundtemplate{}
-
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -1107,71 +938,6 @@ networks which are interconnected in very specific ways.''\\
     \note[item]{We show here a grouped convolutional layer.}
     \note[item]{Yellow blocks are filters.}
     \note[item]{Grey blocks are images or feature maps.}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Network-in-Network}
-            \centering
-			\begin{tikzpicture}[ampersand replacement=\&]
-			\begin{scope}[]
-			\matrix[column sep=0em]{
-				\node (1a) {
-					\includegraphics[height=0.12\linewidth, page=15]{../Figs/PDF/groupfig}
-				};\&
-				\node (1b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\& 
-				\node (1c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (1cdots) {
-					{\Large $\cdots$}
-				};\\
-				\draw node{{\footnotesize \textit{input}} \hspace{0.05em} {\footnotesize \textit{conv1a}}};\&
-				\draw node{\footnotesize \textit{conv1b}};\&
-				\draw node{\footnotesize \textit{conv1c}};\\
-				\node (2adots) {
-					{\Large $\cdots$}
-				};\&
-				\node (2a) {
-				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
-				};\&
-				\node (2b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (2c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (2cdots) {
-					{\Large $\cdots$}
-				};\\
-				\&
-				\draw node{\footnotesize \textit{conv2a}};\&
-				\draw node{\footnotesize \textit{conv2b}};\&
-				\draw node{\footnotesize \textit{conv2c}};\\
-				\node (3adots) {
-					{\Large $\cdots$}
-				};\&
-				\node (3a) {
-				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
-				};\&
-				\node (3b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (3c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (1a) {
-					\includegraphics[height=0.12\linewidth, page=20]{../Figs/PDF/groupfig}
-				};\\
-				\&
-				\draw node{\footnotesize \textit{conv3a}};\&
-				\draw node{\footnotesize \textit{conv3b}};\&
-				\draw node{\footnotesize \textit{conv3c}};\&
-				\draw node{\footnotesize \textit{pool} \hspace{0.08em} {\footnotesize \textit{output}}};\\
-			};
-			\end{scope}
-			\end{tikzpicture}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -1471,96 +1237,7 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 %Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in Table~\ref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in Fig.~\ref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartest} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background. See \S\ref{interlayercovar} for more images, and an explanation of their derivation.
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%
-
-\renewcommand{\covarlabels}[5]{%
-\begin{tikzpicture}[anchor=south west]
-    \tikzstyle{every node}=[font=\tiny]
-    \node [inner sep=0pt] (c)
-    {
-        #5
-    };
-    \ifx\covarwidth\undefined
-    \newlength{\covarwidth}
-    \newlength{\covarheight}
-    \fi
-    \settowidth{\covarwidth}{#5}
-    \settoheight{\covarheight}{#5}
-    \path[use as bounding box] (c.south west) rectangle (c.north east);
-    %\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
-    %\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
-    %\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
-    \node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\tiny\texttt{#3}};
-    %\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
-\end{tikzpicture}%
-}
-
-\begin{frame}[fragile]{Intra-layer Filter Correlation}
-\centering
-\tiny
-%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv0.png}}
-%~
-%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv1.png}}
-%~
-    \covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv2.png}}
-    \covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv4.png}}
-    \covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv5.png}}
-    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv6.png}}
-    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv8.png}}
-    \covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv9.png}}\\
-\textbf{Network-in-Network.}\\
-%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv0.png}}
-%~
-%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv1.png}}
-%~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv2.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv4.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv5.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv6.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv8.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv9.png}\\
-\textbf{Root-4.}\\
-%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv0.png}}
-%~
-%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv1.png}}
-%~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv2.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv4.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv5.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv6.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv8.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv9.png}\\
-\textbf{Root-8.}\\
-%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv0.png}}
-%~
-%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv1.png}}
-%~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv2.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv4.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv5.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv6.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv8.png}
-~
-    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv9.png}\\
-\textbf{Root-32.}\\
-\includegraphics[width=0.4\linewidth]{../Figs/PDF/colorbar}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%5
 
 \begin{frame}
 \pgfplotstableread[col sep=comma]{../rootdata/resnet50ma.csv}\gdatatable
@@ -1770,24 +1447,15 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 
 \begin{frame}{Imagenet Results}
 
+%We propose a new method for creating computationally efficient and compact convolutional neural networks (CNNs) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep CNNs, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art CNN architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
+Networks with root modules have similar or higher accuracy than the baseline architectures with much less computation.
 \begin{itemize}
-    \item Root-8 GoogLeNet
-    \begin{itemize}
-        \item 7\% fewer parameters 
-        \item 21\% faster CPU timings
-        \item 16\% faster GPU timings
-    \end{itemize}
+    \item ResNet 50: \textbf{40\%} smaller, \textbf{45\%} fewer FLOPS%, and is 31\% (12\%) faster on a CPU (GPU).
+    \item ResNet 200: \textbf{44\%} smaller, \textbf{25\%} fewer FLOPS
+    \item GoogLeNet: \textbf{7\%} smaller, \textbf{44\%} fewer FLOPS%, and is 21\% (16\%) faster on a CPU (GPU)
 \end{itemize}
-\begin{itemize}
-\item Root-64 ResNet 50
-    \begin{itemize}
-        \item 40\% fewer parameters
-        \item 45\% fewer floating point operations
-        \item 31\% faster CPU timings
-        \item 12\% faster GPU timings
-    \end{itemize}
-\end{itemize}
-
+\vfill
+But when you also \textbf{increase the number of filters}\ldots
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -1831,12 +1499,12 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 	%\item Separable filter model show surprisingly high accuracy on what are considered challenging problems -- approx.\ 88\% top-5 accuracy on ILSVRC.
 	\item Using structural priors:
 	\begin{itemize}
-    	\item Models are \alert{less computationally complex}
-	    \item They also use \alert{less parameters}
-	    \item They significantly help generalization in \alert{deeper networks}
-        \item They significantly help generalization with \alert{larger datasets}
+    	\item Models are \textbf{less computationally complex}
+	    \item They also use \textbf{less parameters}
+	    \item They significantly help generalization in \textbf{deeper networks}
+        \item They significantly help generalization with \textbf{larger datasets}
 	\end{itemize}
-	\item Are amenable to \alert{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
+	\item Are amenable to \textbf{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
 	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent over-fitting.
   \end{itemize}
 \end{frame}
@@ -1844,8 +1512,7 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Future Work: Research}
     \begin{itemize}
-        \item Structural priors help in both the efficiency and generalization of DNN
-        \item But we don't always have enough knowledge of the domain to propose good structural priors
+        \item We don't always have enough knowledge of the domain to propose good structural priors
         \item Our results (and follow up work) do show however that current methods of training/regularization seem to have limited effectiveness in DNNs learning such priors themselves
         \item How can we otherwise learn structural priors?
     \end{itemize}
@@ -1873,11 +1540,123 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{}
-\centering
-Extra Slides
+
+  \usebackgroundtemplate{
+  \tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+  \includegraphics[height=\paperheight,width=\paperwidth]{background}};
+  }
+
+  \begin{frame}
+  \vfill
+  \centering
+  %\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}Extra Slides\par%
+  %\end{beamercolorbox}
+  \vfill
+  \end{frame}
+  
+  \usebackgroundtemplate{}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{ILSVRC}{Imagenet Large-Scale Visual Recognition Challenge}
+
+\begin{figure}
+    \includegraphics[width=0.4\textwidth]{imagenetlogo}
+\end{figure}
+\begin{itemize}
+    \item Imagenet Large-Scale Visual Recognition Challenge\footcite{ILSVRC2015}.
+    \item 1.2 Million Training Images, 1000 classes.
+    \item 50,000 image validiation/test set.
+    \begin{itemize}
+        \item In 2012 Alex Krizhevsky won challenge with CNN\footcite{Krizhevsky2012}.
+        \item `AlexNet' was 26.2\% better than second best, 15.3\%.
+    \end{itemize}
+    \item State-of-the-art beats human error (5\%).
+\end{itemize}    
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{AlexNet Complexity}
+\begin{figure}[tbp]
+\centering
+\tikzstyle{every node}=[font=\tiny]
+\pgfplotstableread[col sep=comma]{alexnetma.csv}\datatable
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=0.9\linewidth,
+    height=0.33\linewidth,
+    enlarge x limits=0.1,
+    ylabel=FLOPS,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xmajorticks=false,
+    legend style={at={(0.5,1.2)},
+    draw=none, anchor=north,legend columns=-1},
+    area legend,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=ma]{\datatable};
+\end{axis}
+\end{tikzpicture}
+~
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom,
+    axis y line=left,
+    ybar=0pt,
+    bar width=1em,
+    width=0.9\linewidth,
+    height=0.33\linewidth,
+    enlarge x limits=0.1,
+    ylabel=Parameters,
+    y label style={at={(axis description cs:0.09,.5)},anchor=south},
+    y tick label style={
+        /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+        /tikz/.cd
+    },
+    ymin=0,
+    xticklabels from table={\datatable}{layer},
+    xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
+    xtick=data,
+]
+\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Typical Convolutional Layer}
+\begin{figure}
+   \includegraphics[width=0.9\textwidth, page=1]{../Figs/PDF/groupfig}
+%   \caption{A full rank convolutional layer.}
+\end{figure}
+    Best example of this idea is a CNN!
+    \begin{itemize}
+        \item Shared parameters: filter learned for one part of the image should apply to the whole image.
+        \item Filters: natural images are highly correlated locally
+    \end{itemize}
+    %\item A fully-connected network could theoretically learn the same thing, but in practice it never will.
+
+    \note[item]{We show here a typical convolutional layer.}
+    \note[item]{Yellow blocks are filters.}
+    \note[item]{Grey blocks are images or feature maps.}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Vanishing/Exploding Gradients}{}
 \vspace{-2em}
@@ -1926,6 +1705,262 @@ For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
 
 %%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}{Convolution is Expensive}{Can we use Separable Filters?}
+\begin{itemize}
+    \item In image processing, we can often use separable filters instead.
+    \begin{itemize}
+        \item Factorizes a $k\times k$ filter into $1\times k$ and $k \times 1$ smaller filters.
+        \item Only works if we can factorize a matrix into such an outer product $\Rightarrow$ rank-1 matrix    \item \eg $\begin{bmatrix} 1 \\ 2 \\ 1\end{bmatrix} \begin{bmatrix} -1 & 0 & 1\end{bmatrix}  = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1\end{bmatrix}$.
+    \end{itemize}
+    
+    % The following outlook is optional.
+    \vskip0pt plus.5fill
+    \item Much faster - $\mathcal{O}(k+k)$ \vs $\mathcal{O}(k^2)$.
+    \note[item]{We can do this because convolution is associative, \ie $f*(v*h) = (f*v)*h$.}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Separable Layer}
+\vspace{-1em}
+\begin{itemize}
+    \item Use sequential filters of differing orientation\footcite{mamalet2012simplifying,journals/corr/JaderbergVZ14}.
+\end{itemize}
+\begin{figure}
+    \begin{tikzpicture}
+        \node at (0, 4.2) (n1) {
+            \includegraphics[width=0.4\textwidth, page=1]{../Figs/PDF/sparsification}
+        };
+        \node at (0, 1) (t1) {
+            \includegraphics[width=0.9\textwidth, page=2]{../Figs/PDF/sparsification}
+        };
+        \path[->]<1-> (n1) edge (t1);
+    \end{tikzpicture}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Separable Layer -- Issues}
+\begin{figure}
+\includegraphics[width=\textwidth, page=2]{../Figs/PDF/sparsification}
+%   \caption{Sequential separable filters.}
+%   \label{fig:separableseq}
+\end{figure}
+\begin{itemize}
+    \item Order of filter orientations gives different results (!).
+    \note[item]{Vertical first was more accurate\footcite{mamalet2012simplifying}}
+    \note[item]{Second orientation has $64\times$ the param, overfits differently?}
+    \item Complexity of each filter:
+    \begin{itemize}
+        \item before: filter is $\mathcal{O}(d \times [h\times w \times c])$.
+        \item after: $\mathcal{O}(d\times [h\times \mathbf{m}] + \mathbf{m} [w \times c])$,
+    \end{itemize}
+    \item However, in practice was not trainable for large networks.
+    \item New initialization proposed allows us to train this.
+    \note[item]{Get vanishing/exploding gradients if we tried to train these networks.}
+    \note[item]{in most CNNs, $d \geq m \gg c$, so still not that cheap.}
+    \note[item]{Second orientation has $64\times$ the param, so much more expensive that you'd think.}
+    \note[item]{Still has compute savings.}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\begin{frame}{State-of-the-Art Models}%{The Cost of Increasing Accuracy}
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Multiply-Accumulate Operations),
+  axis lines=left,
+  enlarge x limits=0.05,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.00,0.02,...,0.22},
+  xmode=log, 
+  %ymin=0,ymax=0.2,
+  %xmin=10e8,xmax=10e10,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
+\end{axis}
+\end{tikzpicture}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{}
+\begin{figure}
+\centering
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
+\pgfplotstableread[col sep=comma]{../lrdata/bigpicture_aug.csv}\datatableaug
+\pgfplotsset{major grid style={dotted,red}}
+\pgfplotsset{minor grid style={dotted,red}}
+
+\resizebox {\textwidth} {!} {
+\begin{tikzpicture}
+\begin{axis}[
+  width=1.2\textwidth,
+  height=1.1\textheight,
+  axis x line=bottom,
+  ylabel=Top-5 Error,
+  xlabel=$\log_{10}$(Number of Parameters),
+  axis lines=left,
+  enlarge y limits=0.05,
+  grid=both,
+  ytick={0.01,0.02,...,0.2},
+  xmode=log,
+  xmin=10e5,xmax=10e8,
+  yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+  },
+  legend style={at={(0.01,0.01)},anchor=south west},
+]
+\addplot[mark=*,mark options={fill=blue},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+\addplot[mark=square*,mark options={fill=red},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+   every node near coord/.append style={font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+\addplot[mark=*,mark options={fill=green!70!black},
+   nodes near coords,
+   only marks,
+   point meta=explicit symbolic,
+   every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+\legend{Crop \& Mirror Aug., Extra Augmentation, Our Results}
+\end{axis}
+\end{tikzpicture}
+}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\covarlabels}[5]{%
+\begin{tikzpicture}[anchor=south west]
+    \tikzstyle{every node}=[font=\tiny]
+    \node [inner sep=0pt] (c)
+    {
+        #5
+    };
+    \ifx\covarwidth\undefined
+    \newlength{\covarwidth}
+    \newlength{\covarheight}
+    \fi
+    \settowidth{\covarwidth}{#5}
+    \settoheight{\covarheight}{#5}
+    \path[use as bounding box] (c.south west) rectangle (c.north east);
+    %\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
+    %\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
+    %\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
+    \node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\tiny\texttt{#3}};
+    %\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
+\end{tikzpicture}%
+}
+
+\begin{frame}[fragile]{Intra-layer Filter Correlation}
+\centering
+\tiny
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{../Figs/Raster/nin/corrcoef_conv1.png}}
+%~
+    \covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv2.png}}
+    \covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv4.png}}
+    \covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv5.png}}
+    \covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv6.png}}
+    \covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv8.png}}
+    \covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/nin/corrcoef_conv9.png}}\\
+\textbf{Network-in-Network.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot4/corrcoef_conv9.png}\\
+\textbf{Root-4.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot8/corrcoef_conv9.png}\\
+\textbf{Root-8.}\\
+%    \covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv0.png}}
+%~
+%    \covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv1.png}}
+%~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv2.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv4.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv5.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv6.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv8.png}
+~
+    \includegraphics[width=0.15\textwidth]{../Figs/Raster/ninroot32/corrcoef_conv9.png}\\
+\textbf{Root-32.}\\
+\includegraphics[width=0.4\linewidth]{../Figs/PDF/colorbar}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
 \renewcommand{\covarlabels}[5]{%
 \begin{tikzpicture}[anchor=south west]
     \node [inner sep=0pt] (c)
@@ -1968,6 +2003,74 @@ For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
 \label{fig:whitevsnot}
 \end{figure}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Network-in-Network}
+            \centering
+			\begin{tikzpicture}[ampersand replacement=\&]
+			\begin{scope}[]
+			\matrix[column sep=0em]{
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=15]{../Figs/PDF/groupfig}
+				};\&
+				\node (1b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\& 
+				\node (1c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1cdots) {
+					{\Large $\cdots$}
+				};\\
+				\draw node{{\footnotesize \textit{input}} \hspace{0.05em} {\footnotesize \textit{conv1a}}};\&
+				\draw node{\footnotesize \textit{conv1b}};\&
+				\draw node{\footnotesize \textit{conv1c}};\\
+				\node (2adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (2a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (2b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2cdots) {
+					{\Large $\cdots$}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv2a}};\&
+				\draw node{\footnotesize \textit{conv2b}};\&
+				\draw node{\footnotesize \textit{conv2c}};\\
+				\node (3adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (3a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (3b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (3c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=20]{../Figs/PDF/groupfig}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv3a}};\&
+				\draw node{\footnotesize \textit{conv3b}};\&
+				\draw node{\footnotesize \textit{conv3c}};\&
+				\draw node{\footnotesize \textit{pool} \hspace{0.08em} {\footnotesize \textit{output}}};\\
+			};
+			\end{scope}
+			\end{tikzpicture}
+\end{frame}
+
+
 \end{document}
 
 
