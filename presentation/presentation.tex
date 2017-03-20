@@ -687,6 +687,19 @@ The Atlas Slave\\(Accademia, Florence)
     \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn3}
 \end{figure}
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Why are CNNs uniformly structured?}
+\begin{quote}
+``The marvelous powers of the brain emerge not from any single, uniformly structured
+connectionist network but from highly evolved arrangements of smaller, specialized
+networks which are interconnected in very specific ways.''\\
+\flushright{\normalfont Marvin Minsky\\Perceptrons (1988 edition)}
+\end{quote}
+\begin{itemize}
+    \item Deep networks are largely monolithic and symmetric, with only one notable exception -- GoogLeNet
+    \item Why don't we try to structure our networks closer to the specialized components required for learning images?
+\end{itemize}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Spatial Structural Priors}
@@ -917,7 +930,7 @@ The Atlas Slave\\(Accademia, Florence)
 
 %%%%%%%%%%%%%%%%%%%%
 
-\subsection{Channel-wise Structural Priors}
+\subsection{Filter-wise Structural Priors}
 
 \usebackgroundtemplate{%             declare it
 \tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
@@ -931,7 +944,7 @@ The Atlas Slave\\(Accademia, Florence)
 \vfill
 \centering
 %\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-\usebeamerfont{title}Channel-wise Structural Priors\par%
+\usebeamerfont{title}Filter-wise Structural Priors\par%
 %\end{beamercolorbox}
 \vfill
 \end{frame}
