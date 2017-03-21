@@ -1450,8 +1450,8 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 %We propose a new method for creating computationally efficient and compact convolutional neural networks (CNNs) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep CNNs, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art CNN architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
 Networks with root modules have similar or higher accuracy than the baseline architectures with much less computation.
 \begin{itemize}
-    \item ResNet 50: \textbf{40\%} smaller, \textbf{45\%} fewer FLOPS%, and is 31\% (12\%) faster on a CPU (GPU).
-    \item ResNet 200: \textbf{44\%} smaller, \textbf{25\%} fewer FLOPS
+    \item ResNet 50\footnote{Caffe Re-implementation}: \textbf{40\%} smaller, \textbf{45\%} fewer FLOPS%, and is 31\% (12\%) faster on a CPU (GPU).
+    \item ResNet 200\footnote{Based on Facebook Torch Model}: \textbf{44\%} smaller, \textbf{25\%} fewer FLOPS
     \item GoogLeNet: \textbf{7\%} smaller, \textbf{44\%} fewer FLOPS%, and is 21\% (16\%) faster on a CPU (GPU)
 \end{itemize}
 \vfill
@@ -1766,7 +1766,6 @@ For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
 \end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \pgfplotstableread[col sep=comma]{../lrdata/bigpicture.csv}\datatable
 \pgfplotstableread[col sep=comma]{../lrdata/bigpicture_ours.csv}\datatableours
