@@ -88,8 +88,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% Title Page Setup
-\title[Conditional Computation and Restricted Connectivity in Deep Neural Networks] % (optional, use only with long paper titles)
-{Conditional Computation and Restricted Connectivity in Deep Neural Networks}
+\title[Restricted Connectivity in Deep Neural Networks] % (optional, use only with long paper titles)
+{Restricted Connectivity in Deep Neural Networks}
 %\subtitle
 %{Improving CNN
 %Generalization and
@@ -176,84 +176,6 @@
 \usebackgroundtemplate{}
 
 \section{Research Overview}
-\subsection{Collaborative Research}
-\begin{frame}{Collaborative Research @ MSR}
-\begin{itemize}
-    \item \textbf{Medical Computer Vision}
-    \begin{itemize}
-        \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
-        \item Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
-    \end{itemize}
-    \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
-    \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
-S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{CVPR 2016}}
-\end{itemize}
-\end{frame}
-
-
-\usebackgroundtemplate{%             declare it
-\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
-   \setlength{\fboxsep}{0pt}\fbox{
-   \includegraphics[width=0.9\paperwidth,page=2]{darkobrats.pdf}
-   }
-   };
-}
-
-\begin{frame}{Collaborative Research @ MSR}
-\textbf{Segmentation of brain tumor tissues with convolutional neural networks}\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\\textit{MICCAI-BRATS 2014}}
-\begin{itemize}
-    \item One of the first papers using deep learning for volumetric/medical imagery
-    %\item Biggest challenge for training was the class-imbalanced training data
-\end{itemize}
-\vfill
-\end{frame}
-
-\usebackgroundtemplate{}
-
-\begin{frame}{Collaborative Research @ MSR}
-\textbf{Using CNNs for Malaria Diagnosis}\\{\footnotesize Intellectual Ventures/Gates Foundation}
-\begin{itemize}
-    \item Design and train CNN for the classification of malaria parasites in blood smears.
-\end{itemize}
-\vfill
-\includegraphics[width=0.45\linewidth]{malarianegative}\hfill\includegraphics[width=0.45\linewidth]{malariapositive}
-\end{frame}
-
-
-\usebackgroundtemplate{%             declare it
-\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
-   \setlength{\fboxsep}{0pt}\fbox{
-   \includegraphics[width=0.9\paperwidth,page=1]{osbertnips.pdf}
-   }
-   };
-}
-
-\begin{frame}{Collaborative Research @ MSR}
-\textbf{Measuring Neural Net Robustness with Constraints}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\\textit{NIPS 2016}}
-\begin{itemize}
-    %\item Showed that contemporary methods of finding adversarial examples were limited in their coverage
-    \item Found that not all adversarial images can be used to improve network robustness
-\end{itemize}
-\end{frame}
-
-
-\usebackgroundtemplate{%             declare it
-\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
-   \setlength{\fboxsep}{0pt}\fbox{
-   \includegraphics[width=0.9\paperwidth,page=1]{sukritcvpr.pdf}
-   }
-   };
-}
-
-\begin{frame}{Collaborative Research @ MSR}
-\textbf{Refining Architectures of Deep Convolutional Neural Networks}\\{\footnotesize S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\\textit{CVPR 2016}}
-\begin{itemize}
-    \item A method for adapting network architectures optimized for one dataset to another
-    %\item Attempts to answer the common problem of adapting contemporary research to real-world problems
-\end{itemize}
-\end{frame}
-
-\usebackgroundtemplate{}
 
 \subsection{PhD Research}
 
@@ -266,8 +188,27 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \end{itemize}
 \end{frame}
 
-\section{Structural Priors}
-\subsection{Motivation}
+\section{Motivation}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{ILSVRC}{Imagenet Large-Scale Visual Recognition Challenge}
+
+\begin{figure}
+    \includegraphics[width=0.4\textwidth]{imagenetlogo}
+\end{figure}
+\begin{itemize}
+    \item Imagenet Large-Scale Visual Recognition Challenge\footcite{ILSVRC2015}.
+    \item 1.2 Million Training Images, 1000 classes.
+    \item 50,000 image validiation/test set.
+    \begin{itemize}
+        \item In 2012 Alex Krizhevsky won challenge with CNN\footcite{Krizhevsky2012}.
+        \item `AlexNet' was 26.2\% better than second best, 15.3\%.
+    \end{itemize}
+    \item State-of-the-art beats human error (5\%).
+\end{itemize}    
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -531,6 +472,7 @@ The Atlas Slave\\(Accademia, Florence)
 \end{columns}
 \end{frame}
 
+\section{Structural Priors}
 
 %%%%%%%%%%%%%%%%%
 
@@ -954,6 +896,73 @@ Root-2 Module: $d$ filters in $g = 2$ filter groups, of shape $h\times w\times c
 \includegraphics[width=0.9\linewidth, page=6]{../Figs/PDF/groupfig}\\
 Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Network-in-Network}
+            \centering
+			\begin{tikzpicture}[ampersand replacement=\&]
+			\begin{scope}[]
+			\matrix[column sep=0em]{
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=15]{../Figs/PDF/groupfig}
+				};\&
+				\node (1b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\& 
+				\node (1c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1cdots) {
+					{\Large $\cdots$}
+				};\\
+				\draw node{{\footnotesize \textit{input}} \hspace{0.05em} {\footnotesize \textit{conv1a}}};\&
+				\draw node{\footnotesize \textit{conv1b}};\&
+				\draw node{\footnotesize \textit{conv1c}};\\
+				\node (2adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (2a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (2b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (2cdots) {
+					{\Large $\cdots$}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv2a}};\&
+				\draw node{\footnotesize \textit{conv2b}};\&
+				\draw node{\footnotesize \textit{conv2c}};\\
+				\node (3adots) {
+					{\Large $\cdots$}
+				};\&
+				\node (3a) {
+				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
+				};\&
+				\node (3b) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (3c) {
+					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
+				};\&
+				\node (1a) {
+					\includegraphics[height=0.12\linewidth, page=20]{../Figs/PDF/groupfig}
+				};\\
+				\&
+				\draw node{\footnotesize \textit{conv3a}};\&
+				\draw node{\footnotesize \textit{conv3b}};\&
+				\draw node{\footnotesize \textit{conv3c}};\&
+				\draw node{\footnotesize \textit{pool} \hspace{0.08em} {\footnotesize \textit{output}}};\\
+			};
+			\end{scope}
+			\end{tikzpicture}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{NiN Root Architectures}
@@ -1519,11 +1528,11 @@ But when you also \textbf{increase the number of filters}\ldots
 \end{frame}
 
 \begin{frame}{Future Work: Applications}
-    Both of these methods have application within Microsoft:
+    Both of these methods apply to most deep learning applications:
     \begin{itemize}
         \item Smaller model state -- easier storage and synchronization
         \item Faster training and test of models behind ML cloud services
-        \item Embedded devices (HoloLens)/Tensor processing units
+        \item Embedded devices/Tensor processing units
     \end{itemize}
     And more specific to each method
     \begin{itemize}
@@ -1533,7 +1542,7 @@ But when you also \textbf{increase the number of filters}\ldots
         \end{itemize}
         \item Root Modules
         \begin{itemize}
-            \item Model parallelization (Azure)
+            \item Model parallelization (Azure/Amazon Cloud)
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -1556,25 +1565,6 @@ But when you also \textbf{increase the number of filters}\ldots
   \end{frame}
   
   \usebackgroundtemplate{}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{ILSVRC}{Imagenet Large-Scale Visual Recognition Challenge}
-
-\begin{figure}
-    \includegraphics[width=0.4\textwidth]{imagenetlogo}
-\end{figure}
-\begin{itemize}
-    \item Imagenet Large-Scale Visual Recognition Challenge\footcite{ILSVRC2015}.
-    \item 1.2 Million Training Images, 1000 classes.
-    \item 50,000 image validiation/test set.
-    \begin{itemize}
-        \item In 2012 Alex Krizhevsky won challenge with CNN\footcite{Krizhevsky2012}.
-        \item `AlexNet' was 26.2\% better than second best, 15.3\%.
-    \end{itemize}
-    \item State-of-the-art beats human error (5\%).
-\end{itemize}    
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -2003,71 +1993,86 @@ For a ReLU non-linearity\footcite{journals/corr/HeZR015}:
 \end{figure}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Network-in-Network}
-            \centering
-			\begin{tikzpicture}[ampersand replacement=\&]
-			\begin{scope}[]
-			\matrix[column sep=0em]{
-				\node (1a) {
-					\includegraphics[height=0.12\linewidth, page=15]{../Figs/PDF/groupfig}
-				};\&
-				\node (1b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\& 
-				\node (1c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (1cdots) {
-					{\Large $\cdots$}
-				};\\
-				\draw node{{\footnotesize \textit{input}} \hspace{0.05em} {\footnotesize \textit{conv1a}}};\&
-				\draw node{\footnotesize \textit{conv1b}};\&
-				\draw node{\footnotesize \textit{conv1c}};\\
-				\node (2adots) {
-					{\Large $\cdots$}
-				};\&
-				\node (2a) {
-				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
-				};\&
-				\node (2b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (2c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (2cdots) {
-					{\Large $\cdots$}
-				};\\
-				\&
-				\draw node{\footnotesize \textit{conv2a}};\&
-				\draw node{\footnotesize \textit{conv2b}};\&
-				\draw node{\footnotesize \textit{conv2c}};\\
-				\node (3adots) {
-					{\Large $\cdots$}
-				};\&
-				\node (3a) {
-				    \includegraphics[height=0.12\linewidth, page=16]{../Figs/PDF/groupfig}
-				};\&
-				\node (3b) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (3c) {
-					\includegraphics[height=0.145\linewidth, page=17]{../Figs/PDF/groupfig}
-				};\&
-				\node (1a) {
-					\includegraphics[height=0.12\linewidth, page=20]{../Figs/PDF/groupfig}
-				};\\
-				\&
-				\draw node{\footnotesize \textit{conv3a}};\&
-				\draw node{\footnotesize \textit{conv3b}};\&
-				\draw node{\footnotesize \textit{conv3c}};\&
-				\draw node{\footnotesize \textit{pool} \hspace{0.08em} {\footnotesize \textit{output}}};\\
-			};
-			\end{scope}
-			\end{tikzpicture}
+\subsection{Collaborative Research}
+\begin{frame}{Collaborative Research @ MSR}
+\begin{itemize}
+    \item \textbf{Medical Computer Vision}
+    \begin{itemize}
+        \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
+        \item Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+    \end{itemize}
+    \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
+    \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
+S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{CVPR 2016}}
+\end{itemize}
 \end{frame}
+
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=2]{darkobrats.pdf}
+   }
+   };
+}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Segmentation of brain tumor tissues with convolutional neural networks}\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.\\\textit{MICCAI-BRATS 2014}}
+\begin{itemize}
+    \item One of the first papers using deep learning for volumetric/medical imagery
+    %\item Biggest challenge for training was the class-imbalanced training data
+\end{itemize}
+\vfill
+\end{frame}
+
+\usebackgroundtemplate{}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Using CNNs for Malaria Diagnosis}\\{\footnotesize Intellectual Ventures/Gates Foundation}
+\begin{itemize}
+    \item Design and train CNN for the classification of malaria parasites in blood smears.
+\end{itemize}
+\vfill
+\includegraphics[width=0.45\linewidth]{malarianegative}\hfill\includegraphics[width=0.45\linewidth]{malariapositive}
+\end{frame}
+
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-7cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{osbertnips.pdf}
+   }
+   };
+}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Measuring Neural Net Robustness with Constraints}\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.\\\textit{NIPS 2016}}
+\begin{itemize}
+    %\item Showed that contemporary methods of finding adversarial examples were limited in their coverage
+    \item Found that not all adversarial images can be used to improve network robustness
+\end{itemize}
+\end{frame}
+
+
+\usebackgroundtemplate{%             declare it
+\tikz[overlay,remember picture] \node[opacity=0.7, at=(current page.center), yshift=-8cm] {
+   \setlength{\fboxsep}{0pt}\fbox{
+   \includegraphics[width=0.9\paperwidth,page=1]{sukritcvpr.pdf}
+   }
+   };
+}
+
+\begin{frame}{Collaborative Research @ MSR}
+\textbf{Refining Architectures of Deep Convolutional Neural Networks}\\{\footnotesize S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.\\\textit{CVPR 2016}}
+\begin{itemize}
+    \item A method for adapting network architectures optimized for one dataset to another
+    %\item Attempts to answer the common problem of adapting contemporary research to real-world problems
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{}
 
 
 \end{document}
