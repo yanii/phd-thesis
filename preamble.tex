@@ -137,17 +137,6 @@
 \renewcommand{\bibname}{References}
 
 
-% ******************************** Roman Pages *********************************
-% The romanpages environment set the page numbering to lowercase roman one
-% for the contents and figures lists. It also resets
-% page-numbering for the remainder of the dissertation (arabic, starting at 1).
-
-\newenvironment{romanpages}{
-  \setcounter{page}{1}
-  \renewcommand{\thepage}{\roman{page}}}
-{\newpage\renewcommand{\thepage}{\arabic{page}}}
-
-
 % ******************************************************************************
 % ************************* User Defined Commands ******************************
 % ******************************************************************************
@@ -181,7 +170,7 @@
 
 % *********************** Configure Draft Mode **********************************
 
-% Uncomment to disable figures in `draftmode'
+% Uncomment to disable figures in `draft'
 %\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
 
 % These options are active only during the draft mode
