@@ -1,7 +1,7 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,print,index,custombib]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,print,index,custombib,draft]{Classes/PhDThesisPSnPDF}
 %\documentclass[a4paper,12pt,times,print,index,authoryear]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
@@ -152,21 +152,24 @@
 %• Conclusion
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION
-\subfile{chapter1}
+\subfile{introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LITERATURE REVIEW
-\subfile{chapter2}
+\subfile{background}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MOTIVATION
+\subfile{motivation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METHODOLOGY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiments and Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conditional Networks
-\subfile{chapter3}
+\subfile{conditional}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Learning a Low-rank Basis
-\subfile{chapter4}
+\subfile{spatialbasis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Deep Roots
-\subfile{chapter5}
+\subfile{filterbasis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Dropout/Ablation
 %\subfile{chapter6}
