@@ -888,12 +888,12 @@
 
 @inproceedings{ioannou2016e,
 	abstract = "We propose a new method for training computationally efficient and compact convolutional neural networks (CNNs) using a novel sparse connection structure that resembles a tree root. Our sparse connection structure facilitates a significant reduction in computational cost and number of parameters of state-of-the-art deep CNNs without compromising accuracy. We validate our approach by using it to train more efficient variants of state-of-the-art CNN architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less compute, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40{\%} fewer parameters, 45{\%} fewer floating point operations, and is 31{\%} (12{\%}) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25{\%} fewer floating point operations and 44{\%} fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7{\%} fewer parameters and is 21{\%} (16{\%}) faster on a CPU (GPU).",
-  title={Deep roots: Improving CNN efficiency with hierarchical filter groups},
-  author={Ioannou, Yani and Robertson, Duncan and Cipolla, Roberto and Criminisi, Antonio},
-  booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2017, Honolulu, Hawaii},
-  year={2016},
 	archiveprefix = "arXiv",
 	arxivid = "1605.06489",
+	author = "Ioannou, Yani and Robertson, Duncan and Cipolla, Roberto and Criminisi, Antonio",
+	booktitle = "{IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2017, Honolulu, Hawaii}",
+	title = "{Deep roots: Improving CNN efficiency with hierarchical filter groups}",
+	year = "2016"
 }
 
 @inproceedings{Shankar2016,
@@ -2486,40 +2486,57 @@ title = {{Inverse perspective projection of a line segment pair}}
 }
 
 @article{rethinking2016,
-abstract = {Despite their massive size, successful deep artificial neural networks can exhibit a remarkably small difference between training and test performance. Conventional wisdom attributes small generalization error either to properties of the model family, or to the regularization techniques used during training. Through extensive systematic experiments, we show how these traditional approaches fail to explain why large neural networks generalize well in practice. Specifically, our experiments establish that state-of-the-art convolutional networks for image classification trained with stochastic gradient methods easily fit a random labeling of the training data. This phenomenon is qualitatively unaffected by explicit regularization, and occurs even if we replace the true images by completely unstructured random noise. We corroborate these experimental findings with a theoretical construction showing that simple depth two neural networks already have perfect finite sample expressivity as soon as the number of parameters exceeds the number of data points as it usually does in practice. We interpret our experimental findings by comparison with traditional models.},
-archivePrefix = {arXiv},
-arxivId = {1611.03530},
-author = {Zhang, Chiyuan and Bengio, Samy and Hardt, Moritz and Recht, Benjamin and Vinyals, Oriol},
-eprint = {1611.03530},
-journal = {arXiv},
-title = {{Understanding deep learning requires rethinking generalization}},
-year = {2016}
+	abstract = "Despite their massive size, successful deep artificial neural networks can exhibit a remarkably small difference between training and test performance. Conventional wisdom attributes small generalization error either to properties of the model family, or to the regularization techniques used during training. Through extensive systematic experiments, we show how these traditional approaches fail to explain why large neural networks generalize well in practice. Specifically, our experiments establish that state-of-the-art convolutional networks for image classification trained with stochastic gradient methods easily fit a random labeling of the training data. This phenomenon is qualitatively unaffected by explicit regularization, and occurs even if we replace the true images by completely unstructured random noise. We corroborate these experimental findings with a theoretical construction showing that simple depth two neural networks already have perfect finite sample expressivity as soon as the number of parameters exceeds the number of data points as it usually does in practice. We interpret our experimental findings by comparison with traditional models.",
+	archiveprefix = "arXiv",
+	arxivid = "1611.03530",
+	author = "Zhang, Chiyuan and Bengio, Samy and Hardt, Moritz and Recht, Benjamin and Vinyals, Oriol",
+	eprint = "1611.03530",
+	journal = "arXiv",
+	title = "{Understanding deep learning requires rethinking generalization}",
+	year = "2016"
 }
 
 @inproceedings{Hardt2015,
-abstract = {We show that any model trained by a stochastic gradient method with few iterations has vanishing generalization error. We prove this by showing the method is algorithmically stable in the sense of Bousquet and Elisseeff. Our analysis only employs elementary tools from convex and continuous optimization. Our results apply to both convex and non-convex optimization under standard Lipschitz and smoothness assumptions. Applying our results to the convex case, we provide new explanations for why multiple epochs of stochastic gradient descent generalize well in practice. In the nonconvex case, we provide a new interpretation of common practices in neural networks, and provide a formal rationale for stability-promoting mechanisms in training large, deep models. Conceptually, our findings underscore the importance of reducing training time beyond its obvious benefit.},
-address = {New York, New York, USA},
-archivePrefix = {arXiv},
-arxivId = {1509.01240},
-author = {Hardt, Moritz and Recht, Benjamin and Singer, Yoram},
-booktitle = {Proceedings of the 33rd International Conference on Machine Learning (ICML 2016)},
-eprint = {1509.01240},
-isbn = {9781510829008},
-pages = {1--24},
-title = {{Train faster, generalize better: Stability of stochastic gradient descent}},
-year = {2015}
+	abstract = "We show that any model trained by a stochastic gradient method with few iterations has vanishing generalization error. We prove this by showing the method is algorithmically stable in the sense of Bousquet and Elisseeff. Our analysis only employs elementary tools from convex and continuous optimization. Our results apply to both convex and non-convex optimization under standard Lipschitz and smoothness assumptions. Applying our results to the convex case, we provide new explanations for why multiple epochs of stochastic gradient descent generalize well in practice. In the nonconvex case, we provide a new interpretation of common practices in neural networks, and provide a formal rationale for stability-promoting mechanisms in training large, deep models. Conceptually, our findings underscore the importance of reducing training time beyond its obvious benefit.",
+	address = "New York, New York, USA",
+	archiveprefix = "arXiv",
+	arxivid = "1509.01240",
+	author = "Hardt, Moritz and Recht, Benjamin and Singer, Yoram",
+	booktitle = "{Proceedings of the 33rd International Conference on Machine Learning (ICML 2016)}",
+	eprint = "1509.01240",
+	isbn = "9781510829008",
+	pages = "1--24",
+	title = "{Train faster, generalize better: Stability of stochastic gradient descent}",
+	year = "2015"
 }
 
-@inproceedings{icml2013_wan13, 
-    Publisher = {JMLR Workshop and Conference Proceedings}, 
-    Title = {Regularization of Neural Networks using DropConnect}, 
-    Booktitle = {Proceedings of the 30th International Conference on Machine Learning (ICML-13)}, 
-    Author = {Li Wan and Matthew Zeiler and Sixin Zhang and Yann L. Cun and Rob Fergus}, 
-    Number = {3}, 
-    Month = may, 
-    Volume = {28}, 
-    Editor = {Sanjoy Dasgupta and David Mcallester}, 
-    Year = {2013}, 
-    Pages = {1058-1066}, 
-    Abstract = {We introduce DropConnect, a generalization of DropOut, for regularizing large fully-connected layers within neural networks. When training with Dropout, a randomly selected subset of activations are set to zero within each layer. DropConnect instead sets a randomly selected subset of weights within the network to zero. Each unit thus receives input from a random subset of units in the previous layer. We derive a bound on the generalization performance of both Dropout and DropConnect. We then evaluate DropConnect on a range of datasets, comparing to Dropout, and show state-of-the-art results on several image recoginition benchmarks can be obtained by aggregating multiple DropConnect-trained models.}
-   }
+@inproceedings{icml2013_wan13,
+	abstract = "We introduce DropConnect, a generalization of DropOut, for regularizing large fully-connected layers within neural networks. When training with Dropout, a randomly selected subset of activations are set to zero within each layer. DropConnect instead sets a randomly selected subset of weights within the network to zero. Each unit thus receives input from a random subset of units in the previous layer. We derive a bound on the generalization performance of both Dropout and DropConnect. We then evaluate DropConnect on a range of datasets, comparing to Dropout, and show state-of-the-art results on several image recoginition benchmarks can be obtained by aggregating multiple DropConnect-trained models.",
+	author = "Wan, Li and Zeiler, Matthew and Zhang, Sixin and Cun, Yann L. and Fergus, Rob",
+	booktitle = "{Proceedings of the 30th International Conference on Machine Learning (ICML-13)}",
+	editor = "Dasgupta, Sanjoy and Mcallester, David",
+	month = may,
+	number = "3",
+	pages = "1058--1066",
+	publisher = "JMLR Workshop and Conference Proceedings",
+	title = "{Regularization of Neural Networks using DropConnect}",
+	volume = "28",
+	year = "2013"
+}
+
+@article{Hubel1959a,
+	abstract = "Recordings were made in lightly anaesthesized cats whose retinas were stimulated, singly or together, with light spots of various sizes and shapes. Receptive fields, defined as restricted areas where illumination influenced the firing of a single cortical unit, usually contained mutually antagonistic excitatory and inhibitory regions. Thus a stimulus covering a whole field was relatively ineffective in driving most units. Effective driving of a unit required a stimulus specific in form, size, position, and orientation; based on the arrangement of excitatory and inhibitory areas. About 20{\%} of the cortical units studied could be activated from either eye; these were driven from roughly homologous regions of the retinas and summation and antagonism could be shown. (PsycINFO Database Record (c) 2009 APA, all rights reserved)",
+	author = "Hubel, D H and Wiesel, T N",
+	doi = "10.1113/jphysiol.2009.174151",
+	isbn = "0022-3751 (Print)",
+	issn = "00223751",
+	journal = "Journal of Physiology",
+	keywords = "CEREBRAL CORTEX/physiology; NEURONS/physiology",
+	pages = "574--591",
+	pmid = "14403679",
+	title = "{Receptive fields of single neurones in the cat's striate cortex.}",
+	url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed{&}id=14403679{&}retmode=ref{&}cmd=prlinks",
+	volume = "148",
+	year = "1959"
+}
+

@@ -1,33 +1,38 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-	\chapter{Motivation}
+	\chapter{The Unreasonable Affect of Structure on Learning in Neural Networks}
 	\label{motivation}
-	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
-		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
-	\end{chapquote}
 	
-	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
-	``There are many knobs on the black box of 'backprop' (learning by back-propagation of
-	errors (Rumelhart et. al., 1986)). Generally these knobs are set by rules of thumb, trial and
-	error, and the use of reserved test data to assess generalisation ability (or more sophisti-
-	cated cross-validation).''
-	\end{chapquote}
+	A concept taken much for granted in the field is that of neural network design. It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
 	
-	A concept taken much for granted in the neural network community is that of neural network design. It is well known that the design of a neural network architecture can have a large effect on the generalization of that network when trained on a dataset. And yet, despite this, network design remains somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This more than perhaps any other factor has been a barrier to access for the field.
+	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. 
 	
-	Beyond the simpler hyper-parameters, such as 
-	
-	Nowhere is this effect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. As noted by \cite{Fuk80}, 
-	
+	\section{The Neocognitron}
 	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
 				%A Self-organizing Neural Network Model
 				%for a Mechanism of Pattern Recognition
 				%Unaffected by Shift in Position , 
 				Biol.\ Cybernetics 1980}}
-	`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.''
+		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
+		''
 	\end{chapquote}
 	
-	\section{The Unreasonable affect of Network Structure on Learning}
+	The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
+
+	\section{Convolutional Neural Networks}
+	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
+		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
+	\end{chapquote}
+	
+	Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
+	
+	The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+	
+	
+	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
+		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
+		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalisation ability (or more sophisticated cross-validation).''
+	\end{chapquote}
 	
 \end{document}
