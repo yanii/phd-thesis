@@ -3,8 +3,7 @@
 \begin{document}
 	\chapter{The Unreasonable Affect of Structure on Learning in Neural Networks}
 	\label{motivation}
-	
-	A concept taken much for granted in the field is that of neural network design. It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
+	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
 	
 	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. 
 	
@@ -19,6 +18,19 @@
 	\end{chapquote}
 	
 	The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
+
+	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
+	
+	\section{Large Automatic Learning, Rule Extraction and Generalization}
+	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+	\end{chapquote}
+	Under the leadership of a titan in connectionist research, John Hopfield, \citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating to the development of CNNs later, and is cited extensively by \citet{lecun1989generalization}.
+	
+	Through the example of a simple problem, the \emph{two-or-more clumps} predicate, identifying binary input sequences with two or more contiguous strings of ones, the authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation.
+	
+	First, a human-preferred `geometric' solution is hard-coded into the weights of a network to simple identify edges. While this weight configuration is a solution, and gives  
+	
 
 	\section{Convolutional Neural Networks}
 	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
