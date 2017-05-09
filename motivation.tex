@@ -27,7 +27,7 @@
 	\end{chapquote}
 
 
-	\begin{figure}[tbp]
+	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[t]{0.49\textwidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit3rd.pgf}}
@@ -55,12 +55,36 @@
 		\label{fig:polyfits}
 	\end{figure}
 
-	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization}. The authors make the intuitive analogy of a least-squares polynomial fit and the relationship between the size of a neural network and its generalization. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples, the fit generalizes (extrapolates) better than when we use a \engordnumber{20}-order polynomial to fit the same data. While the number of samples can help the fit of the higher order function, even with a large number of samples the generalization fit will not be as good as the polynomial with a more appropriate number of parameters.
-	
-	Similarly, 
+	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization}. The authors make the intuitive analogy of a least-squares polynomial fit and the relationship between the size of a neural network and its generalization. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples, the fit generalizes (extrapolates) better than when we use a \engordnumber{20}-order polynomial to fit the same data. While the number of samples can help the fit of the higher order function, even with a large number of samples the generalization fit will not be as good as the polynomial with a more appropriate number of parameters. Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters. 
 	
 	
-	Through the example of a simple problem, the \emph{two-or-more clumps} predicate, identifying binary input sequences with two or more contiguous strings of ones, the authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation.
+	\begin{figure}[tb]
+		\centering
+		\large
+		\begin{subfigure}[t]{0.45\textwidth}
+			\begin{center}
+			\texttt{00\textbf{11111}00}\\
+			\texttt{00\textbf{11100}00}\\
+			\texttt{00\textbf{00100}00}
+			\end{center}
+			\caption{Binary sequences with one clump}
+			\label{fig:oneclump}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.45\textwidth}
+			\begin{center}
+			\texttt{00\textbf{11}0\textbf{11}00}\\
+			\texttt{00\textbf{1}0\textbf{1}0\textbf{1}00}\\
+			\texttt{00\textbf{111}0\textbf{1}00}
+			\end{center}
+			\caption{Binary sequences with two or more clumps}
+			\label{fig:polyfit20th}
+		\end{subfigure}
+		\caption[Two-or-more Clump Predicate]{The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two or more contiguous strings of ones.}
+		\label{fig:tomclumps}
+	\end{figure}
+	
+	\citet{denker1987large} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, the authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation.
 	
 	First, a human-preferred `geometric' solution is hard-coded into the weights of a network to simple identify edges. While this weight configuration is a solution, and gives  
 	
