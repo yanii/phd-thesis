@@ -25,7 +25,40 @@
 	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
 		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
 	\end{chapquote}
-	Under the leadership of a titan in connectionist research, John Hopfield, \citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating to the development of CNNs later, and is cited extensively by \citet{lecun1989generalization}.
+
+
+	\begin{figure}[tbp]
+		\centering
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit3rd.pgf}}
+			\caption{\engordnumber{3}-order polynomial fitting 3 points}
+			\label{fig:polyfit3rd}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit20th.pgf}}
+			\caption{\engordnumber{20}-order polynomial fitting 3 points}
+			\label{fig:polyfit20th}
+		\end{subfigure}\\	
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit3rdlots.pgf}}
+			\caption{\engordnumber{3}-order polynomial fitting 10 points}
+			\label{fig:polyfit3rdlots}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit20thlots.pgf}}
+			\caption{\engordnumber{20}-order polynomial fitting 10 points}
+			\label{fig:polyfit20thlots}
+		\end{subfigure}
+		\caption[Polynomial Data Fitting]{Polynomial fits of samples from a 3rd order function. Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. While generalization is helped by more data, the higher order polynomial still tends to overfit.}
+		\label{fig:polyfits}
+	\end{figure}
+
+	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization}. The authors make the intuitive analogy of a least-squares polynomial fit and the relationship between the size of a neural network and its generalization. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples, the fit generalizes (extrapolates) better than when we use a \engordnumber{20}-order polynomial to fit the same data. While the number of samples can help the fit of the higher order function, even with a large number of samples the generalization fit will not be as good as the polynomial with a more appropriate number of parameters.
+	
+	Similarly, 
+	
 	
 	Through the example of a simple problem, the \emph{two-or-more clumps} predicate, identifying binary input sequences with two or more contiguous strings of ones, the authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation.
 	
