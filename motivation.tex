@@ -5,28 +5,13 @@
 	\label{motivation}
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
 	
-	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. 
-	
-	\section{The Neocognitron}
-	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
-				%A Self-organizing Neural Network Model
-				%for a Mechanism of Pattern Recognition
-				%Unaffected by Shift in Position , 
-				Biol.\ Cybernetics 1980}}
-		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
-		''
-	\end{chapquote}
-	
-	The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
-
-	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
+	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. 
 	
 	\section{Large Automatic Learning, Rule Extraction and Generalization}
 	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
 		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
 	\end{chapquote}
-
-
+    \subsection{Parameters and Generalization}
 	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[t]{0.49\textwidth}
@@ -55,17 +40,27 @@
 		\label{fig:polyfits}
 	\end{figure}
 
-	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization}. The authors make the intuitive analogy of a least-squares polynomial fit and the relationship between the size of a neural network and its generalization. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples, the fit generalizes (extrapolates) better than when we use a \engordnumber{20}-order polynomial to fit the same data. While the number of samples can help the fit of the higher order function, even with a large number of samples the generalization fit will not be as good as the polynomial with a more appropriate number of parameters. Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters. 
+	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization}. The authors make the intuitive analogy between the affect of the size of a neural network on its generalization, and a simple least-squares polynomial fit. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (Fig.~\ref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (Fig.~\ref{fig:polyfit20th}). While the number of samples can help the fit of the higher order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (Fig.~\ref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (Fig.~\ref{fig:polyfit3rdlots}). Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters.
 	
+	\subsection{Structural Priors}
+	In the real world, when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve, \ie more model parameters, and hope that the model learns to generalize well. There are a number of methods in which we can relate our prior knowledge that the model is over-parameterized to the optimization however.
 	
+	\subsubsection{Weak Priors}
+	Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights.
+	
+	\subsubsection{Strong Priors}
+	With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to that order. For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+	
+	\subsection{Generalization and Parameters in Neural Networks}
 	\begin{figure}[tb]
 		\centering
 		\large
+        \renewcommand{\ttdefault}{pcr}
 		\begin{subfigure}[t]{0.45\textwidth}
 			\begin{center}
 			\texttt{00\textbf{11111}00}\\
-			\texttt{00\textbf{11100}00}\\
-			\texttt{00\textbf{00100}00}
+			\texttt{00\textbf{111}0000}\\
+			\texttt{0000\textbf{1}0000}
 			\end{center}
 			\caption{Binary sequences with one clump}
 			\label{fig:oneclump}
@@ -80,15 +75,30 @@
 			\caption{Binary sequences with two or more clumps}
 			\label{fig:polyfit20th}
 		\end{subfigure}
+		
+        \renewcommand{\ttdefault}{lmodern}
 		\caption[Two-or-more Clump Predicate]{The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two or more contiguous strings of ones.}
 		\label{fig:tomclumps}
 	\end{figure}
 	
-	\citet{denker1987large} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, the authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation.
+	\citet{denker1987large} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. 
 	
-	First, a human-preferred `geometric' solution is hard-coded into the weights of a network to simple identify edges. While this weight configuration is a solution, and gives  
+	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, it does not seem to be a solution that the network would ever settle upon. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
 	
+\section{The Neocognitron}
+	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
+				%A Self-organizing Neural Network Model
+				%for a Mechanism of Pattern Recognition
+				%Unaffected by Shift in Position , 
+				Biol.\ Cybernetics 1980}}
+		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
+		''
+	\end{chapquote}
+	
+	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
+	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
+	
 	\section{Convolutional Neural Networks}
 	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
 		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
