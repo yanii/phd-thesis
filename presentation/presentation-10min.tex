@@ -244,6 +244,15 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Why are models over-parameterized?}
+\begin{itemize}
+    \item Without knowing the appropriate model size or structure for a problem, we err on the side of over-parameterization
+    \item Hinton recommends creating a much bigger model that appropriate for the data, and regularizing ``the hell'' out of it\footnote{Geoffery Hinton, Cambridge, June 2015}
+    \item This has worked surprisingly well in practice for deep CNNs
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{The Problem}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
 \begin{itemize}
@@ -261,50 +270,6 @@ But what about the practicalities of using deep learning:
     \item realtime applications
     \item backed by distributed/cloud computing
 \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Generalization and Num.\ Parameters}
-		\centering
-			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rd.pgf}}
-			%\engordnumber{3}-order poly., 3 points
-			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20th.pgf}}
-			%\engordnumber{20}-order poly., 3 points
-			\label{fig:polyfit20th}
-			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rdlots.pgf}}
-			%\engordnumber{3}-order poly., 10 points
-			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20thlots.pgf}}
-			%\engordnumber{20}-order poly., 10 points
-        \begin{itemize}
-            %\item Polynomial fits of samples from a 3rd order function. 
-            %\item Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. 
-            \item While generalization is helped by more data, the higher order polynomial still tends to overfit~\footcite{denker1987large}
-        \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Restricting Over-parameterized Models}
-\begin{itemize}
-	\item When fitting a curve, we often have little idea of what order polynomial would best fit the data!
-	\item Weak Prior - Regularization
-	\begin{itemize}
-	    \item Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty
-    	\item This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights
-	\end{itemize}
-	\item Strong Priors - Structural
-	\begin{itemize}
-	    \item With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to some particular types of polynomial. %For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Structural Priors}
-\begin{quote}
-		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''\\
-		\flushright{\normalfont John Denker, John Hopfield, \etal,\\\textit{Large Automatic Learning, Complex Systems,1987}}
-\end{quote}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -338,6 +303,14 @@ The Atlas Slave\\(Accademia, Florence)
 
 \section{Structural Priors}
 
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Structural Priors}
+\begin{quote}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''\\
+		\flushright{\normalfont John Denker, John Hopfield, \etal,\\\textit{Large Automatic Learning, Complex Systems,1987}}
+\end{quote}
+\end{frame}
 %%%%%%%%%%%%%%%%%
 
 \begin{frame}{Typical Convolutional Layer}
@@ -404,6 +377,45 @@ The Atlas Slave\\(Accademia, Florence)
     \item Filters replaced by sparse connectivity
 \end{itemize}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Generalization and Num.\ Parameters}
+		\centering
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rd.pgf}}
+			%\engordnumber{3}-order poly., 3 points
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20th.pgf}}
+			%\engordnumber{20}-order poly., 3 points
+			\label{fig:polyfit20th}
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rdlots.pgf}}
+			%\engordnumber{3}-order poly., 10 points
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20thlots.pgf}}
+			%\engordnumber{20}-order poly., 10 points
+        \begin{itemize}
+            %\item Polynomial fits of samples from a 3rd order function. 
+            %\item Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. 
+            \item While generalization is helped by more data, the higher order polynomial still tends to overfit~\footcite{denker1987large}
+        \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Restricting Over-parameterized Models}
+\begin{itemize}
+	\item When fitting a curve, we often have little idea of what order polynomial would best fit the data!
+	\item Weak Prior - Regularization
+	\begin{itemize}
+	    \item Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty
+    	\item This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights
+	\end{itemize}
+	\item Strong Priors - Structural
+	\begin{itemize}
+	    \item With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to some particular types of polynomial. %For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Why are CNNs uniformly structured?}
 \begin{quote}
