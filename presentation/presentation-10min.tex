@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{subcaption}
 \usepackage{epigraph}
+\usepackage{engord}
 % Antonio's macros
 \input{../acsettings}
 \input{../pgftablehighlight}
@@ -88,8 +89,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% Title Page Setup
-\title[Restricted Connectivity in Deep Neural Networks] % (optional, use only with long paper titles)
-{Restricted Connectivity in Deep Neural Networks}
+\title[Structural Priors in Deep Neural Networks] % (optional, use only with long paper titles)
+{Structural Priors in Deep Neural Networks}
 %\subtitle
 %{Improving CNN
 %Generalization and
@@ -101,7 +102,7 @@
 \institute[University of Cambridge] % (optional, but mostly needed)
 {University of Cambridge}
 
-\date{March 21, 2017}
+\date{\today}
 
 %\pgfdeclareimage[height=0.5cm]{university-logo}{uc-cmyk}
 %\logo{\pgfuseimage{university-logo}}
@@ -192,23 +193,6 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \item Images of dimensions  ($227 \times 227 \times 3$) $\approx$ 200 billion pixels % %227×227×3×1281167 = 198,051,763,029
 \end{itemize}
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{frame}{Hinton Philosophy}
-% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
-    %\item Standard practice: Create a model of appropriate size for our data and the problem at hand.
-    %\item Hinton philosophy on neural network design: Create a massively overparameterized network, and regularize like crazy to prevent overfitting.
-    %\item Why is the latter needed in practice?
-    %\item ``If you give me any sized dataset, what you ought to do if you want good generalization is get yourself into the small data regime. That is, however big your dataset, you ought to make a much bigger model so that that's small data. So, I think what the brain is doing is making sure that big data is small data and then regularizing the hell out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model. And you can think of it as, it's just and efficient way of averaging many, many small models, which is a good way to use argback??, but something a bit more efficient than just doing a normal ensemble. So you should always, if you can, be in the small data regime by having a really big computer. And that's certainly where we live, because we have a limited lifetime so the amount of data we get is limited.''
-
-\begin{quote}
-``If you give me any sized dataset, what you ought to do \textbf{if you want good generalization} is get yourself into the small data regime. That is, however big your dataset, you ought to \textbf{make a much bigger model} so that that's small data.''\\
-
-``So, I think what the brain is doing is \ldots \textbf{regularizing the hell} out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model.'' \\
-\flushright{\normalfont Geoffery Hinton\\\footnote{\url{http://sms.cam.ac.uk/media/2017973}}Cambridge, June 2015}
-\end{quote}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -280,11 +264,56 @@ But what about the practicalities of using deep learning:
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Generalization and Num.\ Parameters}
+		\centering
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rd.pgf}}
+			%\engordnumber{3}-order poly., 3 points
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20th.pgf}}
+			%\engordnumber{20}-order poly., 3 points
+			\label{fig:polyfit20th}
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit3rdlots.pgf}}
+			%\engordnumber{3}-order poly., 10 points
+			\resizebox{0.45\linewidth}{!}{\input{../Figs/matplotlib/polyfit20thlots.pgf}}
+			%\engordnumber{20}-order poly., 10 points
+        \begin{itemize}
+            %\item Polynomial fits of samples from a 3rd order function. 
+            %\item Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. 
+            \item While generalization is helped by more data, the higher order polynomial still tends to overfit~\footcite{denker1987large}
+        \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Restricting Over-parameterized Models}
+\begin{itemize}
+	\item When fitting a curve, we often have little idea of what order polynomial would best fit the data!
+	\item Weak Prior - Regularization
+	\begin{itemize}
+	    \item Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty
+    	\item This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights
+	\end{itemize}
+	\item Strong Priors - Structural
+	\begin{itemize}
+	    \item With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to some particular types of polynomial. %For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Structural Priors}
+\begin{quote}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''\\
+		\flushright{\normalfont John Denker, John Hopfield, \etal,\\\textit{Large Automatic Learning, Complex Systems,1987}}
+\end{quote}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Alternative Philosophy}
 \begin{columns}[onlytextwidth,T]
 \begin{column}{0.65\textwidth}
 \begin{itemize}
-    \item Deep networks need many more parameters than data points because they aren't just learning to model data, but also learning what \emph{\color{blue}not} to learn. 
+    \item Deep networks need many more parameters than data points because we don't exactly know the underlying structure of the solution
+    \item As a consequence, they aren't just learning to model data, but also learning what \emph{\color{blue}not} to learn. 
     %\item At each level in a CNN, the transformed data exists both as weights and spatial/channel information.
     %\begin{itemize}
     %    \item Isn't this what regularization is for? Yes, but it's more like using a sledgehammer on a small nail.
@@ -367,8 +396,13 @@ The Atlas Slave\\(Accademia, Florence)
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Sparsity of Convolution}
 \begin{figure}
-    \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn3}
+    \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn4}
 \end{figure}
+\begin{itemize}
+    \item A CNN can be represented as a fully connected network
+    \item Shared filters can be represented with duplicated weights
+    \item Filters replaced by sparse connectivity
+\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Why are CNNs uniformly structured?}
