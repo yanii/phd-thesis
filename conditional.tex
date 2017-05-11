@@ -152,9 +152,9 @@
 	\section{Results}
 	
 	\subsection{Imagenet Large Scale Visual Recognition Challenge (ILSVRC)}
-	We first validate the use of conditional networks for image classification on the ILSVRC dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\citep{Krizhevsky2012imanet} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
+	We first validate the use of conditional networks for image classification on the ILSVRC dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\citep{Krizhevsky2012} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
 	
-	AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012imanet}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
+	AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two GPUs. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 	
 	We based our experiments on the VGG network~\citep{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\citep{He2015b}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe~\citep{Jia2014} on a single Nvidia K40 GPU). It notably does not have any filter grouping, as found in AlexNet, or low-dimensional embeddings, as found in network-in-network. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
 	
@@ -178,7 +178,7 @@
 	introduces a DAG-like routed structure to split the filters in the convolutional section.
 	The assumption here is that each filter should only need to be applied to a small number of channels in the input feature map.
 	
-	Data routing is implemented via `filter groups', as originally used in~\citep{Krizhevsky2012imanet}. 
+	Data routing is implemented via `filter groups', as originally used in~\citep{Krizhevsky2012}. 
 	Thus, at each level $\textrm{conv}\_n\_\{1,2\}, n=3\ldots 5$, the convolutional filters of VGG11-GMP are 
 	divided into $2^{(n-2)}$ groups. Each group depends only on the results of exactly 128 previous filters. 
 	The feature maps of the last convolutional layer are concatenated together, and globally max-pooled
@@ -229,7 +229,7 @@
 	cost\footnote{measured here as number of multiply-accumulate operations. We have observed this measure 
 		to correlate very well with CPU time.} and model size. 
 	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
-	GoogLeNet and Alexnet~\citep{Krizhevsky2012imanet} (in light blue) are in fact instances of conditional networks 
+	GoogLeNet and Alexnet~\citep{Krizhevsky2012} (in light blue) are in fact instances of conditional networks 
 	(though they were not presented that way). In both networks much of the compute saving is obtained by routing
 	subsets of features to different branches of the network.
 	In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very 

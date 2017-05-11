@@ -1813,22 +1813,6 @@ title = {{Inverse perspective projection of a line segment pair}}
 	year = "2009"
 }
 
-@inproceedings{Krizhevsky2012imanet,
-	abstract = "We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSRVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5{\{}$\backslash${\%}{\}} and 17.0{\{}$\backslash${\%}{\}} which is considerably better than the previous state of the art. The neural network, which has 60 million paramters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of the convolutional operation. To reduce overfitting in the fully-connected layers, we employed a recently-developed method called 'dropout' that proved to be effective. We also entered a variant of the model in the ILSVRC-2012 competition and achievd a top-5 test error rate of 15.3{\{}$\backslash${\%}{\}}, compared to 26.2{\{}$\backslash${\%}{\}} achieved by the second-best entry.",
-	archiveprefix = "arXiv",
-	arxivid = "1102.0183",
-	author = "Krizhevsky, Alex and Hinton, Geoffrey E and Sutskever, Ilya",
-	booktitle = "{Adv. Neural Inf. Process. Syst.}",
-	doi = "10.1016/j.protcy.2014.09.007",
-	eprint = "1102.0183",
-	isbn = "9781627480031",
-	issn = "10495258",
-	pages = "1--9",
-	pmid = "7491034",
-	title = "{ImageNet Classification with Deep Convolutional Neural Networks}",
-	year = "2012"
-}
-
 @article{larsen2016optimality,
 	abstract = "For any integers {\$}d, n \backslashgeq 2{\$} and {\$}1/({\{}\backslashmin\backslash{\{}n,d\backslash{\}}{\}}){\^{}}{\{}0.4999{\}} {\textless} \backslashvarepsilon{\textless}1{\$}, we show the existence of a set of {\$}n{\$} vectors {\$}X\backslashsubset \backslashmathbb{\{}R{\}}{\^{}}d{\$} such that any embedding {\$}f:X\backslashrightarrow \backslashmathbb{\{}R{\}}{\^{}}m{\$} satisfying {\$}{\$} $\backslash$forall x,y$\backslash$in X,$\backslash$ (1-$\backslash$varepsilon)$\backslash$|x-y$\backslash$|{\_}2{\^{}}2$\backslash$le $\backslash$|f(x)-f(y)$\backslash$|{\_}2{\^{}}2 $\backslash$le (1+$\backslash$varepsilon)$\backslash$|x-y$\backslash$|{\_}2{\^{}}2 {\$}{\$} must have {\$}{\$} m = $\backslash$Omega($\backslash$varepsilon{\^{}}{\{}-2{\}} $\backslash$lg n). {\$}{\$} This lower bound matches the upper bound given by the Johnson-Lindenstrauss lemma [JL84]. Furthermore, our lower bound holds for nearly the full range of {\$}\backslashvarepsilon{\$} of interest, since there is always an isometric embedding into dimension {\$}\backslashmin\backslash{\{}d, n\backslash{\}}{\$} (either the identity map, or projection onto {\$}\backslashmathop{\{}span{\}}(X){\$}). Previously such a lower bound was only known to hold against linear maps {\$}f{\$}, and not for such a wide range of parameters {\$}\backslashvarepsilon, n, d{\$} [LN16]. The best previously known lower bound for general {\$}f{\$} was {\$}m = \backslashOmega(\backslashvarepsilon{\^{}}{\{}-2{\}}\backslashlg n/\backslashlg(1/\backslashvarepsilon)){\$} [Wel74, Alo03], which is suboptimal for any {\$}\backslashvarepsilon = o(1){\$}.",
 	archiveprefix = "arXiv",
@@ -1876,6 +1860,14 @@ title = {{Inverse perspective projection of a line segment pair}}
 	title = "{Gradient-based learning applied to document recognition}",
 	volume = "86",
 	year = "1998"
+}
+
+@inproceedings{caruana2001overfitting,
+	author = "Caruana, Rich and Lawrence, Steve and Giles, C Lee",
+	booktitle = "{Advances in neural information processing systems}",
+	pages = "402--408",
+	title = "{Overfitting in neural nets: Backpropagation, conjugate gradient, and early stopping}",
+	year = "2001"
 }
 
 @inproceedings{lecun1989optimal,
@@ -2485,15 +2477,15 @@ title = {{Inverse perspective projection of a line segment pair}}
 	year = "2016"
 }
 
-@article{rethinking2016,
-	abstract = "Despite their massive size, successful deep artificial neural networks can exhibit a remarkably small difference between training and test performance. Conventional wisdom attributes small generalization error either to properties of the model family, or to the regularization techniques used during training. Through extensive systematic experiments, we show how these traditional approaches fail to explain why large neural networks generalize well in practice. Specifically, our experiments establish that state-of-the-art convolutional networks for image classification trained with stochastic gradient methods easily fit a random labeling of the training data. This phenomenon is qualitatively unaffected by explicit regularization, and occurs even if we replace the true images by completely unstructured random noise. We corroborate these experimental findings with a theoretical construction showing that simple depth two neural networks already have perfect finite sample expressivity as soon as the number of parameters exceeds the number of data points as it usually does in practice. We interpret our experimental findings by comparison with traditional models.",
+@inproceedings{rethinking2016,
 	archiveprefix = "arXiv",
 	arxivid = "1611.03530",
 	author = "Zhang, Chiyuan and Bengio, Samy and Hardt, Moritz and Recht, Benjamin and Vinyals, Oriol",
 	eprint = "1611.03530",
-	journal = "arXiv",
+	journal = "International Conference on Learning Representations (ICLR)",
+	location = "Toulon, France",
 	title = "{Understanding deep learning requires rethinking generalization}",
-	year = "2016"
+	year = "2017"
 }
 
 @inproceedings{Hardt2015,
@@ -2556,6 +2548,57 @@ title = {{Inverse perspective projection of a line segment pair}}
 	pages = "143--155",
 	publisher = "Zurich, Switzerland: Elsevier",
 	title = "{Generalization and network design strategies}",
+	year = "1989"
+}
+
+@inproceedings{baum1989size,
+	author = "Baum, Eric B and Haussler, David",
+	booktitle = "{Advances in neural information processing systems}",
+	pages = "81--90",
+	title = "{What size net gives valid generalization?}",
+	year = "1989"
+}
+
+@incollection{vapnik2015uniform,
+	author = "Vapnik, Vladimir N and Chervonenkis, A Ya",
+	booktitle = "{Measures of Complexity}",
+	pages = "11--30",
+	publisher = "Springer",
+	title = "{On the uniform convergence of relative frequencies of events to their probabilities}",
+	year = "2015"
+}
+
+@incollection{NIPS2014_5484,
+	author = "Ba, Jimmy and Caruana, Rich",
+	booktitle = "{Advances in Neural Information Processing Systems 27}",
+	editor = "Ghahramani, Z. and Welling, M. and Cortes, C. and Lawrence, N. D. and Weinberger, K. Q.",
+	pages = "2654--2662",
+	publisher = "Curran Associates, Inc.",
+	title = "{Do Deep Nets Really Need to be Deep?}",
+	url = "http://papers.nips.cc/paper/5484-do-deep-nets-really-need-to-be-deep.pdf",
+	year = "2014"
+}
+
+@misc{HintonTalk2015,
+	author = "Hinton, Geoffery E.",
+	howpublished = "Public Lecture",
+	institution = "Department of Engineering",
+	location = "University of Cambridge",
+	month = "jun",
+	series = "{Division F Talks}",
+	title = "{Deep Learning}",
+	url = "http://sms.cam.ac.uk/media/2017973",
+	year = "2015"
+}
+
+@article{lecun1989backpropagation,
+	author = "LeCun, Yann and Boser, Bernhard and Denker, John S and Henderson, Donnie and Howard, Richard E and Hubbard, Wayne and Jackel, Lawrence D",
+	journal = "Neural computation",
+	number = "4",
+	pages = "541--551",
+	publisher = "MIT Press",
+	title = "{Backpropagation applied to handwritten zip code recognition}",
+	volume = "1",
 	year = "1989"
 }
 
