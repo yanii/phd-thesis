@@ -3,16 +3,26 @@
 \begin{document}
 	\chapter{The Unreasonable Affect of Structure on Learning in Neural Networks}
 	\label{motivation}
+	
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
 	
 	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning. 
 	
-	\section{Network Architecture and Generalization}
-	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
-		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
-	\end{chapquote}
 	
-    \subsection{Model Size and Generalization}
+	\section{Network Architecture and Generalization}
+    A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
+    
+    Empirical results have, however, shown that the realities of training neural networks do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
+    
+    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
+    
+    \section{Model Capacity and Representational Power}
+    \citep{vapnik2015uniform}
+    \citep{hornik89a}
+    \citep{baum1989size}
+    
+	\section{Structural Priors}
+
 	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[t]{0.49\textwidth}
@@ -41,22 +51,28 @@
 		\label{fig:polyfits}
 	\end{figure}
 
-    A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
-    
-    Empirical results have, however, shown that the realities of training neural networks do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
-    
-    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
-	
 	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization, lecun1989backpropagation}. The authors make the intuitive analogy between the affect of the size of a neural network on its generalization, and a simple least-squares polynomial fit. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (Fig.~\ref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (Fig.~\ref{fig:polyfit20th}). While the number of samples can help the fit of the higher order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (Fig.~\ref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (Fig.~\ref{fig:polyfit3rdlots}). Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters.
 	
+	
 	\subsection{Structural Priors}
-	In the real world, when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve, \ie more model parameters, and hope that the model learns to generalize well. There are a number of methods in which we can relate our prior knowledge that the model is over-parameterized to the optimization however.
+	In practice when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parameterize our models appropriately~\citep{jain2016structural}), instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but potentially sparse solution. Over-parameterization of a model generally leads to poor generalization however, due to overfitting. To prevent this, there are a number of methods in which we can relate our prior knowledge that the model is over-parameterized to the optimization:
 	
-	\subsubsection{Weak Priors}
-	Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights.
+	\begin{description}
+	\item[Weak Priors]
+	Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters by adding a penalty, for example on the L2 norm of the model weights. For polynomial regression, this is called \emph{ridge regression}, while for neural networks it is called \emph{weight decay}.
 	
-	\subsubsection{Strong Priors}
+	\item[Strong Priors]
 	With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to that order. For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+    \end{description}
+    
+    
+    \section{Deep Networks}
+	% deep boltzmann networks
+	\citep{Krizhevsky2012}
+	\citep{Simonyan2014verydeep}
+	\citep{He2015}
+	\citep{He2016}
+    
 	
 	%% NOTE: Polynomial fits are a special case of linear regression where we've used a polynomial basis
 	%% Use example of sin wave? We can fit it with a polynomial, but better to reparameterize into a basis
