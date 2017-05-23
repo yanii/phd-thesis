@@ -6,8 +6,14 @@
 	
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
 	
-	Beyond the simpler hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this affect more pronounced than in the case of using neural networks with image inputs, which pose unique challenges in learning as compared to less structured data.
+	Beyond hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this effect more pronounced than in the case of using neural networks with highly structured inputs, such as natural images. Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we encode our prior knowledge of the task in the architecture itself -- what we will denote \emph{structural priors}. 
 	
+	Neural Networks with structural priors still differ significantly from hand-tuned local features, as popularized in computer vision in the early 2000s, such as SIFT~\citep{Lowe2004}. As compared with neural networks, such local features are rigidly defined in terms of structure and weights, and the learning system is restricted to finding and cataloging the pre-determined features in images. Neural networks with structural priors on the other hand, while restricting the structure of the network somewhat, still allow the network to learn more fine-grained structure, and have no effect on the latitude given to learning weights.
+	
+	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous work relevant to understanding the role that structural priors play.
+	
+	
+	% This is why NN are not good at general learning, and we are now only good at expert systems
 	
 	\section{Network Architecture and Generalization}
     A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
@@ -136,12 +142,15 @@
 	
 	
 	\section{Learning Neural Network Architectures}
-	
 	\mynote{todo}
+	\citet{}
 	
-	\section{Network Pruning}
-	\citet{lecun1989optimal}
+	\section{Network Pruning and Compression}
+	\mynote{todo}
+	Another approach to learning efficient networks is pruning
+	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15}
 	
+	\section{Weight Representation and Compression}
 	
 	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
 		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
