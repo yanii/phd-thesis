@@ -10,25 +10,18 @@
 	
 	Neural Networks with structural priors still differ significantly from hand-tuned local features, as popularized in computer vision in the early 2000s, such as SIFT~\citep{Lowe2004}. As compared with neural networks, such local features are rigidly defined in terms of structure and weights, and the learning system is restricted to finding and cataloging the pre-determined features in images. Neural networks with structural priors on the other hand, while restricting the structure of the network somewhat, still allow the network to learn more fine-grained structure, and have no effect on the latitude given to learning weights.
 	
-	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous work relevant to understanding the role that structural priors play.
-	
-	
 	% This is why NN are not good at general learning, and we are now only good at expert systems
 	
-	\section{Network Architecture and Generalization}
-    A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
-    
-    Empirical results have, however, shown that the realities of training neural networks do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
-    
-    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
-    
+	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous works relevant to understanding the role that structural priors play.
+	
     \section{Model Capacity and Representational Power}
-    \citep{vapnik2015uniform}
-    \citep{hornik89a}
-    \citep{baum1989size}
+    \citep{vapnik2015uniform,hornik89a,baum1989size,bartlett1997}
     
-	\section{Structural Priors}
-
+	\section{Network Architecture}
+	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+	\end{chapquote}
+	
 	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[t]{0.49\textwidth}
@@ -57,6 +50,13 @@
 		\label{fig:polyfits}
 	\end{figure}
 
+    A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
+    
+    Empirical results have, however, shown that the realities of training neural networks do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
+    
+    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
+	
+    \subsection{Model Size}
 	\citet{denker1987large} explored the relationship of network architecture to generalization. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization, lecun1989backpropagation}. The authors make the intuitive analogy between the affect of the size of a neural network on its generalization, and a simple least-squares polynomial fit. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (Fig.~\ref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (Fig.~\ref{fig:polyfit20th}). While the number of samples can help the fit of the higher order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (Fig.~\ref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (Fig.~\ref{fig:polyfit3rdlots}). Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters.
 	
 	
@@ -115,7 +115,7 @@
 	
 	\citet{denker1987large} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. 
 	
-	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, it does not seem to be a solution that the network would ever settle upon. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
+	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropogation. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
 	
 \section{The Neocognitron}
 	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
