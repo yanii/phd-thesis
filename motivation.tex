@@ -15,7 +15,11 @@
 	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous works relevant to understanding the role that structural priors play.
 	
     \section{Model Capacity and Representational Power}
-    \citep{vapnik2015uniform,hornik89a,baum1989size,bartlett1997}
+    The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension of the algorithm~\citep{vapnik2015uniform}. Intuitively, the VC dimension measures the complexity of the model. For example, back in the space of polynomial fits, a high degree polynomial has more capacity to learn complex functions, and thus can fit a training set well. This does not mean it will generalize well, and indeed its large capacity to learn the training set may result in overfitting.
+    
+    In the case of neural networks, early work showed that the capacity of neural networks is quite large~\citep{hornik89a,baum1989size}.\todo{expand here! put some math}
+    
+    This however did not match empirical results. Later work showed that rather than capacity being based on solely the number of weights, instead the number of large weights was a better measure~\citep{bartlett1997}
     
 	\section{Network Architecture}
     A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
