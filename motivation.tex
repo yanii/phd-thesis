@@ -27,21 +27,14 @@
         \caption{All possible labellings of 3 points in $\mathbb{R}^2$ can be separated by a oriented line (2D hyperplane). This is not possible for all labellings of 4 points in $\mathbb{R}^2$ however, and thus the VC dimension of oriented hyperplanes in $\mathbb{R}^2$ is 3. From \citet{burges1998tutorial}.}
         \label{fig:vcdim_r2line}
     \end{figure}
-    The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks. Intuitively, for a discriminative classifier, the VC dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. 
+    The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks. Intuitively, for a discriminative classifier, the VC dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. A good overview of VC-dimension is given by \citet{burges1998tutorial}.
     
-    More formally, for a classification model $f(\theta)$, parameterized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all labeling of the points
+    More formally, a classification model $f(\theta)$, parameterized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all possible labelings of the points, the classification model can perfectly learn the points. The Vapnik-Chervonenkis (VC) dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of VC-dimension $h$, it is sufficient that there exists one set of $h$ points which can be shattered. It is important to note that in general a classifier with a VC-dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
     %Note that, if the VC dimension is h, then there exists at least one set of h points that can be shattered, but it in general it will not be true that every set of h points can be shattered
     
     For example, in Fig.\ \ref{fig:vcdim_r2line}, the function class of oriented hyperplanes, \ie lines in 2D, can separate all possible labellings of 3 points in $\mathbb{R}^2$ -- oriented hyperplanes in $\mathbb{R}^2$ shatter 3 points. However, for 4 points, this is no longer true. It can be proven (see~\citet{burges1998tutorial}) that in general for $\mathbb{R}^n$, the set of oriented hyperplanes shatters any set of $n+1$ points.
 
-    The VC dimension can give a measure of theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher VC dimension, there are examples of small single parameter models with infinite VC dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, 
-
-\begin{equation}
-    x_i = 10^i,
-\end{equation}
-a simple sinusoidal curve with the appropriate phase can shatter any labeling of these points,
-
-For example, back in the space of polynomial fits, a high degree polynomial has more capacity to learn complex functions, and thus can fit a training set well. This does not mean it will generalize well, and indeed its large capacity to learn the training set may result in overfitting. A good overview of VC-dimension is given by \citet{burges1998tutorial}.
+    The VC dimension can give a measure of theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher VC dimension, there are examples of small single parameter models with infinite VC dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, a simple sinusoidal curve with the appropriate phase can shatter any labeling of an infinite number of such points. However, in general such a classifier would be poor at classifying more general sets of points.
     
     In the case of neural networks, early work showed that the capacity of neural networks is quite large~\citep{hornik89a,baum1989size}.\todo{expand here! put some math}
     
