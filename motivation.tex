@@ -124,6 +124,34 @@
 	
 	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropogation. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
 	
+	\begin{figure}[tb]
+		\centering
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmintrainloss.pgf}}
+			\caption{Training Loss}
+			\label{fig:tomplotmintrainloss}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotminvalloss.pgf}}
+			\caption{Validation Loss}
+			\label{fig:tomplotminvalloss}
+		\end{subfigure}\\
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxtrainacc.pgf}}
+			\caption{Training Accuracy}
+			\label{fig:tomplotmaxtrainacc}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.49\textwidth}
+			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxvalacc.pgf}}
+			\caption{Validation Accuracy}
+			\label{fig:tomplotmaxvalacc}
+		\end{subfigure}
+		\caption[Two-or-more Clumps Problem and Structural Priors]{TODO. Class imbalance responsible for cycle in loss?}
+		\label{fig:tomplot}
+	\end{figure}
+	
 \section{The Neocognitron}
 	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
 				%A Self-organizing Neural Network Model
