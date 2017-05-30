@@ -120,7 +120,7 @@
 		\label{fig:tomclumps}
 	\end{figure}
 	
-	\citet{denker1987large} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. 
+	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. 
 	
 	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropogation. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
 	
@@ -179,7 +179,7 @@
 	\section{Learning Neural Network Architectures}
 	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
 		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
-		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalisation ability (or more sophisticated cross-validation).''
+		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
 	\end{chapquote}
 	
 	\mynote{todo talk about tiling, and MaKay's work}
@@ -204,5 +204,5 @@
     
 	Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we use strong structural priors, encoding our prior knowledge of the task in the architecture itself. As observed by \citet{denker1987large} this may be considered closer to modifying the problem to be solved itself, rather than changing the learning method alone. For example, by asking a CNN to learn to classify a dataset, we are asking the network to ``Classify these types of images'', whereas by asking a fully-connected network to classify the same dataset, we are asking the network ``Classify these types of data''. The first task is inherently easier.
 
-    Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \eg image classification or speech recognition. At the same time, by specializing our network models, we are moving further away from the goal of general artificial intelligence, \ie learnign models that can do both tasks.
+    Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \eg image classification or speech recognition. At the same time, by specializing our network models, we are moving further away from the goal of general artificial intelligence, \ie learning models that can do both tasks.
 \end{document}
