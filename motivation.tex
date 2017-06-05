@@ -20,7 +20,6 @@
     Empirical results have, however, shown that the realities of training neural networks do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
     
     \section{Model Capacity and Representational Power}
-    
     \begin{figure}
         \centering
         \includegraphics[width=0.7\textwidth]{Figs/PDF/vcdim_r2lines}
@@ -29,27 +28,41 @@
     \end{figure}
     The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks. Intuitively, for a discriminative classifier, the VC dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. A good overview of VC-dimension is given by \citet{burges1998tutorial}.
     
+    \subsection{Vapnik-Chervonenkis Dimension}
     More formally, a classification model $f(\theta)$, parameterized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all possible labelings of the points, the classification model can perfectly learn the points. The Vapnik-Chervonenkis (VC) dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of VC-dimension $h$, it is sufficient that there exists one set of $h$ points which can be shattered. It is important to note that in general a classifier with a VC-dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
     %Note that, if the VC dimension is h, then there exists at least one set of h points that can be shattered, but it in general it will not be true that every set of h points can be shattered
     
     For example, in Fig.\ \ref{fig:vcdim_r2line}, the function class of oriented hyperplanes, \ie lines in 2D, can separate all possible labellings of 3 points in $\mathbb{R}^2$ -- oriented hyperplanes in $\mathbb{R}^2$ shatter 3 points. However, for 4 points, this is no longer true. It can be proven (see~\citet{burges1998tutorial}) that in general for $\mathbb{R}^n$, the set of oriented hyperplanes shatters any set of $n+1$ points.
 
-    The VC dimension can give a measure of theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher VC dimension, there are examples of small single parameter models with infinite VC dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, a simple sinusoidal curve with the appropriate phase can shatter any labeling of an infinite number of such points. However, in general such a classifier would be poor at classifying more general sets of points.
+    The VC dimension gives us a measure of the theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher VC dimension, there are examples of small single parameter models with infinite VC dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, a simple sinusoidal curve with the appropriate phase can shatter any labeling of an infinite number of such points. In general, however, such a classifier would be poor at classifying more general sets of points, despite the impressive theoretical VC dimension.
     
-    In the case of neural networks, early work showed that the capacity of neural networks to be quite large~\citep{hornik89a,baum1989size}. \citet{baum1989size} looked at feed-forward networks of \emph{threshold units}, \ie perceptrons\todo{is this what they are?}, showing the VC dimension of a single-layer network with M units and W weights (including biases) to be bounded by,
+    \subsection{VC Dimension of Neural Networks}
+    In the case of neural networks, early work showed that the capacity of neural networks to be quite large~\citep{hornik89a,baum1989size}. \citet{baum1989size} looked at feed-forward networks of \emph{threshold units}, \ie perceptrons. %showing the VC dimension of a single-layer network with k units and w weights (including biases) to be bounded by,
+    %\begin{equation}
+    %    d_{\textrm{VC}} \leq 2 w \log_2(e\,k),
+    %\end{equation}
+    
+    %where $e$ is the mathematical constant, the base of natural logarithms. 
+    The authors prove a lower bound on the VC dimension for a single hidden layer network of $k$ units and $n$ inputs,
     \begin{equation}
-        d_{\textrm{VC}} \leq 2 W \log_2(eM),
+        d_{\textrm{VC}} \geq 2 \lfloor k/2 \rfloor n,
+    \end{equation}
+    where $\lfloor \ \ \rfloor$ is the floor operation, \ie largest integer less than or equal to the operand, and $d$ is the number of inputs. For a single hidden layer network with a large number of $n$ inputs and $k$ units, the authors make the assumption that $kn\approx w$, \ie the number of weights in the first layer alone is approximately that of the whole network $w$,
+    \begin{equation}
+        d_{\textrm{VC}} \geq w.
+    \end{equation}
+
+    \citet{baum1989size} use this lower bound on the VC dimension of a hidden layer to bound the number of training samples required to achieve an error rate of $\epsilon$, showing that for a network with $w$ weights, and a desired error rate $\epsilon$ the minimum number of training samples required is given by,
+    
+    \begin{equation}
+        N_{\min} \approx w/\epsilon.
     \end{equation}
     
-    where $e$ is the mathematical constant, the base of natural logarithms. For 2 layers, they found a lower bound,
-    \begin{equation}
-        d_{\textrm{VC}} \geq 2 \lfloor M/2 \rfloor d,
-    \end{equation}
-    where $\lfloor \ \ \rfloor$ is the floor operation, \ie largest integer less than or equal to the operand, and $d$ is the number of inputs. At the time, the largest number of weights in a network were typically on the first layer, and the authors make the assumption that $Md\approx W$. With this assumption, they who
+    For an error rate of $\epsilon=0.1$, this gives the rule of thumb that for a network with a total of $w$ weights, approximately $10\times w$, or 10 times the number of training samples as weights in the network, are required to guarantee an error rate of 10\%. 
     
-    \todo{expand here! put some math}
+    At first glance this work may seem to have solved a major problem in the design and training of neural networks, however the work of \citet{baum1989size} is to show a worst-case lower bound on the number of training samples required -- in practice this can be far from what is empirically required. \citet{baum1989size} themselves point out that this is likely be far more than necessary in networks where the learning algorithm seeks to minimize the number of non-zero weights (such as networks using weight decay, pruning, etc). Indeed, in practice neural networks were found to generalize much better than this worst case bound would indicate, to the point where modern deep neural networks are trained with far fewer samples than weights, in the case of AlexNet~\citep{Krizhevsky2012} approximately $250\times$ \emph{fewer} training samples than weights allows good generalization on the ILSVRC~\citep{ILSVRC2015} dataset.
     
-    This however did not match empirical results. Later work showed that rather than capacity being based on solely the number of weights, instead the number of large weights was a better measure~\citep{bartlett1997}
+    \citet{bartlett1997} later showed that rather than capacity being based on solely the number of weights, a bound more in-line with empirical results could be found by using the number of \emph{large weights}. To show this they moved to a scale sensitive form of the VC dimension, the \emph{fat-shattering} dimension.
     
     \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
 	
