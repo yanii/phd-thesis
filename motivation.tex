@@ -62,7 +62,13 @@
     
     At first glance this work may seem to have solved a major problem in the design and training of neural networks, however the work of \citet{baum1989size} is to show a worst-case lower bound on the number of training samples required -- in practice this can be far from what is empirically required. \citet{baum1989size} themselves point out that this is likely be far more than necessary in networks where the learning algorithm seeks to minimize the number of non-zero weights (such as networks using weight decay, pruning, etc). Indeed, in practice neural networks were found to generalize much better than this worst case bound would indicate, to the point where modern deep neural networks are trained with far fewer samples than weights, in the case of AlexNet~\citep{Krizhevsky2012} approximately $250\times$ \emph{fewer} training samples than weights allows good generalization on the ILSVRC~\citep{ILSVRC2015} dataset.
     
-    \citet{bartlett1997} later showed that rather than capacity being based on solely the number of weights, a bound more in-line with empirical results could be found by using the number of \emph{large weights}. To show this they moved to a scale sensitive form of the VC dimension, the \emph{fat-shattering} dimension.
+    \citet{bartlett1997} later showed that rather than capacity being based on solely the number of weights, a bound more in-line with empirical results could be found by using the number of \emph{large weights}. To show this they moved to a scale sensitive form of the VC dimension, the \emph{fat-shattering} dimension. The author shows that the error rate for an $\lambda$-layer neural network with $n$ inputs, $m$ training samples, with the sum of weight magnitudes for each unit bounded by $A$, 
+    
+    \begin{equation}
+        \epsilon \approx (cA)^{\lambda(\lambda+1)/2} \sqrt{(\log n)/m},
+    \end{equation}
+    
+    and $c$ is a constant factor.
     
     \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
 	
