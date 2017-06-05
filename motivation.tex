@@ -36,7 +36,18 @@
 
     The VC dimension can give a measure of theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher VC dimension, there are examples of small single parameter models with infinite VC dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, a simple sinusoidal curve with the appropriate phase can shatter any labeling of an infinite number of such points. However, in general such a classifier would be poor at classifying more general sets of points.
     
-    In the case of neural networks, early work showed that the capacity of neural networks is quite large~\citep{hornik89a,baum1989size}.\todo{expand here! put some math}
+    In the case of neural networks, early work showed that the capacity of neural networks to be quite large~\citep{hornik89a,baum1989size}. \citet{baum1989size} looked at feed-forward networks of \emph{threshold units}, \ie perceptrons\todo{is this what they are?}, showing the VC dimension of a single-layer network with M units and W weights (including biases) to be bounded by,
+    \begin{equation}
+        d_{\textrm{VC}} \leq 2 W \log_2(eM),
+    \end{equation}
+    
+    where $e$ is the mathematical constant, the base of natural logarithms. For 2 layers, they found a lower bound,
+    \begin{equation}
+        d_{\textrm{VC}} \geq 2 \lfloor M/2 \rfloor d,
+    \end{equation}
+    where $\lfloor \ \ \rfloor$ is the floor operation, \ie largest integer less than or equal to the operand, and $d$ is the number of inputs. At the time, the largest number of weights in a network were typically on the first layer, and the authors make the assumption that $Md\approx W$. With this assumption, they who
+    
+    \todo{expand here! put some math}
     
     This however did not match empirical results. Later work showed that rather than capacity being based on solely the number of weights, instead the number of large weights was a better measure~\citep{bartlett1997}
     
