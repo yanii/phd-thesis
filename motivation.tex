@@ -4,15 +4,15 @@
 	\chapter{The Unreasonable Affect of Structure on Learning in Neural Networks}
 	\label{motivation}
 	
-	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet, despite this, network design itself remains poorly understood, and is considered somewhat of a black magic, with intuition and experience being the cited motivation behind most common architectures, rather than any theory. This, more than perhaps any other factor, has been a barrier to access for the field.
+	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet network design itself remains poorly understood, with intuition and experience being the cited motivation behind most common architectures, rather than theory. This, more than perhaps any other factor, has been a barrier to access for the practical use of neural networks by people who are not experts in the field.
 	
-	Beyond hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this effect more pronounced than in the case of using neural networks with highly structured inputs, such as natural images. Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we encode our prior knowledge of the task in the architecture itself -- what we will denote \emph{structural priors}. 
+	Beyond hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this effect more pronounced than in the case of using neural networks with highly structured inputs, such as natural images. Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we encode our prior knowledge of the task in the architecture itself -- a concept that we will throughout this work refer to as \emph{structural priors}. Examples of structural priors include common network architectures for images, convolutional neural networks (CNNs), and sequences, recurrent neural networks (RNNs).
 	
 	Neural Networks with structural priors still differ significantly from hand-tuned local features, as popularized in computer vision in the early 2000s, such as SIFT~\citep{Lowe2004}. As compared with neural networks, such local features are rigidly defined in terms of structure and weights, and the learning system is restricted to finding and cataloging the pre-determined features in images. Neural networks with structural priors on the other hand, while restricting the structure of the network somewhat, still allow the network to learn more fine-grained structure, and have no effect on the latitude given to learning weights.
 	
 	% This is why NN are not good at general learning, and we are now only good at expert systems
 	
-	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous works relevant to understanding the role that structural priors play.
+	The history of understanding the role of neural network architecture in learning is long, arguably going back to the Hebbian rule of learning~\citep{hebb1949organization}, and yet our understanding is still far from complete. In this section we will review a select number of the most important previous works relevant to understanding the role that structural priors play, and how they emerged to dominate the practical use of neural networks today.
 	
 	\section{Network Architecture}
     A persistent question in training artificial neural networks has been in the design of the networks. Specifically the question of how many parameters should be learned, and in what way they should be connected,  so as to be suitable for good generalization from a given size dataset. Notable steps in the theoretical answers to this question include findings showing the limitations of single layer networks~\citep{minsky1988perceptrons}, information-theoretic measures of the representational capacity of a network~\citep{vapnik2015uniform}, the proof that single hidden-layer networks are universal approximators~\citep{hornik89a}, and the theoretical number of nodes required for generalization from a dataset of given size~\citep{baum1989size}. 
@@ -62,13 +62,39 @@
     
     At first glance this work may seem to have solved a major problem in the design and training of neural networks, however the work of \citet{baum1989size} is to show a worst-case lower bound on the number of training samples required -- in practice this can be far from what is empirically required. \citet{baum1989size} themselves point out that this is likely be far more than necessary in networks where the learning algorithm seeks to minimize the number of non-zero weights (such as networks using weight decay, pruning, etc). Indeed, in practice neural networks were found to generalize much better than this worst case bound would indicate, to the point where modern deep neural networks are trained with far fewer samples than weights, in the case of AlexNet~\citep{Krizhevsky2012} approximately $250\times$ \emph{fewer} training samples than weights allows good generalization on the ILSVRC~\citep{ILSVRC2015} dataset.
     
-    \citet{bartlett1997} later showed that rather than capacity being based on solely the number of weights, a bound more in-line with empirical results could be found by using the number of \emph{large weights}. To show this they moved to a scale sensitive form of the VC dimension, the \emph{fat-shattering} dimension. The author shows that the error rate for an $\lambda$-layer neural network with $n$ inputs, $m$ training samples, with the sum of weight magnitudes for each unit bounded by $A$, 
+    \citet{bartlett1997} later showed that rather than capacity being based on solely the number of weights, a bound more in-line with empirical results could be found by using the number of \emph{large weights}. To show this they moved to a scale sensitive form of the VC dimension, the \emph{fat-shattering} dimension. The author shows that the error rate for an $\ell$-layer sigmoidal (rather than threshold unit) neural network with $n$ inputs and $m$ training samples,
     
     \begin{equation}
-        \epsilon \approx (cA)^{\lambda(\lambda+1)/2} \sqrt{(\log n)/m},
+        \epsilon \approx (cA)^{\ell(\ell+1)/2} \sqrt{(\log n)/m},
     \end{equation}
     
-    and $c$ is a constant factor.
+    and $c$ is a constant factor, and the $\ell_1$ norm of each unit's weight vector $w$ is bounded by $A$, 
+    \begin{equation}
+    \|\mathbf{w}\|_1 = \sum_i | w_i | \leq A.
+    \end{equation}
+    Surprisingly there is no term for the number of units for any layer in this equation, but rather it is the bounds on the weights themselves that determine ability of the network to generalize. In general, for a network where the inputs $\mathbf{x}$ are also bounded,
+    \begin{equation}
+        \|\mathbf{x}\|_\infty = \max(|x_0|, |x_1|, \ldots, |x_n|) \leq B,
+    \end{equation}
+    \citet{bartlett1997} show that for a given error $epsilon$, the number of training samples $m$ required grows roughly as,
+    \begin{align}
+        m \approx \frac{B^2\,A^{\ell^2}}{\epsilon^2}.
+    \end{align}
+    
+     For a single hidden layer network, \ie $\ell=2$, and an error rate of $\epsilon=0.05$, 
+    
+    \begin{align}
+        m \approx 400\,B^2\,A^6.
+    \end{align}
+    
+    This result, while surprising given the typical VC dimension of neural networks, supports empirical results in using contemporary training methods such as weight decay~\citep{hinton1987learning,}\todo{Add references}, early stopping, and even more recently batch normalization~\citep{Ioffe2015}, all of which keep weight magnitudes low.
+%    For a single hidden layer network, \ie $\ell=2$, and an error rate of $\epsilon=0.05$, 
+    
+%    \begin{align}
+%        m &\approx  \frac{\log n \, (cA)^{\ell(\ell+1)}}{\epsilon^2}\\
+%        &\approx  \frac{\log n \, (cA)^{6}}{0.0025},\\
+%    \end{align}
+%    we can see that the number of training samples required to guarantee this error rate are proportional to the logarithm of the number of inputs and the , 
     
     \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
 	
