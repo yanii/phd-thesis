@@ -176,7 +176,7 @@
 		\label{fig:tomclumps}
 	\end{figure}
 	
-	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate. The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. 
+	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate (truth statement). The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in Fig.~\ref{fig:tomclumps}. The predicate is largely based on the more general predicate of \emph{connectedness} explored by \citet{minsky1988perceptrons}, and is shown to be a problem not linearly separable, or more specifically solvable by a locally connected perceptron. 
 	
 	The authors illustrate some surprising properties of the generalization of fully-connected neural networks learned with backpropogation. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropogation. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
 	
@@ -243,6 +243,7 @@
 	
 	\section{Network Pruning, Compression and Quantization}
 	\mynote{todo}
+	An approach to 
 	Another approach to learning efficient networks is pruning
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,}
 	
