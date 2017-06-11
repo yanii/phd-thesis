@@ -29,7 +29,7 @@
     The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks. Intuitively, for a discriminative classifier, the VC dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. A good overview of VC-dimension is given by \citet{burges1998tutorial}.
     
     \subsection{Vapnik-Chervonenkis Dimension}
-    More formally, a classification model $f(\theta)$, parameterized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all possible labelings of the points, the classification model can perfectly learn the points. The Vapnik-Chervonenkis (VC) dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of VC-dimension $h$, it is sufficient that there exists one set of $h$ points which can be shattered. It is important to note that in general a classifier with a VC-dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
+    More formally, a classification model $f(\theta)$, parameterized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all possible labelings of the points, the classification model can perfectly learn the points. The Vapnik-Chervonenkis (VC) dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of VC-dimension $h$, it is sufficient that there exists a \emph{single} set of $h$ points which can be shattered. It is important to note that in general a classifier with a VC-dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
     %Note that, if the VC dimension is h, then there exists at least one set of h points that can be shattered, but it in general it will not be true that every set of h points can be shattered
     
     For example, in Fig.\ \ref{fig:vcdim_r2line}, the function class of oriented hyperplanes, \ie lines in 2D, can separate all possible labellings of 3 points in $\mathbb{R}^2$ -- oriented hyperplanes in $\mathbb{R}^2$ shatter 3 points. However, for 4 points, this is no longer true. It can be proven (see~\citet{burges1998tutorial}) that in general for $\mathbb{R}^n$, the set of oriented hyperplanes shatters any set of $n+1$ points.
@@ -76,7 +76,7 @@
     \begin{equation}
         \|\mathbf{x}\|_\infty = \max(|x_0|, |x_1|, \ldots, |x_n|) \leq B,
     \end{equation}
-    \citet{bartlett1997} show that for a given error $epsilon$, the number of training samples $m$ required grows roughly as,
+    \citet{bartlett1997} show that for a given error $\epsilon$, the number of training samples $m$ required grows roughly as,
     \begin{align}
         m \approx \frac{B^2\,A^{\ell^2}}{\epsilon^2}.
     \end{align}
@@ -87,7 +87,7 @@
         m \approx 400\,B^2\,A^6.
     \end{align}
     
-    This result, while surprising given the analysis based on the VC dimension of neural networks, supports empirical results in using contemporary training methods such as weight decay~\citep{hinton1987learning,}\todo{Add references}, early stopping, and even more recently batch normalization~\citep{Ioffe2015}, all of which keep weight magnitudes low.
+    This result, while surprising given the analysis based on the VC dimension of neural networks, supports empirical results in using contemporary training methods such as weight decay~\citep{hinton1987learning}, early stopping~\citep{Bishop1995}, and even more recently batch normalization~\citep{Ioffe2015}, all of which can keep weight magnitudes low.
 %    For a single hidden layer network, \ie $\ell=2$, and an error rate of $\epsilon=0.05$, 
     
 %    \begin{align}
@@ -95,10 +95,9 @@
 %        &\approx  \frac{\log n \, (cA)^{6}}{0.0025},\\
 %    \end{align}
 %    we can see that the number of training samples required to guarantee this error rate are proportional to the logarithm of the number of inputs and the , 
-    
-    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
 	
     \subsection{Model Size}
+    \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
 	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
 		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
 	\end{chapquote}
@@ -134,14 +133,6 @@
 	\citet{denker1987large} explored the relationship of network architecture to generalization in a more empirical manner. The work was particularly motivating in the later design of convolutional neural networks~\citep{lecun1989generalization, lecun1989backpropagation}. The authors make the intuitive analogy between the affect of the size of a neural network on its generalization, and a simple least-squares polynomial fit. Fig.~\ref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (Fig.~\ref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (Fig.~\ref{fig:polyfit20th}). While the number of samples can help the fit of the higher order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (Fig.~\ref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (Fig.~\ref{fig:polyfit3rdlots}). Similarly, a neural network with a large number of parameters may not generalize as well as a neural network with fewer more salient parameters.
     
     \citet{caruana2001overfitting} further explored the analogy by training neural networks to fit polynomials, showing that overfitting in neural networks does not seem to be as serious a problem as in polynomials. The greatly over-parameterized neural networks still found relatively good fits. The authors suggest that neural networks trained with backpropogration may be biased towards ``smoother approximations''.
-    
-    \section{Deep Networks}
-	% deep boltzmann networks
-	\citep{Krizhevsky2012}
-	\citep{Simonyan2014verydeep}
-	\citep{He2015}
-	\citep{He2016}
-    
 	
 	%% NOTE: Polynomial fits are a special case of linear regression where we've used a polynomial basis
 	%% Use example of sin wave? We can fit it with a polynomial, but better to reparameterize into a basis
@@ -208,31 +199,7 @@
 		\label{fig:tomplot}
 	\end{figure}
 	
-\section{The Neocognitron}
-	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
-				%A Self-organizing Neural Network Model
-				%for a Mechanism of Pattern Recognition
-				%Unaffected by Shift in Position , 
-				Biol.\ Cybernetics 1980}}
-		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
-		''
-	\end{chapquote}
-	
-	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
-
-	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
-	
-	\section{Convolutional Neural Networks}
-	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
-		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
-	\end{chapquote}
-	
-	Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{lecun1989backpropagation,Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
-	
-	The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
-	
-	
-	\section{Learning Neural Network Architectures}
+\section{Learning Neural Network Architectures}
 	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
 		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
 		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
@@ -248,12 +215,44 @@
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,}
 	
 	
-	\subsection{Structural Priors}
-	In practice when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parameterize our models appropriately~\citep{jain2016structural}), instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but potentially sparse solution. Over-parameterization of a model generally leads to poor generalization however, due to overfitting. To prevent this, there are a number of methods in which we can relate our prior knowledge that the model is over-parameterized to the optimization:
+\section{The Neocognitron}
+	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
+				%A Self-organizing Neural Network Model
+				%for a Mechanism of Pattern Recognition
+				%Unaffected by Shift in Position , 
+				Biol.\ Cybernetics 1980}}
+		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
+		''
+	\end{chapquote}
 	
+	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
+
+	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus and explanation, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. %In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
+	
+	\section{Convolutional Neural Networks}
+	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
+		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
+	\end{chapquote}
+	
+	Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{lecun1989backpropagation,Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
+	
+	The application of the LeNet-style CNN architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+	
+\section{Deep Networks}
+	% deep boltzmann networks
+	\citep{Krizhevsky2012}
+	\citep{Simonyan2014verydeep}
+	\citep{He2015}
+	\citep{He2016}
+
+
+\section{Structural Priors}
+    This section has shown that the concept we have named `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts covered by this large body of work in a compact nomenclature. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
+    
+	In practice when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parameterize our models appropriately~\citep{jain2016structural}). Instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but likely sparse solution. The problem with this approach is that over-parameterization of a model generally leads to poor generalization due to overfitting. To prevent this, there are two types of methods in which we can relate our prior knowledge that the model is over-parameterized to the optimization:
 	\begin{description}
 	\item[Weak Priors]
-	Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters by adding a penalty, for example on the L2 norm of the model weights. For polynomial regression, this is called \emph{ridge regression}, while for neural networks it is called \emph{weight decay}.
+	Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters by adding a penalty, for example on the L2 norm of the model weights. For polynomial regression, this is called \emph{ridge regression}, while for neural networks it is called \emph{weight decay}~\cite{hinton1987learning}. Early stopping is another method for doing this.
 	
 	\item[Strong Priors]
 	With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to that order. For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
@@ -262,4 +261,7 @@
 	Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we use strong structural priors, encoding our prior knowledge of the task in the architecture itself. As observed by \citet{denker1987large} this may be considered closer to modifying the problem to be solved itself, rather than changing the learning method alone. For example, by asking a CNN to learn to classify a dataset, we are asking the network to ``Classify these types of images'', whereas by asking a fully-connected network to classify the same dataset, we are asking the network ``Classify these types of data''. The first task is inherently easier.
 
     Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \eg image classification or speech recognition. At the same time, by specializing our network models, we are moving further away from the goal of general artificial intelligence, \ie learning models that can do both tasks.
+    
+    
+    
 \end{document}
