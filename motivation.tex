@@ -205,14 +205,22 @@
 		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
 	\end{chapquote}
 	
-	\mynote{todo talk about tiling, and MaKay's work, hyper-networks}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
 	
 	
 	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks}.
 	
-	One of the earliest proposals for building neural network structures from the data itself is \emph{tiling} algorithm. The tiling algorithm is guaranteed to converge on perfect classification of the training set (not necessarily good for generalization). 
+	One of the earliest proposals for building neural network structures from the data itself is \emph{tiling} algorithm for boolean classification, \ie classifying boolean patterns. The tiling algorithm is guaranteed to converge on perfect classification of the training set (not necessarily good for generalization). For each layer in the network, a master neuron is fist used to provide the best linear separation of the data, and then ancillary neurons are added until 
 	
+	Cascade Correlation~\citep{Fahlman1989} is a constructive algorithm for building general neural networks from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and are frozen after they are learned, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
+	
+	At the beginning of training, only the input and output layers exist, and since this is a single layer network with no hidden units, any of the simpler perceptron training rules can be used. The authors used quickprop. The 
+	Each new hidden unit that is added to the network is connected to all the inputs in addition to the outputs of all previous hidden units. This hidden unit is treated a new hidden layer, and since all other connections are frozen, can be trained as if it was a single layer.
+	
+	
+	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput. Also, cascade correlation networks do not seem to generalize as well as standard neural networks.
+	
+	\mynote{todo talk about tiling, and MaKay's work, hyper-networks}
 	\section{Network Pruning, Compression and Quantization}
 	\mynote{todo}
 	An approach to 
