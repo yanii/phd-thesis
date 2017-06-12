@@ -199,14 +199,19 @@
 		\label{fig:tomplot}
 	\end{figure}
 	
-\section{Learning Neural Network Architectures}
+\section{Growing Neural Network Architectures}
 	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
 		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
 		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
 	\end{chapquote}
 	
-	\mynote{todo talk about tiling, and MaKay's work}
-	\citet{mezard1989learning,MacKay91,mackay1992practical}
+	\mynote{todo talk about tiling, and MaKay's work, hyper-networks}
+	%http://blog.otoro.net/2016/09/28/hyper-networks/
+	
+	
+	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks}.
+	
+	One of the earliest proposals for building neural network structures from the data itself is \emph{tiling} algorithm. The tiling algorithm is guaranteed to converge on perfect classification of the training set (not necessarily good for generalization). 
 	
 	\section{Network Pruning, Compression and Quantization}
 	\mynote{todo}
