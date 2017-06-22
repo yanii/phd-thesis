@@ -1,7 +1,7 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-	\chapter{The Affect of Structure on Learning in Neural Networks}
+	\chapter{The Unreasonable Affect of Structure on Learning in Neural Networks}
 	\label{motivation}
 	
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet network design itself remains poorly understood, with intuition and experience being the cited motivation behind most common architectures, rather than theory. This, more than perhaps any other factor, has been a barrier to access for the practical use of neural networks by people who are not experts in the field.
@@ -206,36 +206,35 @@
 	\end{chapquote}
 	
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
-	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
 	
-	The earliest proposals for building neural network structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron is fist used to provide the best linear separation of the data, and then ancillary neurons are added until perfect classification of the training data is achieved. In practice this is not necessarily good for generalization to the validation set however. 
 	
-	Cascade Correlation~\citep{Fahlman1989} is a constructive algorithm for building general neural networks from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
+	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks}.
 	
-	\begin{figure}[tbp]
-		\centering
-		\includegraphics{Figs/PDF/fahlmancascade}
-		\caption[Cascade Correlation]{Cascade Correlation. Connections marked with a $\square$ are frozen, while $\times$ connections are learned continously. \copyright~\citet{Fahlman1989}}
-		\label{fig:cascadecorrelation}
-	\end{figure}
+	One of the earliest proposals for building neural network structures from the data itself is \emph{tiling} algorithm for boolean classification, \ie classifying boolean patterns. The tiling algorithm is guaranteed to converge on perfect classification of the training set (not necessarily good for generalization). For each layer in the network, a master neuron is fist used to provide the best linear separation of the data, and then ancillary neurons are added until 
 	
-	At the beginning of training only the input and output layers exist, as shown in Fig.~\ref{fig:cascadecorrelation} and since this is a single layer network with no hidden units, any of the simpler perceptron training rules can be used. After sufficient training, which is heuristically determined, the network is expanded by a single new hidden unit at a time.
-	Each new (candidate) hidden unit that is added to the network is connected to all the network inputs, in addition to all of the outputs of the previous hidden units. The candidate unit is treated as a new hidden layer, and since all other connections are frozen, can be trained as if it was a single layer - \ie with the delta rule, or other similar single layer training algorithm, rather than backpropogation. The candidate unit's input weights are adjusted so as to maximize the covariance of the candidate unit's output with the error output of the network:
-	% http://www.ra.cs.uni-tuebingen.de/SNNS/UserManual/node167.html#SECTION001081200000000000000
-	\begin{equation}
-	    C = \sum_o \left|\sum_p (y_{po} - \overline{y_o})(E_{po} - \overline{E_o})\right|,
-	\end{equation}
-	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error
+	Cascade Correlation~\citep{Fahlman1989} is a constructive algorithm for building general neural networks from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and are frozen after they are learned, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
 	
-	The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
+	At the beginning of training, only the input and output layers exist, and since this is a single layer network with no hidden units, any of the simpler perceptron training rules can be used. The authors used quickprop. The 
+	Each new hidden unit that is added to the network is connected to all the inputs in addition to the outputs of all previous hidden units. This hidden unit is treated a new hidden layer, and since all other connections are frozen, can be trained as if it was a single layer.
 	
-	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks, likely due to their greedy training strategy, as compared to deep networks trained with backpropogation where no weights are frozen during training.
 	
-	\mynote{todo talk about MaKay's work, hyper-networks}
+	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput. Also, cascade correlation networks do not seem to generalize as well as standard neural networks.
+	
+	\mynote{todo talk about tiling, and MaKay's work, hyper-networks}
 	\section{Network Pruning, Compression and Quantization}
 	\mynote{todo}
-	An approach to 
-	Another approach to learning efficient networks is pruning
+	Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the parameters is instead used:
+	
+	% From optimal brain surgeon paper
+	% https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
+	% also look at:
+	% http://cslt.riit.tsinghua.edu.cn/mediawiki/images/9/9e/131125-OBD-LC-01.pdf
+	% http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
+	
+	\begin{align}
+	    \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +O(\|\delta \mathbf{w}\|^3),
+	\end{align}
+	where $E$ is the objective function, $\mathbf{w}$ are the network weights, and $\mathbf{H}=\partial^2 E / \partial w^2$ is the Hessian matrix of second order derivatives.	
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,}
 	
 	
