@@ -1,7 +1,7 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-	\chapter{The Affect of Structure on Learning in Neural Networks}
+	\chapter{The Effect of Structure on Learning in Neural Networks}
 	\label{motivation}
 	
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet network design itself remains poorly understood, with intuition and experience being the cited motivation behind most common architectures, rather than theory. This, more than perhaps any other factor, has been a barrier to access for the practical use of neural networks by people who are not experts in the field.
@@ -98,10 +98,7 @@
 	
     \subsection{Model Size}
     \todo{Include references to \citet{caruana2001overfitting, baum1989size, rethinking2016}}
-	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems,1987}}
-		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
-	\end{chapquote}
-	
+    
 	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[t]{0.49\textwidth}
@@ -200,11 +197,6 @@
 	\end{figure}
 	
 \section{Growing Neural Network Architectures}
-	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, Neural Computation 1991}}
-		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
-		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
-	\end{chapquote}
-	
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
 	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
 	
@@ -230,59 +222,53 @@
 	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks, likely due to their greedy training strategy, as compared to deep networks trained with backpropogation where no weights are frozen during training.
 	
 	\mynote{todo talk about MaKay's work, hyper-networks}
-	\section{Network Pruning, Compression and Quantization}
-       Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. The simplest saliency measure, weight magnitude, is overly simplistic in practice and can lead to a large reduction in accuracy if used for pruning.
+	\section{Pruning Neural Networks}
+    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. The simplest saliency measure, weight magnitude, is overly simplistic in practice and can lead to a large reduction in accuracy if used for pruning.
+
+    In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks where training times can be measured in weeks.
+
+    \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
        
-       \subsection{Optimal Brain Damage}
-       \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
-	       
-       % From optimal brain surgeon paper
-       % https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
-       % also look at:
-       % http://cslt.riit.tsinghua.edu.cn/mediawiki/images/9/9e/131125-OBD-LC-01.pdf
-       % http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
+    % From optimal brain surgeon paper
+    % https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
+    % also look at:
+    % http://cslt.riit.tsinghua.edu.cn/mediawiki/images/9/9e/131125-OBD-LC-01.pdf
+    % http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
+
+    \begin{align}
+       \delta E &= \sum_i \frac{\partial E}{\partial w_i} \delta w_i + \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 E}{\partial w_i \partial w_j} \delta w_i \delta w_j +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+    \end{align}
+
+    where $E$ is the objective function, $w_i$ is the $i$th weight. We can write this more compactly in matrix notation,
+    \begin{align}
+       \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+    \end{align}
+    where $\mathbf{w}$ is the vector of network weights, and $h_{ij}=\partial^2 E / \partial w_i \partial w_j$ is the Hessian matrix of second order derivatives. 
+
+    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
+
+    \begin{align}
+       \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
+    \end{align}
+
+    To calculate the second derivative, chain rule is used, and the second derviatives are back-propogated through the network. 
+
+    This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
+    
+    
        
-       \begin{align}
-           \delta E &= \sum_i \frac{\partial E}{\partial w_i} \delta w_i + \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 E}{\partial w_i \partial w_j} \delta w_i \delta w_j +\mathcal{O}(\|\delta \mathbf{w}\|^3),
-       \end{align}
-       
-       where $E$ is the objective function, $w_i$ is the $i$th weight. We can write this more compactly in matrix notation,
-       \begin{align}
-           \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
-       \end{align}
-       where $\mathbf{w}$ is the vector of network weights, and $h_{ij}=\partial^2 E / \partial w_i \partial w_j$ is the Hessian matrix of second order derivatives. 
-       
-       This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
-       
-       \begin{align}
-           \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
-       \end{align}
-       
-       To calculate the second derivative, chain rule is used, and the second derviatives are back-propogated through the network. 
-       
-       This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted. After each pruning step, the network is again re-trained from scratch. This means that OBD, and in fact most similar pruning methods, do not scale well to contemporary neural networks.
 	\mynote{TODO}
-	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,}
+	\citet{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,}
+    \section{Compression \& Quantization}
+    In order to use deep neural networks on embedded devices, and in many applications, first a compact representation is required. There have been many papers on compressing deep networks, notably the work of ~\citep{han2016dsd} looked at combining a simple weight magnitude-based pruning method with both quantization and Huffman coding, in all the method can take a trained network
 	
 	
 \section{The Neocognitron}
-	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
-				%A Self-organizing Neural Network Model
-				%for a Mechanism of Pattern Recognition
-				%Unaffected by Shift in Position , 
-				Biol.\ Cybernetics 1980}}
-		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
-		''
-	\end{chapquote}
-	
 	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
 	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks, the article's neurological focus and explanation, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. %In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
 	
 	\section{Convolutional Neural Networks}
-	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
-		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
-	\end{chapquote}
 	
 	Despite the pioneering novelty of the work on neocognitrons, it was only following the simplification and improvement of~\citet{lecun1989backpropagation,Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
 	
@@ -312,6 +298,40 @@
 
     Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \eg image classification or speech recognition. At the same time, by specializing our network models, we are moving further away from the goal of general artificial intelligence, \ie learning models that can do both tasks.
     
+    \section{Quotes}
     
+	\begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
+	``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
+	\end{chapquote}
+	
+	
+	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+	\end{chapquote}
+	
+	
+	\begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
+	``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
+	\end{chapquote}
+	
+	
+	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, 1991}}
+		``There are many knobs on the black box of 'backprop' (learning by back-propagation of
+		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
+	\end{chapquote}
+	
     
+	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
+				%A Self-organizing Neural Network Model
+				%for a Mechanism of Pattern Recognition
+				%Unaffected by Shift in Position , 
+				Biol.\ Cybernetics, 1980}}
+		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The neocognitron proposed in this paper gives a drastic solution to this difficulty.
+		''
+	\end{chapquote}
+	
+	
+	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
+		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
+	\end{chapquote}
 \end{document}
