@@ -225,9 +225,7 @@
 	\begin{equation}
 	    C = \sum_o \left|\sum_p (y_{po} - \overline{y_o})(E_{po} - \overline{E_o})\right|,
 	\end{equation}
-	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error
-	
-	The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
+	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
 	
 	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks, likely due to their greedy training strategy, as compared to deep networks trained with backpropogation where no weights are frozen during training.
 	
@@ -235,8 +233,8 @@
 	\section{Network Pruning, Compression and Quantization}
        Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. The simplest saliency measure, weight magnitude, is overly simplistic in practice and can lead to a large reduction in accuracy if used for pruning.
        
-       
-       \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the parameters is instead used:
+       \subsection{Optimal Brain Damage}
+       \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
 	       
        % From optimal brain surgeon paper
        % https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
@@ -245,9 +243,24 @@
        % http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
        
        \begin{align}
-           \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +O(\|\delta \mathbf{w}\|^3),
+           \delta E &= \sum_i \frac{\partial E}{\partial w_i} \delta w_i + \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 E}{\partial w_i \partial w_j} \delta w_i \delta w_j +\mathcal{O}(\|\delta \mathbf{w}\|^3),
        \end{align}
-       where $E$ is the objective function, $\mathbf{w}$ are the network weights, and $\mathbf{H}=\partial^2 E / \partial w^2$ is the Hessian matrix of second order derivatives. 
+       
+       where $E$ is the objective function, $w_i$ is the $i$th weight. We can write this more compactly in matrix notation,
+       \begin{align}
+           \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+       \end{align}
+       where $\mathbf{w}$ is the vector of network weights, and $h_{ij}=\partial^2 E / \partial w_i \partial w_j$ is the Hessian matrix of second order derivatives. 
+       
+       This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
+       
+       \begin{align}
+           \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
+       \end{align}
+       
+       To calculate the second derivative, chain rule is used, and the second derviatives are back-propogated through the network. 
+       
+       This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted. After each pruning step, the network is again re-trained from scratch. This means that OBD, and in fact most similar pruning methods, do not scale well to contemporary neural networks.
 	\mynote{TODO}
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,journals/corr/HanMD15,ullrich2017soft,}
 	
