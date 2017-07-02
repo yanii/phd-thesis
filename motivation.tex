@@ -223,10 +223,13 @@
 	
 	\mynote{todo talk about MaKay's work, hyper-networks}
 	\section{Pruning Neural Networks}
-    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. The simplest saliency measure, weight magnitude, is overly simplistic in practice and can lead to a large reduction in accuracy if used for pruning.
-
+    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
+    
     In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks where training times can be measured in weeks.
 
+    The simplest saliency measure would be to simply measure the effect of removing a weight on the training error of the network. For each weight in the network, the training error can be evaluated, and the difference in error used as the saliency measure for that weight. In practice this straightforward method is infeasible however, since we must evaluate over the training set for each weight of the network. For a network with $n$ weights, and $p$ training samples, calculating the saliencies for the whole network in this manner is $\mathcal{O}(np)$~\citep{hanson1989comparing}.
+%    A simpler naive saliency measure, weight magnitude, is overly simplistic in practice since it does not account for the larger distributed representation learned in a neural networks and can lead to a large reduction in accuracy if used for pruning.
+    
     \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure -- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
        
     % From optimal brain surgeon paper
@@ -251,12 +254,10 @@
        \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
     \end{align}
 
-    To calculate the second derivative, chain rule is used, and the second derviatives are back-propogated through the network. 
-
-    This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
+    To calculate the second derivative, chain rule is used, and the second derviatives are back-propogated through the network. This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
     
+    \citet{hanson1989comparing} proposed using a per-neuron gating mechanism to measure saliency
     
-       
 	\mynote{TODO}
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,}
     \section{Compression \& Quantization}
