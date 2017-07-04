@@ -195,7 +195,39 @@
 		\caption[Two-or-more Clumps Problem and Structural Priors]{TODO. Class imbalance responsible for cycle in loss?}
 		\label{fig:tomplot}
 	\end{figure}
-	
+
+\subsection{No Free Lunch Theorem}
+The requirement for structural priors in neural networks is in many ways a consequence of the findings presented by \citet{wolpert1996lack}. The ``No Free Lunch'' (NFL) states that no algorithm performs better than any other when averaged uniformly over all possible problems of a particular type. Here we present a specialization of the theorem for supervised learning as described by \citet{lattimore2013no}:
+
+Let $X$ and $Y$ be the input and label sets representing the input and outpus space of the classification problem respectively. The classification itself is defined as a mapping $f: X \to Y$, where $y=f(x)$ is the desired class label of input $x$. Let the training set $X_m$ be the subset of the input space $X$ which our classification algorithm is trained on, and the unseen input space is $X_u = X - X_m$. Let the classification algorithm be defined $A(f_{X_{m}}, x)$, where for $x \in X_u$, $A(f_{X_{m}}, x)$ is the guess for the class label of input $x$, and $f_{X_{m}}(x) = f(x)$ where $x\in X_m$. Let the loss function be defined,
+
+\begin{align}
+    L_A(f, X_m) = \frac{1}{X_u} \sum_{x\in X_u} 1_{A(f_{X_m}, x) \neq f(x)},
+\end{align}
+
+where $1_{t}$ is the indicator function, returning 1 when $t$ is true, and 0 otherwise. The loss function measures the number of misclassifications on the training data of the classification algorithm.
+
+The expected loss on all functions $\mathcal{M}: X \to Y$,
+
+\begin{align}
+    E\left[ L_A\left(P, X_m\right) \right] = \sum_{f\in \mathcal{M}} P(f)L_A(f, X_m)
+\end{align} 
+
+where $P$ is a probability distribution on $\mathcal{M}$.
+
+\begin{theorem}[No Free Lunch]\label{NFL}
+Let $P$ be a uniform probability distribution on $\mathcal{M}$. For any algorithm $A$ and training data $X_m\subseteq X$,
+\begin{align}
+    E\left[ L_A\left(P, X_m\right) \right] = | Y - 1 |/|Y|,
+\end{align}
+\end{theorem}
+
+\ie no algorithm can do better than random on all possible problems, given only the training data with no other biases.
+
+Although this theorem leads many to claim that there is no such thing as a universal learner, \citet{lattimore2013no} claim that without contradicting NFL, biased learning algorithms may exist that do well on universal problems. Their main insight is that the assumption of a uniform probability function $P$ may be unrealistic, and under other distributions 
+
+\mynote{TODO} 
+
 \section{Growing Neural Network Architectures}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
 	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
@@ -261,8 +293,8 @@
 	\mynote{TODO}
 	\citet{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,}
     \section{Compression \& Quantization}
-    In order to use deep neural networks on embedded devices, and in many applications, first a compact representation is required. There have been many papers on compressing deep networks, notably the work of ~\citep{han2016dsd} looked at combining a simple weight magnitude-based pruning method with both quantization and Huffman coding, in all the method can take a trained network
-	
+    In order to use deep neural networks on embedded devices, and in many applications, first a compact representation is required. There have been many papers on compressing deep networks, notably the work of ~\citep{han2016dsd} looked at combining a naive weight magnitude-based pruning method with both quantization and Huffman coding. In all the method can take a trained network
+	\mynote{TODO}
 	
 \section{The Neocognitron}
 	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
