@@ -197,17 +197,20 @@
 	\end{figure}
 
 \subsection{No Free Lunch Theorem}
-The requirement for structural priors in neural networks is in many ways a consequence of the findings presented by \citet{wolpert1996lack}. The ``No Free Lunch'' (NFL) states that no algorithm performs better than any other when averaged uniformly over all possible problems of a particular type. Here we present a specialization of the theorem for supervised learning as described by \citet{lattimore2013no}:
+\begin{chapquote}{Zoubin Ghahramani, \textit{Microsoft Research AI Summer School, 2017}}
+	``Everything, but the data itself, is an assumption.''
+\end{chapquote}
 
-Let $X$ and $Y$ be the input and label sets representing the input and outpus space of the classification problem respectively. The classification itself is defined as a mapping $f: X \to Y$, where $y=f(x)$ is the desired class label of input $x$. Let the training set $X_m$ be the subset of the input space $X$ which our classification algorithm is trained on, and the unseen input space is $X_u = X - X_m$. Let the classification algorithm be defined $A(f_{X_{m}}, x)$, where for $x \in X_u$, $A(f_{X_{m}}, x)$ is the guess for the class label of input $x$, and $f_{X_{m}}(x) = f(x)$ where $x\in X_m$. Let the loss function be defined,
+The \emph{No Free Lunch} theorem (NFL)~\citep{wolpert1996lack} states that no algorithm performs better than any other when averaged over all possible problems (\ie all possible data-generating distributions) of a particular type, as each algorithm makes assumptions which will bias it towards different types of data distributions. Intuitively, if you are tasked with predicting the unobserved members of a large set, only from a few samples, and without using any assumptions whatsoever, you cannot do better than random on average. Any assumptions you do make on the pattern or relationship between members of the set will give you better performance for some data types, and worse for others. The NFL theorem simply formalizes the notion that we cannot infer a rule describing an entire set without either information or assumptions on every member of the set.
+
+\subsubsection{Formal Definition}
+Here we present a formal definition of the theorem specialized for supervised learning, as described by \citet{lattimore2013no}: Let $X$ and $Y$ be the input and label sets representing the input and outpus space of the classification problem respectively. The classification itself is defined as a mapping $f: X \to Y$, where $y=f(x)$ is the desired class label of input $x$. Let the training set $X_m$ be the subset of the input space $X$ which our classification algorithm is trained on, and the unseen input space is $X_u = X - X_m$. Let the classification algorithm be defined $A(f_{X_{m}}, x)$, where for $x \in X_u$, $A(f_{X_{m}}, x)$ is the guess for the class label of input $x$, and $f_{X_{m}}(x) = f(x)$ where $x\in X_m$. Let the loss function be defined,
 
 \begin{align}
     L_A(f, X_m) = \frac{1}{X_u} \sum_{x\in X_u} 1_{A(f_{X_m}, x) \neq f(x)},
 \end{align}
 
-where $1_{t}$ is the indicator function, returning 1 when $t$ is true, and 0 otherwise. The loss function measures the number of misclassifications on the training data of the classification algorithm.
-
-The expected loss on all functions $\mathcal{M}: X \to Y$,
+where $1_{t}$ is the indicator function, returning 1 when $t$ is true, and 0 otherwise. The loss function measures the number of misclassifications on the training data of the classification algorithm. The expected loss on all functions $\mathcal{M}: X \to Y$ is then,
 
 \begin{align}
     E\left[ L_A\left(P, X_m\right) \right] = \sum_{f\in \mathcal{M}} P(f)L_A(f, X_m)
@@ -224,13 +227,14 @@ Let $P$ be a uniform probability distribution on $\mathcal{M}$. For any algorith
 
 \ie no algorithm can do better than random on all possible problems, given only the training data with no other biases.
 
-Although this theorem leads many to claim that there is no such thing as a universal learner, \citet{lattimore2013no} claim that without contradicting NFL, biased learning algorithms may exist that do well on universal problems. Their main insight is that the assumption of a uniform probability function $P$ may be unrealistic, and under other distributions 
+The NFL theorem leads many to claim that there is no such thing as a universal learner, however it is important to note that in practice the data distributions that we are interested in represent a small number of all possible data distributions, so it's not inconceivable that a learning algorithm with assumptions may be able to do well on many different real world datasets. Formalizing this argument, \citet{lattimore2013no} claim that without contradicting NFL, biased learning algorithms may exist that do well on universal problems. Their main insight is that the assumption of a uniform probability function $P$ on data distributions may be unrealistic, and under other distributions a biased learner may do well even averaged over all distributions.
 
-\mynote{TODO} 
+\subsubsection{No Free Lunch and Structural Priors}
+The NFL theorem may appear to be the \emph{raison d'\^{e}tre} of structural priors, however this discounts the generality of the theorem. All neural networks makes implicit assumptions even without structural priors. For example, using a single-hidden  layer neural network assumes that the problem being learned is not linear. If the problem is linear, instead a single layer network (perceptron) would suffice, and likely generalize better. The NFL is, however, important in pointing out that structural priors in neural networks are not a `hack'. In fact well-informed assumptions are the reason machine learning works in practice.
 
 \section{Growing Neural Network Architectures}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
-	Given the affect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
+	Given the effect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
 	
 	The earliest proposals for building neural network structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron is fist used to provide the best linear separation of the data, and then ancillary neurons are added until perfect classification of the training data is achieved. In practice this is not necessarily good for generalization to the validation set however. 
 	
