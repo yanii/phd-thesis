@@ -262,7 +262,9 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an RNN allows the concise summary of a potentially infinite depth RNN.
 	\mynote{todo talk about MaKay's work, hyper-networks}
 	\section{Pruning Neural Networks}
-    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
+    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,han2015deep,ullrich2017soft,}
+%Xing2009???
+ differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
     
     In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks where training times can be measured in weeks.
 
@@ -298,7 +300,8 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
     \citet{hanson1989comparing} proposed using a per-neuron gating mechanism to measure saliency
     
 	\mynote{TODO}
-	\citet{lecun1989optimal,sietsma1988neural,Xing2009,han2015deep,ullrich2017soft,}
+	\citet{lecun1989optimal,sietsma1988neural,han2015deep,ullrich2017soft,}
+	%,Xing2009??
     \section{Compression \& Quantization}
     In order to use deep neural networks on embedded devices, and in many applications, first a compact representation is required. There have been many papers on compressing deep networks, notably the work of ~\citep{han2016dsd} looked at combining a naive weight magnitude-based pruning method with both quantization and Huffman coding. In all the method can take a trained network
 	\mynote{TODO}
