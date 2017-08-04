@@ -40,28 +40,29 @@ where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation fun
     y = f\left(\mathbf{w}^T\mathbf{x} + b \right).
 \end{equation}
 
-If we assume the function $f$ to be the Heaviside step function,
+If we assume the function $f$ to be a variant of the Heaviside step function,
 \begin{equation}
     f(x) = 
 \begin{cases}
 1 & \text{if } x \geq 0\\
-0 & \text{if } x < 0,
+0 \textrm{ (or $-1$)} & \text{if } x < 0,
 \end{cases}
 \end{equation}
 
 then the neuron is also called a \emph{perceptron}, a simple binary classifier. The perceptron was one of the earliest connectionist learning algorithms, invented by~\citet{rosenblatt1958perceptron} in 1957. The perceptron is a linear classifier,
-\begin{figure}
-\mynote{TODO}
-\caption{The interpretation of a perceptron as a hyperplane in $\mathbb{R}^n$}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{perceptronline}
+\caption{The interpretation of a perceptron as a hyperplane in $\mathbb{R}^n$.}
 \label{fig:hyperplane}
 \end{figure}
-The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$, and $f(x) = x,$
+The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
 
 \begin{equation}
 y = a x + c.
 \end{equation}
 
-In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron is a hyperplane functioning as a single decision boundary. 
+In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron can be visualized as a hyperplane functioning as a single decision boundary. 
 
 \subsection{Activation Functions}
 Without an activation function, even a large multi-layer neural network would have the representational ability of a linear classifier. The \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions. %Although each neuron is still representing a hyperplane, the space in which it operates is non-linear
