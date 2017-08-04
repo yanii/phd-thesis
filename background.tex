@@ -14,33 +14,54 @@
 \label{background}
 
 \section{Neural Networks}
-Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}), used in regression and classification problems. Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
+Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}).
+%, used in regression and classification problems.
+ Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
 
-Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. In practice however, a network with only a single hidden layer, of even large width, has trouble learning to represent complex functions as compared to networks with many hidden layers layers. Networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks.
-
-We will not cover the long and colourful history of neural networks, but attempt to instead provide an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of~\citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to~\citet{goodfellow2016deep}.
+We will not cover the long and colourful history of neural networks (for this we recommend reading the introduction of ~\citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of~\citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to~\citet{goodfellow2016deep}.
 
 \subsection{The Neuron}
-At its simplest a neuron is a function of the weighted aggregation of many inputs,
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{neuron}
+\caption{An illustration of a typical artificial neural network \emph{neuron}, with output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\label{fig:neuron}
+\end{figure}
+A neuron is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
 
 \begin{equation}
-	y = \sum_{i}^{N} w_i x_i + b,
+	y = f\left(\sum_{i}^{N} w_i x_i + b\right),
 \end{equation}
 
-where $i=0,\ldots,N$, $w_i$ is the weight of the input $x_i$, $b$ is the \emph{bias} and $f$ is an \emph{activation function}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, activation function $f$, weights $\mathbf{w}$ and a bias $b$, the output of which is,
+where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation function}, and $b$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $b$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in Fig.\,\ref{fig:neuron}.
 
 \begin{equation}
-y = \mathbf{w}^T\mathbf{x} + b.
+    y = f\left(\mathbf{w}^T\mathbf{x} + b \right).
 \end{equation}
 
-This function also has a geometric interpretation~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$,
+If we assume the function $f$ to be the Heaviside step function,
+\begin{equation}
+    f(x) = 
+\begin{cases}
+1 & \text{if } x \geq 0\\
+0 & \text{if } x < 0,
+\end{cases}
+\end{equation}
+
+then the neuron is also called a \emph{perceptron}, a simple binary classifier. The perceptron was one of the earliest connectionist learning algorithms, invented by~\citet{rosenblatt1958perceptron} in 1957. The perceptron is a linear classifier,
+\begin{figure}
+\mynote{TODO}
+\caption{The interpretation of a perceptron as a hyperplane in $\mathbb{R}^n$}
+\label{fig:hyperplane}
+\end{figure}
+The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. If we define $a=w_0, x=x_0, c=b$, and $f(x) = x,$
 
 \begin{equation}
 y = a x + c.
 \end{equation}
 
-In general a neuron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions.
-Neural networks are a discriminative classifier, and each neuron is a hyperplane functioning as a single decision boundary.
+In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron is a hyperplane functioning as a single decision boundary. 
 
 \subsection{Activation Functions}
 Without an activation function, even a large multi-layer neural network would have the representational ability of a linear classifier. The \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions. %Although each neuron is still representing a hyperplane, the space in which it operates is non-linear
@@ -59,6 +80,9 @@ hyperbolic tangent:
 \begin{equation}
 	f(x) = \tanh(x).
 \end{equation}
+\subsection{Hidden Layers}
+\mynote{Fill this in more}
+Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. In practice however, a network with only a single hidden layer, of even large width, has trouble learning to represent complex functions as compared to networks with many hidden layers layers. Networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks.
 
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by~\citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
