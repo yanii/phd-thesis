@@ -18,14 +18,14 @@ Artificial neural networks (or simply neural networks) are a broad range of stat
 %, used in regression and classification problems.
  Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
 
-We will not cover the long and colourful history of neural networks (for this we recommend reading the introduction of ~\citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of~\citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to~\citet{goodfellow2016deep}.
+We will not cover the long and colourful history of neural networks (for this we recommend reading the introduction of~\citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of~\citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to~\citet{goodfellow2016deep}.
 
 \subsection{The Neuron}
 
-\begin{figure}[htb]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
-\caption{An illustration of a typical artificial neural network \emph{neuron}, with output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\caption[An illustration of a typical artificial neural network neuron]{An illustration of a typical artificial neural network \emph{neuron}, with output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
 \label{fig:neuron}
 \end{figure}
 A neuron is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
@@ -50,10 +50,10 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \end{equation}
 
 then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by~\citet{rosenblatt1958perceptron} in 1957. The perceptron is a single layer neural network (\ie a linear classifier) and should not to be confused with a multi-layer perceptron (MLP) -- an unfortunate, but common, misnomer of any multi-layer neural network.
-\begin{figure}[htb]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption{The interpretation of a perceptron as a class-separating hyperplane, \ie a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron as a class-separating hyperplane]{The interpretation of a perceptron as a class-separating hyperplane, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
 The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
@@ -65,16 +65,26 @@ y = a x + c.
 In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron can be visualized as a hyperplane functioning as a single decision boundary.
 
 \subsection{The Limitations of Single-Layer Networks}
-A single layer neural network, such as the perceptron, is only a linear classifier, and has been shown to be ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. At the time, it was not obvious how to train networks with more than one layer of neurons, since the method of learning in neural networks, the \emph{perceptron learning rule} for perceptrons or the \emph{delta rule} for general neurons, only applied to single-layered networks.
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.5\textwidth]{perceptronxor}
+\caption[An illustration of the inability of a single line to correctly classify the XOR function]{An illustration of the inability of a single line (\ie a perceptron) to correctly classify the XOR function. Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
+\label{fig:perceptronxor}
+\end{figure}
+A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
+
+ At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
+\subsection{Backpropogation}
+This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
 
 \subsection{Activation Functions}
-As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
+As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
 
 \begin{equation}
 y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
 \end{equation}
 
-In the field of neural networks, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions is not simply a linear combination), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
+In the field of neural networks, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
 	f(x) = \frac{1}{1+e^{-x}},
