@@ -75,12 +75,12 @@ A single layer neural network, such as the perceptron, is only a linear classifi
 
  At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
  
-The delta rule for single-layered neural networks is gradient descent, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume a neuron has output $y$, target (desired output) $t$, inputs $(x_0, x_1, \ldots, x_N)$, weights $(w_0, w_1, \ldots, w_N)$. We want to know how to change a given weight $w_i$, given the error $E = (t-y)$,
+The delta rule for single-layered neural networks is gradient descent, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume the $i$th neuron in our single-layer neural network has output $y_i$, target (desired output) $t_i$, inputs $(x_0, x_1, \ldots, x_N)$, weights $(w_{i0}, w_{i1}, \ldots, w_{iN})$. We want to know how to change a given weight $w_{ij}$, given the error $E_i = (t_i-y_i)$,
 
 \mynote{Derivation of delta rule here}
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E}{\partial w} &= \frac{\partial E}{\partial y}\frac{\partial y}{\partial w} & \textrm{(chain rule)}
+    \frac{\partial E_i}{\partial w_{ij}} &= \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial w_{ij}} & \textrm{(chain rule)}
 \end{aligned}
 \end{equation}
 
