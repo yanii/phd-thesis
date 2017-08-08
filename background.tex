@@ -74,9 +74,21 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
  At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
+ 
+The delta rule for single-layered neural networks is gradient descent, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume a neuron has output $y$, target (desired output) $t$, inputs $(x_0, x_1, \ldots, x_N)$, weights $(w_0, w_1, \ldots, w_N)$. We want to know how to change a given weight $w_i$, given the error $E = (t-y)$,
+
+\mynote{Derivation of delta rule here}
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E}{\partial w} &= \frac{\partial E}{\partial y}\frac{\partial y}{\partial w} & \textrm{(chain rule)}
+\end{aligned}
+\end{equation}
+
 \subsection{Backpropogation}
 This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
 
+\mynote{Derivation of backpropogation here}
+ 
 \subsection{Activation Functions}
 As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
 
