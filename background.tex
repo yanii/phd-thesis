@@ -49,11 +49,11 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \end{cases}
 \end{equation}
 
-then the neuron is also called a \emph{perceptron}, a simple binary classifier. The perceptron was one of the earliest connectionist learning algorithms, invented by~\citet{rosenblatt1958perceptron} in 1957. The perceptron is a linear classifier,
+then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by~\citet{rosenblatt1958perceptron} in 1957. The perceptron is a single layer neural network (\ie a linear classifier) and should not to be confused with a multi-layer perceptron (MLP) -- an unfortunate, but common, misnomer of any multi-layer neural network.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption{The interpretation of a perceptron as a hyperplane in $\mathbb{R}^n$.}
+\caption{The interpretation of a perceptron as a class-separating hyperplane, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
 The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
@@ -62,28 +62,34 @@ The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hy
 y = a x + c.
 \end{equation}
 
-In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron can be visualized as a hyperplane functioning as a single decision boundary. 
+In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron can be visualized as a hyperplane functioning as a single decision boundary.
+
+\subsection{The Limitations of Single-Layer Networks}
+A single layer neural network, such as the perceptron, is only a linear classifier, and has been shown to be ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. At the time, it was not obvious how to train networks with more than one layer of neurons, since the method of learning in neural networks, the \emph{perceptron learning rule} for perceptrons or the \emph{delta rule} for general neurons, only applied to single-layered networks.
 
 \subsection{Activation Functions}
-Without an activation function, even a large multi-layer neural network would have the representational ability of a linear classifier. The \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions. %Although each neuron is still representing a hyperplane, the space in which it operates is non-linear
+As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
 
 \begin{equation}
 y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
 \end{equation}
 
-Activations were classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$, examples of sigmoid functions commonly used include the logistic function: 
+In the field of neural networks, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions is not simply a linear combination), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
 	f(x) = \frac{1}{1+e^{-x}},
 \end{equation}
 
-hyperbolic tangent:
+and they hyperbolic tangent,
 \begin{equation}
 	f(x) = \tanh(x).
 \end{equation}
+
+An issue with sigmoidal activations functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks tend to use the \emph{ReLU} activation function, as described in \S\ref{section:relu}.
+
+
 \subsection{Hidden Layers}
-\mynote{Fill this in more}
-Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. In practice however, a network with only a single hidden layer, of even large width, has trouble learning to represent complex functions as compared to networks with many hidden layers layers. Networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks.
+\mynote{Fill this in more}Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator - \ie such a neural network can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. In practice however, a network with only a single hidden layer, of even a very large width, has trouble learning to represent complex functions as compared to networks with many hidden layers layers. Networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks.
 
 \subsection{Convolutional Neural Networks}
 The earliest work on what are now termed \emph{Convolutional Neural Networks} (CNNs) was by~\citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
@@ -122,7 +128,9 @@ Another key aspect of convolutional architectures is pooling, a form of non-line
 Pooling layers divide the image into non-overlapping pooling regions, in which the spatial extents of the input image/feature map are aggregated into a single scalar. LeNet used the average to aggregate the pooling regions, \ie average pooling~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the feature map sizes~\citep{He2015}.
 
 \section{Contemporary Methods of Training Deep Neural Networks}
+\label{section:contemporary}
 \subsection{Rectified Linear Activation Function}
+\label{section:relu}
 An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in Fig.~\ref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^{-x}}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
 
 \begin{figure}[tbp]
