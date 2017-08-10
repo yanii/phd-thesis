@@ -53,7 +53,7 @@ then the neuron is also called a \emph{perceptron}, a simple binary classifier, 
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption[The interpretation of a perceptron as a class-separating hyperplane]{The interpretation of a perceptron as a class-separating hyperplane, \ie a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron as a hyperplane]{The interpretation of a perceptron as a oriented hyperplane, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
 The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
@@ -73,14 +73,30 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \end{figure}
 A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
- At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
- 
-The delta rule for single-layered neural networks is gradient descent, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume the $i$th neuron in our single-layer neural network has output $y_i$, target (desired output) $t_i$, inputs $(x_0, x_1, \ldots, x_N)$, weights $(w_{i0}, w_{i1}, \ldots, w_{iN})$. We want to know how to change a given weight $w_{ij}$, given the error $E_i = (t_i-y_i)$,
+At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.5\textwidth]{singlelayer}
+\caption[A single layer neural network]{An illustration of a single layer neural network, trainable with the delta rule.}
+\label{fig:singlelayer}
+\end{figure}
 
+The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$, given the output of node $j$, 
+\begin{equation}
+	y_j = f\left( \sum_i w_{ji} x_{i} \right)
+\end{equation}
+and assuming the error of the prediction is a sum of squares,
+\begin{equation}
+E = \sum_n \sum_j (y^n_j - t^n_j).
+\end{equation}
+
+Chain rule allows us to calculate the error for each weight $w_{ji}$ in the network,
 \mynote{Derivation of delta rule here}
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E_i}{\partial w_{ij}} &= \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial w_{ij}} & \textrm{(chain rule)}
+    \frac{\partial E}{\partial w_{ij}} &= \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial w_{ij}} = \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial f}\frac{\partial f}{\partial w_{ij}},& \textrm{(chain rule)}\\
+    & = \frac{\partial (y_i - t_i)}{\partial y_i}\frac{\partial f\left(\sum_j w_{ij} x_{j}\right)}{\partial w_{ij}}, & \\
+    & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
 \end{aligned}
 \end{equation}
 
