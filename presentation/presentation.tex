@@ -89,8 +89,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% Title Page Setup
-\title[Restricted Connectivity in Deep Neural Networks] % (optional, use only with long paper titles)
-{Restricted Connectivity in Deep Neural Networks}
+\title[Structural Priors in Deep Networks] % (optional, use only with long paper titles)
+{Structural Priors in Deep Networks}
 %\subtitle
 %{Improving CNN
 %Generalization and
@@ -102,7 +102,7 @@
 \institute[University of Cambridge] % (optional, but mostly needed)
 {University of Cambridge}
 
-\date{March 21, 2017}
+\date{August 29, 2017}
 
 %\pgfdeclareimage[height=0.5cm]{university-logo}{uc-cmyk}
 %\logo{\pgfuseimage{university-logo}}
@@ -166,7 +166,7 @@
 \begin{frame}{About Me}
 \begin{itemize}
 \item Ph.D.\ student in the Department of Engineering at the University of Cambridge.
-%\item Funded by a Microsoft Research PhD Scholarship
+\item Funded by a Microsoft Research PhD Scholarship
 \item Supervised by Professor Roberto Cipolla, head of the Computer Vision and Robotics group in the Machine Intelligence Lab, and Dr. Antonio Criminisi, a principal researcher at Microsoft Research.
 \end{itemize}
 \centering
@@ -181,11 +181,25 @@
 \subsection{PhD Research}
 
 \begin{frame}{First Author Publications during PhD}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \begin{itemize}
     \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report 2015} 
-    \item Training CNNs with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
-    \item Deep roots: Improving CNN efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.\\CVPR 2017}
-    
+    \item \footnote{To be presented in this talk}Training CNNs with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
+    \item \footnotemark[1]Deep roots: Improving CNN efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.\\CVPR 2017}
+\end{itemize}
+\end{frame}
+
+\subsection{Collaborative Research}
+\begin{frame}{Collaborative Research}
+\begin{itemize}
+    \item \textbf{Medical Computer Vision}
+    \begin{itemize}
+        \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi. \textit{MICCAI-BRATS 2014}}
+        \item Using CNNs for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+    \end{itemize}
+    \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi. \textit{NIPS 2016}}
+    \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
+S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla. \textit{CVPR 2016}}
 \end{itemize}
 \end{frame}
 
@@ -290,22 +304,6 @@
 $\approx$ 96\% in fully connected layers
 %0.961714567
 %0.038285433
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Hinton Philosophy}
-% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
-    %\item Standard practice: Create a model of appropriate size for our data and the problem at hand.
-    %\item Hinton philosophy on neural network design: Create a massively overparameterized network, and regularize like crazy to prevent overfitting.
-    %\item Why is the latter needed in practice?
-    %\item ``If you give me any sized dataset, what you ought to do if you want good generalization is get yourself into the small data regime. That is, however big your dataset, you ought to make a much bigger model so that that's small data. So, I think what the brain is doing is making sure that big data is small data and then regularizing the hell out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model. And you can think of it as, it's just and efficient way of averaging many, many small models, which is a good way to use argback??, but something a bit more efficient than just doing a normal ensemble. So you should always, if you can, be in the small data regime by having a really big computer. And that's certainly where we live, because we have a limited lifetime so the amount of data we get is limited.''
-
-\begin{quote}
-``If you give me any sized dataset, what you ought to do \textbf{if you want good generalization} is get yourself into the small data regime. That is, however big your dataset, you ought to \textbf{make a much bigger model} so that that's small data.''\\
-
-``So, I think what the brain is doing is \ldots \textbf{regularizing the hell} out of it, and that's a better thing to do than what statisticians used to think you should do, which is have a small model.'' \\
-\flushright{\normalfont Geoffery Hinton\\\footnote{\url{http://sms.cam.ac.uk/media/2017973}}Cambridge, June 2015}
-\end{quote}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
