@@ -413,6 +413,37 @@ $\approx$ 96\% in fully connected layers
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The Problem}
+% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
+\begin{itemize}
+%    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
+%    \item This seems to work well in practice for increasing generalization in networks such as VGG, and MSRA
+    \item Creating a massively over-parameterized network, has consequences
+    \item Training time: Translates into 2-3 weeks of training on 8 GPUs! (ResNet 200)
+    \item Forward pass (ResNet 50): 12 ms GPU, 621 ms CPU
+    \item Forward pass (GoogLeNet): 4.4 ms GPU, 300 ms CPU
+\end{itemize}
+\vfill
+But what about the practicalities of using deep learning:
+\begin{itemize}
+    \item on embedded devices
+    \item realtime applications
+    \item backed by distributed/cloud computing
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Compression/Representation}
+Isn't that already being addressed?
+\begin{itemize}
+\item Approximation (compression/pruning) of neural networks
+\item Reduced representation (8-bit floats/binary!)
+%\item Conditional computation
+\end{itemize}
+Allow us to have a trade off in compute \vs accuracy.
+\vfill
+\textit{These methods will still apply to any network.} Instead, let's try to  address the fundamental problem of over-parameterization.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Generalization and Num.\ Parameters}
 	\begin{figure}[p]
@@ -460,39 +491,6 @@ $\approx$ 96\% in fully connected layers
 	\end{itemize}
 \end{itemize}
 \end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{The Problem}
-% http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
-\begin{itemize}
-%    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
-%    \item This seems to work well in practice for increasing generalization in networks such as VGG, and MSRA
-    \item Creating a massively over-parameterized network, has consequences
-    \item Training time: Translates into 2-3 weeks of training on 8 GPUs! (ResNet 200)
-    \item Forward pass (ResNet 50): 12 ms GPU, 621 ms CPU
-    \item Forward pass (GoogLeNet): 4.4 ms GPU, 300 ms CPU
-\end{itemize}
-\vfill
-But what about the practicalities of using deep learning:
-\begin{itemize}
-    \item on embedded devices
-    \item realtime applications
-    \item backed by distributed/cloud computing
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Compression/Representation}
-Isn't that already being addressed?
-\begin{itemize}
-\item Approximation (compression/pruning) of neural networks
-\item Reduced representation (8-bit floats/binary!)
-%\item Conditional computation
-\end{itemize}
-Allow us to have a trade off in compute \vs accuracy.
-\vfill
-\textit{These methods will still apply to any network.} Instead, let's try to  address the fundamental problem of over-parameterization.
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Alternative Philosophy}
 \begin{columns}[onlytextwidth,T]
 \begin{column}{0.65\textwidth}
