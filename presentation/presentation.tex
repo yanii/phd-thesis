@@ -601,6 +601,22 @@ networks which are interconnected in very specific ways.''\\
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Inception: Learning a Basis for Filter Size}{}
+\begin{itemize}
+   \item In \footcite{Szegedy2014going}, linear combination of different sized filters is learned, \ie a basis space for filters:
+\end{itemize}
+
+\begin{figure}
+   \includegraphics[width=0.7\textwidth, page=7]{sparsification}
+\end{figure}
+
+\begin{itemize}
+    %\item Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1)
+    \item Motivation: expect most image correlations to be highly localized, \ie many small filters. However, a few may require larger, more complex filters
+    %\item We can learn an effective filter of full size, but limited parameterization, by learning a basis -- the 1$\times$1 filters can learn a linear combination of the basis
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
 \subsection{Spatial Structural Priors}
 
 \usebackgroundtemplate{%             declare it
