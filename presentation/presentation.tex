@@ -446,11 +446,18 @@ $\approx$ 96\% in fully connected layers
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
+\begin{frame}{Generalization and Num.\ Parameters}
 \begin{itemize}
 	\item When fitting a curve, we often have little idea of what order polynomial would best fit the data!
-	\item Weak Prior - Regularization. Knowing only that our model is over-parameterized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters, by adding a penalty for example on the L2 norm of the model weights.
-	\item Strong Priors - Structural. With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to some particular orders. %For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+	\item Weak Prior - Regularization.
+	\begin{itemize}
+	    \item Prior is knowing only that our model is over-parameterized
+	    \item This restricts the model to effectively use only a small number of the parameters
+	\end{itemize}
+	\item Strong Priors - Structural.
+	\begin{itemize}
+	    \item With more prior information on the task, \eg from the convexity of the polynomial, we may imply that a certain order polynomial is more appropriate, and restrict learning to some particular orders. %For example, given samples from a polynomial appear to be convex, we can surmise that the polynomial is likely to be of an even or \engordnumber{2}-order, and restrict our fit to be of that order. 
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -573,8 +580,13 @@ The Atlas Slave\\(Accademia, Florence)
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Sparsity of Convolution}
 \begin{figure}
-    \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn3}
+    \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn4}
 \end{figure}
+    \begin{itemize}
+        \item Convolutional Neural Networks (CNNs) are structural priors for natural images
+        \item Local connectivity - local correlations are important in natural images, \eg edges
+        \item Shared parameters - we know we don't need to re-learn filters for every pixel
+    \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Why are CNNs uniformly structured?}
