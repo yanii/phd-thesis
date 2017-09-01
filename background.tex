@@ -74,6 +74,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
 At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
+\subsection{Training Single Layer Networks: The Delta Rule}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{singlelayer}
@@ -81,28 +82,37 @@ At the time, it was not obvious how to train networks with more than one layer o
 \label{fig:singlelayer}
 \end{figure}
 
-The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$, given the output of node $j$, 
+The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
 \begin{equation}
-	y_j = f\left( \sum_i w_{ji} x_{i} \right)
+	y_j = f\left( a_i \right),
 \end{equation}
-and assuming the error of the prediction is a sum of squares,
+where
 \begin{equation}
-E = \sum_n \sum_j (y^n_j - t^n_j).
+	a_i = \sum_i w_{ji} x_{i}.
+\end{equation}
+To do so, we must use the error of our prediction for each output $y_j$ and training sample $x^n$ as compared to the known label $t_j$,
+\begin{equation}
+    e^n_j = y^n_j - t^n_j.
 \end{equation}
 
-Chain rule allows us to calculate the error for each weight $w_{ji}$ in the network,
-\mynote{Derivation of delta rule here}
+For this derivation, we assume the error for a single sample is calculated by the squared error (the derivation holds as long as our error function is in the form of a sum of squares~\citep{Bishop1995}),
+\begin{equation}
+E_n = \frac{1}{2} \sum^n_j \left(e^n_j\right)^2.
+\end{equation}
+
+Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E}{\partial w_{ij}} &= \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial w_{ij}} = \frac{\partial E_i}{\partial y_i}\frac{\partial y_i}{\partial f}\frac{\partial f}{\partial w_{ij}},& \textrm{(chain rule)}\\
-    & = \frac{\partial (y_i - t_i)}{\partial y_i}\frac{\partial f\left(\sum_j w_{ij} x_{j}\right)}{\partial w_{ij}}, & \\
+    \frac{\partial E^n}{\partial w^n_{ji}} &= \frac{\partial E^n_j}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}},& \textrm{(chain rule)}\\
     & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
 \end{aligned}
 \end{equation}
+\mynote{Derivation of delta rule here}
 
-\subsection{Backpropogation}
+\subsection{Backpropagation}
 This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
 
+The following derivation is based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation.
 \mynote{Derivation of backpropogation here}
  
 \subsection{Activation Functions}
