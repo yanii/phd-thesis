@@ -84,31 +84,77 @@ At the time, it was not obvious how to train networks with more than one layer o
 
 The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
 \begin{equation}
-	y_j = f\left( a_i \right),
+	y_j = f\left( a_j \right),
+	\label{eqn:output}
 \end{equation}
 where
 \begin{equation}
-	a_i = \sum_i w_{ji} x_{i}.
+	a_j = \sum_i w_{ji} x_{i}.
+	\label{eqn:weightsum}
 \end{equation}
 To do so, we must use the error of our prediction for each output $y_j$ and training sample $x^n$ as compared to the known label $t_j$,
 \begin{equation}
-    e^n_j = y^n_j - t^n_j.
+    e^n_j = t^n_j - y^n_j.
+    \label{eqn:error}
 \end{equation}
 
 For this derivation, we assume the error for a single sample is calculated by the squared error (the derivation holds as long as our error function is in the form of a sum of squares~\citep{Bishop1995}),
 \begin{equation}
-E_n = \frac{1}{2} \sum^n_j \left(e^n_j\right)^2.
+    E_n = \frac{1}{2} \sum^n_j \left(e^n_j\right)^2.
+    \label{eqn:errorsum}
 \end{equation}
 
 Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w^n_{ji}} &= \frac{\partial E^n_j}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}},& \textrm{(chain rule)}\\
-    & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
+    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}},& \textrm{(chain rule)}
+%    & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
 \end{aligned}
 \end{equation}
-\mynote{Derivation of delta rule here}
 
+Differentiating Eq.~\ref{eqn:errorsum} with respect to $e^n_j$,
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial e^n_j} &= e^n_j,
+\end{aligned}
+\end{equation}
+
+Eq.~\ref{eqn:error} with respect to $y^n_j$,
+\begin{equation}
+\begin{aligned}
+    \frac{\partial e^n_j}{\partial y^n_j} &= -1,
+\end{aligned}
+\end{equation}
+
+Eq.~\ref{eqn:output} with respect to $a^n_j$,
+\begin{equation}
+\begin{aligned}
+   \frac{\partial y^n_j}{\partial a^n_j}  &= f^\prime\left( a^n_j \right),
+\end{aligned}
+\end{equation}
+
+and finally Eq.~\ref{eqn:output} with respect to $a^n_j$,
+\begin{equation}
+\begin{aligned}
+   \frac{\partial a^n_j}{\partial w_{ji}} &= x_i.
+\end{aligned}
+\end{equation}
+
+Thus the sensitivity is
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{ji}} &= - e^n_j  f^\prime\left( a^n_j \right) x_i.
+\end{aligned}
+\end{equation}
+
+The delta rule uses the sensitivity to correct $w_{ji}$ proportionally, 
+\begin{equation}
+\begin{aligned}
+    \Delta w_{ji} &= -\gamma \frac{\partial E^n}{\partial w_{ji}},
+\end{aligned}
+\end{equation}
+
+where $\gamma$ is a constant called the \emph{learning rate}.
 \subsection{Backpropagation}
 This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
 
