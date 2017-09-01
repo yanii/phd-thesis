@@ -107,7 +107,7 @@ For this derivation, we assume the error for a single sample is calculated by th
 Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}},& \textrm{(chain rule)}
+    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}}.& \textrm{(chain rule)}
 %    & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
 \end{aligned}
 \end{equation}
