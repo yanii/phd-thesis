@@ -73,7 +73,8 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \end{figure}
 A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
-At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. 
+At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. %This became known as the credit-assignment problem.
+
 \subsection{Training Single Layer Networks: The Delta Rule}
 \begin{figure}[tbp]
 \centering
@@ -155,7 +156,14 @@ The delta rule uses the sensitivity to correct $w_{ji}$ proportionally,
 \end{equation}
 
 where $\gamma$ is a constant called the \emph{learning rate}.
+
 \subsection{Backpropagation}
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.8\textwidth]{neurontwolayer}
+\caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{i0}, \ldots, x_{iN}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$.}
+\label{fig:neurontwolayer}
+\end{figure}
 This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
 
 The following derivation is based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation.
