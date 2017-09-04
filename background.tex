@@ -76,6 +76,7 @@ A single layer neural network, such as the perceptron, is only a linear classifi
 At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
 \subsection{Training Single Layer Networks: The Delta Rule}
+\label{deltarule}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{singlelayer}
@@ -143,6 +144,7 @@ and finally Eq.~\ref{eqn:output} with respect to $a^n_j$,
 
 Thus the sensitivity is
 \begin{equation}
+\label{eqn:deltasensitivity}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= - e^n_j  f^\prime\left( a^n_j \right) x_i.
 \end{aligned}
@@ -164,10 +166,27 @@ where $\gamma$ is a constant called the \emph{learning rate}.
 \caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{i0}, \ldots, x_{iN}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-This issue was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), first demonstrated experimentally by \citet{rumelhartbackprop}, and allowing learning in multi-layer neural networks.
+The credit-assignment problem was solved with the discovery of \emph{backpropogation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It's controversial who first discovered backpropogation, this is since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropogation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first practically implementing the algorithm -- a fact that will be attested to by anyone who has since attempted.
 
-The following derivation is based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation.
-\mynote{Derivation of backpropogation here}
+Following is a derivation of backpropogation based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to Fig.~\ref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers.
+
+We are interested in finding the sensitivity of a the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
+\begin{enumerate*}[label=(\roman*)]
+  \item \label{enum:outputneuron} those belonging to \emph{output neurons}, \ie neurons lying directly before the output layer, such as $w_{kj}$ in Fig.~\ref{fig:neurontwolayer}, and
+  \item \label{enum:hiddenneuron} weights belonging to hidden neurons, such as $w_{ji}$ in Fig.~\ref{fig:neurontwolayer}.
+\end{enumerate*}
+
+\ref{enum:outputneuron} The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks with direct access to the error signal. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation to match Fig.~\ref{fig:neurontwolayer}, we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
+
+\begin{equation}
+\label{eqn:deltasensitivity}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f^\prime\left( a^n_k \right) x_kj.
+\end{aligned}
+\end{equation}
+
+\ref{enum:hiddenneuron} The weights belonging to hidden neurons have no direct access to the error signal, instead we must 
+\mynote{Finish backprop derivation}
  
 \subsection{Activation Functions}
 As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
