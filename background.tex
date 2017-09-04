@@ -208,11 +208,15 @@ The output weights are relatively easy to find, since they correspond to the sam
 \caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$.}
 \label{fig:neurontwolayer}
 \end{figure}
-The weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error. This requires us to calculate the derivative recursively, \ie to calculate the partial derivative $\frac{\partial E^n}{\partial w_{ji}}$, we first assume we know the error derivative of the subsequent layer, $\frac{\partial E^n}{\partial w_{kj}}$. From Fig.~\ref{fig:neurontwolayer}, we can derive the derivative of a hidden layer weight using chain rule,
+
+The weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error. 
+%This requires us to calculate the derivative recursively, \ie to calculate the partial derivative $\frac{\partial E^n}{\partial w_{ji}}$, we first assume we know the error derivative of the subsequent layer, $\frac{\partial E^n}{\partial w_{kj}}$. 
+Assuming we are attempting to work out the partial $\frac{\partial E^n}{\partial w_{ji}}$, for a single hidden layer network illustrated in Fig.~\ref{fig:neurontwolayer}. We can again derive the derivative of a hidden layer weight using chain rule,
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial x^n_{kj}} \frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}
+    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_{k}}
+     \frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}
 \end{aligned}
 \end{equation}
 
