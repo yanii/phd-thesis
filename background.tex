@@ -109,7 +109,7 @@ For this derivation, we assume the error for a single sample is calculated by th
 Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}}.& \textrm{(chain rule)}
+    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}}.
 %    & = -\frac{\partial f\left(w_{ij}x_{j}\right)}{\partial w_{ij}}, & \\
 \end{aligned}
 \end{equation}
@@ -150,14 +150,37 @@ Thus the sensitivity is
 \end{aligned}
 \end{equation}
 
-The delta rule uses the sensitivity to correct $w_{ji}$ proportionally, 
+Typically the local gradient, or \emph{delta}, is then defined,
+\begin{equation}
+\label{eqn:delta}
+\begin{aligned}
+    \delta^n_j &= e^n_j  f^\prime\left( a^n_j \right)\\
+    &= -\frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j},
+\end{aligned}
+\end{equation}
+
+such that equation \ref{eqn:deltasensitivity} can be rewritten,
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_j x_i.
+\end{aligned}
+\end{equation}
+
+
+The delta rule adjusts each weight $w_{ji}$ proportional to the sensitivity, 
 \begin{equation}
 \begin{aligned}
     \Delta w_{ji} &= -\gamma \frac{\partial E^n}{\partial w_{ji}},
 \end{aligned}
 \end{equation}
 
-where $\gamma$ is a constant called the \emph{learning rate}.
+where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \ref{eqn:delta}, this is simply written,
+\begin{equation}
+\begin{aligned}
+    \Delta w_{ji} &= \gamma\, \delta^n_j x_i.
+\end{aligned}
+\end{equation}
+
 
 \subsection{Backpropagation}
 \begin{figure}[tbp]
@@ -171,21 +194,23 @@ The credit-assignment problem was solved with the discovery of \emph{backpropoga
 Following is a derivation of backpropogation based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to Fig.~\ref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers.
 
 We are interested in finding the sensitivity of a the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
-\begin{enumerate*}[label=(\roman*)]
+\begin{enumerate*}[label=(\textbf{\roman*})]
   \item \label{enum:outputneuron} those belonging to \emph{output neurons}, \ie neurons lying directly before the output layer, such as $w_{kj}$ in Fig.~\ref{fig:neurontwolayer}, and
   \item \label{enum:hiddenneuron} weights belonging to hidden neurons, such as $w_{ji}$ in Fig.~\ref{fig:neurontwolayer}.
 \end{enumerate*}
 
-\ref{enum:outputneuron} The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks with direct access to the error signal. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation to match Fig.~\ref{fig:neurontwolayer}, we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
+\paragraph{\ref{enum:outputneuron}~Output Layer Weights.}
+The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie $e^n_j$. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation to match Fig.~\ref{fig:neurontwolayer}, we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
 
 \begin{equation}
-\label{eqn:deltasensitivity}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f^\prime\left( a^n_k \right) x_kj.
+    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f^\prime\left( a^n_k \right) x_{kj}\\
+    &= -\delta^n_k x_{kj}.
 \end{aligned}
 \end{equation}
 
-\ref{enum:hiddenneuron} The weights belonging to hidden neurons have no direct access to the error signal, instead we must 
+\paragraph{\ref{enum:hiddenneuron}}
+The weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error. 
 \mynote{Finish backprop derivation}
  
 \subsection{Activation Functions}
