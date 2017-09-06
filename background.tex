@@ -55,14 +55,14 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \caption[A single layer neural network]{An illustration of a simple single layer neural network, such as a perceptron network.}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by~\citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie a linear classifier), such as that illustrated in Fig.~\ref{fig:singlelayer}, and should not to be confused with a multi-layer perceptron (MLP) -- an unfortunate, but common, misnomer of any multi-layer neural network.
+then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by~\citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a multi-layer perceptron (MLP) -- an unfortunate, but common, misnomer of any multi-layer neural network.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
 \caption[The interpretation of a perceptron as a hyperplane]{The interpretation of a perceptron as a oriented hyperplane, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
-The perceptron also has a geometric interpretation, as shown in Fig.~\ref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
+The perceptron also has a geometric interpretation, as shown in \cref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x,$
 
 \begin{equation}
 y = a x + c.
@@ -77,7 +77,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \caption[An illustration of the inability of a single line to correctly classify the XOR function]{An illustration of the inability of a single line (\ie a perceptron) to correctly classify the XOR function. Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
-A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in Fig.~\ref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
+A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function -- \ie \emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
 At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
@@ -90,7 +90,7 @@ At the time, it was not obvious how to train networks with more than one layer o
 \label{fig:neurononelayer}
 \end{figure}
 
-The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
+The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
 \begin{equation}
 	y_j = f\left( a_j \right),
 	\label{eqn:output}
@@ -119,21 +119,21 @@ Chain rule allows us to calculate the \emph{sensitivity} of the error to each we
 \end{aligned}
 \end{equation}
 
-Differentiating Eq.~\ref{eqn:errorsum} with respect to $e^n_j$,
+Differentiating \cref{eqn:errorsum} with respect to $e^n_j$,
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial e^n_j} &= e^n_j,
 \end{aligned}
 \end{equation}
 
-Eq.~\ref{eqn:error} with respect to $y^n_j$,
+\cref{eqn:error} with respect to $y^n_j$,
 \begin{equation}
 \begin{aligned}
     \frac{\partial e^n_j}{\partial y^n_j} &= -1,
 \end{aligned}
 \end{equation}
 
-Eq.~\ref{eqn:output} with respect to $a^n_j$,
+\cref{eqn:output} with respect to $a^n_j$,
 \begin{equation}
 \begin{aligned}
    \frac{\partial y^n_j}{\partial a^n_j}  &= f'\left( a^n_j \right),
@@ -141,7 +141,7 @@ Eq.~\ref{eqn:output} with respect to $a^n_j$,
 \label{eqn:partialdyda}
 \end{equation}
 
-and finally Eq.~\ref{eqn:weightsum} with respect to $w_{ji}$,
+and finally \cref{eqn:weightsum} with respect to $w_{ji}$,
 \begin{equation}
 \begin{aligned}
    \frac{\partial a^n_j}{\partial w_{ji}} &= \frac{\partial}{\partial w_{ji}} \left( \sum_i w_{ji} x_{i} \right)\\
@@ -167,7 +167,7 @@ Typically what is variously called the local gradient, error, or simply \emph{de
 \end{aligned}
 \end{equation}
 
-such that equation \ref{eqn:deltasensitivity} can be rewritten,
+such that \cref{eqn:deltasensitivity} can be rewritten,
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_j x_i.
@@ -182,7 +182,7 @@ The delta rule adjusts each weight $w_{ji}$ proportional to the sensitivity,
 \end{aligned}
 \end{equation}
 
-where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \ref{eqn:delta}, this is simply written,
+where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \cref{eqn:delta}, this is simply written,
 \begin{equation}
 \begin{aligned}
     \Delta w_{ji} &= \gamma\, \delta^n_j x_i.
@@ -193,16 +193,16 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 \subsection{Backpropagation}
 The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It is somewhat controversial who first ``discovered'' backpropagation, since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm -- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to Fig.~\ref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers, and which notably differs from that in Fig.~\ref{fig:neurononelayer} for the single layer case.
+Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to \cref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers, and which notably differs from that in \cref{fig:neurononelayer} for the single layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label=(\textbf{\roman*})]
-  \item \label{enum:outputneuron} those belonging to \emph{output layer neurons}, \ie neurons lying directly before the output, such as $w_{kj}$ in Fig.~\ref{fig:neurontwolayer}, and
-  \item \label{enum:hiddenneuron} weights belonging to hidden layer neurons, such as $w_{ji}$ in Fig.~\ref{fig:neurontwolayer}.
+  \item \label{enum:outputneuron} those belonging to \emph{output layer neurons}, \ie neurons lying directly before the output, such as $w_{kj}$ in \cref{fig:neurontwolayer}, and
+  \item \label{enum:hiddenneuron} weights belonging to hidden layer neurons, such as $w_{ji}$ in \cref{fig:neurontwolayer}.
 \end{enumerate*}
 
 \paragraph{\ref{enum:outputneuron}~Output Layer.}
-The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie $e^n_j$. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation (now indexing by $k$ rather than $j$ to match Fig.~\ref{fig:neurontwolayer}), we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
+The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie $e^n_j$. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation (now indexing by $k$ rather than $j$ to match \cref{fig:neurontwolayer}), we can use the sensitivity found in \cref{eqn:deltasensitivity},
 
 \begin{equation}
 \begin{aligned}
@@ -222,7 +222,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
+We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
 
 Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E$,
 \begin{equation}
@@ -234,9 +234,9 @@ Following from chain rule we can write the partial derivative of a hidden weight
 \end{aligned}
 \end{equation}
 
-where the sum arises from the fact that, unlike in Eq.~\ref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons in the subsequent layer (see Fig.~\ref{fig:neurontwolayer}).
+where the sum arises from the fact that, unlike in \cref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons in the subsequent layer (see \cref{fig:neurontwolayer}).
 
-We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from Eq.~\ref{eqn:outputlayer} for the output neuron and error partial derivatives,
+We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from \cref{eqn:outputlayer} for the output neuron and error partial derivatives,
 
 \begin{equation}
 \begin{aligned}
@@ -246,14 +246,14 @@ We already know how to calculate the partials for the output layer from the deri
 \end{aligned}
 \end{equation}
 
-Recall from Eq.~\ref{eqn:weightsum}, the net activation $a$ is a sum of all previous layer weights. Thus,
+Recall from \cref{eqn:weightsum}, the net activation $a$ is a sum of all previous layer weights. Thus,
 \begin{equation}
 \begin{aligned}
     \frac{\partial a^n_k}{\partial y^n_{j}} &= \frac{\partial}{\partial y^n_{j}}\left(\sum_j w_{kj} y^n_{j} \right) &= w_{kj},
 \end{aligned}
 \end{equation}
 
-and substituting from Eq.~\ref{eqn:partialdyda} and Eq.~\ref{eqn:sumonetermpartial} into Eq.~\ref{eqn:twolayer2},
+and substituting from \cref{eqn:partialdyda} and \cref{eqn:sumonetermpartial} into \cref{eqn:twolayer2},
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= -\left( \sum_k \delta^n_k y^n_j w_{kj}\right)
@@ -262,7 +262,7 @@ and substituting from Eq.~\ref{eqn:partialdyda} and Eq.~\ref{eqn:sumonetermparti
 \end{aligned}
 \end{equation}
 
-This bears some resemblance to the derived expression for a single layer, and just as in Eq.~\ref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
+This bears some resemblance to the derived expression for a single layer, and just as in \cref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
 \begin{equation}
 \label{eqn:deltahidden}
 \begin{aligned}
@@ -282,7 +282,7 @@ This leaves us with the more convenient (as we will see in \S\ref{arbitraryhidde
 
 \subsubsection{Arbitrary Number of Hidden Layers}
 \label{arbitraryhidden}
-The derivation above was based on the specific case of a single hidden layer network, but it is trivial to extend this result to multiple hidden layers. There is a recursion in the calculation of the partial derivatives in Eq.~\ref{eqn:deltahidden} which holds for a network with any number of hidden layers, and which we will now make explicit. 
+The derivation above was based on the specific case of a single hidden layer network, but it is trivial to extend this result to multiple hidden layers. There is a recursion in the calculation of the partial derivatives in \cref{eqn:deltahidden} which holds for a network with any number of hidden layers, and which we will now make explicit. 
 
 The delta is defined,
 \begin{equation}
@@ -309,7 +309,7 @@ Learning with backpropogation is much like the delta rule; sensitivities are use
      \label{eqn:backproplearningrule}
 \end{aligned}
 \end{equation}
-where $\delta^n_j$ is as defined in Eq.~\ref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
+where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
 Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $n$, in practice this method, called \emph{online training}, is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general.
@@ -390,7 +390,7 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 \label{section:contemporary}
 \subsection{Rectified Linear Activation Function}
 \label{section:relu}
-An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in Fig.~\ref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^{-x}}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
+An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in \cref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^{-x}}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
 
 \begin{figure}[tbp]
 	\centering
@@ -545,12 +545,12 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether -- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-Rectified linear units (ReLU) were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (Fig.~\ref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
+Rectified linear units (ReLU) were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (\cref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
 Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
 
-For example, consider a deep network consisting of $L$ identical layers as shown in Fig.~\ref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\beta$ for each layer.
+For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\beta$ for each layer.
 
 After propagating through $L$ layers, this becomes a scaling of $\beta^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\beta$:
 

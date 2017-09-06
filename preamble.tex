@@ -17,6 +17,12 @@
 %\usepackage{enumitem}
 %\setlist[enumerate,itemize,description]{topsep=0em}
 
+
+% *****************************************************************************
+% ******************* AMS Font/Symbol Packages (to not conflict with font) ****
+
+\usepackage{amsmath, amsthm, amssymb}
+
 % *****************************************************************************
 % ******************* Fonts (like different typewriter fonts etc.)*************
 
@@ -26,6 +32,8 @@
   % Set your custom font here and use `customfont' in options. Leave empty to
   % load computer modern font (default LaTeX font).
   %\RequirePackage{helvet}
+  %\RequirePackage{newtxtext,newtxmath}
+  \RequirePackage{tgtermes,newtxmath}
 
   % For use with XeLaTeX
   %  \setmainfont[
@@ -122,7 +130,7 @@
 % *****************************************************************************
 % *************************** Bibliography  and References ********************
 
-%\usepackage{cleveref} %Referencing without need to explicitly state fig /table
+\usepackage[capitalise]{cleveref} %Referencing without need to explicitly state fig /table
 
 % Add `custombib' in the document class option to use this section
 \ifuseCustomBib
@@ -235,7 +243,6 @@
 %\pgfplotsset{
 %	cycle list={Set1-9}
 %}
-\usepackage{amsmath, amsthm, amssymb}
 \newtheorem{theorem}{Theorem}
 
 \usepackage[inline]{enumitem}
