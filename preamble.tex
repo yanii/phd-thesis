@@ -222,14 +222,15 @@
 \usepackage{afterpage}
 \usepackage{engord}
 
-\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
-\DeclareFontShape{U}{mathb}{m}{n}{
-	<5> <6> <7> <8> <9> <10> gen * mathb
-	<10.95> mathb10 <12> <14.4> <17.28> <20.74> <24.88> mathb12
-}{}
-\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
-\DeclareFontSubstitution{U}{mathb}{m}{n}
-\DeclareMathSymbol{\convolution}   {2}{mathb}{"0A}
+%\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+%\DeclareFontShape{U}{mathb}{m}{n}{
+%	<5> <6> <7> <8> <9> <10> gen * mathb
+%	<10.95> mathb10 <12> <14.4> <17.28> <20.74> <24.88> mathb12
+%}{}
+%\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+%\DeclareFontSubstitution{U}{mathb}{m}{n}
+%\DeclareMathSymbol{\convolution}   {2}{mathb}{"0A}
+\newcommand{\convolution}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
 
 %\pgfplotsset{
 %	cycle list={Set1-9}
