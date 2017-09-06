@@ -91,7 +91,7 @@
 		\label{fig:alexnetplots}
 	\end{figure}
 	
-	\paragraph{AlexNet Filter Groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a CNN (see Fig. \ref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features vs. texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
+	\paragraph{AlexNet Filter Groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a CNN (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features vs. texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
 	Despite the large difference in the number of parameters between the models, both achieve comparable accuracy on ILSVRC -- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This paper builds upon these findings and extends them to state-of-the-art networks.
 	
 	\paragraph{Low-dimensional Embeddings.}
@@ -226,7 +226,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in Table~\ref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
+	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
 	We did not group filters in the first convolutional layer -- since it operates on the three-channel image space, it is of limited computational impact compared to other layers.
 	\begin{figure}[tp]
 		\centering
@@ -358,7 +358,7 @@
 		}
 		\label{fig:nincifarplotsconvonly}
 	\end{figure}
-	Results are shown in Table~\ref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \S\ref{gpuexplanation} for an explanation of the GPU timing disparity).
+	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \S\ref{gpuexplanation} for an explanation of the GPU timing disparity).
 	
 	\newcommand{\covarlabels}[5]{%
 		\begin{tikzpicture}[anchor=south west]
@@ -434,7 +434,7 @@
 		\end{figure}
 	\end{landscape}}
 	
-	Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in Table~\ref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
+	Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
 	
 	\subsection{Inter-Layer Covariance}
 	\label{interlayercovar}
@@ -821,7 +821,7 @@
 			\bottomrule
 		\end{tabular}
 	\end{table}
-	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in Table~\ref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
+	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
 	\begin{table}[tp]
 		\caption[ResNet 50 ILSVRC Results]{\textbf{ResNet 50 Results.}}
 		\label{table:resnet50imagenetresults}
@@ -1096,7 +1096,7 @@
 		\caption{\textbf{ResNet-50 Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet50plots}
 	\end{figure}
-	Results are shown in Table \ref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. CPU timings were 23\% faster, while GPU timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. CPU timings were 31\% faster, while GPU timings were 12\% faster. 
+	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. CPU timings were 23\% faster, while GPU timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. CPU timings were 31\% faster, while GPU timings were 12\% faster. 
 	
 	\subsubsection{ResNet 200}
 	\label{resnet200results}
@@ -1146,7 +1146,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. Table \ref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer FLOPS and 44\% fewer parameters than ResNet 200.
+	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer FLOPS and 44\% fewer parameters than ResNet 200.
 	
 	\subsection{Improving GoogLeNet on ILSVRC}
 	\label{googlenet50results}
@@ -1227,7 +1227,7 @@
 	
 	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{Jia2014}). To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
-	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, as described in Table~\ref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
+	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, as described in \cref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
 	\begin{figure}[tbp]
 		\centering
 		\begin{subfigure}[b]{\linewidth}
@@ -1434,7 +1434,7 @@
 		\label{fig:googlenet50plots}
 	\end{figure}
 	
-	As shown in Table \ref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in FLOPS (multiply-adds), CPU and GPU timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
+	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in FLOPS (multiply-adds), CPU and GPU timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
 	The highest accuracy result, is 0.1\% off the top-5 accuracy of the baseline model, but has a 0.1\% higher top-1 accuracy -- within the error bounds resulting from training with different random initializations. While maintaining the same accuracy, this network has 9\% faster CPU and GPU timings. However, a model with only 0.3\% lower top-5 accuracy than the baseline has much higher gains in computational efficiency -- 44\% fewer floating point operations (multiply-add), 7\% fewer model parameters, 21\% faster CPU and 16\% faster GPU timings.
 	
 	While these results may seem modest compared to the results for ResNet, GoogLeNet is by far the smallest and fastest near state-of-the-art model ILSVRC model. We believe that more experimentation in using different cardinalities of filter grouping in the heterogeneously-sized filter groups within each inception module will improve results further.
