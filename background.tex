@@ -90,8 +90,7 @@ At the time, it was not obvious how to train networks with more than one layer o
 \label{fig:neurononelayer}
 \end{figure}
 
-
-The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
+The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in Fig.~\ref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
 \begin{equation}
 	y_j = f\left( a_j \right),
 	\label{eqn:output}
@@ -141,14 +140,15 @@ Eq.~\ref{eqn:output} with respect to $a^n_j$,
 \end{aligned}
 \end{equation}
 
-and finally Eq.~\ref{eqn:output} with respect to $a^n_j$,
+and finally Eq.~\ref{eqn:weightsum} with respect to $w_{ji}$,
 \begin{equation}
 \begin{aligned}
-   \frac{\partial a^n_j}{\partial w_{ji}} &= x_i.
+   \frac{\partial a^n_j}{\partial w_{ji}} &= \frac{\partial}{\partial w_{ji}} \left( \sum_i w_{ji} x_{i} \right)\\
+   &= x_i,
 \end{aligned}
+\label{eqn:sumonetermpartial}
 \end{equation}
-
-Thus the sensitivity is
+since only one of the terms in the sum is related to the specific weight $w_{ji}$. Thus the sensitivity is,
 \begin{equation}
 \label{eqn:deltasensitivity}
 \begin{aligned}
@@ -156,12 +156,13 @@ Thus the sensitivity is
 \end{aligned}
 \end{equation}
 
-Typically the local gradient, or \emph{delta}, is then defined,
+Typically what is variously called the local gradient, error, or simply \emph{delta}, is then defined,
 \begin{equation}
 \label{eqn:delta}
 \begin{aligned}
-    \delta^n_j &= e^n_j  f'\left( a^n_j \right)\\
-    &= -\frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j},
+    \delta^n_j \equiv&-\frac{\partial E^n}{\partial a^n_j}\\
+    =& -\frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j}\\
+    =& e^n_j  f'\left( a^n_j \right),
 \end{aligned}
 \end{equation}
 
@@ -204,8 +205,9 @@ The output weights are relatively easy to find, since they correspond to the sam
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f'\left( a^n_k \right) x_{kj}\\
-    &= -\delta^n_k x_{kj}.
+    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
+    &= -\delta^n_k x^n_{kj}\\
+    &= -\delta^n_k y^n_j.
 \end{aligned}
 \label{eqn:outputlayer}
 \end{equation}
@@ -213,45 +215,52 @@ The output weights are relatively easy to find, since they correspond to the sam
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.8\textwidth]{neurontwolayer}
-\caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$.}
+\caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
+We will first derive the partial $\frac{\partial E^n}{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
 
-The weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error. 
-%This requires us to calculate the derivative recursively, \ie to calculate the partial derivative $\frac{\partial E^n}{\partial w_{ji}}$, we first assume we know the error derivative of the subsequent layer, $\frac{\partial E^n}{\partial w_{kj}}$. 
-We will first derive the partial $\frac{\partial E^n}{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Again, following from chain rule we can write the partial,
-
+Again, following from chain rule we can write the partial,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \overbrace{\frac{\partial E^n}{\partial e^n_{k}}}^\text{error}
-     \underbrace{\frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_\text{output neuron}
-     \underbrace{\frac{\partial w_{kj}}{\partial x^n_{kj}}\frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}}_\text{hidden neuron}.
+    \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
+     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial y^n_{j}}\right)}_\text{output neurons}
+     \underbrace{\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}}_\text{hidden neuron},
      \label{eqn:twolayer1}
 \end{aligned}
 \end{equation}
+
+where the sum arises from the fact that, unlike in Eq.~\ref{eqn:sumonetermpartial}, 
 
 We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, we can substitute the results from Eq.~\ref{eqn:outputlayer} for the output neuron and error partial derivatives,
 
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\frac{\partial E^n}{\partial e^n_{k}}
-     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_{\frac{\partial E^n}{\partial w_{kj}} = -\delta^n_k x_{kj}}
-     \frac{\partial w_{kj}}{\partial x^n_{kj}}\frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
+     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_{\frac{\partial E^n}{\partial w_{kj}} = -\delta^n_k y_{j}}
+     \frac{\partial w_{kj}}{\partial y^n_{j}}\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_k x_{kj} \frac{\partial w_{kj}}{\partial x^n_{kj}}\frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
+    \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_k y_{j} \frac{\partial w_{kj}}{\partial y^n_{j}}\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
 \end{aligned}
 \end{equation}
+
+
+
+
+
+
+
 
 Recall from Eq.~\ref{eqn:weightsum}, the net activation $a$ is a sum of all previous layer weights. Thus,
 
 \begin{equation}
 \begin{aligned}
     \frac{\partial a^n_k}{\partial w_{kj}} &= \frac{\partial}{\partial w_{kj}}\left(\sum_j w_{kj} x^n_{kj} \right)\\
-    &= x^n_{kj}.
+    &= x^n_{kj} = y^n_j.
 \end{aligned}
 \end{equation}
 
