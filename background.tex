@@ -300,9 +300,6 @@ for any adjacent neural network layers $i, j$, including the output layer where 
 \end{aligned}
 \end{equation}
 
-\mynote{Finish backprop derivation}
-
-
 \subsubsection{Learning with Backpropagation}
 Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Formally, the weight change rule is given by,
 \begin{equation}
@@ -322,7 +319,11 @@ At the opposite end of the spectrum there is \emph{batch training} where the gra
 
 Although this gives a very good gradient, it is very expensive to compute, since it requires us to perform the forward pass of the network over all training samples. It has also been observed in practice that adding noise to the gradient at training time helps generalization, perhaps by preventing overfitting.
 
-InsteadAnother form of training is called 
+Another form of training is called 
+\mynote{TODO}
+
+\subsection{Momentum}
+A common improvement to SGD is momentum. 
 \mynote{TODO}
 
 \subsection{Activation Functions}
