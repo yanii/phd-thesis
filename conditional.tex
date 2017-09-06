@@ -42,7 +42,7 @@
 		\label{fig:newGraphLanguage}
 	\end{figure}
 	
-	The standard depiction of a neural network with one hidden layer is shown in Fig.~\ref{fig:oldnotation}, where each of the layers is fully connected, and these connecting weights are illustrated as lines between the neurons represented as circles. While this image illustrates the connectivity of the model, it assumes the function of the neurons themselves to be known or otherwise described. In Fig.~\ref{fig:newnotation}\ we use a different notation to show both connectivity and function of each layer, with the assumption that all nodes on a particular layer have the same function.
+	The standard depiction of a neural network with one hidden layer is shown in \cref{fig:oldnotation}, where each of the layers is fully connected, and these connecting weights are illustrated as lines between the neurons represented as circles. While this image illustrates the connectivity of the model, it assumes the function of the neurons themselves to be known or otherwise described. In \cref{fig:newnotation}\ we use a different notation to show both connectivity and function of each layer, with the assumption that all nodes on a particular layer have the same function.
 	
 	In this simple example of a fully-connected neural network, between layers $i$ and $j$, every node outputs the non-linear transformation, $\vec v_j = \sigma(\mat P \vec v_i)$, a composition of the non-linear function $\sigma$ (\eg a ReLU or sigmoid) and the projection of the input units with a projection matrix $\mat P$, which includes the bias term in homogeneous coordinates. We denote this operation explicitly as $\mat P_{ij} \wr$, where $\mat P_{ij}$ is the projection matrix and $\wr$ represents a non-linearity. In short $\mat P_{ij} \wr$ denotes the standard neural net layer's non-linear transformation $\vec v_j = \sigma(\mat P \vec v_i)$. 
 	
@@ -76,9 +76,9 @@
 		\label{fig:projections}
 	\end{figure}
 	
-	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in Fig.~\ref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in Fig.~\ref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in Fig.~\ref{fig:identitynotation}.
+	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in \cref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in \cref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in \cref{fig:identitynotation}.
 	
-	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in Fig.~\ref{fig:selectionnotation}.
+	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in \cref{fig:selectionnotation}.
 	
 	\subsection{Explicit Routing}
 	\begin{figure}[htbp!] 
@@ -109,7 +109,7 @@
 	
 	We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
 	
-	We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in Fig.~\ref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. Fig.~\ref{fig:newtreenotation} shows the same tree as shown in Fig.~\ref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
+	We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in \cref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network layers, \ie as $\mat P_{ij} \wr$. \Cref{fig:newtreenotation} shows the same tree as shown in \cref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
 	
 	
 	\begin{figure}[tbp] 
@@ -134,13 +134,13 @@
 	\subsection{Implicit Routing}
 	It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{implicit routing} \vs \emph{explicit routing}, where a router is used. 
 	
-	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in Fig.~\ref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
+	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in \cref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
 	
 	\begin{equation}
 	y_1 = \{y_1^j\} \forall j\circleplus \vec r = \sum_j r_j \sigma(P^j \vec v_1^j ).
 	\end{equation}
 	
-	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and ReLU, \ie for Fig.~\ref{fig:implicitRouter}, the output of $\vec v_2$,  is simply,
+	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and ReLU, \ie for \cref{fig:implicitRouter}, the output of $\vec v_2$,  is simply,
 	
 	\begin{equation}
 	y_1 = \max (0, ~\sum_j v_1^j \sigma(P^j \vec v_0) ).
@@ -162,10 +162,10 @@
 	We found that global {\em max}-pooling, like 
 	{\em average}-pooling (as used in~\citep{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy. This suggests that preserving spatial information after the convolutional layers may not be as important as previously thought. 
 	We trained a new network (`VGG11-GMP') with such pooling, and achieved lower top-5 error than the baseline VGG11 
-	network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see Fig.~\ref{fig:VggPerLayerCost}).
+	network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see \cref{fig:VggPerLayerCost}).
 	
 	\subsection{Designing an efficient conditional architecture}
-	Starting from the already improved, non-routed VGG11-GMP architecture, we designed the conditional network in Fig.~\ref{fig:Imagenet_CondNet}.
+	Starting from the already improved, non-routed VGG11-GMP architecture, we designed the conditional network in \cref{fig:Imagenet_CondNet}.
 	% figure 
 	\begin{figure}[tbp]
 		\centering
@@ -235,8 +235,8 @@
 	In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very 
 	different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
 	
-	The conditional network of Fig.~\ref{fig:Imagenet_CondNet} 
-	corresponds to the green circle in Fig.~\ref{fig:Imagenet_results}.
+	The conditional network of \cref{fig:Imagenet_CondNet} 
+	corresponds to the green circle in \cref{fig:Imagenet_results}.
 	It achieves a top-5, centre-crop error of
 	13.9\% compared to 13.8\% for the VGG11 network, while requiring less than half of the compute (45\%),
 	and almost one-fifth (21\%) of the parameters.
@@ -244,7 +244,7 @@
 	by using routes of different (learned) cardinality, as well as incorporating low-dimensional embedding and multiple-loss training. This is left for future work. 
 	Note that the most efficient model in~\citep{He2015b} uses 1.9E+10 flops which is just outside the plot. 
 	More accurate versions of~\citep{He2015b} are more expensive still.
-	Finally, Fig.~\ref{fig:VggPerLayerCost} shows efficiency improvements achieved by our conditional network, layer by layer.
+	Finally, \cref{fig:VggPerLayerCost} shows efficiency improvements achieved by our conditional network, layer by layer.
 	
 	%%% Figure ---------------
 	\begin{figure}[tbp]
@@ -288,7 +288,7 @@
 	Here we validate conditional networks for the classification of images in the CIFAR10 dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state of the art Network in Network (NiN) model 
-	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in Fig.~\ref{fig:Cifar_CondNet}. 
+	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in \cref{fig:Cifar_CondNet}. 
 	Then we go on to show its increased efficiency compared to the original NiN model.
 	%\acnote{there is another net which is 0.1\% better.}
 	
@@ -322,7 +322,7 @@
 	%\acnote{we have not done this in Imagenet because too big.}
 	
 	In the optimization we maximized the {\em size-normalized} accuracy $\alpha =\frac{\textrm{validation accuracy}}{\textrm{model size}}$ with respect to the parameters $R_l = 2^i, \left\{i\in \mathbb{N} : 0 \le i \le 5\right\}$, where $R_l$ is the number of nodes at layer $l$ in the conditional network. 
-	Fig.~\ref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in CIFAR10. 
+	\cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in CIFAR10. 
 	It is a DAG-structured conditional network with 10 layers.
 	To our knowledge this is the first attempt at learning automatically the architecture of a deep CNN for image classification.
 	
@@ -357,7 +357,7 @@
 		\label{fig:Cifar_results}
 	\end{figure}
 	%
-	Fig.~\ref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
+	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
 	Diamonds denote unrouted networks and circles denote conditional networks. 
 	The original NiN is shown in red, and our NiN-64 variant is shown as a grey diamond.
 	A sample of 300 models explored during the Bayesian optimization are shown as grey circles.
