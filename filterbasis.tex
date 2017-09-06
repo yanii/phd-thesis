@@ -22,7 +22,7 @@
 	%\end{figure}
 	
 	% Maybe we need something like this here too, don't know
-	%It has been shown that reducing the co-adaption of filters is beneficial to generalization in deep networks~\citep{Hinton2012,goodfellow2013maxout,Cogswell2016}. Co-adaption occurs when hidden layer filters (or neurons) rely on one another to fit training data, such that their outputs become highly correlated. However, instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use hierarchical filter groups (see \S\ref{regularizingstructure}) to allow the network itself to learn independent filters. By restricting the connectivity between filters on subsequent layers the network is forced to learn filters of limited dependence. We allow the standard network optimization (\eg SGD) to learn appropriate weights within this restricted architecture.
+	%It has been shown that reducing the co-adaption of filters is beneficial to generalization in deep networks~\citep{Hinton2012,goodfellow2013maxout,Cogswell2016}. Co-adaption occurs when hidden layer filters (or neurons) rely on one another to fit training data, such that their outputs become highly correlated. However, instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use hierarchical filter groups (see \cref{regularizingstructure}) to allow the network itself to learn independent filters. By restricting the connectivity between filters on subsequent layers the network is forced to learn filters of limited dependence. We allow the standard network optimization (\eg SGD) to learn appropriate weights within this restricted architecture.
 	
 	In this chapter we show that simple alterations to the architecture of state-of-the-art CNNs for image recognition can drastically reduce computational cost and model size while maintaining (or even increasing) accuracy, through structure-induced regularization, by reducing the connectivity in monolithic networks to reflect more closely the sparse, localized filter co-dependencies within.
 	
@@ -144,13 +144,13 @@
 		}
 		\label{fig:rootmodule}
 	\end{figure}
-	This reduced connectivity also reduces computational complexity and model size since the size of filters in filter groups are reduced drastically, as is evident in \cref{fig:rootmodule}. Unlike methods for increasing the efficiency of deep networks by approximating pre-trained existing networks (see \S\ref{previouswork}), our models are trained from random initialization using stochastic gradient descent. This means that our method can also speed up training and, since we are not merely approximating an existing model's weights, the accuracy of the existing model is not an upper bound on accuracy of the modified model.
+	This reduced connectivity also reduces computational complexity and model size since the size of filters in filter groups are reduced drastically, as is evident in \cref{fig:rootmodule}. Unlike methods for increasing the efficiency of deep networks by approximating pre-trained existing networks (see \cref{previouswork}), our models are trained from random initialization using stochastic gradient descent. This means that our method can also speed up training and, since we are not merely approximating an existing model's weights, the accuracy of the existing model is not an upper bound on accuracy of the modified model.
 	
 	\paragraph{Root Module}
 	The basic element of our network architecture, a \emph{root module}, is shown in \cref{fig:rootmodule}. A root module has a given number of filter groups, the more filter groups, the fewer the number of connections to the previous layer's outputs. Each spatial convolutional layer is followed by a low-dimensional embedding (1$\times$1 convolution). Like in \citep{Ioannou2016}, this configuration  learns a linear combination of the basis filters (filter groups), implicitly representing a filter of full channel depth, but with limited filter dependence.
 	
 	\section{Results}
-	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \S\ref{method}) .
+	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \cref{method}) .
 	
 	\subsection{Improving Network in Network on CIFAR-10}
 	Network in Network (NiN)~\cite{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by~\citet{Ioffe2015}.
@@ -226,7 +226,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
+	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \cref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
 	We did not group filters in the first convolutional layer -- since it operates on the three-channel image space, it is of limited computational impact compared to other layers.
 	\begin{figure}[tp]
 		\centering
@@ -358,7 +358,7 @@
 		}
 		\label{fig:nincifarplotsconvonly}
 	\end{figure}
-	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \S\ref{gpuexplanation} for an explanation of the GPU timing disparity).
+	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \cref{gpuexplanation} for an explanation of the GPU timing disparity).
 	
 	\newcommand{\covarlabels}[5]{%
 		\begin{tikzpicture}[anchor=south west]
@@ -821,7 +821,7 @@
 			\bottomrule
 		\end{tabular}
 	\end{table}
-	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \S\ref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
+	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \cref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
 	\begin{table}[tp]
 		\caption[ResNet 50 ILSVRC Results]{\textbf{ResNet 50 Results.}}
 		\label{table:resnet50imagenetresults}
