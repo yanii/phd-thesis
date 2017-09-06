@@ -138,6 +138,7 @@ Eq.~\ref{eqn:output} with respect to $a^n_j$,
 \begin{aligned}
    \frac{\partial y^n_j}{\partial a^n_j}  &= f'\left( a^n_j \right),
 \end{aligned}
+\label{eqn:partialdyda}
 \end{equation}
 
 and finally Eq.~\ref{eqn:weightsum} with respect to $w_{ji}$,
@@ -201,11 +202,12 @@ We are interested in finding the sensitivity of a the error $E$ to a given weigh
 \end{enumerate*}
 
 \paragraph{\ref{enum:outputneuron}~Output Layer.}
-The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie $e^n_j$. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation to match Fig.~\ref{fig:neurontwolayer}, we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
+The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie $e^n_j$. Indeed the derivation in \S\ref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation (now indexing by $k$ rather than $j$ to match Fig.~\ref{fig:neurontwolayer}), we can use the sensitivity found in Eqn.~\ref{eqn:deltasensitivity},
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{kj}} &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
+    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial e^n_k}\frac{\partial e^n_k}{\partial y^n_k} \frac{\partial y^n_k}{\partial a^n_k}\\
+    &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
     &= -\delta^n_k x^n_{kj}\\
     &= -\delta^n_k y^n_j.
 \end{aligned}
@@ -220,7 +222,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \end{figure}
 We will first derive the partial $\frac{\partial E^n}{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
 
-Again, following from chain rule we can write the partial,
+Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E$,
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
@@ -230,41 +232,51 @@ Again, following from chain rule we can write the partial,
 \end{aligned}
 \end{equation}
 
-where the sum arises from the fact that, unlike in Eq.~\ref{eqn:sumonetermpartial}, 
+where the sum arises from the fact that, unlike in Eq.~\ref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons in the subsequent layer (see Fig.~\ref{fig:neurontwolayer}).
 
-We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, we can substitute the results from Eq.~\ref{eqn:outputlayer} for the output neuron and error partial derivatives,
-
-\begin{equation}
-\begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\frac{\partial E^n}{\partial e^n_{k}}
-     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_{\frac{\partial E^n}{\partial w_{kj}} = -\delta^n_k y_{j}}
-     \frac{\partial w_{kj}}{\partial y^n_{j}}\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
-\end{aligned}
-\end{equation}
+We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from Eq.~\ref{eqn:outputlayer} for the output neuron and error partial derivatives,
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_k y_{j} \frac{\partial w_{kj}}{\partial y^n_{j}}\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
+    \frac{\partial E^n}{\partial w_{ji}} &= -\left( \sum_k \delta^n_k y^n_j \frac{\partial a^n_k}{\partial y^n_{j}}\right)
+     \frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
+     \label{eqn:twolayer2}
 \end{aligned}
 \end{equation}
-
-
-
-
-
-
-
 
 Recall from Eq.~\ref{eqn:weightsum}, the net activation $a$ is a sum of all previous layer weights. Thus,
-
 \begin{equation}
 \begin{aligned}
-    \frac{\partial a^n_k}{\partial w_{kj}} &= \frac{\partial}{\partial w_{kj}}\left(\sum_j w_{kj} x^n_{kj} \right)\\
-    &= x^n_{kj} = y^n_j.
+    \frac{\partial a^n_k}{\partial y^n_{j}} &= \frac{\partial}{\partial y^n_{j}}\left(\sum_j w_{kj} y^n_{j} \right) &= w_{kj},
 \end{aligned}
 \end{equation}
 
+and substituting from Eq.~\ref{eqn:partialdyda} and Eq.~\ref{eqn:sumonetermpartial} into Eq.~\ref{eqn:twolayer2},
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{ji}} &= -\left( \sum_k \delta^n_k y^n_j w_{kj}\right)
+     f'\left( a^n_j \right) x_i.
+     \label{eqn:twolayer3}
+\end{aligned}
+\end{equation}
 
+This bears some resemblance to the derived expression for a single layer, and just as in Eq.~\ref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
+\begin{equation}
+\label{eqn:deltahidden}
+\begin{aligned}
+    \delta^n_j \equiv& \frac{\partial E^n}{\partial a^n_k}\\
+    =& -\sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k}\\
+    =& -\sum_k \delta^n_k y^n_j w_{kj}.
+\end{aligned}
+\end{equation}
+
+This leaves us with the more convenient expression,
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j f'\left( a^n_j \right) x_i.
+     \label{eqn:twolayer3}
+\end{aligned}
+\end{equation}
 
 \mynote{Finish backprop derivation}
 
