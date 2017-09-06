@@ -34,7 +34,7 @@ A neuron is a function of the weighted aggregation of its many inputs ${x_0,\ldo
 	y = f\left(\sum_{i}^{N} w_i x_i + b\right),
 \end{equation}
 
-where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation function}, and $b$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $b$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in Fig.\,\ref{fig:neuron}.
+where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation function}, and $b$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $b$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
 
 \begin{equation}
     y = f\left(\mathbf{w}^T\mathbf{x} + b \right).
@@ -365,7 +365,7 @@ The application of the LeNet-style CNN architecture to more complex problems, ho
 	\label{fig:convlayer}
 \end{figure}
 
-Figure \ref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ feature map for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the feature map $h^d$ at spatial location $i, j$ is given by,
+\Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ feature map for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the feature map $h^d$ at spatial location $i, j$ is given by,
 
 \begin{equation}
 	h^d_{i,j} = f\left( \left(W^d \convolution x \right)_{i,j} + b_d \right),

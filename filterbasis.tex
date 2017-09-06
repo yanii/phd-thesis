@@ -434,12 +434,11 @@
 		\end{figure}
 	\end{landscape}}
 	
-	Figure~\ref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \ref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
+	\Cref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \cref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
 	
 	\subsection{Inter-Layer Covariance}
 	\label{interlayercovar}
-	To show the relationships between filters between adjacent convolutional layers, as illustrated in Fig.~1
-	%\ref{fig:normalconv}
+	To show the relationships between filters between adjacent convolutional layers, as illustrated in \cref{fig:normalconv}
 	, we calculate the covariance of the responses from two adjacent featuremaps, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
 	
 	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional featuremap for layer $i$. We consider each pixel across the two featuremaps to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two featuremaps have different spatial dimensions, due to pooling, we up-sample the smaller featuremap (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each featuremap.
@@ -684,9 +683,9 @@
 		\end{landscape}
 	}%afterpage
 	
-	Figure \ref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters they correlate strongly with.
+	\Cref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters they correlate strongly with.
 	
-	Figure \cref{fig:covar} shows the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. \Cref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in \cref{fig:suppcovariances}.
+	\Cref{fig:covar} shows the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. \Cref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in \cref{fig:suppcovariances}.
 	
 	\subsection{Grouping Degree with Network Depth}
 	\afterpage{
@@ -785,7 +784,7 @@
 			\caption{Root-4 Architecture}
 			\label{fig:root4topology}
 		\end{subfigure}
-		\caption{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see Fig.\ref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
+		\caption{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see \cref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
 		}
 		\label{fig:networktopology}
 	\end{figure}
@@ -1584,7 +1583,7 @@
 		
 		\label{fig:resnet50layerwisema}
 	\end{figure}
-	Figure \ref{fig:resnet50layerwisema} shows the difference in compute and parameters for each layer in a standard ResNet-50 model and a root-64 variant. The layers in the original networks with the highest computational complexity are clearly the spatial convolutional layers, \ie layers with 3$\times$3 spatial filters. When instead a root-module is used, the computational complexity of these layers is reduced dramatically. While the low dimensional embedding layers (1$\times$1) are not changed, these have less than half the compute of the spatial convolution layers. The number of parameters in spatial convolution layers with large numbers of input channels, which increase towards the end of the network, are similarly reduced.
+	\Cref{fig:resnet50layerwisema} shows the difference in compute and parameters for each layer in a standard ResNet-50 model and a root-64 variant. The layers in the original networks with the highest computational complexity are clearly the spatial convolutional layers, \ie layers with 3$\times$3 spatial filters. When instead a root-module is used, the computational complexity of these layers is reduced dramatically. While the low dimensional embedding layers (1$\times$1) are not changed, these have less than half the compute of the spatial convolution layers. The number of parameters in spatial convolution layers with large numbers of input channels, which increase towards the end of the network, are similarly reduced.
 	
 	\section{Future Work} 
 	In this chapter we focused on using homogeneous filter groups (with a uniform division of filters in each group), however this may not be optimal. Heterogeneous filter groups may reflect better the filter co-dependencies found in deep networks. %Another interesting direction for future work is to exploit the independence of filter groups for model parallelism~\cite{krizhevsky2014one}.

@@ -219,12 +219,12 @@
 			\caption{Top-5 ILSVRC validation error (centre crop) \vs model size for various architectures.}
 			\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on ILSVRC relative to state of the art.]{Our VGG11-GMP (green diamond in \ref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}
+		\caption[Efficiency of conditional networks on ILSVRC relative to state of the art.]{Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}
 		\label{fig:Imagenet_results}
 	\end{figure}
 	
 	
-	Figure~\ref{fig:Imagenet_results} summarizes the results.
+	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time 
 	cost\footnote{measured here as number of multiply-accumulate operations. We have observed this measure 
 		to correlate very well with CPU time.} and model size. 
@@ -265,13 +265,13 @@
 	
 	
 	%The most efficient of the state of the art networks used for Imagenet classification, by a wide margin, is 
-	%GoogLeNet (see fig.~\ref{fig:Imagenet_results}). Network in Network and GoogLeNet pioneered the use of semi-dense 
+	%GoogLeNet (see \cref{fig:Imagenet_results}). Network in Network and GoogLeNet pioneered the use of semi-dense 
 	%weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
 	%Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional 
 	%feature map are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. 
 	%This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains 
-	%the majority of weights in the network (see fig.~\ref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of Network in Network and GoogLeNet.
+	%the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of Network in Network and GoogLeNet.
 	
 	%\begin{itemize}
 	%\item Our convtree has much more potential for distributed computation.
