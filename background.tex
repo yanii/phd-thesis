@@ -282,24 +282,17 @@ This leaves us with the more convenient expression,
 
 \subsubsection{Arbitrary Number of Hidden Layers}
 The derivation above only presented the case of a single hidden layer network, but it is trivial to extend this result to multiple hidden layers. There is a recursion in the calculation of the partial derivatives in Eq.~\ref{eqn:twolayer1} which we will now make explicit. Recall,
- 
-\begin{equation}
+ \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\frac{\partial E^n}{\partial e^n_{k}}
-    \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_{\frac{\partial E^n}{\partial w_{kj}} }
-    \frac{\partial w_{kj}}{\partial x^n_{kj}}\frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}},
+    \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
+     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial y^n_{j}}\right)}_\text{output neurons}
+     \underbrace{\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}}_\text{hidden neuron},
 \end{aligned}
 \end{equation}
 
 this may then be re-written,
 
-\begin{equation}
-\begin{aligned}
-    \frac{\partial E^n}{\partial w_{lm}} &= \underbrace{\frac{\partial E^n}{\partial w_{mk}}
-    \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}}_{\frac{\partial E^n}{\partial w_{kj}} }
-    \frac{\partial w_{kj}}{\partial x^n_{kj}}\frac{\partial x^n_{kj}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}},
-\end{aligned}
-\end{equation}
+\mynote{TODO}
 
 In fact, for any neural network of $M$ layers, including the output layer,
 
