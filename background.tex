@@ -191,14 +191,14 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 
 
 \subsection{Backpropagation}
-The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It's controversial who first discovered backpropagation, this is since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm -- a fact that will be attested to by anyone who has since attempted.
+The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It is somewhat controversial who first ``discovered'' backpropagation, since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm -- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to Fig.~\ref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers.
+Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to Fig.~\ref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers, and which notably differs from that in Fig.~\ref{fig:neurononelayer} for the single layer case.
 
-We are interested in finding the sensitivity of a the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
+We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label=(\textbf{\roman*})]
-  \item \label{enum:outputneuron} those belonging to \emph{output neurons}, \ie neurons lying directly before the output layer, such as $w_{kj}$ in Fig.~\ref{fig:neurontwolayer}, and
-  \item \label{enum:hiddenneuron} weights belonging to hidden neurons, such as $w_{ji}$ in Fig.~\ref{fig:neurontwolayer}.
+  \item \label{enum:outputneuron} those belonging to \emph{output layer neurons}, \ie neurons lying directly before the output, such as $w_{kj}$ in Fig.~\ref{fig:neurontwolayer}, and
+  \item \label{enum:hiddenneuron} weights belonging to hidden layer neurons, such as $w_{ji}$ in Fig.~\ref{fig:neurontwolayer}.
 \end{enumerate*}
 
 \paragraph{\ref{enum:outputneuron}~Output Layer.}
@@ -206,13 +206,15 @@ The output weights are relatively easy to find, since they correspond to the sam
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial e^n_k}\frac{\partial e^n_k}{\partial y^n_k} \frac{\partial y^n_k}{\partial a^n_k}\\
-    &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
+    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}\\
+%    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial e^n_k}\frac{\partial e^n_k}{\partial y^n_k} \frac{\partial y^n_k}{\partial a^n_k}\\
+%    &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
     &= -\delta^n_k x^n_{kj}\\
     &= -\delta^n_k y^n_j.
 \end{aligned}
 \label{eqn:outputlayer}
 \end{equation}
+
 \paragraph{\ref{enum:hiddenneuron} Hidden Layer.}
 \begin{figure}[tbp]
 \centering
@@ -220,7 +222,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-We will first derive the partial $\frac{\partial E^n}{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
+We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in Fig.~\ref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
 
 Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E$,
 \begin{equation}
@@ -265,36 +267,63 @@ This bears some resemblance to the derived expression for a single layer, and ju
 \label{eqn:deltahidden}
 \begin{aligned}
     \delta^n_j \equiv& \frac{\partial E^n}{\partial a^n_k}\\
-    =& -\sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k}\\
-    =& -\sum_k \delta^n_k y^n_j w_{kj}.
+    =& -\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \right) \frac{\partial y^n_{k}}{\partial a^n_k}\\
+    =& -\left(\sum_k \delta^n_k y^n_j w_{kj} \right) f'\left( a^n_j \right).
 \end{aligned}
 \end{equation}
 
-This leaves us with the more convenient expression,
+This leaves us with the more convenient (as we will see in \S\ref{arbitraryhidden}) expression,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j f'\left( a^n_j \right) x_i.
+    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j x_i.
      \label{eqn:twolayer4}
+\end{aligned}
+\end{equation}
+
+\subsubsection{Arbitrary Number of Hidden Layers}
+\label{arbitraryhidden}
+The derivation above was based on the specific case of a single hidden layer network, but it is trivial to extend this result to multiple hidden layers. There is a recursion in the calculation of the partial derivatives in Eq.~\ref{eqn:deltahidden} which holds for a network with any number of hidden layers, and which we will now make explicit. 
+
+The delta is defined,
+\begin{equation}
+\delta^n_i = \begin{cases}
+         e^n_j \, f'\left( a^n_j \right)& \textrm{when neuron $j$ is output}\\
+        - \left( \sum_j \delta^n_j y^n_i w_{ji} \right) f'\left( a^n_j \right)& \textrm{when neuron $j$ is hidden},
+        \end{cases}
+\label{eqn:fulldeltadefinition}
+\end{equation}
+for any adjacent neural network layers $i, j$, including the output layer where the outputs are considered to have an index $j$. The sensitivity is then, 
+\begin{equation}
+\begin{aligned}
+    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j y_i.
+     \label{eqn:sensitivity}
 \end{aligned}
 \end{equation}
 
 \mynote{Finish backprop derivation}
 
-\subsubsection{Arbitrary Number of Hidden Layers}
-The derivation above only presented the case of a single hidden layer network, but it is trivial to extend this result to multiple hidden layers. There is a recursion in the calculation of the partial derivatives in Eq.~\ref{eqn:twolayer1} which we will now make explicit. Recall,
- \begin{equation}
+
+\subsubsection{Learning with Backpropagation}
+Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Formally, the weight change rule is given by,
+\begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
-     \frac{\partial e^n_{k}}{\partial y^n_{k}} \frac{\partial y^n_{k}}{\partial a^n_k} \frac{\partial a^n_k}{\partial y^n_{j}}\right)}_\text{output neurons}
-     \underbrace{\frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}}_\text{hidden neuron},
+    \Delta w^n_{ij} &= \lambda\, \frac{\partial E^n}{\partial w_{ji}}\\
+    &= \lambda \, \delta^n_j y_i,
+     \label{eqn:backproplearningrule}
 \end{aligned}
 \end{equation}
+where $\delta^n_j$ is as defined in Eq.~\ref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
 
-this may then be re-written,
+\subsection{Online, Batch and Stochastic Gradient Descent}
+Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $n$, in practice this method, called \emph{online training}, is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general.
 
+At the opposite end of the spectrum there is \emph{batch training} where the gradient is based on all data samples in the training set,
+\mynote{TODO define this formally}.
+
+Although this gives a very good gradient, it is very expensive to compute, since it requires us to perform the forward pass of the network over all training samples. It has also been observed in practice that adding noise to the gradient at training time helps generalization, perhaps by preventing overfitting.
+
+InsteadAnother form of training is called 
 \mynote{TODO}
-
-In fact, for any neural network of $M$ layers, including the output layer,
 
 \subsection{Activation Functions}
 As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
