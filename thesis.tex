@@ -123,56 +123,26 @@
 
 \tableofcontents
 
-%TODO clean this up
 \listoffigures
 
-%TODO clean this up
 \listoftables
 
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
-
 \printnomenclature
 
 % ******************************** Main Matter *********************************
 \mainmatter
-
-%Background
-%• Trees, DAGs and deep neural networks (DNNs)
-%• Motivation: Representing trees/DAGs as MLPs
-%• Motivation: ReLUs and data routing
-%Conditional networks (methodology)
-%• The model
-%• Training via back-propagation
-%Experiments and results (results)
-%• Conditional sparsification of a perceptron
-%• Comparing architectures on ImageNet
-%• Comparing architectures on CIFAR
-%• Conditional ensembles
-%• Conclusion
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION
 \subfile{introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LITERATURE REVIEW
 \subfile{background}
-% - Random Forests
-% - Neural Networks
-% - Convolutional Neural Networks
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MOTIVATION
 \subfile{motivation}
-% Structural Priors
-% - Weak: regularization, soft conditional computation
-% - Strong: Structural, hard conditional computation
-
-% Generalization and Network Size
-% 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METHODOLOGY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiments and Results
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conditional Networks
-\subfile{conditional}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Learning a Low-rank Basis
 \subfile{spatialbasis}
 
@@ -182,19 +152,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Dropout/Ablation
 %\subfile{chapter6}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conditional Networks
+\subfile{conditional}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conclusion
 \subfile{conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Future Work/Propsal
 \subfile{futurework}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 'MEAT'
-%\chapter{Stuff I did my first year}
-%\chapter{Stuff I should be doing now}
-%\chapter{Stuff I'll do in future}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSION
-%\chapter{Conclusions}
-
 
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References
@@ -222,11 +187,9 @@
 
 \printbibliography[heading=bibintoc, title={References}]
 
-
 \end{spacing}
 
 % ********************************** Appendices ********************************
-
 \begin{appendices} % Using appendices environment for more functunality
 
 %\include{appendix1}
