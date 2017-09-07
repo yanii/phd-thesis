@@ -358,7 +358,7 @@ When using SGD, we randomly sample (without replacement) a subset of the trainin
 \begin{equation}
 \begin{aligned}
     \Delta w_{ij} &= -\lambda\, \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\mathbf{x}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
-     \label{eqn:batchlearningrule}
+     \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
 where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of SGD. 
