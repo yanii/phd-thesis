@@ -513,7 +513,7 @@ supported!}
 \fi
 
 % ********************************** Fonts **********************************
-\RequirePackage{textcomp}
+\RequirePackage[full]{textcomp}
 % Font Selection
 \ifPHD@times
   \ifxetex
