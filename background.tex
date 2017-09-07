@@ -305,7 +305,7 @@ for any adjacent neural network layers $i, j$, including the output layer where 
 \end{equation}
 
 \subsubsection{Learning with Backpropagation}
-Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Formally, the weight change rule is given by,
+Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
     \Delta w^n_{ij} &= -\lambda\, \frac{\partial E^n}{\partial w_{ji}}\\
@@ -315,7 +315,15 @@ Learning with backpropogation is much like the delta rule; sensitivities are use
 \end{equation}
 where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
 
+Each weight change $\Delta w^n_{ij}$ is a step towards a local minima, backpropagation (like the delta rule) is a method of steepest descent. However $\Delta w^n_{ij}$ is only an approximation to the true gradient we want -- it is only from one sample, $x^n$, of the training dataset $X$. Even if we use the gradient from the entire dataset $X$ (see \cref{batchlearning}), the dataset is only a sampling of the true population we want our network to generalize to. Each gradient will likely move us towards a solution is biased towards the particular subset of samples we calculated it based on.
+
+The learning rate parameter scales the 
+\subsection{Momentum}
+A common improvement to SGD is momentum. 
+\mynote{TODO}
+
 \subsection{Online, Batch and Stochastic Gradient Descent}
+\label{batchlearning}
 Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $n$, in practice this method, called \emph{online training}, is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general.
 
 At the opposite end of the spectrum there is \emph{batch training} where the gradient is based on all data samples in the training set,
@@ -326,9 +334,6 @@ Although this gives a very good gradient, it is very expensive to compute, since
 Another form of training is called 
 \mynote{TODO}
 
-\subsection{Momentum}
-A common improvement to SGD is momentum. 
-\mynote{TODO}
 
 \subsection{Activation Functions}
 As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
