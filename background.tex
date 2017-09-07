@@ -86,29 +86,33 @@ At the time, it was not obvious how to train networks with more than one layer o
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single layer neural network]{Detailed illustration of a single layer neural network trainable with the delta rule.. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single layer neural network]{Detailed illustration of a single layer neural network trainable with the delta rule. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
-The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. Assume that for a training sample $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. We want to know how to change a given weight $w_{ji}$ given the output of node $j$, 
+The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
+
+Training is performed on a training dataset $X$, where each training sample $\mathbf{x}^n\in X$ is a vector $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\mathbf{x}^n$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
+
+We want to know how to change a given weight $w_{ji}$ given the output of node $j$ for a given input data sample $\mathbf{x}^n$, 
 \begin{equation}
-	y_j = f\left( a_j \right),
+	y^n_j = f\left( a^n_j \right),
 	\label{eqn:output}
 \end{equation}
-where the net activation $a_j$ is,
+where the net activation $a^n_j$ is,
 \begin{equation}
-	a_j = \sum_i w_{ji} x_{i}.
+	a^n_j = \sum_i w_{ji} x^n_{i}.
 	\label{eqn:weightsum}
 \end{equation}
 To do so, we must use the error of our prediction for each output $y_j$ and training sample $x^n$ as compared to the known label $t_j$,
 \begin{equation}
-    e^n_j = t^n_j - y^n_j.
+    e^n_j = y^n_j - t^n_j.
     \label{eqn:error}
 \end{equation}
 
-For this derivation, we assume the error for a single sample is calculated by the squared error. In fact, the derivation holds as long as our error function is in the form of an average~\citep{Bishop1995},
+For this derivation, we assume the error for a single sample is calculated by the sum of squared errors of each output. In fact, the derivation holds as long as our error function is in the form of an average~\citep{Bishop1995},
 \begin{equation}
-    E_n = \frac{1}{2} \sum^n_j \left(e^n_j\right)^2.
+    E^n = \frac{1}{2} \sum_j \left(e^n_j\right)^2.
     \label{eqn:errorsum}
 \end{equation}
 
@@ -129,7 +133,7 @@ Differentiating \cref{eqn:errorsum} with respect to $e^n_j$,
 \cref{eqn:error} with respect to $y^n_j$,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial e^n_j}{\partial y^n_j} &= -1,
+    \frac{\partial e^n_j}{\partial y^n_j} &= 1,
 \end{aligned}
 \end{equation}
 
@@ -153,7 +157,7 @@ since only one of the terms in the sum is related to the specific weight $w_{ji}
 \begin{equation}
 \label{eqn:deltasensitivity}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= - e^n_j  f'\left( a^n_j \right) x_i.
+    \frac{\partial E^n}{\partial w_{ji}} &= e^n_j  f'\left( a^n_j \right) x_i.
 \end{aligned}
 \end{equation}
 
@@ -161,16 +165,16 @@ Typically what is variously called the local gradient, error, or simply \emph{de
 \begin{equation}
 \label{eqn:delta}
 \begin{aligned}
-    \delta^n_j \equiv&-\frac{\partial E^n}{\partial a^n_j}\\
-    =& -\frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j}\\
-    =& e^n_j  f'\left( a^n_j \right),
+    \delta^n_j &\equiv \frac{\partial E^n}{\partial a^n_j}\\
+    &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j}\\
+    &= e^n_j  f'\left( a^n_j \right),
 \end{aligned}
 \end{equation}
 
 such that \cref{eqn:deltasensitivity} can be rewritten,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= -\delta^n_j x_i.
+    \frac{\partial E^n}{\partial w_{ji}} &= \delta^n_j x_i.
 \end{aligned}
 \end{equation}
 
@@ -185,7 +189,7 @@ The delta rule adjusts each weight $w_{ji}$ proportional to the sensitivity,
 where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \cref{eqn:delta}, this is simply written,
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ji} &= \gamma\, \delta^n_j x_i.
+    \Delta w_{ji} &= -\gamma\, \delta^n_j x_i.
 \end{aligned}
 \end{equation}
 
@@ -193,7 +197,7 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 \subsection{Backpropagation}
 The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It is somewhat controversial who first ``discovered'' backpropagation, since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm -- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. Indeed the notation is the hardest part of the derivation, and it is important to pay attention to \cref{fig:neurontwolayer} to understand the indexing we will use to refer to neurons of different layers, and which notably differs from that in \cref{fig:neurononelayer} for the single layer case.
+Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label=(\textbf{\roman*})]
@@ -209,8 +213,8 @@ The output weights are relatively easy to find, since they correspond to the sam
     \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}\\
 %    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial e^n_k}\frac{\partial e^n_k}{\partial y^n_k} \frac{\partial y^n_k}{\partial a^n_k}\\
 %    &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
-    &= -\delta^n_k x^n_{kj}\\
-    &= -\delta^n_k y^n_j.
+    &= \delta^n_k x^n_{kj}\\
+    &= \delta^n_k y^n_j.
 \end{aligned}
 \label{eqn:outputlayer}
 \end{equation}
@@ -224,7 +228,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \end{figure}
 We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie every output neuron $y_k$).
 
-Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E$,
+Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E^n$,
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
@@ -240,7 +244,7 @@ We already know how to calculate the partials for the output layer from the deri
 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= -\left( \sum_k \delta^n_k y^n_j \frac{\partial a^n_k}{\partial y^n_{j}}\right)
+    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \delta^n_k y^n_j \frac{\partial a^n_k}{\partial y^n_{j}}\right)
      \frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
      \label{eqn:twolayer2}
 \end{aligned}
@@ -256,7 +260,7 @@ Recall from \cref{eqn:weightsum}, the net activation $a$ is a sum of all previou
 and substituting from \cref{eqn:partialdyda} and \cref{eqn:sumonetermpartial} into \cref{eqn:twolayer2},
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= -\left( \sum_k \delta^n_k y^n_j w_{kj}\right)
+    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \delta^n_k y^n_j w_{kj}\right)
      f'\left( a^n_j \right) x_i.
      \label{eqn:twolayer3}
 \end{aligned}
@@ -266,9 +270,9 @@ This bears some resemblance to the derived expression for a single layer, and ju
 \begin{equation}
 \label{eqn:deltahidden}
 \begin{aligned}
-    \delta^n_j \equiv& \frac{\partial E^n}{\partial a^n_k}\\
-    =& -\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \right) \frac{\partial y^n_{k}}{\partial a^n_k}\\
-    =& -\left(\sum_k \delta^n_k y^n_j w_{kj} \right) f'\left( a^n_j \right).
+    \delta^n_j &\equiv \frac{\partial E^n}{\partial a^n_k}\\
+    &= \left( \sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \right) \frac{\partial y^n_{k}}{\partial a^n_k}\\
+    &= \left(\sum_k \delta^n_k y^n_j w_{kj} \right) f'\left( a^n_j \right).
 \end{aligned}
 \end{equation}
 
@@ -287,8 +291,8 @@ The derivation above was based on the specific case of a single hidden layer net
 The delta is defined,
 \begin{equation}
 \delta^n_i = \begin{cases}
-         e^n_j \, f'\left( a^n_j \right)& \textrm{when neuron $j$ is output}\\
-        - \left( \sum_j \delta^n_j y^n_i w_{ji} \right) f'\left( a^n_j \right)& \textrm{when neuron $j$ is hidden},
+        f'\left( a^n_j \right) e^n_j \,& \textrm{when neuron $j$ is output}\\
+        f'\left( a^n_j \right) \left( \sum_j \delta^n_j y^n_i w_{ji} \right)& \textrm{when neuron $j$ is hidden},
         \end{cases}
 \label{eqn:fulldeltadefinition}
 \end{equation}
@@ -304,8 +308,8 @@ for any adjacent neural network layers $i, j$, including the output layer where 
 Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
-    \Delta w^n_{ij} &= \lambda\, \frac{\partial E^n}{\partial w_{ji}}\\
-    &= \lambda \, \delta^n_j y_i,
+    \Delta w^n_{ij} &= -\lambda\, \frac{\partial E^n}{\partial w_{ji}}\\
+    &= -\lambda \, \delta^n_j y_i,
      \label{eqn:backproplearningrule}
 \end{aligned}
 \end{equation}
