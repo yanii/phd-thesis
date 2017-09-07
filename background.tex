@@ -304,7 +304,7 @@ for any adjacent neural network layers $i, j$, including the output layer where 
 \end{aligned}
 \end{equation}
 
-\subsubsection{Learning with Backpropagation}
+\subsection{Learning with Backpropagation}
 Learning with backpropogation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
@@ -315,25 +315,55 @@ Learning with backpropogation is much like the delta rule; sensitivities are use
 \end{equation}
 where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
 
-Each weight change $\Delta w^n_{ij}$ is a step towards a local minima, backpropagation (like the delta rule) is a method of steepest descent. However $\Delta w^n_{ij}$ is only an approximation to the true gradient we want -- it is only from one sample, $x^n$, of the training dataset $X$. Even if we use the gradient from the entire dataset $X$ (see \cref{batchlearning}), the dataset is only a sampling of the true population we want our network to generalize to. Each gradient will likely move us towards a solution is biased towards the particular subset of samples we calculated it based on.
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.9\textwidth]{learningrate}
+\caption[Learning rate and convergence.]{An illustration of the effect of step size (learning rate) on convergence with backpropagation. Too small a step size can result in very slow learning, while too large a step size can result in bouncing around the minima, or missing the it altogether.}
+\label{fig:learningrate}
+\end{figure}
+Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector, and while 
 
-The learning rate parameter scales the 
+
 \subsection{Momentum}
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.9\textwidth]{momentum}
+\caption[Learning with momentum.]{An illustration of the effect of momentum on convergence.}
+\label{fig:momentum}
+\end{figure}
+
 A common improvement to SGD is momentum. 
 \mynote{TODO}
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
-\label{batchlearning}
-Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $n$, in practice this method, called \emph{online training}, is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general.
+Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method
+%, called \emph{online} training,
+is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want -- it is only from one sample, $x^n$, of the training dataset $X$. 
 
-At the opposite end of the spectrum there is \emph{batch training} where the gradient is based on all data samples in the training set,
-\mynote{TODO define this formally}.
+\subsubsection{Batch Gradient Descent}
+At the opposite end of the spectrum there is \emph{batch} training where the gradient is computed over all data samples in the training set,
+\begin{equation}
+\begin{aligned}
+    \Delta w_{ij} &= -\lambda\, \frac{1}{T} \sum^T_{n=0} \frac{\partial E^n}{\partial w_{ji}},
+     \label{eqn:batchlearningrule}
+\end{aligned}
+\end{equation}
 
-Although this gives a very good gradient, it is very expensive to compute, since it requires us to perform the forward pass of the network over all training samples. It has also been observed in practice that adding noise to the gradient at training time helps generalization, perhaps by preventing overfitting.
+where $T$ is the number of training samples in $X$. Batch training gives us the true gradient, however it is also very expensive, since it requires us to perform the forward pass of the network over all training samples for every update. 
 
-Another form of training is called 
-\mynote{TODO}
+\subsubsection{Stochastic Gradient Descent}
+Instead of computing the gradient on only one training sample, or over the entire training set, we might instead use a significant subset of the training set -- a \emph{mini-batch}. This approach is called Stochastic Gradient Descent (SGD). 
 
+When using SGD, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$,
+\begin{equation}
+\begin{aligned}
+    \Delta w_{ij} &= -\lambda\, \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\mathbf{x}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
+     \label{eqn:batchlearningrule}
+\end{aligned}
+\end{equation}
+where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of SGD. 
+
+It has been observed in practice that adding noise to the gradient by using stochastic gradient descent often helps generalization compared to batch gradient descent, perhaps by preventing overfitting. Note that even if we use the true gradient for the training dataset, the training set $X$ is only a sampling of the population distribution we want our network to generalize to.
 
 \subsection{Activation Functions}
 As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier -- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
