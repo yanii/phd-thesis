@@ -43,7 +43,7 @@
 			\caption{Convolution with filter groups.}
 			\label{fig:groupedconv}
 		\end{subfigure}
-		\caption{\textbf{Filter Groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}
+		\caption[Convolutional filter groups.]{\textbf{Filter Groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}
 		\label{fig:groupconfig}
 	\end{figure}
 	\begin{figure}[tb]
@@ -87,7 +87,7 @@
 		%\legend{Standard AlexNet}%, Alternate Filter Grouping}
 		\end{axis}
 		\end{tikzpicture}
-		\caption{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}
+		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}
 		\label{fig:alexnetplots}
 	\end{figure}
 	
@@ -108,11 +108,11 @@
 	\begin{figure}[tp]
 		\centering
 		\includegraphics[width=\linewidth, page=3]{Figs/PDF/sparsification}
-		\caption{\textbf{Learning a (Spatial) Basis for Filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
+		\caption[Learning a spatial basis for filters.]{\textbf{Learning a (Spatial) Basis for Filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
 		\label{fig:spatialbasis}
 	\end{figure}
+    \mynote{Change this to refer to chapter instead of paper}
 	Our approach is connected with that of \citet{Ioannou2016} who showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art CNNs, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
-	
 	\section{Root Architectures}
 	\label{method}
 	In this section we present the main contribution of our work: the use of novel sparsely connected architectures resembling tree roots -- to decrease computational complexity and model size compared to state-of-the-art deep networks for image recognition.
@@ -140,7 +140,7 @@
 			\caption{Root-4 Module: Convolution with $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.}
 			\label{fig:rootresnet4}
 		\end{subfigure}
-		\caption{\textbf{Root Modules.} Root modules (b), (c) compared to a typical set of convolutional layers (a) found in ResNet and other modern architectures. Grey blocks represent the feature maps over which a layer's filters operate, while colored blocks represent the filters of each layer. 
+		\caption[Root modules: learning a channel basis for filters.]{\textbf{Root Modules.} Root modules (b), (c) compared to a typical set of convolutional layers (a) found in ResNet and other modern architectures. Grey blocks represent the feature maps over which a layer's filters operate, while colored blocks represent the filters of each layer. 
 		}
 		\label{fig:rootmodule}
 	\end{figure}
@@ -156,7 +156,7 @@
 	Network in Network (NiN)~\cite{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by~\citet{Ioffe2015}.
 	
 	\begin{table}[tp]
-		\caption[Network in Network Architectures]{\textbf{Network-in-Network}. Filter groups in each convolutional layer.}
+		\caption[Network in network root architectures.]{\textbf{Network in Network}. Filter groups in each convolutional layer.}
 		\label{table:ninconfig}
 		\centering
 		%\resizebox{\linewidth}{!}{
@@ -176,7 +176,7 @@
 		%}
 	\end{table}
 	\begin{table}[tp]
-		\caption[Network-in-Network CIFAR10]{\textbf{Network-in-Network CIFAR10}}
+		\caption[Network in network CIFAR10 results.]{\textbf{Network-in-Network CIFAR10}}
 		\label{table:nincifarresults}
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
@@ -353,7 +353,7 @@
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		
-		\caption{\textbf{Network-in-Network CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
+		\caption[Network in network CIFAR10 results.]{\textbf{Network in Network CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
 			%(left) Parameters \vs Error, (right) FLOPS \vs Error.
 		}
 		\label{fig:nincifarplotsconvonly}
@@ -429,7 +429,7 @@
 				\caption{Root-32}
 				\label{fig:root32corrfull}
 			\end{subfigure}
-			\caption{\textbf{Filter Inter-layer Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
+			\caption[Inter-layer filter covariance conv2c--conv3a.]{\textbf{Inter-layer Filter Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
 			\label{fig:covar}
 		\end{figure}
 	\end{landscape}}
@@ -465,7 +465,7 @@
 			\caption{Whitened responses}
 			\label{fig:whitened}
 		\end{subfigure}
-		\caption{Covariance for between two layers in the root-32 Network-in-Network model with and without whitened responses}
+		\caption[Inter-layer covariance with/without whitened responses.]{Covariance for between two layers in the root-32 Network-in-Network model with and without whitened responses.}
 		\label{fig:whitevsnot}
 	\end{figure}
 	
@@ -587,7 +587,7 @@
 				\end{subfigure}
 				\centering
 				\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
-				\caption{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
+				\caption[Intra-layer filter correlation.]{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
 				\label{fig:nincorr}
 			\end{figure}
 		\end{landscape}
@@ -677,7 +677,7 @@
 					\caption{\textbf{Root-32.}}
 					\label{fig:covarroot32}
 				\end{subfigure}
-				\caption{\textbf{Network-in-Network Inter-layer Absolute Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
+				\caption[Inter-layer covariance (all layers).]{\textbf{Network in Network Inter-layer Absolute Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
 				\label{fig:suppcovariances}
 			\end{figure}
 		\end{landscape}
@@ -784,7 +784,7 @@
 			\caption{Root-4 Architecture}
 			\label{fig:root4topology}
 		\end{subfigure}
-		\caption{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see \cref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
+		\caption[Network in network standard \vs root architecture.]{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see \cref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
 		}
 		\label{fig:networktopology}
 	\end{figure}
@@ -802,7 +802,7 @@
 	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 GPUs with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
 	For training, we used the initialization scheme described by \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization~\citep{Ioffe2015}.
 	\begin{table}[tp]
-		\caption{\textbf{ResNet 50}. Filter groups in each conv.\ layer.}
+		\caption[ResNet 50 root architectures.]{\textbf{ResNet 50}. Filter groups in each conv.\ layer.}
 		\label{table:resnet50config}
 		\centering
 		\begin{tabular}{@{}lcccccccccccc@{}}
@@ -1092,7 +1092,7 @@
 			\label{fig:resnet5050cpuforward}
 		\end{subfigure}
 		
-		\caption{\textbf{ResNet-50 Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\caption[ResNet-50 ILSVRC results.]{\textbf{ResNet-50 ILSVRC Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet50plots}
 	\end{figure}
 	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. CPU timings were 23\% faster, while GPU timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. CPU timings were 31\% faster, while GPU timings were 12\% faster. 
@@ -1100,7 +1100,7 @@
 	\subsubsection{ResNet 200}
 	\label{resnet200results}
 	\begin{table}[tp]
-		\caption[ResNet 200 ILSVRC Results]{\textbf{ResNet-200 Results}}
+		\caption[ResNet 200 ILSVRC results.]{\textbf{ResNet-200 ILSVRC Results}}
 		\label{table:resnet200imagenetresults}
 		%\resizebox{\columnwidth}{!}{
 		\centering
@@ -1150,7 +1150,7 @@
 	\subsection{Improving GoogLeNet on ILSVRC}
 	\label{googlenet50results}
 	\begin{table}[tp]
-		\caption[GoogLeNet ILSVRC Results]{\textbf{GoogLeNet Results.}}
+		\caption[GoogLeNet ILSVRC results.]{\textbf{GoogLeNet ILSVRC Results.}}
 		\label{table:googlenetimagenetresults}
 		%\resizebox{\columnwidth}{!}{
 		\centering
@@ -1207,7 +1207,7 @@
 	\end{table}
 	
 	\begin{table}[tp]
-		\caption[GoogLeNet Architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and Inception module (\textit{incp}.)}
+		\caption[GoogLeNet root architectures.]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and Inception module (\textit{incp}.)}
 		\label{table:googlenetconfig}
 		\centering
 		\begin{tabular}{@{}lm{1.6em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}@{}}
@@ -1429,7 +1429,7 @@
 			\label{fig:googlenet50cpuforward}
 		\end{subfigure}
 		
-		\caption{\textbf{GoogLeNet Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\caption[GoogLeNet ILSVRC results.]{\textbf{GoogLeNet ILSVRC Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:googlenet50plots}
 	\end{figure}
 	
@@ -1499,7 +1499,7 @@
 			\caption{Root-32}
 			\label{fig:resnet50root32conv0}
 		\end{subfigure}
-		\caption{\textbf{ResNet 50 \texttt{conv1} filters.} With filter groups directly after \texttt{conv1}, in \texttt{conv2}, some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks.}
+		\caption[ResNet 50 conv1 filters.]{\textbf{ResNet 50 \texttt{conv1} filters.} With filter groups directly after \texttt{conv1}, in \texttt{conv2}, some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks.}
 		\label{fig:resnet50conv0}
 	\end{figure}
 	In the ResNet root models, filter groups are used in \texttt{conv2},  directly after the image level filters of \texttt{conv1} some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks. \Cref{fig:resnet50conv0} shows the \texttt{conv0} filters learned for each of the ResNet 50 models. It is apparent that the filters learned in these networks are very similar to those learned in the original model, although sometimes inverted or with a different ordering. This ordering is somewhat consistent in models with filter groups however, even with different random initializations. This is because filter groups cause filters with strong mutual information to be grouped adjacent to each other.
@@ -1578,7 +1578,7 @@
 			\end{tikzpicture}
 			
 		\end{subfigure}
-		\caption{\textbf{ResNet 50 Layer-wise FLOPS/Parameters.} 
+		\caption[ResNet 50 layer-wise FLOPS/parameters.]{\textbf{ResNet 50 Layer-wise FLOPS/Parameters.} 
 		}
 		
 		\label{fig:resnet50layerwisema}
