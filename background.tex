@@ -26,7 +26,7 @@ We will not cover the long and colourful history of neural networks (for this we
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
-\caption[An illustration of a typical artificial neural network neuron]{An illustration of a typical artificial neural network \emph{neuron}, with output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\caption[An illustration of a typical artificial neural network neuron.]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
 \label{fig:neuron}
 \end{figure}
 A neuron is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
@@ -53,14 +53,14 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{singlelayer}
-\caption[A single layer neural network]{An illustration of a simple single layer neural network, such as a perceptron network.}
+\caption[A single layer neural network.]{\textbf{An illustration of a simple single layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
 then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by~\citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a multi-layer perceptron (MLP) --- an unfortunate, but common, misnomer of any multi-layer neural network.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption[The interpretation of a perceptron as a hyperplane]{The interpretation of a perceptron as a oriented hyperplane, \ie{}a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron as a hyperplane.]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
 The perceptron also has a geometric interpretation, as shown in \cref{fig:hyperplane}~\citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie{}$N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
@@ -75,7 +75,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronxor}
-\caption[An illustration of the inability of a single line to correctly classify the XOR function]{An illustration of the inability of a single line (\ie{}a perceptron) to correctly classify the XOR function. Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
+\caption[An illustration of the inability of a single line to correctly classify the XOR function.]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
 A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
@@ -116,7 +116,6 @@ For this derivation, we assume the error for a single sample is calculated by th
     E^n = \frac{1}{2} \sum_j {\left(e^n_j\right)}^2.
     \label{eqn:errorsum}
 \end{equation}
-
 Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}

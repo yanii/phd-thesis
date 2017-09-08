@@ -19,7 +19,7 @@ Classic computer vision approaches depended on hand-designing problem specific \
 \begin{figure}[tbp]
 	\centering
 	\includegraphics[width=0.66\textwidth]{dnnvsfeatures}
-	\caption{A comparison of classic feature-based approach to computer vision, and deep learning approaches. Although both methods require hand-tuned hyper-parameters and design, deep learning methods avoid much of the hand-engineering of classic approaches.}\label{dnnvsfeatures}
+	\caption[Classic feature-based approach \vs{}deep learning.]{\textbf{A comparison of classic feature-based approach to computer vision, and deep learning approaches.} Although both methods require hand-tuned hyper-parameters and design, deep learning methods avoid much of the hand-engineering of classic approaches.}\label{dnnvsfeatures}
 \end{figure}
 	
 Glossed over in this description of deep learning, as it is often in the field itself, is that this learning ability does not come for free, it relies on very specific assumptions that are mostly encoded in the design of the neural network architecture itself --- what I call \emph{structural priors} --- as necessitated by the Free Lunch Theorem explained in \cref{nofreelunch}. Structural priors require some knowledge of the domain to design but, unlike hand-designed features, are higher level and have broad applicability. In real-world applications fully-connected neural networks are seldom used, every practical application of deep learning has relied on some form of structural prior. \Cref{dnnvsfeatures} illustrates, at a high level, the amount of learning \vs{}design in deep learning as compared to traditional feature-based computer vision.
