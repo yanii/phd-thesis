@@ -87,7 +87,7 @@ At the time, it was not obvious how to train networks with more than one layer o
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single layer neural network]{Detailed illustration of a single layer neural network trainable with the delta rule. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
@@ -223,7 +223,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.8\textwidth]{neurontwolayer}
-\caption[An illustration of a neural network with a single hidden layer]{An illustration of a neural network with a single hidden layer. The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
+\caption[An illustration of a neural network with a single hidden layer]{\textbf{An illustration of a neural network with a single hidden layer.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
 We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie{}every output neuron $y_k$).
@@ -318,7 +318,7 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.9\textwidth]{learningrate}
-\caption[Learning rate and convergence.]{An illustration of the effect of step size (learning rate) on convergence with backpropagation. Too small a step size can result in very slow learning, while too large a step size can result in bouncing around the minima, or missing the it altogether.}
+\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) on convergence with backpropagation.} Too small a step size can result in very slow learning, while too large a step size can result in bouncing around the minima, or missing the it altogether.}
 \label{fig:learningrate}
 \end{figure}
 Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector, and while 
@@ -328,7 +328,7 @@ Backpropagation (like the delta rule) is a method of steepest descent. This is i
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.9\textwidth]{momentum}
-\caption[Learning with momentum.]{An illustration of the effect of momentum on convergence.}
+\caption[Learning with momentum.]{\textbf{An illustration of the effect of momentum on convergence.} \mynote{TODO}}
 \label{fig:momentum}
 \end{figure}
 
@@ -573,7 +573,7 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 		\end{tikzpicture}
 		\caption{Derivative $\frac{d \max(0,x)}{dx}$}\label{fig:relugradient}
 	\end{subfigure}
-	\caption[Activation Functions]{Activation functions for Neural Networks}\label{fig:afunctions}
+	\caption[Activation functions.]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
 \end{figure}
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
@@ -593,7 +593,7 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}
 	$\cdots$
 	\includegraphics[width=0.23\textwidth, page=1, viewport = 0 0 400 600, clip=true]{layer}
-	\caption[Vanishing Gradients]{\textbf{Vanishing Gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
+	\caption[Vanishing gradients.]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
 \end{figure}
 \begin{equation}
 \begin{aligned}

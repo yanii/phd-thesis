@@ -29,18 +29,15 @@
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{fullyconnected}
-			\caption{Standard diagram of a neural network with one hidden layer.}
-			\label{fig:oldnotation}
+			\caption{Standard diagram of a neural network with one hidden layer.}\label{fig:oldnotation}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{newnotation}
-			\caption{New notation showing transformation between layers explicitly.}
-			\label{fig:newnotation}
+			\caption{New notation showing transformation between layers explicitly.}\label{fig:newnotation}
 		\end{subfigure}
-		\caption[New graphical notation for neural network.]{The proposed compact graphical notation for neural networks. Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}
-		\label{fig:newGraphLanguage}
+		\caption[New graphical notation for neural networks.]{\textbf{The proposed compact graphical notation for neural networks.} Non-linear transformations in a standard neural network with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}\label{fig:newGraphLanguage}
 	\end{figure}
 	
 	The standard depiction of a neural network with one hidden layer is shown in \cref{fig:oldnotation}, where each of the layers is fully connected, and these connecting weights are illustrated as lines between the neurons represented as circles. While this image illustrates the connectivity of the model, it assumes the function of the neurons themselves to be known or otherwise described. In \cref{fig:newnotation}\ we use a different notation to show both connectivity and function of each layer, with the assumption that all nodes on a particular layer have the same function.
@@ -56,25 +53,21 @@
 		\begin{subfigure}[b]{\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{projectionnotation}
-			\caption{Generic projection with non-linearity, typically found in neural networks.}
-			\label{fig:projectionnotation}
+			\caption{Generic projection with non-linearity, typically found in neural networks.}\label{fig:projectionnotation}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{identitynotation}
-			\caption{Identity projection with identity function, typically found in decision trees.}
-			\label{fig:identitynotation}
+			\caption{Identity projection with identity function, typically found in decision trees.}\label{fig:identitynotation}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{selectionnotation}
-			\caption{Selection projection, found in random forests.}
-			\label{fig:selectionnotation}
+			\caption{Selection projection, found in random forests.}\label{fig:selectionnotation}
 		\end{subfigure}
-		\caption[Various projection matrices in conditional networks.]{{\bf The proposed compact graphical notation for various types of projection in a conditional network}.}
-		\label{fig:projections}
+		\caption[Various projection matrices in conditional networks.]{\textbf{The proposed compact graphical notation for various types of projection in a conditional network.}}\label{fig:projections}
 	\end{figure}
 	
 	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in \cref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in \cref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in \cref{fig:identitynotation}.
@@ -85,8 +78,7 @@
 	\begin{figure}[htbp!] 
 		\centering
 		\includegraphics[width=0.95\textwidth]{treenotation}
-		\caption[Proposed graphical notation for a decision stump.]{The proposed compact graphical notation for a ``decision stump''.}
-		\label{fig:treeNotation}
+		\caption[Proposed graphical notation for a decision stump.]{\textbf{The proposed compact graphical notation for a ``decision stump''.}}\label{fig:treeNotation}
 	\end{figure}
 	
 	\begin{figure}[tbp] 
@@ -94,18 +86,15 @@
 		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=0.95\textwidth]{oldtreenotation}
-			\caption{Standard diagram of a decision tree.}
-			\label{fig:oldtreenotation}
+			\caption{Standard diagram of a decision tree.}\label{fig:oldtreenotation}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=0.8\textwidth]{newtreenotation}
-			\caption{New explicit graphical notation.}
-			\label{fig:newtreenotation}
+			\caption{New explicit graphical notation.}\label{fig:newtreenotation}
 		\end{subfigure}
-		\caption[Proposed compact graphical notation for a decision tree.]{The proposed compact graphical notation for a full decision tree.}
-		\label{fig:complexDecisionTree}
+		\caption[Proposed compact graphical notation for a decision tree.]{\textbf{The proposed compact graphical notation for a full decision tree.}}\label{fig:complexDecisionTree}
 	\end{figure}
 	
 	We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
@@ -118,18 +107,15 @@
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
 			\includegraphics[width=0.95\textwidth]{explicit}
-			\caption{Explicitly routed network.}
-			\label{fig:explicitRouter}
+			\caption{Explicitly routed network.}\label{fig:explicitRouter}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
 			\includegraphics[width=0.95\textwidth]{explicit}
-			\caption{Implcitly routed network.}
-			\label{fig:implicitRouter}
+			\caption{Implcitly routed network.}\label{fig:implicitRouter}
 		\end{subfigure}
-		\caption{Explicit \vs implicitly routed networks.}
-		\label{fig:routerConnections}
+		\caption[Explicit \vs{}implicitly routed networks.]{\textbf{Explicit \vs{}implicitly routed networks.}}\label{fig:routerConnections}
 	\end{figure}
 	
 	\subsection{Implicit Routing}
@@ -171,8 +157,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
-		\caption[Conditional network used with Imagenet ILSVRC experiments]{The conditional network used on the Imagenet experiments employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, non-routed DNNs.}
-		\label{fig:Imagenet_CondNet}
+		\caption[Conditional network used with Imagenet ILSVRC experiments.]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, non-routed DNNs.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
 	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
@@ -210,18 +195,15 @@
 		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsEff}
-			\caption{Top-5 ILSVRC validation error (centre crop) \vs compute for various network architectures.}
-			\label{fig:resultsImagenet_AccVsEff}
+			\caption{Top-5 ILSVRC validation error (centre crop) \vs{}compute for various network architectures.}\label{fig:resultsImagenet_AccVsEff}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
-			\caption{Top-5 ILSVRC validation error (centre crop) \vs model size for various architectures.}
-			\label{fig:resultsImagenet_AccVsSize}
+			\caption{Top-5 ILSVRC validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on ILSVRC relative to state of the art.]{Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}
-		\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on ILSVRC relative to state of the art.]{\textbf{Efficiency of conditional networks on ILSVRC relative to state of the art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
 	\end{figure}
 	
 	
@@ -251,28 +233,14 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{vgg11costs}
-		\caption[Cost of VGG11-based networks per layer]{
-			Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) 
-			layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) 
-			reduce both the memory use and the compute cost.}
-		\label{fig:VggPerLayerCost}
+		\caption[Computational cost of VGG-11 based networks per layer.]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
-	
-	
 	% Removed to save space
-	%GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, 
-	%giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within 
-	%these routes reduces compute and parameters of the network even further.
+	GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
 	
+	The most efficient of the state of the art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). Network in Network and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
-	%The most efficient of the state of the art networks used for Imagenet classification, by a wide margin, is 
-	%GoogLeNet (see \cref{fig:Imagenet_results}). Network in Network and GoogLeNet pioneered the use of semi-dense 
-	%weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
-	
-	%Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional 
-	%feature map are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. 
-	%This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains 
-	%the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of Network in Network and GoogLeNet.
+	Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional feature map are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of Network in Network and GoogLeNet.
 	
 	%\begin{itemize}
 	%\item Our convtree has much more potential for distributed computation.
@@ -298,8 +266,7 @@
 		\centerline{
 			\includegraphics[width=1.1\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically learned conditional architecture for CIFAR.]{{\bf Automatically learned conditional architecture for image classification in CIFAR.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization.
-			Best viewed on screen.}
+		\caption[Automatically learned conditional architecture for CIFAR10.]{\textbf{Automatically learned conditional architecture for image classification in CIFAR10.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
@@ -327,7 +294,7 @@
 	It is a DAG-structured conditional network with 10 layers.
 	To our knowledge this is the first attempt at learning automatically the architecture of a deep CNN for image classification.
 	
-	\noindent{\bf Accuracy \vs efficiency results.}
+	\paragraph{Accuracy \vs{}efficiency results.}
 	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters. 
 	\ie we maximize $\alpha$ over $F_l = F_\textrm{orig}/2^i, \left\{i\in \mathbb{N} : 0 \le i \le 4\right\}$, where $F_\textrm{orig}$ is the number of filters in layer $l$ in NiN-64. 
 	
@@ -344,18 +311,15 @@
 		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsEff}
-			\caption{Test error \vs test-time compute for various architectures used in the CIFAR experiments.}
-			\label{fig:resultsCifar_AccVsEff}
+			\caption{Test error \vs test-time compute for various architectures used in the CIFAR experiments.}\label{fig:resultsCifar_AccVsEff}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
-			\caption{Test error \vs model size.}
-			\label{fig:resultsCifar_AccVsSize}
+			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on CIFAR10.]{{\bf Comparing network architectures on CIFAR10.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}
-		\label{fig:Cifar_results}
+		\caption[Comparing network architectures on CIFAR10.]{\textbf{Comparing network architectures on CIFAR10.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
 	\end{figure}
 	%
 	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
@@ -373,9 +337,11 @@
 
 %\vspace{-0.5\baselineskip}
 
-This chapter has investigated similarities and differences between decision trees/forests and convolutional networks. This has led us to introduce a hybrid model (namely conditional network) which can be thought both as:
-i) trees which have been augmented with representation learning capabilities, and
-ii) CNNs which have been augmented with explicit data routers and a rich, branched architecture.
+This chapter has investigated similarities and differences between decision trees/forests and convolutional networks. This has led us to introduce a hybrid model (namely conditional network) which can be thought both as: 
+\begin{enumerate*}[label=(\roman*)]
+\item trees which have been augmented with representation learning capabilities, and
+\item CNNs which have been augmented with explicit data routers and a rich, branched architecture.
+\end{enumerate*}
 Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or CNNs. The desired accuracy-efficiency ratio can be selected {\em at run time}, without the need to train a new network.
 %Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of CNNs, without loss of accuracy.
 	
