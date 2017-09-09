@@ -24,8 +24,7 @@
     \begin{figure}
         \centering
         \includegraphics[width=0.7\textwidth]{Figs/PDF/vcdim_r2lines}
-        \caption{All possible labellings of 3 points in $\mathbb{R}^2$ can be separated by a oriented line (2D hyperplane). This is not possible for all labellings of 4 points in $\mathbb{R}^2$ however, and thus the VC dimension of oriented hyperplanes in $\mathbb{R}^2$ is 3. From \citet{burges1998tutorial}.}
-        \label{fig:vcdim_r2line}
+        \caption[Possible labellings of 3 points in $\mathbb{R}^2$. ]{\textbf{Possible labellings of 3 points in $\mathbb{R}^2$.} All possible labellings of 3 points in $\mathbb{R}^2$ can be separated by a oriented line (2D hyperplane). This is not possible for all labellings of 4 points in $\mathbb{R}^2$ however, and thus the VC dimension of oriented hyperplanes in $\mathbb{R}^2$ is 3. \copyright\citet{burges1998tutorial}.}\label{fig:vcdim_r2line}
     \end{figure}
     The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (VC) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks. Intuitively, for a discriminative classifier, the VC dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. A good overview of VC-dimension is given by \citet{burges1998tutorial}.
     
@@ -124,7 +123,7 @@
 			\caption{\engordnumber{20}-order polynomial fitting 10 points}
 			\label{fig:polyfit20thlots}
 		\end{subfigure}
-		\caption[Polynomial Data Fitting]{Polynomial fits of samples from a 3rd order function. Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. While generalization is helped by more data, the higher order polynomial still tends to overfit.}
+		\caption[Polynomial fits of samples from a 3rd order function.]{\textbf{Polynomial fits of samples from a 3rd order function.} Polynomials of high order, like neural networks of many parameters, easily overfit a small number of samples as compared to polynomials of a more suitable order for the sampled function. While generalization is helped by more data, the higher order polynomial still tends to overfit.}
 		\label{fig:polyfits}
 	\end{figure}
 
@@ -160,7 +159,7 @@
 			\label{fig:twoclumps}
 		\end{subfigure}
 		
-		\caption[Two-or-more Clump Predicate]{The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two or more contiguous strings of ones.}
+		\caption[Two-or-more clumps predicate.]{\textbf{Two-or-more clumps predicate.} The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two or more contiguous strings of ones.}
 		\label{fig:tomclumps}
 	\end{figure}
 	
@@ -192,7 +191,7 @@
 			\caption{Validation Accuracy}
 			\label{fig:tomplotmaxvalacc}
 		\end{subfigure}
-		\caption[Two-or-more Clumps Problem and Structural Priors]{\mynote{TODO}. Class imbalance responsible for cycle in loss?}
+		\caption[Two-or-more clumps problem and structural priors.]{\textbf{Two-or-more clumps problem and structural priors.} \mynote{TODO}Class imbalance responsible for cycle in loss?}
 		\label{fig:tomplot}
 	\end{figure}
 
@@ -244,7 +243,7 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics{Figs/PDF/fahlmancascade}
-		\caption[Cascade Correlation]{Cascade Correlation. Connections marked with a $\square$ are frozen, while $\times$ connections are learned continously. \copyright~\citet{Fahlman1989}}
+		\caption[Cascade correlation.]{\textbf{Cascade Correlation.} Connections marked with a $\square$ are frozen, while $\times$ connections are learned continously. \copyright~\citet{Fahlman1989}}
 		\label{fig:cascadecorrelation}
 	\end{figure}
 	
