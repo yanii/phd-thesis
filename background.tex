@@ -668,7 +668,7 @@ The winner of the ILSVRC2014 challenge, as measured by classification accuracy a
 %As will be explained in \cref{googlenetasbasis}, the specific method inception does this is better explained by a basis than the `factorization' explanation used by the authors.
 %\mynote{Add section on how inception is learning basis for spatial dimension of filters}
 
-\subsection{Residual Networks}
+\subsection{Residual Networks}\label{residualnetworks}
 \citet{He2015} introduced residual networks, with the insight that training extra layers to deep networks could in fact \emph{increase} training error. Yet it is not clear why this should be so --- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
 	F(x) = H(x) + x.
