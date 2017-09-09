@@ -317,28 +317,71 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.9\textwidth]{learningratedecrease}
+\includegraphics[width=0.85\textwidth]{learningratedecrease}
 \caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}
 \label{fig:learningrate}
 \end{figure}
-Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{learningratedecrease} illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. In order to settle into a local minima, the learning rate must be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while too slow a rate of decrease and it will take a very long time to enter the basin of attraction, such as with $\lambda_3$.
+Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{learningratedecrease} illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. 
 
+In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while too slow a rate of decrease and it will take a very long time to enter the basin of attraction, such as with $\lambda_3$. 
 
-\subsection{Momentum}
+The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training deep networks which comes from experience, but \citep{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
+
+\subsection{The Problem with First-order Optimization}
+The underlying reason learning rate and learning policy has such a large effect is that gradient descent is a \emph{first-order} optimization method, and only considers the first-order partial derivatives, \ie for a 2D error surface $E(x, y)$, gradient descent moves in the opposite direction of the gradient,
+\begin{equation}
+    \nabla E(x, y) = {\left(\frac{\partial E}{\partial x}, \frac{\partial E}{\partial y}\right)}.
+\end{equation}
+This gradient tells us the direction of maximum increase at a given point on the error surface, but it does not tell us any information about the \emph{curvature} of the surface at that point. The curvature of the surface is described by higher-order derivatives such as the second-order partial derivatives, \eg
+\begin{equation}
+    \frac{\partial^2 E}{\partial x^2},
+\end{equation}
+and mixed partial derivatives, \eg
+\begin{equation}
+    \frac{\partial^2 E}{\partial x\,\partial y}.
+\end{equation}
+
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.9\textwidth]{momentum}
-\caption[Learning with momentum.]{\textbf{An illustration of the effect of momentum on convergence.} \mynote{TODO}}
-\label{fig:momentum}
+\begin{subfigure}[b]{0.45\textwidth}
+\includegraphics[width=\textwidth]{narrowvalley}
+\caption{Gradient descent}\label{fig:narrowvalleysgd}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\textwidth}
+\includegraphics[width=\textwidth]{narrowvalleymomentum}
+\caption{Momentum}\label{fig:narrowvalleymomentum}
+\end{subfigure}
+\caption[Pathological curvature.]{\textbf{Pathological curvature.} An error surface $E(x, y)$ exhibiting a narrow valley, and the optimal path from the starting point to the minima shown by the red arrow. In a pathological error surface such as this, first order methods cannot use the information provided by the Hessian on the surface curvature to avoid bouncing along the walls of the valley, slowing descent. Momentum alleviates this somewhat by damping the change in direction, by preserving information on previous gradients, allowing a quicker descent. Inspired by a similar diagram by \citet{martens2010deep}.}
+\label{fig:learningrate}
 \end{figure}
+These second-order partials give important information about the curvature of the error surface $E$. For example, in \cref{fig:learningrate}, the error surface takes on an elliptical shape, which causes problems when we only consider the direction of maximum decrease $-\nabla E$. The classic example of such a pathological error surface for first order methods is an error surface that looks like a narrow valley, as shown in \cref{fig:narrowvalleysgd}. With an initialization outside the bottom of the valley, gradient descent will bounce along the walls of the valley, leading to a very slow learning convergence.
 
-A common improvement to SGD is momentum. 
-\mynote{TODO}
+For well-behaved surfaces where the scaling of parameters is similar
+%, \ie surfaces where the mixed partial derivatives, \eg
+%\begin{equation}
+%    \frac{\partial^2 E}{\partial x\,\partial y} \approx 1,
+%\end{equation}
+basins of attraction around a minima are roughly circular, and thus avoid this problem, since the first order gradients will point almost directly at the minima for any location on the error surface.
+
+There are second-order optimization methods based on Newton's method, however the issue is that they do not scale to the size of any practical deep networks. The matrix of second order partial derivatives for a vector function, the Hessian, is required for any full second-order optimization method, however the Hessian is square in the number of parameters in the network. For networks of millions of parameters this means storing the Hessian is infeasible.
+
+There are a whole slew of optimization tricks for gradient descent, often attempting to to compensate for the shortcomings of first-order optimization without using the Hessian, or using some approximation to it. We will not cover those here, since none of these were used in our experiments. A full background of the issues of optimization in deep networks is outside the scope of this thesis, however interested readers should refer to \citet{goodfellow2016deep} to learn more about these methods, and \citet{martens2010deep} for an excellent introduction to the problems of first and second order optimization in deep networks.
+
+\subsection{Momentum}
+A common improvement to gradient descent is momentum~\citep{polyak1964some,rumelhartbackprop}, a trick for minimizing the effect of pathological curvature on gradient descent, which also helps with variance in gradients. The name comes from the analogy of the update to physical momentum $p$ for a moving particle, $\mathbf{p}=m\mathbf{v}$, where we assume unit mass, $m=1$.
+
+In momentum the gradients over multiple iterations are accumulated into a velocity gradient, 
+\begin{equation}
+\begin{aligned}
+\mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \lambda\nabla E(\mathbf{w})\\
+\Delta\mathbf{w} &= \mathbf{w}_t + \mathbf{v}_{t+1},
+\end{aligned}
+\end{equation}
+where $\lambda$ is the learning rate, $t$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\mathbf{w})$ being minimized, and $\mathbf{w}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
+r a summary of some of the more popular methods.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
-Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method
-%, called \emph{online} training,
-is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
+Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
 
 \subsubsection{Batch Gradient Descent}
 At the opposite end of the spectrum there is \emph{batch} training where the gradient is computed over all data samples in the training set,
@@ -352,7 +395,7 @@ At the opposite end of the spectrum there is \emph{batch} training where the gra
 where $T$ is the number of training samples in $X$. Batch training gives us the true gradient, however it is also very expensive, since it requires us to perform the forward pass of the network over all training samples for every update. 
 
 \subsubsection{Stochastic Gradient Descent}
-Instead of computing the gradient on only one training sample, or over the entire training set, we might instead use a significant subset of the training set --- a \emph{mini-batch}. This approach is called Stochastic Gradient Descent (SGD). 
+Instead of computing the gradient on only one training sample, or over the entire training set, we might instead use a significant subset of the training set --- a \emph{mini-batch}. This approach is called Stochastic Gradient Descent (SGD).
 
 When using SGD, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$,
 \begin{equation}
