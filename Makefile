@@ -47,7 +47,7 @@ version		:= 2.2.1-alpha9
 # BUILD_STRATEGY := latex
 BUILD_STRATEGY		?= pdflatex
 # This can be used to pass extra options to latex.
-LATEX_OPTS		?=
+LATEX_OPTS		?= --synctex=1
 #
 # Sets LC_ALL=C, by default, so that the locale-aware tools, like sort, be
 # # immune to changes to the locale in the user environment.
