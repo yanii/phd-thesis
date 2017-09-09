@@ -317,11 +317,11 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.9\textwidth]{learningrate}
-\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) on convergence with backpropagation.} Too small a step size can result in very slow learning, while too large a step size can result in bouncing around the minima, or missing the it altogether.}
+\includegraphics[width=0.9\textwidth]{learningratedecrease}
+\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}
 \label{fig:learningrate}
 \end{figure}
-Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector, and while 
+Backpropagation (like the delta rule) is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{learningratedecrease} illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. In order to settle into a local minima, the learning rate must be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while too slow a rate of decrease and it will take a very long time to enter the basin of attraction, such as with $\lambda_3$.
 
 
 \subsection{Momentum}
