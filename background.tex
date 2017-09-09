@@ -471,8 +471,6 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 \label{section:contemporary}
 \subsection{Rectified Linear Activation Function}
 \label{section:relu}
-An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent ($f(x) = \tanh(x)$), as plotted in \cref{fig:tanh} and logistic function ($f(x) = \frac{1}{1+e^{-x}}$). Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions with easy to calculate derivatives.
-
 \begin{figure}[tbp]
 	\centering
 	\begin{subfigure}[t]{0.48\textwidth}
@@ -619,9 +617,25 @@ An integral part of any useful neuron in a neural network is a non-linear activa
 	\caption[Activation functions.]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
 \end{figure}
 
+An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent,
+
+\begin{equation}
+    f(x) = \tanh(x),
+\end{equation}
+plotted in \cref{fig:tanh}, and the logistic function,
+\begin{equation}
+f(x) = \frac{1}{1+e^{-x}}.
+\end{equation}
+
+Both of these functions have the nice properties that their range is normalized in ($[-1,1]$ in the case of the hyperbolic tangent), and they are smooth functions, with easy to calculate derivatives.
+
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-Rectified linear units (ReLU) were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function, $f(x) = \max(0,x)$ (\cref{fig:relu}). ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
+Rectified linear units (ReLU) were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function plotted in \cref{fig:relu}, 
+\begin{equation}
+f(x) = \max(0,x).
+\end{equation} 
+ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
 Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.

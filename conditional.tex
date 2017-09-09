@@ -72,7 +72,7 @@
 	
 	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in \cref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in \cref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in \cref{fig:identitynotation}.
 	
-	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection - \ie an identity matrix of reduced rank, as illustrated in \cref{fig:selectionnotation}.
+	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection --- \ie an identity matrix of reduced rank, as illustrated in \cref{fig:selectionnotation}.
 	
 	\subsection{Explicit Routing}
 	\begin{figure}[htbp!] 
@@ -338,11 +338,11 @@
 %\vspace{-0.5\baselineskip}
 
 This chapter has investigated similarities and differences between decision trees/forests and convolutional networks. This has led us to introduce a hybrid model (namely conditional network) which can be thought both as: 
-\begin{enumerate*}[label=(\textbf{\roman*)]
+\begin{enumerate*}[label= (\textbf{\roman*})]
 \item trees which have been augmented with representation learning capabilities, and
 \item CNNs which have been augmented with explicit data routers and a rich, branched architecture.
 \end{enumerate*}
-Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or CNNs. The desired accuracy-efficiency ratio can be selected {\em at run time}, without the need to train a new network.
+Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or CNNs. The desired accuracy-efficiency ratio can be selected \emph{at run time}, without the need to train a new network.
 %Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of CNNs, without loss of accuracy.
 	
 \end{document}
