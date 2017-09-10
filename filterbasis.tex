@@ -31,29 +31,29 @@
 	\label{previouswork}
 	Most previous work on reducing the computational complexity of CNNs has focused on approximating convolutional filters in the spatial (as opposed to the channel) domain, either by using low-rank approximations~\citep{mamalet2012simplifying,journals/corr/JaderbergVZ14, journals/pami/SironiTRLF15, journals/corr/LebedevGROL14, Ioannou2016}, or Fourier transform based convolution~\cite{mathieu2013fast, rippel2015spectral}. More general methods have used reduced precision number representations~\cite{1502.02551v1} or compression of previously trained models~\cite{Chen2015,Kim2016}. Here we explore methods that reduce the computational impact of the large number of filter channels within state-of-the art networks. Specifically, we consider decreasing the number of incoming connections to nodes.
 	
-	\begin{figure}[tb]
-		\begin{subfigure}[b]{\linewidth}
+	\begin{figure}[tbp]
+		\begin{subfigure}[b]{0.95\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth, page=1]{Figs/PDF/groupfig}
+			\includegraphics[width=0.66\textwidth, page=1]{Figs/PDF/groupfig}
 			\caption{Convolution}\label{fig:normalconv}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{0.95\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth, page=2]{Figs/PDF/groupfig}
+			\includegraphics[width=0.66\textwidth, page=2]{Figs/PDF/groupfig}
 			\caption{Convolution with filter groups}\label{fig:groupedconv}
 		\end{subfigure}
-		\caption[Convolutional filter groups.]{\textbf{Filter Groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
+		\caption[Convolutional filter groups.]{\textbf{Filter groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
 	\end{figure}
-	\begin{figure}[tb]
+	\begin{figure}[tbp]
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/alexnetma.csv}\datatable
 		\pgfplotsset{major grid style={dotted,red}}
 		
 		\begin{tikzpicture}
 		\begin{axis}[
-		width=\linewidth,
-		height=0.4\linewidth,
+		width=0.95\textwidth,
+		height=0.4\textwidth,
 		axis x line=bottom,
 		ylabel=Top-5 Val.\ Error,
 		xlabel=Model Parameters (\# floats),
@@ -86,10 +86,10 @@
 		%\legend{Standard AlexNet}%, Alternate Filter Grouping}
 		\end{axis}
 		\end{tikzpicture}
-		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}\label{fig:alexnetplots}
+		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet performance and filter groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}\label{fig:alexnetplots}
 	\end{figure}
 	
-	\paragraph{AlexNet Filter Groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a CNN (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features \vs{}texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
+	\paragraph{AlexNet Filter groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a CNN (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features \vs{}texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
 	Despite the large difference in the number of parameters between the models, both achieve comparable accuracy on ILSVRC --- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This paper builds upon these findings and extends them to state-of-the-art networks.
 	
 	\paragraph{Low-dimensional Embeddings.}
@@ -103,10 +103,10 @@
 	Various authors have suggested approximating learned convolutional filters using tensor decomposition~\citep{journals/corr/JaderbergVZ14,journals/corr/LebedevGROL14,Kim2016}. For example, \citet{journals/corr/JaderbergVZ14} propose approximating the convolutional filters in a trained network with representations that are low-rank both in the spatial and the channel domains. This approach significantly decreases computational complexity, albeit at the expense of a small amount of accuracy. In this paper we are not approximating an existing model's weights but creating a new network architecture with explicit structural sparsity, which is then trained from scratch.
 	
 	\paragraph{Learning a Basis for Filters}
-	\begin{figure}[tp]
+	\begin{figure}[tbp]
 		\centering
-		\includegraphics[width=\linewidth, page=3]{Figs/PDF/sparsification}
-		\caption[Learning a spatial basis for filters.]{\textbf{Learning a (Spatial) Basis for Filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
+		\includegraphics[width=0.95\textwidth, page=3]{Figs/PDF/sparsification}
+		\caption[Learning a spatial basis for filters.]{\textbf{Learning a spatial basis for filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
 		\label{fig:spatialbasis}
 	\end{figure}
     \mynote{Change this to refer to chapter instead of paper}
@@ -120,21 +120,21 @@
 	
 	Instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use filter groups (see \cref{fig:groupconfig}) to force the network to learn filters with only limited dependence on previous layers. Each of the filters in the filter groups is smaller in the channel extent, since it operates on only a subset of the channels of the input feature map. 
 	
-	\begin{figure}[tb]
+	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.6\linewidth}
+		\begin{subfigure}[b]{0.95\textwidth}
 			\centering
-			\includegraphics[width=\linewidth, page=4]{Figs/PDF/groupfig}
+			\includegraphics[width=\textwidth, page=4]{Figs/PDF/groupfig}
 			\caption{Convolution with $d$ filters of shape $h\times w\times c$.}
 			\label{fig:normalresnet}
 		\end{subfigure}\\
-		\begin{subfigure}[b]{0.6\linewidth}
-			\includegraphics[width=\linewidth, page=5]{Figs/PDF/groupfig}
+		\begin{subfigure}[b]{0.95\textwidth}
+			\includegraphics[width=\textwidth, page=5]{Figs/PDF/groupfig}
 			\caption{Root-2 Module: Convolution with $d$ filters in $g = 2$ filter groups, of shape $h\times w\times c/2$.}
 			\label{fig:rootresnet2}
 		\end{subfigure}
-		\begin{subfigure}[b]{0.6\linewidth}
-			\includegraphics[width=\linewidth, page=6]{Figs/PDF/groupfig}
+		\begin{subfigure}[b]{0.95\textwidth}
+			\includegraphics[width=\textwidth, page=6]{Figs/PDF/groupfig}
 			\caption{Root-4 Module: Convolution with $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.}
 			\label{fig:rootresnet4}
 		\end{subfigure}
@@ -153,11 +153,11 @@
 	\subsection{Improving Network in Network on CIFAR-10}
 	Network in Network (NiN)~\cite{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by~\citet{Ioffe2015}.
 	
-	\begin{table}[tp]
+	\begin{table}[tbp]
 		\caption[Network in network root architectures.]{\textbf{Network in Network}. Filter groups in each convolutional layer.}
 		\label{table:ninconfig}
 		\centering
-		%\resizebox{\linewidth}{!}{
+		%\resizebox{\textwidth}{!}{
 		\begin{tabular}{@{}lm{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}@{}}
 			\toprule
 			Model & \multicolumn{3}{c}{conv1} & \multicolumn{3}{c}{conv2} & \multicolumn{3}{c}{conv3} \\
@@ -184,7 +184,7 @@
 		\pgfplotstablevertcat{\data}{\codata}
 		\pgfplotstablevertcat{\data}{\tdatatable}
 		\pgfplotstablevertcat{\data}{\cdatatable}
-		%\resizebox{\linewidth}{!}{
+		%\resizebox{\textwidth}{!}{
 		\pgfplotstabletypeset[
 		every head row/.style={before row=\toprule,after row=\midrule},
 		every last row/.style={after row=\bottomrule},
@@ -226,9 +226,9 @@
 	\end{table}
 	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original NiN network with root modules (as described in \cref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:ninconfig}. We considered the first of the pair of existing 1$\times$1 layers to be part of our root modules. 
 	We did not group filters in the first convolutional layer --- since it operates on the three-channel image space, it is of limited computational impact compared to other layers.
-	\begin{figure}[tp]
+	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
@@ -239,8 +239,8 @@
 			\begin{tikzpicture}
 			%\tikzstyle{every node}=[font=\footnotesize]
 			\begin{axis}[
-			width=\linewidth,
-			height=0.66\linewidth,
+			width=0.95\textwidth,
+			height=0.66\textwidth,
 			axis x line=bottom,
 			ylabel=Error,
 			xlabel=Model Parameters,
@@ -291,7 +291,7 @@
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
@@ -302,8 +302,8 @@
 			\begin{tikzpicture}
 			%\tikzstyle{every node}=[font=\footnotesize]
 			\begin{axis}[
-			width=\linewidth,
-			height=0.66\linewidth,
+			width=0.95\textwidth,
+			height=0.66\textwidth,
 			axis x line=bottom,
 			ylabel=Error,
 			xlabel=FLOPS (Multiply-Add),
@@ -378,51 +378,51 @@
 		\end{tikzpicture}%
 	}
 	
-	\afterpage{
-	\begin{landscape}
+	%\afterpage{
+	%\begin{landscape}
 		\begin{figure}[p]
 			\centering
-			\begin{subfigure}[b]{0.32\linewidth}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
 				\caption{Standard}\label{fig:normalcovartestfull}
 			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.32\linewidth}
+			\hspace{1em}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
-				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
-				\caption{Root-2}\label{fig:root2corrfull}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
+				\caption{Root-2 (1 group)}\label{fig:root2corrfull}
 			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.32\linewidth}
+			\hspace{1em}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
-				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
-				\caption{Root-4}\label{fig:root4corrfull}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
+				\caption{Root-4 (2 groups)}\label{fig:root4corrfull}
 			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.32\linewidth}
+			\hspace{1em}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
 				\vspace*{0.6em}
-				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
-				\caption{Root-8}\label{fig:root8corrfull}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
+				\caption{Root-8 (4 groups)}\label{fig:root8corrfull}
 			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.32\linewidth}
+			\hspace{1em}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
 				\vspace*{0.6em}
-				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
-				\caption{Root-16}\label{fig:root16corrfull}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
+				\caption{Root-16 (8 groups)}\label{fig:root16corrfull}
 			\end{subfigure}
-			~
-			\begin{subfigure}[b]{0.32\linewidth}
+			\hspace{1em}
+			\begin{subfigure}[b]{0.3\textheight}
 				\centering
 				\vspace*{0.6em}
-				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
+				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
 				\caption{Root-32}\label{fig:root32corrfull}
 			\end{subfigure}
 			\caption[Inter-layer filter covariance conv2c--conv3a.]{\textbf{Inter-layer Filter Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}\label{fig:covar}
 		\end{figure}
-	\end{landscape}}
+	%\end{landscape}}
 	
 	\Cref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \cref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
 	
@@ -441,16 +441,16 @@
 	
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.3\textheight}
 			\centering
-			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovar_conv8}}
+			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/Raster/ninroot32/layercovar_conv8}}
 			\caption{Non-whitened responses}
 			\label{fig:notwhitened}
 		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\hspace{1em}
+		\begin{subfigure}[b]{0.3\textheight}
 			\centering
-			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
+			\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
 			\caption{Whitened responses}
 			\label{fig:whitened}
 		\end{subfigure}
@@ -488,7 +488,7 @@
 	\afterpage{%
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv0}}
 					~
@@ -510,7 +510,7 @@
 					\vspace*{0.6em}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
 					~
@@ -532,7 +532,7 @@
 					\label{fig:corrroot4}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
 					~
@@ -554,7 +554,7 @@
 					\label{fig:corrroot8}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
 					~
@@ -575,14 +575,14 @@
 					\label{fig:corrroot32}
 				\end{subfigure}
 				\centering
-				\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
+				\includegraphics[width=0.4\textwidth]{Figs/PDF/colorbar}
 				\caption[Intra-layer filter correlation.]{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
 				\label{fig:nincorr}
 			\end{figure}
 		\end{landscape}
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/nin/layercovarwhite_conv1}}
 					~
@@ -604,7 +604,7 @@
 					\label{fig:covaroot1}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
 					~
@@ -625,7 +625,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot4}
 				\end{subfigure}
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
 					~
@@ -646,7 +646,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot8}
 				\end{subfigure}
-				\begin{subfigure}[c]{\paperwidth}
+				\begin{subfigure}[c]{\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
 					~
@@ -679,38 +679,38 @@
 	\subsection{Grouping Degree with Network Depth}
 	\afterpage{
 	\begin{landscape}
-	\begin{figure}[tb]
-		\begin{subfigure}[c]{0.9\linewidth}
+	\begin{figure}[p]
+		\begin{subfigure}[c]{0.9\textwidth}
 			\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=15]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.08\textwidth, page=15]{Figs/PDF/groupfig}}
 				};\&
 				\node (1b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (1c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (2a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{Figs/PDF/groupfig}}
 				};\&
 				\node (2b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (2c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (3a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{Figs/PDF/groupfig}}
 				};\&
 				\node (3b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (3c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}}
 				};\&
 				\node (7) {
 					{\Large $\cdots$}
@@ -729,38 +729,37 @@
 			\end{tikzpicture}
 			\caption{Standard}
 			\label{fig:standardtopology}
-		\end{subfigure}
-		~
-		\begin{subfigure}[c]{0.9\linewidth}
+		\end{subfigure}\\
+		\begin{subfigure}[c]{0.9\textwidth}
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\includegraphics[height=0.08\linewidth, page=15]{Figs/PDF/groupfig}
+					\includegraphics[height=0.08\textwidth, page=15]{Figs/PDF/groupfig}
 				};\&
 				\node (1b) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\& 
 				\node (1c) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\& 
 				\node (2a) {
-					\includegraphics[height=0.15\linewidth, page=19]{Figs/PDF/groupfig}
+					\includegraphics[height=0.15\textwidth, page=19]{Figs/PDF/groupfig}
 				};\&
 				\node (2b) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\&
 				\node (2c) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\&
 				\node (3a) {
-					\includegraphics[height=0.09\linewidth, page=18]{Figs/PDF/groupfig}
+					\includegraphics[height=0.09\textwidth, page=18]{Figs/PDF/groupfig}
 				};\&
 				\node (3b) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\&
 				\node (3c) {
-					\includegraphics[height=0.11\linewidth, page=17]{Figs/PDF/groupfig}
+					\includegraphics[height=0.11\textwidth, page=17]{Figs/PDF/groupfig}
 				};\&
 				\node (4) {
 					{\Large $\cdots$}
@@ -813,7 +812,7 @@
 	\begin{table}[tp]
 		\caption[ResNet 50 ILSVRC Results]{\textbf{ResNet 50 Results.}}
 		\label{table:resnet50imagenetresults}
-		%\resizebox{\linewidth}{!}{
+		%\resizebox{\textwidth}{!}{
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\data
 		%\pgfplotstableread[col sep=comma]{rootdata/resnet50maall.csv}\alldata
@@ -869,7 +868,7 @@
 	\end{table}
 	\begin{figure}[tp]
 		\centering
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -882,8 +881,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.45\linewidth,
+			width=\textwidth,
+			height=0.45\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=Model Parameters (\# Floats),
@@ -923,7 +922,7 @@
 			\label{fig:resnet5050param}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -931,8 +930,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.45\linewidth,
+			width=\textwidth,
+			height=0.45\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=FLOPS (Multiply-Add),
@@ -971,7 +970,7 @@
 			\label{fig:resnet50ma}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -979,8 +978,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.45\linewidth,
+			width=\textwidth,
+			height=0.45\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=GPU Forward (ms),
@@ -1026,7 +1025,7 @@
 			\label{fig:resnet5050gpuforward}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50maconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -1034,8 +1033,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.45\linewidth,
+			width=\textwidth,
+			height=0.45\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=CPU Forward (ms),
@@ -1218,7 +1217,7 @@
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, as described in \cref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetmaconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -1226,8 +1225,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.4\linewidth,
+			width=\textwidth,
+			height=0.4\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=Model Parameters (\# Floats),
@@ -1266,7 +1265,7 @@
 			\label{fig:googlenet50param}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetmaconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -1274,8 +1273,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.4\linewidth,
+			width=\textwidth,
+			height=0.4\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=FLOPS (Multiply-Add),
@@ -1314,7 +1313,7 @@
 			\label{fig:googlenet50ma}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetmaconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -1322,8 +1321,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.4\linewidth,
+			width=\textwidth,
+			height=0.4\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=GPU Forward (ms),
@@ -1366,7 +1365,7 @@
 			\label{fig:googlenet50gpuforward}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\gdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetmaconvonly.csv}\codatatable
 			\pgfplotsset{major grid style={dotted,red}}
@@ -1374,8 +1373,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\linewidth,
-			height=0.4\linewidth,
+			width=\textwidth,
+			height=0.4\textwidth,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=CPU Forward (ms),
@@ -1447,44 +1446,44 @@
 	\subsection{The Affect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
 		\centering
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1}
 			\caption{Standard}
 			\label{fig:resnet50normalconv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1-root4-convonly}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root4-convonly}
 			\caption{Root-2}
 			\label{fig:resnet50root2conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1-root8-convonly}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root8-convonly}
 			\caption{Root-4}
 			\label{fig:resnet50root4conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1-root16-convonly}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root16-convonly}
 			\caption{Root-8}
 			\label{fig:resnet50root8conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1-root32-convonly}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root32-convonly}
 			\caption{Root-16}
 			\label{fig:resnet50root16conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\linewidth}
+		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\linewidth]{Figs/Raster/msrc-resnet-50-conv1-root64-convonly}
+			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root64-convonly}
 			\caption{Root-32}
 			\label{fig:resnet50root32conv0}
 		\end{subfigure}
@@ -1498,7 +1497,7 @@
 	\subsection{Layer-wise Compute/Parameter Savings}
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerma.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerma.csv}\datatablea
@@ -1508,8 +1507,8 @@
 			axis y line=left,
 			ybar=0pt,
 			bar width=0.15em,
-			width=1.05\linewidth,
-			height=0.4\linewidth,
+			width=1.05\textwidth,
+			height=0.4\textwidth,
 			enlarge x limits=0.02,
 			ylabel=FLOPS,
 			y label style={at={(axis description cs:0.09,.5)},anchor=south},
@@ -1534,7 +1533,7 @@
 			
 		\end{subfigure}
 		
-		\begin{subfigure}[b]{\linewidth}
+		\begin{subfigure}[b]{\textwidth}
 			
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerparam.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerparam.csv}\datatablea
@@ -1544,8 +1543,8 @@
 			axis y line=left,
 			ybar=0pt,
 			bar width=0.15em,
-			width=1.05\linewidth,
-			height=0.4\linewidth,
+			width=1.05\textwidth,
+			height=0.4\textwidth,
 			enlarge x limits=0.02,
 			ylabel=Parameters,
 			y label style={at={(axis description cs:0.09,.5)},anchor=south},
