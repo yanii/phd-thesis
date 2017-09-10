@@ -745,7 +745,7 @@ WHICH		?= which
 XARGS		?= xargs
 SLEEP		?= sleep
 # == LaTeX (tetex-provided) ==
-BIBTEX		?= bibtex
+BIBTEX		?= biber
 DVIPS		?= dvips
 LATEX		?= latex
 PDFLATEX	?= pdflatex
