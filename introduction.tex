@@ -21,7 +21,7 @@ Classic computer vision approaches depended on hand-designing problem specific \
 
 \begin{figure}[tbp]
 	\centering
-	\includegraphics[width=0.66\textwidth]{dnnvsfeatures}
+	\includegraphics[width=0.9\textwidth]{dnnvsfeatures}
 	\caption[Classic feature-based approach \vs{}deep learning.]{\textbf{A comparison of classic feature-based approach to computer vision, and deep learning approaches.} Although both methods require hand-tuned hyper-parameters and design, deep learning methods avoid much of the hand-engineering of classic approaches. Deep networks are far from automatic however, for every application hyper-parameters must be tuned and significant thought has to be put into the design of the structure of the network.}\label{dnnvsfeatures}
 \end{figure}
 	
@@ -42,7 +42,7 @@ This lack of understanding in both the optimization and structure of deep networ
 
 In this thesis we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and compute efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. This is not a completely new idea, and received focus in an earlier iteration of connectionist research progress, the late 80's and early 90's --- Convolutional Neural Networks are perhaps the most successful example of this approach --- but it is one that contemporary research in the field often misunderstands the significance of.
 \section{Contributions}
-While this philosophy defines our approach, deep neural networks have a large number of degrees of freedom, and there are many facets of deep neural networks that warrant such analysis. In this thesis, we have looked at several interrelated aspects of deep networks:
+While this philosophy defines our approach, deep neural networks have a large number of degrees of freedom, and there are many facets of deep neural networks that warrant such analysis. In this thesis, we have looked at several interrelated aspects of deep convolutional neural networks:
 \begin{enumerate*}[label=(\textbf{\roman*)}]
 \item spatial connectivity (\cref{lowrankfilters}),
 \item inter-filter connectivity (\cref{deeproots}),

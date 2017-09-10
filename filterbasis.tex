@@ -2,17 +2,17 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
+	\chapter{Inter-Filter Connectivity}\label{deeproots}
+	%Learning Filters with Limited Channel Extents
+	%It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones --- as shown by recent research~\citep{Krizhevsky2012,Szegedy2014going,Simonyan2014verydeep,He2015}.
+	%This does not appear to be a limitation of finite capacity, since it has been proposed that at least some deep networks are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
 	
-	\chapter{Learning Filters with Limited Channel Extents}
-	\label{deeproots}
-	It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones --- as shown by recent research~\citep{Krizhevsky2012,Szegedy2014going,Simonyan2014verydeep,He2015}.
-	This does not appear to be a limitation of finite capacity, since it has been proposed that at least some deep networks are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
-	
-	It has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization deep networks are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\cite{Hinton2012}. Furthermore, a carefully designed sparse network connection structure can also have a regularizing effect. Convolutional Neural Networks (CNNs)~\citep{Fuk80,Lecun1998} embody this idea, using a sparse convolutional connection structure to exploit the locality of natural image structure. In consequence, they are easier to train.
-	
+	%It has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization deep networks are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\cite{Hinton2012}. Furthermore, a carefully designed sparse network connection structure can also have a regularizing effect. Convolutional Neural Networks (CNNs)~\citep{Fuk80,Lecun1998} embody this idea, using a sparse convolutional connection structure to exploit the locality of natural image structure. In consequence, they are easier to train.
 	With few exceptions, state-of-the-art CNNs for image recognition are largely monolithic, with each filter operating on the feature maps of all filters on a previous layer. Interestingly, this is in stark contrast to what we understand of biological neural networks, where we see ``highly evolved arrangements of smaller, specialized networks which are interconnected in very specific ways''~\citep{minsky1988perceptrons}.
 	
-	Recently, learning a low-rank basis for filters was found to improve generalization while reducing the computational complexity and model size of a CNN with only full rank filters~\citep{Ioannou2016}. However, this work addressed only the spatial extents of the convolutional filters (\ie $h$ and $w$ in \cref{fig:normalconv}). In this work we will show that a similar idea can be applied to the channel extents --- \ie filter inter-connectivity --- by using \emph{filter groups}~\citep{Krizhevsky2012}. We show that simple alterations to state-of-the-art CNN architectures can drastically reduce computational cost and model size without compromising accuracy.
+	In \cref{lowrankfilters} learning a low-rank spatial basis for filters was found to improve generalization while reducing the computational complexity and model size of a CNN with only full rank filters. However, this work addressed only the spatial extents of the convolutional filters (\ie $h$ and $w$ in \cref{fig:normalconv}). In this work we will show that a similar idea can be applied to the channel extents --- \ie filter inter-connectivity --- by using \emph{filter groups}~\citep{Krizhevsky2012}. 
+	
+	%We show that simple alterations to state-of-the-art CNN architectures can drastically reduce computational cost and model size without compromising accuracy.
 	
 	% Try to find a creative commons version of this
 	%\begin{figure}[t]
@@ -34,18 +34,16 @@
 	\begin{figure}[tb]
 		\begin{subfigure}[b]{\linewidth}
 			\centering
-			\includegraphics[width=0.45\linewidth, page=1]{Figs/PDF/groupfig}
-			\caption{Convolution.}
-			\label{fig:normalconv}
-		\end{subfigure}~
+			\includegraphics[width=0.9\linewidth, page=1]{Figs/PDF/groupfig}
+			\caption{Convolution}\label{fig:normalconv}
+		\end{subfigure}
+		~
 		\begin{subfigure}[b]{\linewidth}
 			\centering
-			\includegraphics[width=0.45\linewidth, page=2]{Figs/PDF/groupfig}
-			\caption{Convolution with filter groups.}
-			\label{fig:groupedconv}
+			\includegraphics[width=0.9\linewidth, page=2]{Figs/PDF/groupfig}
+			\caption{Convolution with filter groups}\label{fig:groupedconv}
 		\end{subfigure}
-		\caption[Convolutional filter groups.]{\textbf{Filter Groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}
-		\label{fig:groupconfig}
+		\caption[Convolutional filter groups.]{\textbf{Filter Groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
 	\end{figure}
 	\begin{figure}[tb]
 		\centering
@@ -88,8 +86,7 @@
 		%\legend{Standard AlexNet}%, Alternate Filter Grouping}
 		\end{axis}
 		\end{tikzpicture}
-		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}
-		\label{fig:alexnetplots}
+		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet Filter Groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on ILSVRC image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}\label{fig:alexnetplots}
 	\end{figure}
 	
 	\paragraph{AlexNet Filter Groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a CNN (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features \vs{}texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
@@ -356,8 +353,7 @@
 		
 		\caption[Network in network CIFAR10 results.]{\textbf{Network in Network CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
 			%(left) Parameters \vs Error, (right) FLOPS \vs Error.
-		}
-		\label{fig:nincifarplotsconvonly}
+		}\label{fig:nincifarplotsconvonly}
 	\end{figure}
 	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \cref{gpuexplanation} for an explanation of the GPU timing disparity).
 	
@@ -389,49 +385,42 @@
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
-				\caption{Standard}
-				\label{fig:normalcovartestfull}
+				\caption{Standard}\label{fig:normalcovartestfull}
 			\end{subfigure}
 			~
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
-				\caption{Root-2}
-				\label{fig:root2corrfull}
+				\caption{Root-2}\label{fig:root2corrfull}
 			\end{subfigure}
 			~
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
-				\caption{Root-4}
-				\label{fig:root4corrfull}
+				\caption{Root-4}\label{fig:root4corrfull}
 			\end{subfigure}
 			~
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
-				\caption{Root-8}
-				\label{fig:root8corrfull}
+				\caption{Root-8}\label{fig:root8corrfull}
 			\end{subfigure}
 			~
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
-				\caption{Root-16}
-				\label{fig:root16corrfull}
+				\caption{Root-16}\label{fig:root16corrfull}
 			\end{subfigure}
 			~
 			\begin{subfigure}[b]{0.32\linewidth}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\linewidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
-				\caption{Root-32}
-				\label{fig:root32corrfull}
+				\caption{Root-32}\label{fig:root32corrfull}
 			\end{subfigure}
-			\caption[Inter-layer filter covariance conv2c--conv3a.]{\textbf{Inter-layer Filter Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}
-			\label{fig:covar}
+			\caption[Inter-layer filter covariance conv2c--conv3a.]{\textbf{Inter-layer Filter Covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network.}\label{fig:covar}
 		\end{figure}
 	\end{landscape}}
 	

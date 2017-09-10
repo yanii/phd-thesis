@@ -2,16 +2,14 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-	
-	\chapter{Learning a Basis for the Spatial Extents of Filters}
-	\label{lowrankfilters}
-    
+	\chapter{Spatial Connectivity}\label{lowrankfilters}
+	%\chapter{Learning a Basis for the Spatial Extents of Filters}
     \section{Introduction}
-    One promising aspect of CNNs, from a memory and computational efficiency standpoint, is their use of \emph{convolutional filters}. Such filters usually have limited spatial extents (\ie width and height, as opposed to channels) and their learned weights are shared across the image spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
+    CNNs (see \cref{cnns}) are a highly specialized form of neural network for learning image representations. Their use of \emph{convolutional filters} allows CNNs to learn much more efficient representations, from a memory and computational efficiency standpoint, than a full connected network. Such filters usually have limited spatial extents (\ie{}width and height, as opposed to channels) and their learned weights are shared across the image's spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
     Thus, as illustrated in \cref{fig:sparseconn}, in comparison with fully connected network layers (\cref{fig:sparseconn}a), convolutional layers have a much sparser connection structure and use fewer parameters (\cref{fig:sparseconn}b).
     This leads to faster training and test, better generalization, and higher accuracy.
     
-    This chapter focuses on reducing the computational complexity of the convolutional layers of CNNs by further sparsifying their connection structures.  Specifically, we show that by representing convolutional filters using a basis space comprising groups of filters of different spatial dimensions (examples shown in \cref{fig:sparseconn}c and d), we can significantly reduce the computational complexity of existing state-of-the-art CNNs without compromising classification accuracy.
+    This chapter focuses on reducing the computational complexity of the convolutional layers of CNNs by further sparsifying their spatial connection structures further.  Specifically, we show that by representing convolutional filters using a basis space comprising groups of filters of different spatial dimensions (examples shown in \cref{fig:sparseconn}c and d), we can significantly reduce the computational complexity of existing state-of-the-art CNNs without compromising classification accuracy.
     
     %%% Figure
     \begin{figure}[tbp] 
