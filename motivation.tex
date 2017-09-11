@@ -3,7 +3,10 @@
 
 \begin{document}
 	\chapter{The Effect of Structure on Learning in Neural Networks}\label{motivation}
-	
+	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
+		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+	\end{chapquote}
+
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet network design itself remains poorly understood, with intuition and experience being the cited motivation behind most common architectures, rather than theory. This, more than perhaps any other factor, has been a barrier to access for the practical use of neural networks by people who are not experts in the field.
 	
 	Beyond hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this effect more pronounced than in the case of using neural networks with highly structured inputs, such as natural images. Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we encode our prior knowledge of the task in the architecture itself --- a concept that we will throughout this work refer to as \emph{structural priors}. Examples of structural priors include common network architectures for images, convolutional neural networks (CNNs), and sequences, recurrent neural networks (RNNs).
@@ -347,9 +350,9 @@ Since the work of \citet{Krizhevsky2012}, classification error on the ILSVRC cha
 	\end{chapquote}
 	
 	
-	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
-		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
-	\end{chapquote}
+%	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
+%		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+%	\end{chapquote}
 	
 	
 	\begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}

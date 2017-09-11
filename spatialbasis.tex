@@ -4,7 +4,11 @@
 \begin{document}
 	\chapter{Spatial Connectivity}\label{lowrankfilters}
 	%\chapter{Learning a Basis for the Spatial Extents of Filters}
-    \section{Introduction}
+	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
+        ``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place.''
+        %Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
+    \end{chapquote}
+    
     CNNs (see \cref{cnns}) are a highly specialized form of neural network for learning image representations. Their use of \emph{convolutional filters} allows CNNs to learn much more efficient representations, from a memory and computational efficiency standpoint, than a full connected network. Such filters usually have limited spatial extents (\ie{}width and height, as opposed to channels) and their learned weights are shared across the image's spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
     Thus, as illustrated in \cref{fig:sparseconn}, in comparison with fully connected network layers (\cref{fig:sparseconn}a), convolutional layers have a much sparser connection structure and use fewer parameters (\cref{fig:sparseconn}b).
     This leads to faster training and test, better generalization, and higher accuracy.

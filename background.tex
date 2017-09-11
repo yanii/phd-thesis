@@ -13,7 +13,9 @@
 
 \chapter{Background}
 \label{background}
-
+\begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
+	``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
+\end{chapquote}
 \section{Neural Networks}
 Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
 %, used in regression and classification problems.
@@ -305,7 +307,7 @@ for any adjacent neural network layers $i, j$, including the output layer where 
 \end{equation}
 
 \subsection{Learning with Backpropagation}
-Learning with backpropagation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient. Formally, the weight change rule is given by,
+Learning with backpropagation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note, that rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
     \Delta w^n_{ij} &= -\lambda \frac{\partial E^n}{\partial w_{ji}}\\
@@ -466,7 +468,7 @@ Another key aspect of convolutional architectures is pooling, a form of non-line
 
 Pooling layers divide the image into non-overlapping pooling regions, in which the spatial extents of the input image/feature map are aggregated into a single scalar. LeNet used the average to aggregate the pooling regions, \ie average pooling~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the feature map sizes~\citep{He2015}.
 
-\section{Contemporary Methods of Training Deep Neural Networks}
+\section{Contemporary Neural Networks}
 \label{section:contemporary}
 \subsection{Rectified Linear Activation Function}
 \label{section:relu}
