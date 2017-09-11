@@ -16,7 +16,7 @@
 \begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
 	``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
 \end{chapquote}
-\section{Neural Networks}
+%\section{Neural Networks}
 Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
 %, used in regression and classification problems.
  Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
@@ -738,13 +738,34 @@ The motivation of the architecture is that most of the important correlations in
 The authors explain this as learning `factorized' filters, however we disagree, and understand this architecture instead as learning a \emph{basis} for filters. Ignoring the non-linearity between the two layers in \cref{fig:inceptionunit}, heterogeneous filters on the same layer are concatenated into a single feature-map, which is then \emph{linearly combined} by the 1$\times$1 filters of the subsequent layer. This linear combination of smaller filters in order to represent a minimally parameterized, but effective filter of full-size (7$\times$7), is similar to representing a complex function as a parameterization of simpler basis functions.
 
 \subsection{Residual Networks}\label{residualnetworks}
+\begin{figure}[tbp]
+\begin{subfigure}[T]{0.3\textwidth}
+\centering
+\includegraphics[height=0.215\textheight]{resnet-1}
+\phantomsubcaption\label{fig:resnet-1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.3\textwidth}
+\centering
+\includegraphics[height=0.33\textheight]{resnet-2}
+\phantomsubcaption\label{fig:resnet-2}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.3\textwidth}
+\centering
+\includegraphics[height=0.33\textheight]{resnet-3}
+\phantomsubcaption\label{fig:resnet-3}
+\end{subfigure}
+\caption[Residual networks.]{\textbf{Residual networks.} \subref{fig:resnet-1} a convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$ .}
+\label{fig:resnet}
+\end{figure}
 \citet{He2015} introduced residual networks, with the important insight that adding layers to a deep network architecture could in fact \emph{increase} training error. 
 
 \mynote{add more explanation here}
 
 Yet it is not clear why this should be so --- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
-	F(x) = H(x) + x.
+	H(x) = F(x) + x.
 \end{equation}
 
 In practice these residual layers greatly help optimize very deep networks, and have pushed state of the art accuracy in many datasets.
