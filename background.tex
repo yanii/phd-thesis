@@ -713,7 +713,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network-in-Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie ReLU) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}
+    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network-in-Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie ReLU) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
 \begin{figure}[tbp]
 \centering
@@ -768,9 +768,9 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \label{fig:networkinnetwork}
 \end{figure}
 
-\citet{Lin2013NiN} introduced \emph{Network in Network} (NiN), in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions have since been referred to as \emph{low dimensional embeddings}, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly. 
+\citet{Lin2013NiN} introduced \emph{Network in Network} (NiN), in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input feature map into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
 
-\citet{Lin2013NiN} also introduced \emph{global average pooling}, in which the spatial extents at the end of the convolutional layers (\ie pool5 for NiN/AlexNet) are aggregated such that there is only a single scalar output response for each filter in the pooled layer. After global average pooling a layer with $f$ filters/feature maps, the input to the classification layer is simply a vector of $f$ responses. This reduces the parameters network dramatically since the majority of the parameters in the network are typically between the last convolutional layer and the fully-connected classification layer. Lin \etal showed that on CIFAR-10 global average pooling by itself achieved a lower error than having a fully connected layer with dropout.
+\citet{Lin2013NiN} also introduced \emph{global average pooling}, in which the spatial extents at the end of the convolutional layers (\ie pool5 for NiN/AlexNet) are aggregated such that there is only a single scalar output response for each filter in the pooled layer. After global average pooling a layer with $f$ filters/feature maps, the input to the classification layer is simply a vector of $f$ responses, as illustrated in \cref{fig:networkinnetwork}. This reduces the parameters network dramatically since the majority of the parameters in the network are typically between the last convolutional layer and the fully-connected classification layer. Lin \etal showed that on CIFAR-10 global average pooling by itself achieved a lower error than having a fully connected layer with dropout.
 
 \subsection{VGG}
 Since AlexNet, there have been many improvements to the state of the art on the ILSVRC challenge, every one of which has been an improved CNN architecture. One particular model that has lent itself to both high accuracy and being a natural extension of the original network has been the models proposed by \citet{Simonyan2014verydeep} of the Visual Geometry Group (VGG) at Oxford. The primary contributions of the VGG network ares
@@ -795,22 +795,22 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 
 \subsection{Residual Networks}\label{residualnetworks}
 \begin{figure}[tbp]
-\begin{subfigure}[T]{0.3\textwidth}
+\begin{subfigure}[T]{0.32\textwidth}
 \centering
 \includegraphics[height=0.215\textheight]{resnet-1}
-\phantomsubcaption\label{fig:resnet-1}
+\caption{}\label{fig:resnet-1}
 \end{subfigure}
-\hfill
-\begin{subfigure}[T]{0.3\textwidth}
+~
+\begin{subfigure}[T]{0.32\textwidth}
 \centering
 \includegraphics[height=0.33\textheight]{resnet-2}
-\phantomsubcaption\label{fig:resnet-2}
+\caption{}\label{fig:resnet-2}
 \end{subfigure}
-\hfill
-\begin{subfigure}[T]{0.3\textwidth}
+~
+\begin{subfigure}[T]{0.32\textwidth}
 \centering
 \includegraphics[height=0.33\textheight]{resnet-3}
-\phantomsubcaption\label{fig:resnet-3}
+\caption{}\label{fig:resnet-3}
 \end{subfigure}
 \caption[Residual networks.]{\textbf{Residual networks.} \subref{fig:resnet-1} a convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$ .}
 \label{fig:resnet}
