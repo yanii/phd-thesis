@@ -249,7 +249,11 @@ supported!}
 % ************************** Layout and Formatting *****************************
 
 \ifpdf
-\RequirePackage{pdflscape}   % Supports Landscape Layout (PDF)
+  \if@print
+    \RequirePackage{pdflscape}   % Supports Landscape Layout (PDF)
+  \else
+    \RequirePackage{lscape}   % Supports Landscape Layout
+  \fi
 \else
 \RequirePackage{lscape}   % Supports Landscape Layout
 \fi
