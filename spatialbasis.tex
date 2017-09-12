@@ -16,15 +16,18 @@
     This chapter focuses on reducing the computational complexity of the convolutional layers of CNNs by further sparsifying their spatial connection structures further.  Specifically, we show that by representing convolutional filters using a basis space comprising groups of filters of different spatial dimensions (examples shown in \cref{fig:sparseconn}c and d), we can significantly reduce the computational complexity of existing state-of-the-art CNNs without compromising classification accuracy.
     
     %%% Figure
-    \begin{figure}[tbp] 
-        \centerline{
-            \includegraphics[width=0.95\textwidth]{sparseconn3}
-        }
+    \afterpage{
+    \begin{landscape}
+    \begin{figure}[p] 
+        \centering
+        \includegraphics[height=0.97\textheight]{sparseconn3}
         \caption[Image access map visualizing sparsity of convolutional filters]{
             {\bf Network connection structure for convolutional layers.} An input image is transformed in one layer of an neural network into an output image of same size. Connection weight maps show pairwise dependencies between input and output pixels. In (a), each node is connected to all input pixels. For (b,c,d), output pixels depend only on a subset of input pixels (shared weights are represented by unique colours). Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
         }
         \label{fig:sparseconn}
     \end{figure}
+    \end{landscape}
+    }
     %%%
     
     Our contributions include a novel method of learning a set of small basis filters that are combined to represent larger filters efficiently. Rather than approximating previously trained networks, we train networks \emph{from scratch} and show that our convolutional layer representation can improve both efficiency and classification accuracy. Unlike methods that approximate previously-trained models (as listed in \cref{approxmethods,factorized}) this allows us to reduce training time, and even increase accuracy over the original model. We further describe how to initialize connection weights effectively for training networks with composite convolutional layers containing groups of differently-shaped filters, which we found to be of critical importance to our training method.
@@ -53,23 +56,24 @@
     
     %%% Figure
     \begin{figure}[tbp] 
-        \centering
-        \begin{subfigure}[b]{0.95\textwidth}
-            \centerline{
-            \includegraphics[width=0.6\textwidth, page=1]{sparsification}
-            }
-            \caption{A full rank convolutional layer.}\label{fig:fullrank}
+        \begin{subfigure}[b]{0.98\textwidth}
+            \centering
+            \includegraphics[height=0.165\textheight, page=1]{sparsification}
+            \caption{A standard convolutional layer.}\label{fig:fullrank}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.95\textwidth}
-            \includegraphics[width=0.95\textwidth, page=2]{sparsification}
+        \begin{subfigure}[b]{0.98\textwidth}
+            \centering
+            \includegraphics[height=0.16\textheight, page=2]{sparsification}
             \caption{Sequential separable filters \citep{journals/corr/JaderbergVZ14}.}\label{fig:separableseq}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.95\textwidth}
-            \includegraphics[width=0.95\textwidth, page=3]{sparsification}
+        \begin{subfigure}[b]{0.98\textwidth}
+            \centering
+            \includegraphics[height=0.19\textheight, page=3]{sparsification}
             \caption{Our method, a learned basis space of filters that are rectangular in the spatial domain and oriented horizontally and vertically.}\label{fig:ourmethod}
         \end{subfigure}\\
-        \begin{subfigure}[b]{0.95\textwidth}
-            \includegraphics[width=0.95\textwidth, page=4]{sparsification}
+        \begin{subfigure}[b]{0.98\textwidth}
+            \centering
+            \includegraphics[height=0.23\textheight, page=4]{sparsification}
             \caption{Our method, a learned basis space of vertical/horizontal rectangular filters and square filters. Filters of other shapes are also possible.}\label{fig:ourmethodfullrank}
         \end{subfigure}
         \caption[Overview of methods of using low-rank filters]{\textbf{Methods of using low-rank filters in CNNs}. Methods from literature and our proposed methods for learning low rank filters. The activation function is not shown, coming after the last layer in each configuration.}\label{fig:separablemethods}
@@ -104,15 +108,15 @@
             &
             \subcaptionbox{$3\times1$ filters.\label{fig:horizontalfilters}}
             {
-                \includegraphics[width=0.3\textwidth]{conv1_x}
+                \includegraphics[width=0.5\textwidth]{conv1_x}
             }\\
             \subcaptionbox{$1\times3$ filters.\label{fig:verticalfilters}}[0.3\textwidth]
             {
-                \includegraphics[height=0.3\textwidth]{conv1_y}
+                \includegraphics[height=0.5\textwidth]{conv1_y}
             }&
             \subcaptionbox{Learned linear combinations.\label{fig:linearcomb}}
             {
-                \includegraphics[width=0.3\textwidth]{linearcombinations}
+                \includegraphics[width=0.5\textwidth]{linearcombinations}
             }\\
         \end{tabular}
         \caption[Learned Cross-Shaped Filters]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}\label{fig:conv1filters}
@@ -179,12 +183,12 @@
     
     This leads to the result of \citet{He2015b}, in that a layer with $\hat{n}_l$ connections followed by a ReLU activation function should be initialized with a zero-mean Gaussian distribution with standard deviation $\sqrt{2/ \hat{n}_l}$.
     
-    \paragraph{Weight Initialisation in Composite Layers.}
+    \paragraph{Weight Initialization in Composite Layers.}
     %%% Figure
     \begin{figure}[tbp]
         \centering
-        \includegraphics[width=0.7\textwidth]{composite}
-        \caption[Illustration of a composite layer]{{\bf A composite layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
+        \includegraphics[width=0.95\textwidth]{composite}
+        \caption[A composite convolutional layer.]{{\bf A composite convolutional layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
         \label{fig:compositelayers}
     \end{figure}
     %%%
@@ -375,7 +379,6 @@
     
     For the \textbf{googlenet-lr} network, within only the inception modules we replaced each the $3\times 3$ filters with low-rank $3 \times 1$ and $1\times 3$ filters, and replaced the layer of $5\times 5$ filters with a set of low-rank $5 \times 1$ and $1\times 5$ filters. For the \textbf{googlenet-lr-conv1} network, we similarly replaced the first and second layer convolutional layers with $7 \times 1$~/~$1\times 7$ and $3 \times 1$~/~$1\times 3$ layers respectively.
     
-%    \input{lrdata/googlenetplots}
     Results are shown in \cref{table:googlenetimagenetresultsch4}, and \cref{fig:googlenetimagenetresultsch4}. Due to the intermediate losses used for training, which contain the only fully-connected layers in GoogLeNet, test time model size is significantly smaller than training time model size. \Cref{table:googlenetimagenetresultsch4} also reports test time model size. The low-rank network delivers comparable classification accuracy using 26\% less compute.  No other networks produce comparable accuracy within an order of magnitude of compute. We note that although the Caffe pre-trained GoogLeNet model~\citep{Jia2014} has a top-5 accuracy of 0.889, our training of the same network using the given model definition, including the hyper-parameters and training schedule, but a different random initialization had a top-5 accuracy of 0.883.
     
     \begin{table}[tbp]
@@ -460,7 +463,7 @@
     
     \subsection{Network-in-Network for CIFAR-10 Object Classification}
     The CIFAR-10 dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the CIFAR-10 dataset, we used the Network in Network architecture~\citep{Lin2014}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state of the art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. 
-%    \input{lrdata/cifarplots}
+
     The results of our CIFAR experiments are listed in \cref{table:cifarresultsch4} and plotted in \cref{fig:cifarresultsch4}.
     
     \begin{table}[tbp]
@@ -552,8 +555,9 @@
     
     State-of-the-art networks, such as MSRA-C, VGG-19 and oversampled GoogLeNet are orders of magnitude larger in computational complexity than our networks. From \cref{fig:bigpicturema}, where the multiply-accumulate operations are plotted on a log scale, increasing the model size and/or computational complexity of test-time augmentation of CNNs appears to have diminishing returns for decreasing validation error. Our models \emph{without} training or test time augmentation show comparable accuracy to networks such as VGG-13 \emph{with} training and test time augmentation, while having far less computational complexity and model size. In particular, the `googlenet-lr' model has a much smaller test-time model size than any network of comparable accuracy. 
     
-    
-    \begin{figure}[tbp]
+    \afterpage{
+    \begin{landscape}
+    \begin{figure}[p]
     	\centering
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture.csv}\datatable
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_ours.csv}\datatableours
@@ -564,7 +568,7 @@
     	\begin{tikzpicture}
     	\begin{axis}[
     	width=0.95\textwidth,
-    	height=0.6\textwidth,
+    	height=0.95\textheight,
     	axis x line=bottom,
     	ylabel=Top-5 Error,
     	xlabel=$\log_{10}$(Multiply-Accumulate Operations),
@@ -598,9 +602,13 @@
     	\caption[Computational complexity of state-of-the-Art ILSVRC models]{\textbf{Computational complexity of state-of-the-art ILSVRC models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
     	\label{fig:bigpicturema}
     \end{figure}
+    \end{landscape}
+    }
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \begin{figure}[tbp]
+    \afterpage{
+    \begin{landscape}
+    \begin{figure}[p]
     	\centering
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture.csv}\datatable
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_ours.csv}\datatableours
@@ -611,7 +619,7 @@
     	\begin{tikzpicture}
     	\begin{axis}[
     	width=0.95\textwidth,
-    	height=0.6\textwidth,
+    	height=0.95\textheight,
     	axis x line=bottom,
     	ylabel=Top-5 Error,
     	xlabel=$\log_{10}$(Number of Parameters),
@@ -652,6 +660,8 @@
     	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art ILSVRC Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
     	\label{fig:bigpictureparam}
     \end{figure}
+    \end{landscape}
+    }
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     \begin{table}[tbp]

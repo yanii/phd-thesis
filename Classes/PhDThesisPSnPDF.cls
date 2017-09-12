@@ -241,16 +241,20 @@ supported!}
 % ******************************************************************************
 % ******************************** Packages ************************************
 % ******************************************************************************
-% ************************** Layout and Formatting *****************************
-
-\RequirePackage{lscape}   % Supports Landscape Layout
-\RequirePackage{setspace} % Define line spacing in paragraph
-\RequirePackage{calc}     % calculate vertical spacing
 
 % ************************* Conditional Statements *****************************
 \RequirePackage{ifthen}   % Conditional statements
 \RequirePackage{ifpdf}    % Check for pdfLaTeX
 \RequirePackage{ifxetex}  % XeLaTeX
+% ************************** Layout and Formatting *****************************
+
+\ifpdf
+\RequirePackage{pdflscape}   % Supports Landscape Layout (PDF)
+\else
+\RequirePackage{lscape}   % Supports Landscape Layout
+\fi
+\RequirePackage{setspace} % Define line spacing in paragraph
+\RequirePackage{calc}     % calculate vertical spacing
 
 % *********************** Table of Contents & Appendices ***********************
 % add Bibliography, List of figures and tables to contents
