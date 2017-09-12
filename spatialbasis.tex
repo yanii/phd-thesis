@@ -668,7 +668,7 @@
     	
     	\begin{tikzpicture}
     	\begin{axis}[
-    	width=0.95\textwidth,
+    	width=1.37\textwidth,
     	height=0.95\textheight,
     	axis x line=bottom,
     	ylabel=Top-5 Error,
@@ -687,15 +687,15 @@
     	]
     	\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
     	\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
     	\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
@@ -719,7 +719,7 @@
     	
     	\begin{tikzpicture}
     	\begin{axis}[
-    	width=0.95\textwidth,
+    	width=1.37\textwidth,
     	height=0.95\textheight,
     	axis x line=bottom,
     	ylabel=Top-5 Error,
@@ -740,19 +740,19 @@
     	nodes near coords,
     	only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
     	\addplot[mark=*,mark options={fill=blue},
     	nodes near coords,
     	only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
     	\addplot[mark=square*,mark options={fill=red},
     	nodes near coords,
     	only marks,
     	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\tiny},
+    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	every node near coord/.append style={font=\tiny},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
@@ -780,11 +780,11 @@
     	columns={Real Name, Multiply-Acc., Test Multiply-Acc., Param., Top-5 Acc.},
     	column type/.add={lrrrrrr}{},
     	columns/Multiply-Acc./.style={
-    		column name=Multiply-Acc. {\small $\times 10^{9}$},
+    		column name=FLOPS {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Test Multiply-Acc./.style={
-    		column name=Test M.A. w/ Aug. {\small $\times 10^{9}$},
+    		column name=Test FLOPS w/ Aug. {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Param./.style={
