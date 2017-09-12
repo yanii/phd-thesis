@@ -680,7 +680,7 @@
 	\afterpage{
 	\begin{landscape}
 	\begin{figure}[p]
-		\begin{subfigure}[c]{0.9\textwidth}
+		\begin{subfigure}[b]{0.95\textwidth}
 			\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
@@ -715,7 +715,7 @@
 				\node (7) {
 					{\Large $\cdots$}
 				};\\
-				\draw node{{\footnotesize \textit{input image}} \hspace{0.7em} {\footnotesize \textit{conv1a}}};\&
+				\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
 				\draw node{\footnotesize \textit{conv1b}};\&
 				\draw node{\footnotesize \textit{conv1c}};\&
 				\draw node{\footnotesize \textit{conv2a}};\&
@@ -730,7 +730,8 @@
 			\caption{Standard}
 			\label{fig:standardtopology}
 		\end{subfigure}\\
-		\begin{subfigure}[c]{0.9\textwidth}
+		\begin{subfigure}[b]{0.95\textwidth}
+			\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
@@ -772,9 +773,8 @@
 			\caption{Root-4 Architecture}
 			\label{fig:root4topology}
 		\end{subfigure}
-		\caption[Network in network standard \vs root architecture.]{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see \cref{fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
-		}
-		\label{fig:networktopology}
+		\caption[Network in network standard \vs root architecture.]{\textbf{Network-in-Network Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps over which a layer's filters operate, or the final fully connected layer, out of space considerations (see \cref{fig:networkinnetwork,fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
+		}\label{fig:networktopology}
 	\end{figure}
 	\end{landscape}
 	}

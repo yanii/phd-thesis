@@ -645,9 +645,9 @@ For example, consider a deep network consisting of $L$ identical layers as shown
 After propagating through $L$ layers, this becomes a scaling of $\beta^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\beta$:
 
 \begin{figure}[tbp]
-	\includegraphics[width=0.3\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}\hfill
-	\includegraphics[width=0.3\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}$\cdots$\hfill
-	\includegraphics[width=0.3\textwidth, page=1, viewport = 0 0 400 600, clip=true]{layer}
+    \centering
+    \newcommand{\layer}{\includegraphics[width=0.3\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}}
+	\parbox{\widthof{\layer}}{\layer}\parbox{\widthof{\layer}}{\layer}\ldots\parbox{\widthof{\layer}}{\layer}
 	\caption[Vanishing gradients.]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
 \end{figure}
 \begin{equation}
@@ -700,7 +700,7 @@ Batch normalization uses batch statistics to whiten the responses of layers it i
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this thesis, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
 
 \subsection{AlexNet}
-Training \emph{deep} networks, that is neural networks with many (\ie{}2 or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, ReLU activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
+Training \emph{deep} networks, that is neural networks with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, ReLU activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
 
 AlexNet notably used training-time and test-time augmentation to achieve its state of the art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the PCA components over all RGB pixels in the image are used to perturb the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and its mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these models. 
 
@@ -724,37 +724,38 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=21]{groupfig}}
 	};\&
 	\node (1c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}
-	};\\
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+	};
+	\\
 	\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
 	\draw node{\footnotesize \textit{conv1b}};\&
 	\draw node{\footnotesize \textit{conv1c}};\\
 	\node (2a) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
 	};\&
 	\node (2b) {
 		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=8]{groupfig}}
 	};\&
 	\node (2c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
 	};\\
 	\draw node{\footnotesize \textit{conv2a}};\&
 	\draw node{\footnotesize \textit{conv2b}};\&
 	\draw node{\footnotesize \textit{conv2c}};\\
 	\node (3a) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
 	};\&
 	\node (3b) {
 		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=8]{groupfig}}
 	};\&
 	\node (3c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
 	};\\
 	\draw node{\footnotesize \textit{conv3a}};\&
 	\draw node{\footnotesize \textit{conv3b}};\&
 	\draw node{\footnotesize \textit{conv3c}};\\
     \&\node (3c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=20]{groupfig}}
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=20]{groupfig}}
 	};\\
 	\&\draw node{\footnotesize \textit{GAP/output}};\\
 };
@@ -773,7 +774,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 Since AlexNet, there have been many improvements to the state of the art on the ILSVRC challenge, every one of which has been an improved CNN architecture. One particular model that has lent itself to both high accuracy and being a natural extension of the original network has been the models proposed by \citet{Simonyan2014verydeep} of the Visual Geometry Group (VGG) at Oxford. The primary contributions of the VGG network ares
 \begin{enumerate*}[label = (\textbf{\roman*})]
 \item showing that very deep networks improve generalization, and
-\item learning stacked small filters, \ie three 3$\times$3 convolutional layers is more computationally efficient than learning a single convolutional layer of 7x7 filters, and also improves generalization.
+\item learning stacked small filters, \ie three 3$\times$3 convolutional layers is more computationally efficient than learning a single convolutional layer of 7$\times$7 filters, and also improves generalization.
 \end{enumerate*}.
 
 VGG is an evolution of the AlexNet models, with the same number of max-pooling layers, however using very small convolutional filters ($3 \times 3$) in the convolutional layers, and many more of these convolutional layers between pooling, instead of the relatively large single layers of convolutional filters in AlexNet ($7\times 7$). In addition VGG uses small non-overlapping max-pooling ($2\times 2$), and the \emph{fully convolutional trick} introduced by \citet{Sermanet2013overfeat} to do test-time oversampling more efficiently. VGG uses extensive training augmentation, extending the augmentation used in AlexNet \citep{Krizhevsky2012} by adding scale augmentation, where crops are taken from images of different rescaled sizes. 
