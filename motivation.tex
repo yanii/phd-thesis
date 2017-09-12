@@ -3,10 +3,9 @@
 
 \begin{document}
 	\chapter{The Effect of Structure on Learning in Neural Networks}\label{motivation}
-	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
-		``A general tabula rasa network is a fine subject for the abstract, formal studies, but one should not try to use it to solve practical problems. \ldots One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data.''
+	\begin{chapquote}{Zoubin Ghahramani, \textit{Microsoft Research AI Summer School, 2017}}
+		``Everything, but the data itself, is an assumption.''
 	\end{chapquote}
-
 	It is well known that the design of a neural network architecture can have a large effect on the generalization of a learned model. And yet network design itself remains poorly understood, with intuition and experience being the cited motivation behind most common architectures, rather than theory. This, more than perhaps any other factor, has been a barrier to access for the practical use of neural networks by people who are not experts in the field.
 	
 	Beyond hyper-parameters used for tuning the optimization method, such as learning rate, momentum and weight decay, the architecture of a network has a profound effect on the learning. Nowhere is this effect more pronounced than in the case of using neural networks with highly structured inputs, such as natural images. Although neural networks are usually posed as general learning machines, time and again it has been demonstrated that neural networks only truly stand out as a learning method when we encode our prior knowledge of the task in the architecture itself --- a concept that we will throughout this work refer to as \emph{structural priors}. Examples of structural priors include common network architectures for images, convolutional neural networks (CNNs), and sequences, recurrent neural networks (RNNs).
@@ -199,10 +198,6 @@
 
 \subsection{No Free Lunch Theorem}
 \label{nofreelunch}
-\begin{chapquote}{Zoubin Ghahramani, \textit{Microsoft Research AI Summer School, 2017}}
-	``Everything, but the data itself, is an assumption.''
-\end{chapquote}
-
 The \emph{No Free Lunch} theorem (NFL)~\citep{wolpert1996lack} states that no algorithm performs better than any other when averaged over all possible problems (\ie all possible data-generating distributions) of a particular type, as each algorithm makes assumptions which will bias it towards different types of data distributions. Intuitively, if you are tasked with predicting the unobserved members of a large set, only from a few samples, and without using any assumptions whatsoever, you cannot do better than random on average. Any assumptions you do make on the pattern or relationship between members of the set will give you better performance for some data types, and worse for others. The NFL theorem simply formalizes the notion that we cannot infer a rule describing an entire set without either information or assumptions on every member of the set.
 
 \subsubsection{Formal Definition}
@@ -343,11 +338,11 @@ Since the work of \citet{Krizhevsky2012}, classification error on the ILSVRC cha
 
     Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \eg image classification or speech recognition. At the same time, by specializing our network models, we are moving further away from the goal of general artificial intelligence, \ie learning models that can do both tasks.
     
-    \section{Quotes}
+    % \section{Quotes}
     
-	\begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
-	``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
-	\end{chapquote}
+	% \begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
+	% ``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
+	% \end{chapquote}
 	
 	
 %	\begin{chapquote}{John Denker \etal, \textit{Large Automatic Learning, Complex Systems, 1987}}
@@ -355,38 +350,38 @@ Since the work of \citet{Krizhevsky2012}, classification error on the ILSVRC cha
 %	\end{chapquote}
 	
 	
-	\begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
-	``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
-	\end{chapquote}
+	% \begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
+	% ``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
+	% \end{chapquote}
 	
 	
-	\begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, 1991}}
-		``There are many knobs on the black box of `backprop' (learning by back-propagation of
-		errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
-	\end{chapquote}
+	% \begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, 1991}}
+	% 	``There are many knobs on the black box of `backprop' (learning by back-propagation of
+	% 	errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
+	% \end{chapquote}
 	
     
-	\begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
-				%A Self-organizing Neural Network Model
-				%for a Mechanism of Pattern Recognition
-				%Unaffected by Shift in Position , 
-				Biol.\ Cybernetics, 1980}}
-		`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The Neocognitron proposed in this paper gives a drastic solution to this difficulty.
-		''
-	\end{chapquote}
+	% \begin{chapquote}{Kunihiko Fukushima, \textit{Neocognitron, 
+	% 			%A Self-organizing Neural Network Model
+	% 			%for a Mechanism of Pattern Recognition
+	% 			%Unaffected by Shift in Position , 
+	% 			Biol.\ Cybernetics, 1980}}
+	% 	`` One of the largest and long-standing difficulties in designing a pattern-recognizing machine has been the problem how to cope with the shift in position and the distortion in shape of the input patterns. The Neocognitron proposed in this paper gives a drastic solution to this difficulty.
+	% 	''
+	% \end{chapquote}
 	
 	
-	\begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
-		``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
-	\end{chapquote}
+	% \begin{chapquote}{Yann LeCun, \textit{Backpropagation Applied to Handwritten Zip Code Recognition, 1989}}
+	% 	``Classical work in visual pattern recognition has demonstrated the advantage of extracting local features and combining them to form higher order features. Such knowledge can be easily built into the network by forcing the hidden units to combine only local sources of information. Distinctive features of an object can appear at various location on the input image. Therefore it seems judicious to have a set of feature detectors that can detect a particular instance of a feature anywhere on the input place. Since the precise location of a feature is not relevant to the classification, we can afford to lose some position information in the process. Nevertheless, approximate position information must be preserved, to allow the next levels to detect higher order, more complex features.''
+	% \end{chapquote}
 	
 	
-	\mynote{Fit this into our talk of learning basis functions/filters!}
-	\begin{chapquote}{Chris Bishop, \textit{Neural Networks for Pattern Recognition, Page 98, 1996}}
-	    ``We have already seen that a network with a single layer of weights has very
-limited capabilities. To improve the performance of the perceptron, Rosenblatt
-used a layer of fixed processing elements to transform the raw input data, as
-shown in Figure 3.10. These processing elements can be regarded as the basis
-functions of a generalized linear discriminant.''
-	\end{chapquote}
+% 	\mynote{Fit this into our talk of learning basis functions/filters!}
+% 	\begin{chapquote}{Chris Bishop, \textit{Neural Networks for Pattern Recognition, Page 98, 1996}}
+% 	    ``We have already seen that a network with a single layer of weights has very
+% limited capabilities. To improve the performance of the perceptron, Rosenblatt
+% used a layer of fixed processing elements to transform the raw input data, as
+% shown in Figure 3.10. These processing elements can be regarded as the basis
+% functions of a generalized linear discriminant.''
+% 	\end{chapquote}
 \end{document}
