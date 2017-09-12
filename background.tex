@@ -646,8 +646,25 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 
 \begin{figure}[tbp]
     \centering
-    \newcommand{\layer}{\includegraphics[width=0.3\textwidth, page=1, viewport = 0 0 440 600, clip=true]{layer}}
-	\parbox{\widthof{\layer}}{\layer}\parbox{\widthof{\layer}}{\layer}\ldots\parbox{\widthof{\layer}}{\layer}
+    \newcommand{\layer}{\includegraphics[width=0.29\textwidth, page=1, viewport = 0 0 440 300, clip=true]{layer}}
+    \begin{tikzpicture}[ampersand replacement=\&]
+\begin{scope}[]
+\matrix[column sep=0em]{
+	\node {
+		\raisebox{-0.5\height}{\layer}
+	};\&
+	\node {
+		\raisebox{-0.5\height}{\layer}
+	};\&
+	\node {
+		\raisebox{-0.5\height}{\layer}
+	};\&
+	\node {
+		\raisebox{-0.5\height}{$\cdots$}
+	};\\
+	};
+	\end{scope}
+	\end{tikzpicture}
 	\caption[Vanishing gradients.]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
 \end{figure}
 \begin{equation}
