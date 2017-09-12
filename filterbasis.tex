@@ -491,7 +491,7 @@
 	\afterpage{%
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{\textwidth}
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv0}}
 					~
@@ -511,9 +511,8 @@
 					\label{fig:corrroot1}
 					\caption{Network-in-Network}
 					\vspace*{0.6em}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\textwidth}
+				\end{subfigure}\\
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
 					~
@@ -533,9 +532,8 @@
 					\caption{Root-4}
 					\vspace*{0.6em}
 					\label{fig:corrroot4}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\textwidth}
+				\end{subfigure}\\
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
 					~
@@ -555,9 +553,8 @@
 					\caption{Root-8}
 					\vspace*{0.6em}
 					\label{fig:corrroot8}
-				\end{subfigure}
-				~
-				\begin{subfigure}[c]{\textwidth}
+				\end{subfigure}\\
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
 					~
@@ -869,7 +866,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	\begin{figure}[tp]
+	\begin{figure}[p]
 		\centering
 		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50ma.csv}\gdatatable
@@ -884,8 +881,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.45\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=Model Parameters (\# Floats),
@@ -933,8 +930,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.45\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=FLOPS (Multiply-Add),
@@ -981,8 +978,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.45\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=GPU Forward (ms),
@@ -1036,8 +1033,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.45\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=CPU Forward (ms),
@@ -1201,7 +1198,7 @@
 		\caption[GoogLeNet root architectures.]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and Inception module (\textit{incp}.)}
 		\label{table:googlenetconfig}
 		\centering
-		\begin{tabular}{@{}lm{1.6em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}m{1.1em}@{}}
+		\begin{tabular}{@{}lcccccccccccc@{}}
 			\toprule
 			Model & conv1 & \multicolumn{2}{c}{conv2} & \multicolumn{3}{c}{incp.~3\{a,b\}} & \multicolumn{3}{c}{incp.~4\{a--e\}} & \multicolumn{3}{c}{incp.~5\{a,b\}} \\
 			& \textit{\footnotesize7$\times$7} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize3$\times$3} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize3$\times$3} & \textit{\footnotesize5$\times$5} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize3$\times$3} & \textit{\footnotesize5$\times$5} & \textit{\footnotesize1$\times$1} & \textit{\footnotesize3$\times$3} & \textit{\footnotesize5$\times$5} \\
@@ -1218,7 +1215,7 @@
 	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{Jia2014}). To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, as described in \cref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
-	\begin{figure}[tbp]
+	\begin{figure}[p]
 		\centering
 		\begin{subfigure}[b]{\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/googlenetma.csv}\gdatatable
@@ -1228,8 +1225,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.4\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=Model Parameters (\# Floats),
@@ -1276,8 +1273,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.4\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=FLOPS (Multiply-Add),
@@ -1324,8 +1321,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.4\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=GPU Forward (ms),
@@ -1376,8 +1373,8 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=\textwidth,
-			height=0.4\textwidth,
+			width=0.95\textwidth,
+			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
 			xlabel=CPU Forward (ms),
