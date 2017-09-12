@@ -250,9 +250,9 @@ supported!}
 
 \ifpdf
   \if@print
-    \RequirePackage{pdflscape}   % Supports Landscape Layout (PDF)
-  \else
     \RequirePackage{lscape}   % Supports Landscape Layout
+  \else
+    \RequirePackage{pdflscape}   % Supports Landscape Layout (PDF)
   \fi
 \else
 \RequirePackage{lscape}   % Supports Landscape Layout
