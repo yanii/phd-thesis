@@ -56,7 +56,7 @@
 		\begin{tikzpicture}
 		\begin{axis}[
 		width=0.95\textwidth,
-		height=0.4\textwidth,
+		height=0.2\textheight,
 		axis x line=bottom,
 		ylabel=Top-5 Val.\ Error,
 		xlabel=Model Parameters (\# floats),
@@ -99,7 +99,7 @@
 	\citet{Lin2013NiN} proposed a method to reduce the dimensionality of convolutional feature maps. 
 	By using relatively cheap `1$\times$1' convolutional layers (\ie{}layers comprising $d$ filters of size $1\times 1 \times c$, where $d<c$), they learn to map feature maps into lower-dimensional spaces, \ie to new feature maps with fewer channels. Subsequent spatial filters operating on this lower dimensional input space require significantly less computation. This method is used in most state of the art networks for image classification to reduce computation~\citep{Szegedy2014going,He2015}. Our method is complementary.
 	
-	\paragraph{GoogLeNet.} In contrast to much other work, \citet{Szegedy2014going} propose a CNN architecture that is highly optimized for computational efficiency. GoogLeNet uses, as a basic building block, a mixture of low-dimensional embeddings~\citep{Lin2013NiN} and heterogeneously sized spatial filters -- collectively an `inception' module. 
+	\paragraph{GoogLeNet.} In contrast to much other work, \citet{Szegedy2014going} propose a CNN architecture that is highly optimized for computational efficiency. GoogLeNet uses, as a basic building block, a mixture of low-dimensional embeddings~\citep{Lin2013NiN} and heterogeneously sized spatial filters --- collectively an `inception' module. 
 	There are two distinct forms of convolutional layers in the inception module, low-dimensional embeddings (1$\times$1) and spatial (3$\times$3, 5$\times $5). GoogLeNet keeps large, expensive spatial convolutions (\ie 5$\times$5) to a minimum by using few of these filters, using more 3$\times$3 convolutions, and even more 1$\times$1 filters. The motivation is that most of the convolutional filters respond to localized patterns in a small receptive field, with few requiring a larger receptive field. The number of filters in each successive inception module increases slowly with decreasing feature map size, in order to maintain computational performance. GoogLeNet is by far the most efficient state-of-the-art network for ILSVRC, achieving near state-of-the-art accuracy with the lowest computation/model size. However, we will show that even such an efficient and optimized network architecture benefits from our method.
 	
 	\paragraph{Low-Rank Approximations.}
@@ -116,7 +116,7 @@
 	Our approach is connected with that of \citet{Ioannou2016} who showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art CNNs, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
 	\section{Root Architectures}
 	\label{method}
-	In this section we present the main contribution of our work: the use of novel sparsely connected architectures resembling tree roots -- to decrease computational complexity and model size compared to state-of-the-art deep networks for image recognition.
+	In this section we present the main contribution of our work: the use of novel sparsely connected architectures resembling tree roots --- to decrease computational complexity and model size compared to state-of-the-art deep networks for image recognition.
 	
 	\paragraph{Learning a Basis for Filter Dependencies}
 	It is unlikely that every filter (or neuron) in a deep neural network needs to depend on the output of all the filters in the previous layer. In fact, reducing filter co-dependence in deep networks has been shown to benefit generalization. For example, \citet{Hinton2012} introduced {\em dropout} for regularization of deep networks. When training a network layer with dropout, a random subset of neurons is excluded from both the forward and backward pass for each mini-batch.  Furthermore, \citet{Cogswell2016} observe a correlation between the covariance of hidden unit activations and overfitting. To explicitly reduce the covariance of hidden activations, they train networks with a loss function, based on the covariance matrix of the activations in a hidden layer. 
@@ -161,7 +161,7 @@
 		\label{table:ninconfig}
 		\centering
 		%\resizebox{\textwidth}{!}{
-		\begin{tabular}{@{}lm{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}m{1.5em}@{}}
+		\begin{tabular}{@{}lccccccccc@{}}
 			\toprule
 			Model & \multicolumn{3}{c}{conv1} & \multicolumn{3}{c}{conv2} & \multicolumn{3}{c}{conv3} \\
 			& \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} & \textit{\footnotesize a} & \textit{\footnotesize b} & \textit{\footnotesize c} \\
@@ -220,7 +220,7 @@
 			precision=1
 		},
 		%    column type/.add={@{}lrrrrrr@{}}{},
-		column type/.add={@{}lp{3em}p{3em}p{4em}p{3em}p{3em}p{3em}@{}}{},
+		column type/.add={@{}lcccccc@{}}{},
 		highlight col max ={\data}{accuracy},
 		highlight col min ={\data}{param}, 
 		highlight col min ={\data}{ma}, 
@@ -573,7 +573,7 @@
 					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv9}}
 					\caption{Root-32}
 					\label{fig:corrroot32}
-				\end{subfigure}
+				\end{subfigure}\\
 				\centering
 				\includegraphics[width=0.4\textwidth]{Figs/PDF/colorbar}
 				\caption[Intra-layer filter correlation.]{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
@@ -582,7 +582,7 @@
 		\end{landscape}
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{\textwidth}
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/nin/layercovarwhite_conv1}}
 					~
@@ -604,7 +604,7 @@
 					\label{fig:covaroot1}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{\textwidth}
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
 					~
@@ -625,7 +625,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot4}
 				\end{subfigure}
-				\begin{subfigure}[c]{\textwidth}
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
 					~
@@ -646,7 +646,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot8}
 				\end{subfigure}
-				\begin{subfigure}[c]{\textwidth}
+				\begin{subfigure}[c]{0.95\textwidth}
 					\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
 					~
