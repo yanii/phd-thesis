@@ -834,17 +834,18 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \caption[Residual networks.]{\textbf{Residual networks.} \subref{fig:resnet-1} a convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$ .}
 \label{fig:resnet}
 \end{figure}
-\citet{He2015} introduced residual networks, with the important insight that adding layers to a deep network architecture could in fact \emph{increase} training error. 
+\citet{He2015} introduced residual networks, which provide an important insight on a problem with the training of very deep networks. While deeper networks generally improve generalization, especially with large datasets, at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
-\mynote{add more explanation here}
+The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having training a deep network with good generalization (\eg{}\cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single layer to the otherwise identical deep network architecture (\eg{}\cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
 
-Yet it is not clear why this should be so --- a trivial set of parameters could be learned by the optimization to at least maintain the accuracy of a shallow network, namely the identity. In order to aid optimization, a residual layer is instead trained. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
+Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identify transformation $H(\mathbf{x})=x$. 
+
+\citet{He2015} proposed that in order to aid the optimization, a \emph{residual connection} (as in \cref{fig:resnet-3}) is added to the convolutional layers, allowing the trivial identify solution to be easily learned. This residual connection can be thought of as a shortcut, bypassing the previous layer. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
-	H(x) = F(x) + x.
+	H(x) + x.
 \end{equation}
 
-In practice these residual layers greatly help optimize very deep networks, and have pushed state of the art accuracy in many datasets.
-\mynote{TODO: add figure for resnets}
+In practice these residual layers greatly help the training of very deep networks, and have pushed state of the art accuracy in many datasets. All current state-of-the-art models for image classification use residual layers.
 
 \section{Decision Forests}
 \subsection{Decision Trees}
