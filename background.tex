@@ -727,61 +727,65 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network-in-Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie ReLU) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
+    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network in Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie ReLU) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
+\afterpage{
+\begin{landscape}
 \begin{figure}[tbp]
 \centering
 \begin{tikzpicture}[ampersand replacement=\&]
 \begin{scope}[]
 \matrix[column sep=0em]{
 	\node (1a) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.08\textwidth, page=15]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=15]{groupfig}}
 	};\&
 	\node (1b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=21]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=21]{groupfig}}
 	};\&
 	\node (1c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
 	};
 	\\
 	\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
 	\draw node{\footnotesize \textit{conv1b}};\&
 	\draw node{\footnotesize \textit{conv1c}};\\
 	\node (2a) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
 	};\&
 	\node (2b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=8]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
 	};\&
 	\node (2c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
 	};\\
 	\draw node{\footnotesize \textit{conv2a}};\&
 	\draw node{\footnotesize \textit{conv2b}};\&
 	\draw node{\footnotesize \textit{conv2c}};\\
 	\node (3a) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
 	};\&
 	\node (3b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=8]{groupfig}}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
 	};\&
 	\node (3c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
 	};\\
 	\draw node{\footnotesize \textit{conv3a}};\&
 	\draw node{\footnotesize \textit{conv3b}};\&
 	\draw node{\footnotesize \textit{conv3c}};\\
-    \&\node (3c) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=20]{groupfig}}
+	\&\node (3c) {
+		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=20]{groupfig}}
 	};\\
 	\&\draw node{\footnotesize \textit{GAP/output}};\\
 };
 \end{scope}
 \end{tikzpicture}
-\caption[Network in Network architecture.]{\textbf{Network-in-Network Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. Global average pooling (GAP) is used at the end of the network.
+\caption[Network in Network architecture.]{\textbf{Network in Network Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. Global average pooling (GAP) is used at the end of the network.
 }
 \label{fig:networkinnetwork}
 \end{figure}
+\end{landscape}
+}
 
 \citet{Lin2013NiN} introduced \emph{Network in Network} (NiN), in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input feature map into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
 
