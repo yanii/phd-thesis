@@ -1436,16 +1436,7 @@
 	Caffe presently parallelizes over filter groups by using multiple CUDA streams to run multiple CuBLAS matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling CuBLAS from the host can take approximately as long as the matrix computation itself. To avoid this overhead, CuBLAS provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using GPUs to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the CuBLAS batched calls.
 	We have modified Caffe to use CuBLAS batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\% speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of CuBLAS-style batching into CuDNN could improve the performance of filter groups significantly.
 	
-	\section{Future Work} 
-	In this paper we focused on using homogeneous filter groups (with a uniform division of filters in each group), however this may not be optimal. Heterogeneous filter groups may reflect better the filter co-dependencies found in deep networks. Learning a combined spatial~\citep{Ioannou2016} and channel basis, may also improve efficiency further.
-	
-	\section{Conclusion}
-	We explored the effect of using complex hierarchical arrangements of filter groups in CNNs and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
-	
-	We validated our method by using it to create more efficient variants of state-of-the-art Network-in-network, GoogLeNet, and ResNet architectures, which were evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For Network-in-Network on CIFAR10, our model has 33\% of the parameters of the original network, and approximately 37\% (23\%) faster CPU (GPU) timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
-	Even for the most efficient of the near state-of-the-art ILSVRC network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
-	
-	\subsection{The Affect on Image-level Filters of Root Modules}
+	\subsection{The Effect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
 		\centering
 		\begin{subfigure}[b]{0.45\textwidth}
@@ -1497,9 +1488,11 @@
 	For example, in the root-8 network (\cref{fig:resnet50root8conv0}), each row of filters corresponds to the input of an independent filter group in \texttt{conv2}. We can see that the first row primarily is composed of filters giving various directions of the same color gradient. These filters can be combined in the next layer to produce color edges easily. Due to the shortcut layer and the learned combinations of filters however, not all filter groupings are so obvious.
 	
 	\subsection{Layer-wise Compute/Parameter Savings}
+	\afterpage{
+	\begin{landscape}
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.97\linewidth}
 			
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerma.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerma.csv}\datatablea
@@ -1508,12 +1501,12 @@
 			axis x line=bottom,
 			axis y line=left,
 			ybar=0pt,
-			bar width=0.15em,
-			width=1.05\textwidth,
-			height=0.4\textwidth,
+			bar width=0.3em,
+			width=0.95\linewidth,
+			height=0.4\textheight,
 			enlarge x limits=0.02,
 			ylabel=FLOPS,
-			y label style={at={(axis description cs:0.09,.5)},anchor=south},
+			y label style={at={(axis description cs:-0.04,.5)},anchor=south},
 			y tick label style={
 				/pgf/number format/.cd,
 				fixed,
@@ -1535,7 +1528,7 @@
 			
 		\end{subfigure}
 		
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.97\linewidth}
 			
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerparam.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerparam.csv}\datatablea
@@ -1544,12 +1537,12 @@
 			axis x line=bottom,
 			axis y line=left,
 			ybar=0pt,
-			bar width=0.15em,
-			width=1.05\textwidth,
-			height=0.4\textwidth,
+			bar width=0.3em,
+			width=0.95\linewidth,
+			height=0.4\textheight,
 			enlarge x limits=0.02,
 			ylabel=Parameters,
-			y label style={at={(axis description cs:0.09,.5)},anchor=south},
+			y label style={at={(axis description cs:-0.04,.5)},anchor=south},
 			y tick label style={
 				/pgf/number format/.cd,
 				fixed,
@@ -1559,7 +1552,7 @@
 			},
 			ymin=0,
 			xticklabels from table={\datatable}{layer},
-			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\tiny},
+			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 			xtick=data,
 			]
 			\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
@@ -1573,10 +1566,9 @@
 		
 		\label{fig:resnet50layerwisema}
 	\end{figure}
+	\end{landscape}
+	}
 	\Cref{fig:resnet50layerwisema} shows the difference in compute and parameters for each layer in a standard ResNet-50 model and a root-64 variant. The layers in the original networks with the highest computational complexity are clearly the spatial convolutional layers, \ie layers with 3$\times$3 spatial filters. When instead a root-module is used, the computational complexity of these layers is reduced dramatically. While the low dimensional embedding layers (1$\times$1) are not changed, these have less than half the compute of the spatial convolution layers. The number of parameters in spatial convolution layers with large numbers of input channels, which increase towards the end of the network, are similarly reduced.
-	
-	\section{Future Work} 
-	In this chapter we focused on using homogeneous filter groups (with a uniform division of filters in each group), however this may not be optimal. Heterogeneous filter groups may reflect better the filter co-dependencies found in deep networks. %Another interesting direction for future work is to exploit the independence of filter groups for model parallelism~\cite{krizhevsky2014one}.
 	
 	\section{Conclusion}
 	We explored the effect of using complex hierarchical arrangements of filter groups in CNNs and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
@@ -1584,6 +1576,7 @@
 	We validated our method by using it to create more efficient variants of state-of-the-art Network-in-network, Googlenet, and ResNet architectures, which were evaluated on the CIFAR10 and ILSVRC datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For Network-in-Network on CIFAR10, our model has 47\% of the parameters of the original network, and approximately 22\% faster CPU and GPU timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
 	%For ResNet 200 our model has 25\% fewer FLOPS and 44\% fewer parameters.
 	Even for the most efficient of the near state-of-the-art ILSVRC network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
+	\mynote{Update with newer resnet-200 results}
 	
 	
 \end{document}
