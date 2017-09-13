@@ -707,11 +707,28 @@ For the more typically used rectified linear unit, a variation of this initializ
 \end{equation}
 
 \subsection{Batch Normalization}
-Some network architectures are sufficiently complex, e.g.~networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, a more direct approach of managing gradient amplitude during training was introduced by \citet{Ioffe2015}. 
+Some network architectures are sufficiently complex, \eg{}networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, \citet{Ioffe2015} proposed a more direct approach of maintaining the desired zero-mean, unit Gaussian response distribution. Batch normalization proposes to use batch statistics to whiten the responses of layers it is applied to during training.
 
-\mynote{TODO} %unit gaussian activations across all features of the layer
+%Batch normalization maintains per-batch response statistics during training, and uses them to reshape the response distribution during training.
+Full whitening (\ie{}de-correlating the responses) is prohibitively expensive however, instead batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. Using batch-normalization during training can make a dramatic difference, in many cases networks that would previous not converge, will converge, and it can sometimes speed up training.
 
-Batch normalization uses batch statistics to whiten the responses of layers it is applied to during training. Batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. 
+%Batch normalization uses batch statistics to whiten the responses of layers it is applied to during training. Batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. 
+
+The batch statistics calculated by batch normalization are,
+\begin{equation}
+\begin{aligned}
+    \mu_b &= \frac{1}{M} \sum^M_{i=0} x_i\\
+    \sigma^2_b &= \frac{1}{M} \sum^M_{i=0},\\
+    \hat{x}_i &= \frac{x_i - \mu_b}{\sqrt{\sigma^2_b + \epsilon}},
+\end{aligned}
+\end{equation}
+where for mini-batch $b$, $\mu_b$ is the mean, $\sigma^2_b$ is the variance, $\epsilon$ is for numerical stability, $\left\{x_0, \ldots, x_i, \ldots x_M\right\}$ are the mini-batch responses for a particular parameter of the layer, and $\hat{x_i}$ is the normalized response for that parameter. 
+
+Batch normalization then uses these statistics, along with two parameters learned across mini-batches, $\gamma$ and $\beta$, to scale and shift the responses,
+\begin{equation}    
+    y_i = \gamma \hat{x_i} + \beta.
+\end{equation}
+
 Most state-of-the-art supervised deep networks now use batch normalization along with the initialization presented above to train.
 \section{Deep Neural Network Architectures}
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this thesis, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
