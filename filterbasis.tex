@@ -56,7 +56,7 @@
 		\begin{tikzpicture}
 		\begin{axis}[
 		width=0.95\textwidth,
-		height=0.2\textheight,
+		height=0.33\textheight,
 		axis x line=bottom,
 		ylabel=Top-5 Val.\ Error,
 		xlabel=Model Parameters (\# floats),
@@ -112,8 +112,7 @@
 		\caption[Learning a spatial basis for filters.]{\textbf{Learning a spatial basis for filters.} Learning a linear combination of mostly small, heterogeneously sized spatial filters~\citep{Ioannou2016}. Note that all filters operate on all $c$ channels of the input feature map.}
 		\label{fig:spatialbasis}
 	\end{figure}
-    \mynote{Change this to refer to chapter instead of paper}
-	Our approach is connected with that of \citet{Ioannou2016} who showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art CNNs, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
+	Our approach is connected with that presented in \cref{lowrankfilters}, where we showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art CNNs, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
 	\section{Root Architectures}
 	\label{method}
 	In this section we present the main contribution of our work: the use of novel sparsely connected architectures resembling tree roots --- to decrease computational complexity and model size compared to state-of-the-art deep networks for image recognition.
@@ -489,180 +488,183 @@
 	cov(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
 	\end{equation}
 	\afterpage{%
-		\begin{landscape}
+	    \begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.97\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv0}}
+    				\vspace{0.6em}
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv0}}
 					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv1}}
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv1}}
 					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv2}}
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv2}}
 					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv4}}
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv4}}
 					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv5}}
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv5}}
 					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv6}}
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv6}}
 					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv8}}
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv8}}
 					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/nin/corrcoef_conv9}}
-					\label{fig:corrroot1}
-					\caption{Network-in-Network}
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/nin/corrcoef_conv9}}
+					\caption{Network-in-Network}\label{fig:corrroot1}
+    				\vspace{0.6em}
+				\end{subfigure}\\
+				\begin{subfigure}[c]{0.97\linewidth}
+					\centering
+    				\vspace{0.6em}
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
+					~
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv1}}
+					~
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv2}}
+					~
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv4}}
+					~
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv5}}
+					~
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv6}}
+					~
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv8}}
+					~
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot4/corrcoef_conv9}}
+					\caption{Root-4}\label{fig:corrroot4}
 					\vspace*{0.6em}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.97\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv0}}
+    				\vspace{0.6em}
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
 					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv1}}
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv1}}
 					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv2}}
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv2}}
 					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv4}}
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv4}}
 					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv5}}
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv5}}
 					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv6}}
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv6}}
 					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv8}}
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv8}}
 					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot4/corrcoef_conv9}}
-					\caption{Root-4}
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot8/corrcoef_conv9}}
+					\caption{Root-8}\label{fig:corrroot8}
 					\vspace*{0.6em}
-					\label{fig:corrroot4}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.97\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv0}}
+    				\vspace{0.6em}
+					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
 					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv1}}
+					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv1}}
 					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv2}}
+					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv2}}
 					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv4}}
+					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv4}}
 					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv5}}
+					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv5}}
 					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv6}}
+					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv6}}
 					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv8}}
+					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv8}}
 					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot8/corrcoef_conv9}}
-					\caption{Root-8}
+					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\linewidth]{Figs/Raster/ninroot32/corrcoef_conv9}}
+					\caption{Root-32}\label{fig:corrroot32}
 					\vspace*{0.6em}
-					\label{fig:corrroot8}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.95\textwidth}
-					\centering
-					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv0}}
-					~
-					\covarlabels{conv1b}{160}{conv1b}{160}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv1}}
-					~
-					\covarlabels{conv1c}{96}{conv1c}{96}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv2}}
-					~
-					\covarlabels{conv2a}{192}{conv2a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv4}}
-					~
-					\covarlabels{conv2b}{192}{conv2b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv5}}
-					~
-					\covarlabels{conv2c}{192}{conv2c}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv6}}
-					~
-					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv8}}
-					~
-					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\textwidth]{Figs/Raster/ninroot32/corrcoef_conv9}}
-					\caption{Root-32}
-					\label{fig:corrroot32}
-				\end{subfigure}\\
-				\centering
-				\includegraphics[width=0.4\textwidth]{Figs/PDF/colorbar}
+				\begin{subfigure}[c]{0.97\linewidth}
+    				\centering
+	    			\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
+				\end{subfigure}
 				\caption[Intra-layer filter correlation.]{\textbf{Network-in-Network Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
 				\label{fig:nincorr}
 			\end{figure}
 		\end{landscape}
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.95\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/nin/layercovarwhite_conv1}}
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/nin/layercovarwhite_conv1}}
 					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/nin/layercovarwhite_conv2}}
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/nin/layercovarwhite_conv2}}
 					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv4}}
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/nin/layercovarwhite_conv4}}
 					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv5}}
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/nin/layercovarwhite_conv5}}
 					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv6}}
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/nin/layercovarwhite_conv6}}
 					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv8}}
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/nin/layercovarwhite_conv8}}
 					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/nin/layercovarwhite_conv9}}
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/nin/layercovarwhite_conv9}}
 					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/nin/layercovarwhite_conv10}}
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\linewidth]{Figs/Raster/nin/layercovarwhite_conv10}}
 					\caption{Network-in-Network}
 					\vspace*{0.6em}
 					\label{fig:covaroot1}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.95\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
 					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv2}}
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv2}}
 					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv4}}
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv4}}
 					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv5}}
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv5}}
 					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv6}}
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv6}}
 					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv8}}
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv8}}
 					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv9}}
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv9}}
 					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot4/layercovarwhite_conv10}}
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv10}}
 					\caption{Root-4}
 					\vspace*{0.6em}
 					\label{fig:covarroot4}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.95\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
 					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv2}}
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv2}}
 					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv4}}
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv4}}
 					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv5}}
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv5}}
 					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv6}}
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv6}}
 					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv8}}
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv8}}
 					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv9}}
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv9}}
 					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot8/layercovarwhite_conv10}}
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv10}}
 					\caption{Root-8}
 					\vspace*{0.6em}
 					\label{fig:covarroot8}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.95\textwidth}
+				\begin{subfigure}[c]{0.95\linewidth}
 					\centering
-					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
+					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
 					~
-					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv2}}
+					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv2}}
 					~
-					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv4}}
+					\covarlabels{conv1c}{96}{conv2a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv4}}
 					~
-					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv5}}
+					\covarlabels{conv2a}{192}{conv2b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv5}}
 					~
-					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv6}}
+					\covarlabels{conv2b}{192}{conv2c}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv6}}
 					~
-					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
+					\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv8}}
 					~
-					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv9}}
+					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv9}}
 					~
-					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\textwidth]{Figs/Raster/ninroot32/layercovarwhite_conv10}}
+					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv10}}
 					\caption{Root-32}
 					\label{fig:covarroot32}
 				\end{subfigure}
@@ -680,40 +682,40 @@
 	\afterpage{
 	\begin{landscape}
 	\begin{figure}[p]
-		\begin{subfigure}[b]{0.95\textwidth}
+		\begin{subfigure}[b]{0.98\linewidth}
 			\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.08\textwidth, page=15]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.065\linewidth, page=15]{groupfig}}
 				};\&
 				\node (1b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (1c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (2a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.075\linewidth, page=16]{groupfig}}
 				};\&
 				\node (2b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (2c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (3a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.09\textwidth, page=16]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.075\linewidth, page=16]{groupfig}}
 				};\&
 				\node (3b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (3c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.11\textwidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
 				};\&
 				\node (7) {
-					{\Large $\cdots$}
+					{\large $\cdots$}
 				};\\
 				\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
 				\draw node{\footnotesize \textit{conv1b}};\&
@@ -730,40 +732,40 @@
 			\caption{Standard}
 			\label{fig:standardtopology}
 		\end{subfigure}\\
-		\begin{subfigure}[b]{0.95\textwidth}
+		\begin{subfigure}[b]{0.98\linewidth}
 			\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\includegraphics[height=0.08\textwidth, page=15]{groupfig}
+					\includegraphics[height=0.065\linewidth, page=15]{groupfig}
 				};\&
 				\node (1b) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\& 
 				\node (1c) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\& 
 				\node (2a) {
-					\includegraphics[height=0.15\textwidth, page=19]{groupfig}
+					\includegraphics[height=0.13\linewidth, page=19]{groupfig}
 				};\&
 				\node (2b) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\&
 				\node (2c) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\&
 				\node (3a) {
-					\includegraphics[height=0.09\textwidth, page=18]{groupfig}
+					\includegraphics[height=0.075\linewidth, page=18]{groupfig}
 				};\&
 				\node (3b) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\&
 				\node (3c) {
-					\includegraphics[height=0.11\textwidth, page=17]{groupfig}
+					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
 				};\&
 				\node (4) {
-					{\Large $\cdots$}
+					{\large $\cdots$}
 				};\\
 			};
 			\draw[decorate,decoration={brace,mirror},](2a.south west) -- node[below=3pt] {\small root-4 module} ++(3.5, 0);
