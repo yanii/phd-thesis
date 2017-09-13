@@ -10,8 +10,11 @@
 	%It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones --- as shown by recent research~\citep{Krizhevsky2012,Szegedy2014going,Simonyan2014verydeep,He2015}.
 	%This does not appear to be a limitation of finite capacity, since it has been proposed that at least some deep networks are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
 	
-	%It has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization deep networks are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\cite{Hinton2012}. Furthermore, a carefully designed sparse network connection structure can also have a regularizing effect. Convolutional Neural Networks (CNNs)~\citep{Fuk80,Lecun1998} embody this idea, using a sparse convolutional connection structure to exploit the locality of natural image structure. In consequence, they are easier to train.
 	With few exceptions, state-of-the-art CNNs for image recognition are largely monolithic, with each filter operating on the feature maps of all filters on a previous layer. Interestingly, this is in stark contrast to what we understand of biological neural networks, where we see ``highly evolved arrangements of smaller, specialized networks which are interconnected in very specific ways''~\citep{minsky1988perceptrons}.
+	
+	Yet it has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. 
+	%It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization deep networks are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\citep{Hinton2012}. Furthermore
+	A carefully designed sparse network connection structure can have a regularizing effect. Convolutional Neural Networks (CNNs)~\citep{Fuk80,Lecun1998} embody this idea, using a sparse convolutional connection structure to exploit the locality of natural image structure. In consequence, they are easier to train.
 	
 	In \cref{lowrankfilters} learning a low-rank spatial basis for filters was found to improve generalization while reducing the computational complexity and model size of a CNN with only full rank filters. However, this work addressed only the spatial extents of the convolutional filters (\ie $h$ and $w$ in \cref{fig:normalconv}). In this work we will show that a similar idea can be applied to the channel extents --- \ie filter inter-connectivity --- by using \emph{filter groups}~\citep{Krizhevsky2012}. 
 	
@@ -30,9 +33,8 @@
 	
 	In this chapter we show that simple alterations to the architecture of state-of-the-art CNNs for image recognition can drastically reduce computational cost and model size while maintaining (or even increasing) accuracy, through structure-induced regularization, by reducing the connectivity in monolithic networks to reflect more closely the sparse, localized filter co-dependencies within.
 	
-	\section{Related Work}
-	\label{previouswork}
-	Most previous work on reducing the computational complexity of CNNs has focused on approximating convolutional filters in the spatial (as opposed to the channel) domain, either by using low-rank approximations~\citep{mamalet2012simplifying,journals/corr/JaderbergVZ14, journals/pami/SironiTRLF15, journals/corr/LebedevGROL14, Ioannou2016}, or Fourier transform based convolution~\cite{mathieu2013fast, rippel2015spectral}. More general methods have used reduced precision number representations~\cite{1502.02551v1} or compression of previously trained models~\cite{Chen2015,Kim2016}. Here we explore methods that reduce the computational impact of the large number of filter channels within state-of-the art networks. Specifically, we consider decreasing the number of incoming connections to nodes.
+	\section{Related Work}\label{previouswork}
+	Most previous work on reducing the computational complexity of CNNs has focused on approximating convolutional filters in the spatial (as opposed to the channel) domain, either by using low-rank approximations~\citep{mamalet2012simplifying,journals/corr/JaderbergVZ14, journals/pami/SironiTRLF15, journals/corr/LebedevGROL14, Ioannou2016}, or Fourier transform based convolution~\citep{mathieu2013fast, rippel2015spectral}. More general methods have used reduced precision number representations~\citep{1502.02551v1} or compression of previously trained models~\citep{Chen2015,Kim2016}. Here we explore methods that reduce the computational impact of the large number of filter channels within state-of-the art networks. Specifically, we consider decreasing the number of incoming connections to nodes.
 	
 	\begin{figure}[tbp]
 		\begin{subfigure}[b]{0.95\textwidth}
@@ -46,7 +48,7 @@
 			\includegraphics[width=0.66\textwidth, page=2]{Figs/PDF/groupfig}
 			\caption{Convolution with filter groups}\label{fig:groupedconv}
 		\end{subfigure}
-		\caption[Convolutional filter groups.]{\textbf{Filter groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
+		\caption[Convolutional filter groups.]{\textbf{Convolutional Filter groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
 	\end{figure}
 	\begin{figure}[tbp]
 		\centering
@@ -147,13 +149,13 @@
 	This reduced connectivity also reduces computational complexity and model size since the size of filters in filter groups are reduced drastically, as is evident in \cref{fig:rootmodule}. Unlike methods for increasing the efficiency of deep networks by approximating pre-trained existing networks (see \cref{previouswork}), our models are trained from random initialization using stochastic gradient descent. This means that our method can also speed up training and, since we are not merely approximating an existing model's weights, the accuracy of the existing model is not an upper bound on accuracy of the modified model.
 	
 	\paragraph{Root Module}
-	The basic element of our network architecture, a \emph{root module}, is shown in \cref{fig:rootmodule}. A root module has a given number of filter groups, the more filter groups, the fewer the number of connections to the previous layer's outputs. Each spatial convolutional layer is followed by a low-dimensional embedding (1$\times$1 convolution). Like in \citep{Ioannou2016}, this configuration  learns a linear combination of the basis filters (filter groups), implicitly representing a filter of full channel depth, but with limited filter dependence.
+	The basic element of our network architecture, a \emph{root module}, is shown in \cref{fig:rootmodule}. A root module has a given number of filter groups, the more filter groups, the fewer the number of connections to the previous layer's outputs. Each spatial convolutional layer is followed by a low-dimensional embedding (1$\times$1 convolution). Like in~\citep{Ioannou2016}, this configuration  learns a linear combination of the basis filters (filter groups), implicitly representing a filter of full channel depth, but with limited filter dependence.
 	
 	\section{Results}
 	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \cref{method}) .
 	
 	\subsection{Improving Network in Network on CIFAR-10}
-	Network in Network (NiN)~\cite{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\cite{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by~\citet{Ioffe2015}.
+	Network in Network (NiN) \citep{Lin2013NiN} is a near state-of-the-art network for CIFAR-10~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
 	
 	\begin{table}[tbp]
 		\caption[Network in network root architectures.]{\textbf{Network in Network}. Filter groups in each convolutional layer.}
@@ -460,7 +462,7 @@
 		\label{fig:whitevsnot}
 	\end{figure}
 	
-	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using ZCA~\cite{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
+	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using ZCA~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
 	
 	\begin{equation}
 	cov(X, X) = \frac{1}{N-1} XX^\textrm{T},
@@ -785,12 +787,12 @@
 	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in \cref{fig:nincifarplotsconvonly}. The results show that the so-called root topology (illustrated in \cref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of deep networks for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
 	
 	\subsection{Improving Residual Networks on ILSVRC}
-	Residual networks (ResNets)~\citep{He2015} are the state-of-the art network for ILSVRC\@. ResNets are more computationally efficient than the VGG architecture~\cite{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
+	Residual networks (ResNets)~\citep{He2015} are the state-of-the art network for ILSVRC\@. ResNets are more computationally efficient than the VGG architecture~\citep{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
 	
 	\subsubsection{ResNet 50}
 	\label{resnet50results}
 	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 GPUs with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
-	For training, we used the initialization scheme described by \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization~\citep{Ioffe2015}.
+	For training, we used the initialization scheme described by~\citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization~\citep{Ioffe2015}.
 	\begin{table}[tp]
 		\caption[ResNet 50 root architectures.]{\textbf{ResNet 50}. Filter groups in each conv.\ layer.}
 		\label{table:resnet50config}
@@ -1214,7 +1216,7 @@
 		\end{tabular}
 	\end{table}
 	
-	We replicated the network as described by~\citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\cite{Jia2014}). To train we used the initialization of \citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
+	We replicated the network as described by \citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring (as supported by Caffe~\citep{Jia2014}). To train we used the initialization of~\citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter grouping, as described in \cref{table:googlenetconfig}.  While the inception architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
 	\begin{figure}[p]
