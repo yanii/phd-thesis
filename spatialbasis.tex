@@ -108,15 +108,15 @@
             &
             \subcaptionbox{$3\times1$ filters.\label{fig:horizontalfilters}}
             {
-                \includegraphics[width=0.5\textwidth]{conv1_x}
+                \includegraphics[width=0.25\textheight]{conv1_x}
             }\\
-            \subcaptionbox{$1\times3$ filters.\label{fig:verticalfilters}}[0.3\textwidth]
+            \subcaptionbox{$1\times3$ filters.\label{fig:verticalfilters}}[0.1\textheight]
             {
-                \includegraphics[height=0.5\textwidth]{conv1_y}
+                \includegraphics[height=0.25\textheight]{conv1_y}
             }&
             \subcaptionbox{Learned linear combinations.\label{fig:linearcomb}}
             {
-                \includegraphics[width=0.5\textwidth]{linearcombinations}
+                \includegraphics[width=0.25\textheight]{linearcombinations}
             }\\
         \end{tabular}
         \caption[Learned Cross-Shaped Filters]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}\label{fig:conv1filters}
@@ -340,121 +340,119 @@
 }
 \end{landscape}
 }
+
+\begin{table}[tbp]
+    \caption[Low-rank VGG ILSVRC results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this chapter.}\label{table:vggimagenetresults}
+    \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
     
-    \begin{table}[tbp]
-       	\caption[Low-rank VGG ILSVRC results]{{\bf VGG ILSVRC Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this chapter.}\label{table:vggimagenetresults}
-       	\pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
-       	
-       	%        \scalebox{0.9}{
-       	\tabcolsep=5pt
-       	\pgfplotstabletypeset[
-       	every head row/.style={
-       		before row=\toprule,after row=\midrule},
-       	every last row/.style={
-       		after row=\bottomrule},
-       	every first row/.style={
-       		after row=\bottomrule},
-       	%dec sep align,      % Align at decimal point
-       	fixed zerofill,     % Fill numbers with zeros
-       	columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
-       	column type/.add={lrrrrrr}{},
-       	columns/Multiply-Acc./.style={
-       		column name=Multiple-Acc. {\small $\times 10^{9}$},
-       		preproc/expr={{##1/1e9}}
-       	},
-       	columns/Param./.style={
-       		column name=Param. {\small $\times 10^{7}$},
-       		preproc/expr={{##1/1e7}}
-       	},
-       	columns/Network/.style={string type},
-       	columns/Stride/.style={precision=0},
-       	columns/Top-1 Acc./.style={precision=3},
-       	columns/Top-5 Acc./.style={precision=3},
-       	highlight col max ={\data}{Top-1 Acc.},
-       	highlight col max ={\data}{Top-5 Acc.},
-       	highlight col min ={\data}{Param.},
-       	highlight col min ={\data}{Multiply-Acc.},
-       	col sep=comma]{\data}
-       	%        }
-    \end{table}
+    %        \scalebox{0.9}{
+    \tabcolsep=5pt
+    \pgfplotstabletypeset[
+    every head row/.style={
+        before row=\toprule,after row=\midrule},
+    every last row/.style={
+        after row=\bottomrule},
+    every first row/.style={
+        after row=\bottomrule},
+    %dec sep align,      % Align at decimal point
+    fixed zerofill,     % Fill numbers with zeros
+    columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
+    column type/.add={lrrrrrr}{},
+    columns/Multiply-Acc./.style={
+        column name=Multiple-Acc. {\small $\times 10^{9}$},
+        preproc/expr={{##1/1e9}}
+    },
+    columns/Param./.style={
+        column name=Param. {\small $\times 10^{7}$},
+        preproc/expr={{##1/1e7}}
+    },
+    columns/Network/.style={string type},
+    columns/Stride/.style={precision=0},
+    columns/Top-1 Acc./.style={precision=3},
+    columns/Top-5 Acc./.style={precision=3},
+    highlight col max ={\data}{Top-1 Acc.},
+    highlight col max ={\data}{Top-5 Acc.},
+    highlight col min ={\data}{Param.},
+    highlight col min ={\data}{Multiply-Acc.},
+    col sep=comma]{\data}
+    %        }
+\end{table}
+\begin{figure}[tbp] 
+    \centering
+    \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\datatable
+    \pgfplotsset{major grid style={dotted,red}}
     
-    \begin{figure}[tbp] 
-       	\centering
-       	\pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\datatable
-       	\pgfplotsset{major grid style={dotted,red}}
-       	
-       	\begin{tikzpicture}
-       	\begin{axis}[
-       	width=0.95\textwidth,
-       	height=0.33\textwidth,
-       	axis x line=bottom,
-       	ylabel=Top-5 Error,
-       	xlabel=Multiply-Accumulate Operations,
-       	axis lines=left,
-       	enlarge x limits=0.10,
-       	grid=major,
-       	%xmin=0,
-       	ytick={0.01,0.02,...,0.21},
-       	ymin=0.1,ymax=0.15,
-       	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-       		/pgf/number format/fixed,
-       		/pgf/number format/precision=1
-       	},
-       	legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
-       	legend columns=2,
-       	]
-       	\addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
-       	point meta=explicit symbolic,
-       	x filter/.code={
-       		\ifnum\coordindex>2\def\pgfmathresult{}\fi
-       	},
-       	] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
-       	\addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
-       	point meta=explicit symbolic,
-       	x filter/.code={
-       		\ifnum\coordindex<3\def\pgfmathresult{}\fi
-       	},
-       	] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
-       	\legend{Baseline Networks, Our Results}
-       	\end{axis}
-       	\end{tikzpicture}
-       	\caption[Low-rank VGG ILSVRC results]{\textbf{VGG ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on ILSVRC object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}\label{fig:vggplots}
-    \end{figure}
-    
-    \begin{table}[tbp]
-       	\centering
-       	\caption[Low-rank MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this chapter. All networks were trained at stride 2 for the MIT Places dataset.
-       	}
-       	%\resizebox{\textwidth}{!}{
-       	\pgfplotstableread[col sep=comma]{lrdata/mitma.csv}\data
-       	\pgfplotstabletypeset[
-       	every head row/.style={
-       		before row=\toprule,after row=\midrule},
-       	every last row/.style={
-       		after row=\bottomrule},
-       	fixed zerofill,     % Fill numbers with zeros
-       	columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
-       	column type/.add={lrrrrrr}{},
-       	columns/Multiply-Acc./.style={
-       		column name=Multiple-Acc. {\small $\times 10^{8}$},
-       		preproc/expr={{##1/1e8}}
-       	},
-       	columns/Param./.style={
-       		column name=Param. {\small $\times 10^{7}$},
-       		preproc/expr={{##1/1e7}}
-       	},
-       	columns/Network/.style={string type},
-       	columns/Stride/.style={precision=0},
-       	columns/Top-1 Acc./.style={precision=3},
-       	columns/Top-5 Acc./.style={precision=3},
-       	highlight col max ={\data}{Top-1 Acc.},
-       	highlight col max ={\data}{Top-5 Acc.}, 
-       	highlight col min ={\data}{Param.}, 
-       	highlight col min ={\data}{Multiply-Acc.}, 
-       	col sep=comma]{\data}
-       	%}
-       	\label{table:placesresults}
-    \end{table}
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    height=0.33\textheight,
+    axis x line=bottom,
+    ylabel=Top-5 Error,
+    xlabel=Multiply-Accumulate Operations,
+    axis lines=left,
+    enlarge x limits=0.10,
+    grid=major,
+    %xmin=0,
+    ytick={0.01,0.02,...,0.21},
+    ymin=0.1,ymax=0.15,
+    yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=1
+    },
+    legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
+    legend columns=2,
+    ]
+    \addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
+    point meta=explicit symbolic,
+    x filter/.code={
+        \ifnum\coordindex>2\def\pgfmathresult{}\fi
+    },
+    ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+    \addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
+    point meta=explicit symbolic,
+    x filter/.code={
+        \ifnum\coordindex<3\def\pgfmathresult{}\fi
+    },
+    ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
+    \legend{Baseline Networks, Our Results}
+    \end{axis}
+    \end{tikzpicture}
+    \caption[Low-rank VGG ILSVRC results]{\textbf{VGG ILSVRC Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on ILSVRC object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}\label{fig:vggplots}
+\end{figure}
+\begin{table}[tbp]
+    \centering
+    \caption[Low-rank MIT Places results]{{\bf MIT Places Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline `vgg-11-gmp' network, separable filter network as described by \citet{journals/corr/JaderbergVZ14}, and more efficient models created by the methods described in this chapter. All networks were trained at stride 2 for the MIT Places dataset.
+    }
+    %\resizebox{\textwidth}{!}{
+    \pgfplotstableread[col sep=comma]{lrdata/mitma.csv}\data
+    \pgfplotstabletypeset[
+    every head row/.style={
+        before row=\toprule,after row=\midrule},
+    every last row/.style={
+        after row=\bottomrule},
+    fixed zerofill,     % Fill numbers with zeros
+    columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
+    column type/.add={lrrrrrr}{},
+    columns/Multiply-Acc./.style={
+        column name=Multiple-Acc. {\small $\times 10^{8}$},
+        preproc/expr={{##1/1e8}}
+    },
+    columns/Param./.style={
+        column name=Param. {\small $\times 10^{7}$},
+        preproc/expr={{##1/1e7}}
+    },
+    columns/Network/.style={string type},
+    columns/Stride/.style={precision=0},
+    columns/Top-1 Acc./.style={precision=3},
+    columns/Top-5 Acc./.style={precision=3},
+    highlight col max ={\data}{Top-1 Acc.},
+    highlight col max ={\data}{Top-5 Acc.}, 
+    highlight col min ={\data}{Param.}, 
+    highlight col min ={\data}{Multiply-Acc.}, 
+    col sep=comma]{\data}
+    %}
+    \label{table:placesresults}
+\end{table}
     
     \input{lrdata/vggplacesplots}
     In what follows, we compare the accuracy of a number of different network architectures detailed in  \cref{table:vggarch}. Results for ILSVRC are given in \cref{table:vggimagenetresults}, and plotted in \cref{fig:vggplots}. Results for MIT Places are given in \cref{table:placesresults}, and plotted in \cref{fig:placesresults}. 
