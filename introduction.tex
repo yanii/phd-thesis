@@ -67,11 +67,11 @@ This thesis is organized as follows:
 	
 	We validate our approach by using it to train more efficient variants of state-of-the-art \gls{cnn} architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less compute. %, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40\% fewer parameters, 45\% fewer floating point operations, and is 31\% (12\%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25\% fewer floating point operations and 44\% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
 	
-	\item[\Cref{conditionalnetworks}] presents work towards conditional computation in deep neural networks, conditional networks, allowing for faster inference, by understanding the connections between two state of the art classifiers: deep neural networks (DNNs) and randomized decision forests.
+	\item[\Cref{conditionalnetworks}] presents work towards conditional computation in deep neural networks, conditional networks, allowing for faster inference, by understanding the connections between two state of the art classifiers: \glspl{dnn} and randomized decision forests.
 	
 	We propose a new discriminative learning model, \emph{conditional networks}, 
 	that jointly exploits the accurate \emph{representation learning} capabilities of deep neural networks with the efficient \emph{conditional computation} of decision trees and directed acyclic graphs (DAGs).
-	Conditional networks can be thought of as a way to learn an optimal block-diagonal sparsification of a DNN, and we show how they can be trained to cover the continuous spectrum between deep networks and decision forests/jungles. 
+	Conditional networks can be thought of as a way to learn an optimal block-diagonal sparsification of a \gls{dnn}, and we show how they can be trained to cover the continuous spectrum between deep networks and decision forests/jungles. 
 	
 	In addition to improving test and training efficiency, conditional networks yield smaller models, are highly interpretable, and offer test-time flexibility. Validation is performed on standard image classification tasks. Compared to the state of the art, our results demonstrate superior efficiency for at-par accuracy both on the ImageNet and CIFAR datasets.
 	
