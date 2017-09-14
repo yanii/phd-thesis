@@ -130,6 +130,39 @@
   TITLE = {Neural networks: a comprehensive foundation},
 }
 
+@INCOLLECTION{Bottou2012sgdtricks,
+  AUTHOR = {Bottou, Léon},
+  EDITOR = {Montavon, Grégoire and Orr, Genevieve B and Müller, Klaus-Robert},
+  PUBLISHER = {Springer},
+  BOOKTITLE = {{Neural Networks: Tricks of the Trade (2nd ed.)}},
+  DATE = {2012},
+  ISBN = {978-3-642-35288-1},
+  KEYWORDS = {dblp},
+  PAGES = {421--436},
+  SERIES = {{Lecture Notes in Computer Science}},
+  TITLE = {{Stochastic Gradient Descent Tricks.}},
+  VOLUME = {7700},
+}
+
+@INPROCEEDINGS{martens2010deep,
+  AUTHOR = {Martens, James},
+  BOOKTITLE = {{Proceedings of the 27th International Conference on Machine Learning (ICML-10)}},
+  DATE = {2010},
+  PAGES = {735--742},
+  TITLE = {{Deep learning via Hessian-free optimization}},
+}
+
+@ARTICLE{polyak1964some,
+  AUTHOR = {Polyak, Boris T},
+  PUBLISHER = {Elsevier},
+  DATE = {1964},
+  JOURNALTITLE = {USSR Computational Mathematics and Mathematical Physics},
+  NUMBER = {5},
+  PAGES = {1--17},
+  TITLE = {Some methods of speeding up the convergence of iteration methods},
+  VOLUME = {4},
+}
+
 @ARTICLE{Fuk80,
   AUTHOR = {Fukushima, K},
   DATE = {1980},
@@ -284,6 +317,14 @@
   VOLUME = {5},
 }
 
+@ARTICLE{ILSVRC2015,
+  AUTHOR = {Russakovsky, Olga and Deng, Jia and Su, Hao and Krause, Jonathan and Satheesh, Sanjeev and Ma, Sean and Huang, Zhiheng and Karpathy, Andrej and Khosla, Aditya and Bernstein, Michael and Berg, Alexander C and Fei-Fei, Li},
+  DATE = {2015},
+  DOI = {10.1007/s11263-015-0816-y},
+  JOURNALTITLE = {International Journal of Computer Vision (IJCV)},
+  TITLE = {{ImageNet Large Scale Visual Recognition Challenge}},
+}
+
 @INPROCEEDINGS{Sutskever2013momentum,
   AUTHOR = {Sutskever, Ilya and Martens, James and Dahl, George E and Hinton, Geoffrey E},
   PUBLISHER = {JMLR.org},
@@ -330,7 +371,7 @@
   ABSTRACT = {Abstract: In this work we investigate the effect of the convolutional network depth on its accuracy in the large-scale image recognition setting. Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3x3) ...},
   AUTHOR = {Simonyan, K and Zisserman, A},
   BOOKTITLE = {{eprint ar{\{}X{\}}iv:arXiv:1409.1556v5}},
-  DATE = {2014},
+  DATE = {1409},
   TITLE = {{Very deep convolutional networks for large-scale image recognition}},
 }
 
@@ -352,88 +393,6 @@
   BOOKTITLE = {{Computer Vision and Pattern Recognition (CVPR)}},
   DATE = {2015},
   TITLE = {{Going Deeper with Convolutions}},
-}
-
-@ARTICLE{journals/iandc/HancockJLT96,
-  ABSTRACT = {k-Decision lists and decision trees play important roles in learning theory as well as in practical learning systems.k-Decision lists generalize classes such as monomials,k-DNF, andk-CNF, and like these subclasses they are polynomially PAC-learnable [R. Rivest,Mach. Learning2(1987), 229--246]. This leaves open the question of whetherk-decision lists can be learned as efficiently ask-DNF. We answer this question negatively in a certain sense, thus disproving a claim in a popular textbook [M. Anthony and N. Biggs, ``Computational Learning Theory,'' Cambridge Univ. Press, Cambridge, UK, 1992]. Decision trees, on the other hand, are not even known to be polynomially PAC-learnable, despite their widespread practical application. We will show that decision trees are not likely to be efficiently PAC-learnable. We summarize our specific results. The following problems cannot be approximated in polynomial time within a factor of 2log$\delta$ nfor any$\delta${<}1, unlessNP⊂DTIME[2polylog n]: a generalized set cover,k-decision lists,k-decision lists by monotone decision lists, and decision trees. Decision lists cannot be approximated in polynomial time within a factor ofn$\delta$, for some constant$\delta${>}0, unlessNP=P. Also,k-decision lists withl0--1 alternations cannot be approximated within a factor logl nunlessNP⊂DTIME[nO(log log n)] (providing an interesting comparison to the upper bound obtained by A. Dhagat and L. Hellerstein [in``FOCS '94,'' pp. 64--74]).},
-  AUTHOR = {Hancock, Thomas and Jiang, Tao and Li, Ming and Tromp, John},
-  URL = {http://www.sciencedirect.com/science/article/pii/S0890540196900401%7B%5C%%7D5Cnhttp://www.sciencedirect.com/science/article/pii/S0890540196900401/pdf?md5=59bdd8c077309262836d57b76a5a5577%7B&%7Dpid=1-s2.0-S0890540196900401-main.pdf},
-  DATE = {1996},
-  DOI = {10.1006/inco.1996.0040},
-  ISBN = {3540590420},
-  ISSN = {0890-5401},
-  JOURNALTITLE = {Information and Computation},
-  NUMBER = {2},
-  PAGES = {114--122},
-  TITLE = {{Lower Bounds on Learning Decision Lists and Trees}},
-  VOLUME = {126},
-}
-
-@BOOK{breiman84,
-  AUTHOR = {Breiman, Leo and Friedman, Jerome H and Olshen, Richard A and Stone, Charles J},
-  PUBLISHER = {CRC press},
-  BOOKTITLE = {{CA: Wadsworth International Group}},
-  DATE = {1984},
-  DOI = {10.1371/journal.pone.0015807},
-  ISBN = {978-0534980535},
-  ISSN = {19326203},
-  TITLE = {{Classification and regression trees}},
-}
-
-@ARTICLE{journals/neco/AmitG97,
-  AUTHOR = {Amit, Yali and Geman, Donald},
-  URL = {http://dblp.uni-trier.de/db/journals/neco/neco9.html%7B%5C#%7DAmitG97},
-  DATE = {1997},
-  JOURNALTITLE = {Neural Computation},
-  KEYWORDS = {dblp},
-  NUMBER = {7},
-  PAGES = {1545--1588},
-  TITLE = {{Shape Quantization And Recognition With Randomized Trees.}},
-  VOLUME = {9},
-}
-
-@ARTICLE{breiman2001random,
-  AUTHOR = {Breiman, Leo},
-  DATE = {2001},
-  JOURNALTITLE = {Machine Learning},
-  KEYWORDS = {forests random},
-  PAGES = {5--32},
-  TITLE = {{Random Forests}},
-  VOLUME = {45},
-}
-
-@ARTICLE{breiman1996bagging,
-  ABSTRACT = {Bagging predictors is a method for generating multiple versions of a pre-dictor and using these to get an aggregated predictor. The aggregation av-erages over the versions when predicting a numerical outcome and does a plurality v ote when predicting a class. The multiple versions are formed by making bootstrap replicates of the learning set and using these as new learning sets. Tests on real and simulated data sets using classiication and regression trees and subset selection in linear regression show that bagging can give substantial gains in accuracy. The vital element is the instability o f the prediction method. If perturbing the learning set can cause signiicant changes in the predictor constructed, then bagging can improve accuracy.},
-  AUTHOR = {Breiman, Leo},
-  PUBLISHER = {Springer},
-  DATE = {1996},
-  DOI = {10.1007/BF00058655},
-  ISSN = {0885-6125},
-  JOURNALTITLE = {Machine Learning},
-  KEYWORDS = {aggregation; averaging; bootstrap; combining},
-  NUMBER = {421},
-  PAGES = {123--140},
-  TITLE = {{Bagging Predictors}},
-  VOLUME = {24},
-}
-
-@REPORT{Sethi1990,
-  AUTHOR = {Sethi, I K},
-  INSTITUTION = {Dept. of Computer Sci, Wayne State Univ.},
-  BOOKTITLE = {{Proceedings of the {\{}IEEE{\}}}},
-  DATE = {1990},
-  NUMBER = {10},
-  PAGES = {1605--1613},
-  TITLE = {{Entropy Nets: From Decison Trees to Neural Networks}},
-  TYPE = {techreport},
-  VOLUME = {78},
-}
-
-@INPROCEEDINGS{Welbl2014casting,
-  AUTHOR = {Welbl, J},
-  BOOKTITLE = {{GCPR}},
-  DATE = {2014},
-  TITLE = {{Casting Random Forests as Artificial Neural Networks (and Profiting from It)}},
 }
 
 @ARTICLE{Lowe2004,
@@ -541,14 +500,6 @@
   PAGES = {121--167},
   TITLE = {{A tutorial on support vector machines for pattern recognition}},
   VOLUME = {2},
-}
-
-@ARTICLE{ILSVRC2015,
-  AUTHOR = {Russakovsky, Olga and Deng, Jia and Su, Hao and Krause, Jonathan and Satheesh, Sanjeev and Ma, Sean and Huang, Zhiheng and Karpathy, Andrej and Khosla, Aditya and Bernstein, Michael and Berg, Alexander C and Fei-Fei, Li},
-  DATE = {2015},
-  DOI = {10.1007/s11263-015-0816-y},
-  JOURNALTITLE = {International Journal of Computer Vision (IJCV)},
-  TITLE = {{ImageNet Large Scale Visual Recognition Challenge}},
 }
 
 @ARTICLE{bartlett1997,
@@ -750,6 +701,7 @@
   URL = {http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed%7B&%7Did=14403679%7B&%7Dretmode=ref%7B&%7Dcmd=prlinks},
   DATE = {1959},
   DOI = {10.1113/jphysiol.2009.174151},
+  ISSN = {00223751},
   JOURNALTITLE = {Journal of Physiology},
   KEYWORDS = {CEREBRAL CORTEX/physiology; NEURONS/physiology},
   PAGES = {574--591},
@@ -763,6 +715,108 @@
   DATE = {2016},
   PAGES = {5308--5317},
   TITLE = {{Structural-RNN: Deep learning on spatio-temporal graphs}},
+}
+
+@ARTICLE{mozer1989using,
+  AUTHOR = {Mozer, Michael C and Smolensky, Paul},
+  PUBLISHER = {Taylor \& Francis},
+  DATE = {1989},
+  JOURNALTITLE = {Connection Science},
+  NUMBER = {1},
+  PAGES = {3--16},
+  TITLE = {Using relevance to reduce network size automatically},
+  VOLUME = {1},
+}
+
+@INPROCEEDINGS{mozer1989skeletonization,
+  AUTHOR = {Mozer, Michael C and Smolensky, Paul},
+  BOOKTITLE = {Advances in neural information processing systems},
+  DATE = {1989},
+  PAGES = {107--115},
+  TITLE = {Skeletonization: A technique for trimming the fat from a network via relevance assessment},
+}
+
+@ARTICLE{castellano1997iterative,
+  AUTHOR = {Castellano, Giovanna and Fanelli, Anna Maria and Pelillo, Marcello},
+  PUBLISHER = {IEEE},
+  DATE = {1997},
+  JOURNALTITLE = {IEEE Transactions on Neural Networks},
+  NUMBER = {3},
+  PAGES = {519--531},
+  TITLE = {{An iterative pruning algorithm for feedforward neural networks}},
+  VOLUME = {8},
+}
+
+@ARTICLE{gorodkin1993quantitative,
+  AUTHOR = {Gorodkin, Jan and Hansen, Lars Kai and Krogh, Anders and Svarer, Claus and Winther, Ole},
+  PUBLISHER = {World Scientific},
+  DATE = {1993},
+  JOURNALTITLE = {International journal of neural systems},
+  NUMBER = {02},
+  PAGES = {159--169},
+  TITLE = {A quantitative study of pruning by optimal brain damage},
+  VOLUME = {4},
+}
+
+@INPROCEEDINGS{han2015learning,
+  AUTHOR = {Han, Song and Pool, Jeff and Tran, John and Dally, William},
+  BOOKTITLE = {Advances in Neural Information Processing Systems},
+  DATE = {2015},
+  PAGES = {1135--1143},
+  TITLE = {{Learning both weights and connections for efficient neural network}},
+}
+
+@ARTICLE{setiono1997penalty,
+  AUTHOR = {Setiono, Rudy},
+  PUBLISHER = {MIT Press},
+  DATE = {1997},
+  JOURNALTITLE = {Neural computation},
+  NUMBER = {1},
+  PAGES = {185--204},
+  TITLE = {A penalty-function approach for pruning feedforward neural networks},
+  VOLUME = {9},
+}
+
+@ARTICLE{frean1990upstart,
+  AUTHOR = {Frean, Marcus},
+  PUBLISHER = {MIT Press},
+  DATE = {1990},
+  JOURNALTITLE = {Neural computation},
+  NUMBER = {2},
+  PAGES = {198--209},
+  TITLE = {The upstart algorithm: A method for constructing and training feedforward neural networks},
+  VOLUME = {2},
+}
+
+@INPROCEEDINGS{ahmad1989scaling,
+  AUTHOR = {Ahmad, Subutai and Tesauro, Gerald},
+  BOOKTITLE = {Advances in neural information processing systems},
+  DATE = {1989},
+  PAGES = {160--168},
+  TITLE = {Scaling and generalization in neural networks: a case study},
+}
+
+@INPROCEEDINGS{Kim2016,
+  ABSTRACT = {Although the latest high-end smartphone has powerful CPU and GPU, running deeper convolutional neural networks (CNNs) for complex tasks such as ImageNet classification on mobile devices is challenging. To deploy deep CNNs on mobile devices, we present a simple and effective scheme to compress the entire CNN, which we call one-shot whole network compression. The proposed scheme consists of three steps: (1) rank selection with variational Bayesian matrix factorization, (2) Tucker decomposition on kernel tensor, and (3) fine-tuning to recover accumulated loss of accuracy, and each step can be easily implemented using publicly available tools. We demonstrate the effectiveness of the proposed scheme by testing the performance of various compressed CNNs (AlexNet, VGGS, GoogLeNet, and VGG-16) on the smartphone. Significant reductions in model size, runtime, and energy consumption are obtained, at the cost of small loss in accuracy. In addition, we address the important implementation level issue on 1?1 convolution, which is a key operation of inception module of GoogLeNet as well as CNNs compressed by our proposed scheme.},
+  AUTHOR = {Kim, Yong-Deok and Park, Eunhyeok and Yoo, Sungjoo and Choi, Taelim and Yang, Lu and Shin, Dongjun},
+  URL = {http://arxiv.org/abs/1511.06530},
+  BOOKTITLE = {{International Conference on Learning Representations (ICLR)}},
+  DATE = {2016},
+  EPRINT = {1511.06530},
+  EPRINTTYPE = {arXiv},
+  PAGES = {1--16},
+  TITLE = {{Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications}},
+}
+
+@ARTICLE{schwartz1990exhaustive,
+  AUTHOR = {Schwartz, Daniel B and Samalam, Vijay K and Solla, Sara A and Denker, John S},
+  PUBLISHER = {MIT Press},
+  DATE = {1990},
+  JOURNALTITLE = {Neural Computation},
+  NUMBER = {3},
+  PAGES = {374--385},
+  TITLE = {Exhaustive learning},
+  VOLUME = {2},
 }
 
 @MISC{1502.02551v1,
@@ -847,20 +901,6 @@
   TITLE = {{Gradient flow in recurrent nets: the difficulty of learning long-term dependencies}},
 }
 
-@INCOLLECTION{Bottou2012sgdtricks,
-  AUTHOR = {Bottou, Léon},
-  EDITOR = {Montavon, Grégoire and Orr, Genevieve B and Müller, Klaus-Robert},
-  PUBLISHER = {Springer},
-  BOOKTITLE = {{Neural Networks: Tricks of the Trade (2nd ed.)}},
-  DATE = {2012},
-  ISBN = {978-3-642-35288-1},
-  KEYWORDS = {dblp},
-  PAGES = {421--436},
-  SERIES = {{Lecture Notes in Computer Science}},
-  TITLE = {{Stochastic Gradient Descent Tricks.}},
-  VOLUME = {7700},
-}
-
 @ARTICLE{Jia2014,
   ABSTRACT = {Caffe provides multimedia scientists and practitioners with a clean and modifiable framework for state-of-the-art deep learning algorithms and a collection of reference models. The framework is a BSD-licensed C++ library with Python and MATLAB bindings for training and deploying general-purpose convolutional neural networks and other deep models efficiently on commodity architectures. Caffe fits industry and internet-scale media needs by CUDA GPU computation, processing over 40 million images a day on a single K40 or Titan GPU ({\$}\backslashapprox{\$} 2.5 ms per image). By separating model representation from actual implementation, Caffe allows experimentation and seamless switching among platforms for ease of development and deployment from prototyping machines to cloud environments. Caffe is maintained and developed by the Berkeley Vision and Learning Center (BVLC) with the help of an active community of contributors on GitHub. It powers ongoing research projects, large-scale industrial applications, and startup prototypes in vision, speech, and multimedia.},
   AUTHOR = {Jia, Yangqing and Shelhamer, Evan and Donahue, Jeff and Karayev, Sergey and Long, Jonathan and Girshick, Ross and Guadarrama, Sergio and Darrell, Trevor},
@@ -922,21 +962,6 @@
   PAGES = {1319--1327},
   TITLE = {{Maxout Networks}},
   VOLUME = {28},
-}
-
-@INPROCEEDINGS{Ba2013dothey,
-  ABSTRACT = {Currently, deep neural networks are the state of the art on problems such as speech recognition and computer vision. In this extended abstract, we show that shal- low feed-forward networks can learn the complex functions previously learned by deep nets and achieve accuracies previously only achievable with deep models. Moreover, in some cases the shallow neural nets can learn these deep functions using a total number of parameters similar to the original deep model. We eval- uate our method on the TIMIT phoneme recognition task and are able to train shallow fully-connected nets that perform similarly to complex, well-engineered, deep convolutional architectures. Our success in training shallow neural nets to mimic deeper models suggests that there probably exist better algorithms for train- ing shallow feed-forward nets than those currently available.},
-  AUTHOR = {Ba, Lj and Caurana, R},
-  URL = {http://arxiv.org/abs/1312.6184},
-  BOOKTITLE = {{arXiv preprint arXiv:1312.6184}},
-  DATE = {2013},
-  DOI = {10.1038/nature14539},
-  EPRINT = {arXiv:1312.6184v5},
-  EPRINTTYPE = {arXiv},
-  ISSN = {0028-0836},
-  PAGES = {1--6},
-  TITLE = {{Do Deep Nets Really Need to be Deep ?}},
-  VOLUME = {2014},
 }
 
 @INPROCEEDINGS{Denton2014efficient,
@@ -1024,18 +1049,6 @@
   VOLUME = {37},
 }
 
-@INPROCEEDINGS{Kim2016,
-  ABSTRACT = {Although the latest high-end smartphone has powerful CPU and GPU, running deeper convolutional neural networks (CNNs) for complex tasks such as ImageNet classification on mobile devices is challenging. To deploy deep CNNs on mobile devices, we present a simple and effective scheme to compress the entire CNN, which we call one-shot whole network compression. The proposed scheme consists of three steps: (1) rank selection with variational Bayesian matrix factorization, (2) Tucker decomposition on kernel tensor, and (3) fine-tuning to recover accumulated loss of accuracy, and each step can be easily implemented using publicly available tools. We demonstrate the effectiveness of the proposed scheme by testing the performance of various compressed CNNs (AlexNet, VGGS, GoogLeNet, and VGG-16) on the smartphone. Significant reductions in model size, runtime, and energy consumption are obtained, at the cost of small loss in accuracy. In addition, we address the important implementation level issue on 1?1 convolution, which is a key operation of inception module of GoogLeNet as well as CNNs compressed by our proposed scheme.},
-  AUTHOR = {Kim, Yong-Deok and Park, Eunhyeok and Yoo, Sungjoo and Choi, Taelim and Yang, Lu and Shin, Dongjun},
-  URL = {http://arxiv.org/abs/1511.06530},
-  BOOKTITLE = {{International Conference on Learning Representations (ICLR)}},
-  DATE = {2016},
-  EPRINT = {1511.06530},
-  EPRINTTYPE = {arXiv},
-  PAGES = {1--16},
-  TITLE = {{Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications}},
-}
-
 @INPROCEEDINGS{Cogswell2016,
   AUTHOR = {Cogswell, Michael and Ahmed, Faruk and Girshick, Ross B and Zitnick, Larry and Batra, Dhruv},
   BOOKTITLE = {{International Conference on Learning Representations}},
@@ -1077,6 +1090,18 @@
   VOLUME = {2},
 }
 
+@REPORT{Sethi1990,
+  AUTHOR = {Sethi, I K},
+  INSTITUTION = {Dept. of Computer Sci, Wayne State Univ.},
+  BOOKTITLE = {{Proceedings of the {\{}IEEE{\}}}},
+  DATE = {1990},
+  NUMBER = {10},
+  PAGES = {1605--1613},
+  TITLE = {{Entropy Nets: From Decison Trees to Neural Networks}},
+  TYPE = {techreport},
+  VOLUME = {78},
+}
+
 @INPROCEEDINGS{montillo2011entangled,
   ABSTRACT = {This work addresses the challenging problem of simultaneously segmenting multiple anatomical structures in highly varied CT scans. We propose the entangled decision forest (EDF) as a new discriminative classifier which augments the state of the art decision forest, resulting in higher prediction accuracy and shortened decision time. Our main contribution is two-fold. First, we propose entangling the binary tests applied at each tree node in the forest, such that the test result can depend on the result of tests applied earlier in the same tree and at image points offset from the voxel to be classified. This is demonstrated to improve accuracy and capture long-range semantic context. Second, during training, we propose injecting randomness in a guided way, in which node feature types and parameters are randomly drawn from a learned (nonuniform) distribution. This further improves classification accuracy. We assess our probabilistic anatomy segmentation technique using a labeled database of CT image volumes of 250 different patients from various scan protocols and scanner vendors. In each volume, 12 anatomical structures have been manually segmented. The database comprises highly varied body shapes and sizes, a wide array of pathologies, scan resolutions, and diverse contrast agents. Quantitative comparisons with state of the art algorithms demonstrate both superior test accuracy and computational efficiency.},
   AUTHOR = {Montillo, Albert and Shotton, Jamie and Winn, John and Iglesias, Juan Eugenio and Metaxas, Dimitri and Criminisi, Antonio},
@@ -1110,23 +1135,10 @@
   TITLE = {{Practical Bayesian Optimization of Machine Learning Algorithms}},
 }
 
-@inproceedings{martens2010deep,
-  author = "Martens, James",
-  booktitle = "{Proceedings of the 27th International Conference on Machine Learning (ICML-10)}",
-  pages = "735--742",
-  title = "{Deep learning via Hessian-free optimization}",
-  year = "2010"
+@ARTICLE{zhang2017primal,
+  AUTHOR = {Zhang, Ting and Qi, Guo-Jun and Xiao, Bin and Wang, Jingdong},
+  DATE = {2017},
+  JOURNALTITLE = {arXiv preprint arXiv:1707.02725},
+  TITLE = {{Primal-Dual Group Convolutions for Deep Neural Networks}},
 }
 
-@article{polyak1964some,
-  title={Some methods of speeding up the convergence of iteration methods},
-  author={Polyak, Boris T},
-  journal={USSR Computational Mathematics and Mathematical Physics},
-  volume={4},
-  number={5},
-  pages={1--17},
-  year={1964},
-  publisher={Elsevier}
-}
-
-@COMMENT{x-kbibtex-personnameformatting=<%l><, %f>}
