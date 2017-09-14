@@ -122,17 +122,17 @@
         \caption[Learned Cross-Shaped Filters]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the ILSVRC dataset.}\label{fig:conv1filters}
     \end{figure}
     
-    Note that, in general, more than two different sizes of basis filter might be used in the composite layer. For example,  \cref{fig:ourmethodfullrank} shows a combination of three sets of filters with spatial dimensions $w \times 1$, $1 \times h$, and $w \times h$. Also note that an interesting option is to omit the $1 \times 1$ linear combination layer and instead allow the connection weights in a subsequent network layer to learn to combine the basis filters of the preceding layer (despite any intermediate non-linearity, \eg ReLUs). This possibility is explored in practice in the Results section.
+    Note that, in general, more than two different sizes of basis filter might be used in the composite layer. For example,  \cref{fig:ourmethodfullrank} shows a combination of three sets of filters with spatial dimensions $w \times 1$, $1 \times h$, and $w \times h$. Also note that an interesting option is to omit the $1 \times 1$ linear combination layer and instead allow the connection weights in a subsequent network layer to learn to combine the basis filters of the preceding layer (despite any intermediate non-linearity, \eg \glspl{relu}). This possibility is explored in practice in the Results section.
     
     In that our method uses a combination of filters in a composite layer, it is similar to the `GoogLeNet' of \citet{Szegedy2014going} which uses `inception' modules comprising several (square) filters of different sizes ranging from 1$\times$1 to 5$\times$5. In our case, however, we are implicitly learning linear combinations of less computationally expensive filters with different orientations (\eg 3$\times$1 and 1$\times$3 filters), rather than combinations of filters of different sizes. Amongst networks with similar computational requirements, GoogLeNet is one of the most accurate for large scale image classification tasks (see \cref{fig:vggplots}), partly due to the use of heterogeneous filters in the inception modules, but also the use of low-dimensional embeddings and global pooling.
 
     \section{Training CNNs with mixed-shape low-rank filters}\label{initialization}
-    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a ReLU). In \cref{initializationderivation}, we show the details of our derivation, generalizing the approach of \citet{He2015b} to the initialization of `composite' layers comprising several groups of filters of different spatial dimensions (see \cref{initializationderivation}, \cref{fig:compositelayers}). This is one of the main contributions of this work.
+    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a \gls{relu}). In \cref{initializationderivation}, we show the details of our derivation, generalizing the approach of \citet{He2015b} to the initialization of `composite' layers comprising several groups of filters of different spatial dimensions (see \cref{initializationderivation}, \cref{fig:compositelayers}). This is one of the main contributions of this work.
     
     \section{Initializing CNNs with mixed-shape low-rank filters}\label{initializationderivation}
     At the start of training, network weights are initialized at random using samples drawn from a Gaussian distribution with a standard deviation parameter specified separately for each layer. We found that the setting of these parameters was critical to the success of network training and difficult to get right, particularly because published parameter settings used elsewhere were not suitable for our new network architectures. With unsuitable weight initialization, training may fail due to {\em exploding gradients}, where  back propagated gradients grow so large as to cause numeric overflow, or {\em vanishing gradients} where back propagated gradients grow so small that their effect is dwarfed by that of weight decay such that loss does not decrease during training~\citep{Hochreiter01gradientflow}.
     
-    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a ReLU). Their approach works by ensuring that the magnitudes of back-propagated gradients remain approximately the same throughout the network. Otherwise, if the gradients were inappropriately scaled by some factor (\eg $\beta$) then the final back-propagated signal would be scaled by a potentially much larger factor ($\beta^L$ after $L$ layers).
+    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a \gls{relu}). Their approach works by ensuring that the magnitudes of back-propagated gradients remain approximately the same throughout the network. Otherwise, if the gradients were inappropriately scaled by some factor (\eg $\beta$) then the final back-propagated signal would be scaled by a potentially much larger factor ($\beta^L$ after $L$ layers).
     
     In what follows, we adopt notation similar to that of \citet{He2015b}, and follow their derivation of the appropriate standard deviation for weight initialization. However, we also generalize their approach to the initialization of `composite' layers comprising several groups of filters of different spatial dimensions (see \cref{fig:compositelayers}). This is one of the main contributions of this work.
     
@@ -141,7 +141,7 @@
     \begin{equation}
     \mathbf{y}_l =\mathbf{W}_l \mathbf{x}_l + \mathbf{b}_l.
     \end{equation}
-    Here $\mathbf{y}_l$ is a $d \times 1$ vector representing a pixel in the output feature map and $\bf x_l$ is a $ w h c \times 1$ vector that represents a $w \times h$ subregion of the $c$-channel input feature map. $\mathbf{W}_l$ is the $d\times n$ weight matrix, where $d$ is the number of filters and $n$ is the size of a filter, \ie $n = w h c$ for a filter with spatial dimensions $w \times h$ operating on an input feature map of $c$ channels, and $\mathbf{b}_l$ is the bias. Finally $\mathbf{x}_l = f(\mathbf{y}_{l-1})$ is the output of the previous layer passed through an activation function $f$ (\eg the application of a ReLU to each element of $\mathbf{y}_{l-1}$).
+    Here $\mathbf{y}_l$ is a $d \times 1$ vector representing a pixel in the output feature map and $\bf x_l$ is a $ w h c \times 1$ vector that represents a $w \times h$ subregion of the $c$-channel input feature map. $\mathbf{W}_l$ is the $d\times n$ weight matrix, where $d$ is the number of filters and $n$ is the size of a filter, \ie $n = w h c$ for a filter with spatial dimensions $w \times h$ operating on an input feature map of $c$ channels, and $\mathbf{b}_l$ is the bias. Finally $\mathbf{x}_l = f(\mathbf{y}_{l-1})$ is the output of the previous layer passed through an activation function $f$ (\eg the application of a \gls{relu} to each element of $\mathbf{y}_{l-1}$).
     
     \paragraph{Backward Propagation.}
     During back-propagation, the gradient of a convolutional layer is computed as
@@ -165,7 +165,7 @@
     \Expect[\Delta y_l] = \Expect[f^\prime (y_l)] \Expect[ \Delta x_{l+1}].
     \end{equation}
     
-    For the ReLU case, $f'(y_l)$ is zero or one with equal probability. 
+    For the \gls{relu} case, $f'(y_l)$ is zero or one with equal probability. 
     Like \citet{glorot2010understanding}, we assume that $w_l$ and $\Delta y_l$ are independent of each other. Thus, \cref{eq:back_prop_gradient} implies that $\Delta x_l$ has zero mean for all $l$, when $w_l$ is initialized by a distribution that is symmetric around zero. Thus we have $\Expect[\Delta y_l] = \frac{1}{2}\Expect[\Delta x_{l+1}]= 0$ and also $\Expect[(\Delta y_l)^2] = \Var[\Delta y_l] = \frac{1}{2} \Var[\Delta x_{l+1}]$. Now, since each element of $\Delta \mathbf{x}_l$ is a summation of $\hat n$ products of elements of $\hat{\mathbf{W}}_l$ and elements of $\Delta \mathbf{y}_l$, we can compute the variance of the gradients in \cref{eq:back_prop_gradient}:
     
     \begin{equation}
@@ -181,7 +181,7 @@
     \frac{1}{2} \hat{n} \Var[w_l] = 1.
     \end{equation}
     
-    This leads to the result of \citet{He2015b}, in that a layer with $\hat{n}_l$ connections followed by a ReLU activation function should be initialized with a zero-mean Gaussian distribution with standard deviation $\sqrt{2/ \hat{n}_l}$.
+    This leads to the result of \citet{He2015b}, in that a layer with $\hat{n}_l$ connections followed by a \gls{relu} activation function should be initialized with a zero-mean Gaussian distribution with standard deviation $\sqrt{2/ \hat{n}_l}$.
     
     \paragraph{Weight Initialization in Composite Layers.}
     %%% Figure
@@ -211,13 +211,13 @@
     \hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}.
     \end{equation}
     
-    In the case of a ReLU non-linearity, this leads to a zero-mean Gaussian distribution with standard deviation:
+    In the case of a \gls{relu} non-linearity, this leads to a zero-mean Gaussian distribution with standard deviation:
     
     \begin{equation}
     \sigma = \sqrt{\frac{2}{\sum{ w^{[i]} h^{[i]} d^{[i]}}}}.
     \end{equation}
     
-    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $w^{[i]} h^{[i]} d^{[i]}$ outgoing connections should be initialized as if it is a single layer with  $\hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}$. Thus in the case of a ReLU non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation:
+    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $w^{[i]} h^{[i]} d^{[i]}$ outgoing connections should be initialized as if it is a single layer with  $\hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation:
     
     \begin{equation}
     \sigma = \sqrt{\frac{2}{\sum{ w^{[i]} h^{[i]} d^{[i]}}}}.
@@ -466,7 +466,7 @@
     
     \paragraph{Full-Rank Mixture.} An interesting question concerns the impact on accuracy of combining a small proportion of 3×3 filters with the 1×3 and 3×1 filters used in ‘vgg-gmp-lr-join’. To answer this question, we trained a network, \textbf{vgg-gmp-lr-join-wfull}, with a mixture of 25\% $3 \times 3$ and 75\% $1 \times 3$ and $3 \times 1$ filters, while preserving the total number of filters of the baseline network (as illustrated in \cref{fig:ourmethodfullrank}). This network was significantly more accurate than both `vgg-gmp-lr-join' and the baseline, with a top-5 center crop accuracy of 89.7\% on ILSVRC, with a computational savings of approx.~16\% over our baseline. We note that the accuracy is approx.~1 percentage point higher than GoogLeNet.
     
-    \paragraph{Implicitly Learned Combinations.} In addition, we try a network similar to vgg-gmp-lr-join but without the $1 \times 1$ convolutional layer (as shown in \cref{fig:ourmethod}) used to sum the contributions of $3 \times 1$ and $1 \times 3$ filters (\textbf{vgg-gmp-lr}). Interestingly, because of the elimination of the extra $1\times 1$ layers, this gives an additional compute saving such that this model is only $1/3^{\textrm{rd}}$ of the compute of our baseline, with no reduction in accuracy. This seems to be a consequence of the fact that the subsequent convolutional layer is itself capable of learning effective combinations of filter responses even after the intermediate ReLU non-linearity.
+    \paragraph{Implicitly Learned Combinations.} In addition, we try a network similar to vgg-gmp-lr-join but without the $1 \times 1$ convolutional layer (as shown in \cref{fig:ourmethod}) used to sum the contributions of $3 \times 1$ and $1 \times 3$ filters (\textbf{vgg-gmp-lr}). Interestingly, because of the elimination of the extra $1\times 1$ layers, this gives an additional compute saving such that this model is only $1/3^{\textrm{rd}}$ of the compute of our baseline, with no reduction in accuracy. This seems to be a consequence of the fact that the subsequent convolutional layer is itself capable of learning effective combinations of filter responses even after the intermediate \gls{relu} non-linearity.
     
     We also trained such a network with double the number of convolutional filters (\textbf{vgg-gmp-lr-2x}), \ie with an equal number of $1 \times 3$ and $3 \times 1$ filters, or $2c$ filters as shown in \cref{fig:ourmethod}. We found this to increase accuracy further (88.9\% Top-5 on ILSVRC) while still being approximately 58\% faster than our baseline network.
     

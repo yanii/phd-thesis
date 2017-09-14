@@ -22,7 +22,7 @@ In this chapter we will demonstrate that some of the contemporary issues in trai
 \section{Co-adpation of Hidden Units in Deep Networks}
 \citet{Hinton2012} proposed dropout as a regularization method for neural networks. In randomly dropping out hidden units -- zeroing out a random subset on each layer -- it was claimed that complex co-adaptions of these hidden units on training data, which do not generalize to the test set, are prevented. In practice dropout has seen remarkable success in improving the generalization of large neural networks, especially in the context of large fully-connected layers. Several follow-up methods have similarly suggested alternative methods of preventing this co-adaption\mynote{TODO: cite}.
 
-Although empirically dropout works well, the claim that hidden units learn to co-adapt has not itself been well demonstrated, and seemingly straightforward methods of doing have serious drawbacks. Showing the covariance/correlation between pairs of hidden units doesn't give the full story, since covariance shows the linear relationship between the units, but in a deep network this relationship is likely to be highly non-linear. Mutual information cannot be used either since most modern networks need to use unbounded activation functions, such as ReLUs, in order to train effectively.
+Although empirically dropout works well, the claim that hidden units learn to co-adapt has not itself been well demonstrated, and seemingly straightforward methods of doing have serious drawbacks. Showing the covariance/correlation between pairs of hidden units doesn't give the full story, since covariance shows the linear relationship between the units, but in a deep network this relationship is likely to be highly non-linear. Mutual information cannot be used either since most modern networks need to use unbounded activation functions, such as \glspl{relu}, in order to train effectively.
 
 A crude but effective method of analyzing the importance of hidden units in neural networks is ablation -- zeroing out certain units in a trained network of interest, and observing the effect on the training and test loss. This method can be extended to empirically evaluate the importance of pairs of hidden units in trained neural networks. For each pair of hidden units, zero out the parameters of both units, and observe the effect on the loss calculated over the training/test set: pairwise ablation. This is however very expensive since each pair of hidden units must be evaluated over the entire dataset.
 
@@ -129,7 +129,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 While, as expected, most pairwise ablations result in a decrease in accuracy, a small but significant number of pairwise ablations result in an \emph{increase} in accuracy (and decrease in loss). For the validation set this seems to provide clear evidence of hidden units co-adapting, and hence over-fitting to the training data. Surprisingly however, this effect is also evident when evaluating on the training set, and by definition cannot be explained by over-fitting. We observed similar effects on all other layers of the network (see supplemental).
 
 
-\paragraph{MNIST.} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer MNIST network. With a fully-connected network with one hidden layer, ReLU activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
+\paragraph{MNIST.} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer MNIST network. With a fully-connected network with one hidden layer, \gls{relu} activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
 
 \begin{figure}[tp]
 \centering
@@ -158,7 +158,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
 
-\legend{SGD, Momentum, Weight Decay, Dropout, HF}
+\legend{\gls{sgd}, Momentum, Weight Decay, Dropout, HF}
 
 \end{axis}
 
@@ -394,7 +394,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{5} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{5} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
 
-\legend{SGD, Momentum, Weight Decay, Dropout, HF}
+\legend{\gls{sgd}, Momentum, Weight Decay, Dropout, HF}
 
 \end{axis}
 
@@ -471,9 +471,9 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \label{fig:mnist_ablation_stats}
 \end{figure}
 
-\cref{fig:mnist_ablation} shows the minimum and maximum increase in training loss/accuracy and test loss/accuracy for the MNIST network with different numbers of hidden units, when pairwise filters are ablated, as evaluated on the entire MNIST training/test sets. The effect of training with weight decay, dropout and momentum are also compared with vanilla SGD. Weight decay and dropout are considered to be regularization methods, while momentum is an optimization trick that is intended to help avoid some issues of using a first order optimization -- it can help speed up learning in the presence of some types of pathological curvature that would otherwise lead to slow optimization or a poor local minima with vanilla SGD.
+\cref{fig:mnist_ablation} shows the minimum and maximum increase in training loss/accuracy and test loss/accuracy for the MNIST network with different numbers of hidden units, when pairwise filters are ablated, as evaluated on the entire MNIST training/test sets. The effect of training with weight decay, dropout and momentum are also compared with vanilla \gls{sgd}. Weight decay and dropout are considered to be regularization methods, while momentum is an optimization trick that is intended to help avoid some issues of using a first order optimization -- it can help speed up learning in the presence of some types of pathological curvature that would otherwise lead to slow optimization or a poor local minima with vanilla \gls{sgd}.
 
-Momentum clearly helps avoid co-adaption the most, with there being no increase in accuracy/decrease in loss at training time, as compared to vanilla SGD where co-adaption is significant. Taken by itself, this observation would indicate that co-adaption is a symptom of an optimization problem. Weight decay does not seem to have a helpful effect on co-adaption, if anything it may exacerbate the phenomenon. As a form of regularization, this might be expected, as it should help generalization, not training fit. On the other hand Dropout seems to reduce the number of co-adapted units significantly, and is even effective at reducing co-adaption at \emph{training time}. If dropout is a regularization method, then this seems to conflict with our findings from weight decay and momentum.
+Momentum clearly helps avoid co-adaption the most, with there being no increase in accuracy/decrease in loss at training time, as compared to vanilla \gls{sgd} where co-adaption is significant. Taken by itself, this observation would indicate that co-adaption is a symptom of an optimization problem. Weight decay does not seem to have a helpful effect on co-adaption, if anything it may exacerbate the phenomenon. As a form of regularization, this might be expected, as it should help generalization, not training fit. On the other hand Dropout seems to reduce the number of co-adapted units significantly, and is even effective at reducing co-adaption at \emph{training time}. If dropout is a regularization method, then this seems to conflict with our findings from weight decay and momentum.
 
 \subsection{Dropout as an optimization trick}
 Dropout can also be thought of as a orthogonal projection of the error surface onto a random lower-dimensional subspace, in which the curvature of the error surface may no longer exhibit pathological issues, and optimization may be easier. For example, if in a subset of the dimensions, a deep valley exists, and these dimensions are dropped-out. Random projection is a well established method for dimensionality reduction of high dimensional spaces~\citep{kaski1998dimensionality,fodor2002survey}.

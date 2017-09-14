@@ -16,7 +16,7 @@
 \section{Neural Networks}
 Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
 %, used in regression and classification problems.
- Although initially biologically inspired, Neural Networks (NN) within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
+ Although initially biologically inspired, \gls{nn} within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
 
 We will not cover the long and colourful history of neural networks (for this we recommend reading the introduction of \citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of \citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to \citet{goodfellow2016deep}. 
 
@@ -55,7 +55,7 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \caption[A single layer neural network.]{\textbf{An illustration of a simple single layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a multi-layer perceptron (MLP) --- an unfortunate, but common, misnomer of any multi-layer neural network.
+then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
@@ -393,16 +393,16 @@ At the opposite end of the spectrum there is \emph{batch} training where the gra
 where $T$ is the number of training samples in $X$. Batch training gives us the true gradient, however it is also very expensive, since it requires us to perform the forward pass of the network over all training samples for every update. 
 
 \subsubsection{Stochastic Gradient Descent}
-Instead of computing the gradient on only one training sample, or over the entire training set, we might instead use a significant subset of the training set --- a \emph{mini-batch}. This approach is called Stochastic Gradient Descent (SGD).
+Instead of computing the gradient on only one training sample, or over the entire training set, we might instead use a significant subset of the training set --- a \emph{mini-batch}. This approach is called \gls{sgd}.
 
-When using SGD, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$,
+When using \gls{sgd}, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$,
 \begin{equation}
 \begin{aligned}
     \Delta w_{ij} &= -\lambda \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\mathbf{x}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
      \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
-where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie{}a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of SGD\@. 
+where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie{}for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie{}a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of \gls{sgd}. 
 
 It has been observed in practice that adding noise to the gradient by using stochastic gradient descent often helps generalization compared to batch gradient descent, perhaps by preventing overfitting. Note that even if we use the true gradient for the training dataset, the training set $X$ is only a sampling of the population distribution we want our network to generalize to.
 
@@ -424,7 +424,7 @@ and they hyperbolic tangent,
 	f(x) = \tanh(x).
 \end{equation}
 
-An issue with sigmoidal activations functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks tend to use the \emph{ReLU} activation function, as described in \cref{section:relu}.
+An issue with sigmoidal activations functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks tend to use the \gls{relu} activation function, as described in \cref{section:relu}.
 
 
 \subsection{Deep \vs Shallow Neural Networks}
@@ -631,11 +631,11 @@ Both of these functions have the nice properties that their range is normalized 
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-Rectified linear units (ReLU) were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function plotted in \cref{fig:relu}, 
+\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function plotted in \cref{fig:relu}, 
 \begin{equation}
 f(x) = \max(0,x).
 \end{equation} 
-ReLUs do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
+\glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
 Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
@@ -734,7 +734,7 @@ Most state-of-the-art supervised deep networks now use batch normalization along
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this thesis, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
 
 \subsection{AlexNet}
-Training \emph{deep} networks, that is neural networks with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, ReLU activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
+Training \emph{deep} networks, that is neural networks with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, \gls{relu} activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
 
 AlexNet notably used training-time and test-time augmentation to achieve its state of the art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the PCA components over all RGB pixels in the image are used to perturb the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and its mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these models. 
 
@@ -744,7 +744,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network in Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie ReLU) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
+    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network in Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie{}\gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
 \afterpage{
 \begin{landscape}
