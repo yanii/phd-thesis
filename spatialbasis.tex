@@ -804,18 +804,12 @@
     
     \section{Discussion}
     %We found our network architecture, which learns a small set of $3 \times 3$ basis filters along with many $1\times 3$~/~$3\times 1$ basis filters, gave the most impressive results. Such a model, `vgg-lr-wfull', increased the top-5 center crop validation accuracy on ILSVRC by 1 percentage points in accuracy (89.7\% \vs 88.7\%) while reducing computation by 16\%, over our baseline network with global max-pooling. Although we did not try such a configuration of GoogLeNet, our `googlenet-lr' network using only $1\times 3$~/~$3\times 1$ and $1\times 5$~/~$5\times 1$ basis filters within the inception modules obtained the smallest model size while maintaining comparable accuracy, using 26\% less compute than GoogLeNet and 41\% less model parameters.`
-    
+    This chapter has presented a method to train convolutional neural networks from scratch using low-rank filters. This is made possible by a new way of initializing the network’s weights which takes into consideration the presence of differently shape filters in composite layers. 
+    Validation on image classification in three popular datasets confirms similar or higher accuracy than state of the art, with much greater computational efficiency. 
+
     It is somewhat surprising that networks based on learning filters with less representational ability are able to do as well, or better, than CNNs with full $k\times k$ filters on the task of image classification. However, a lot of interesting small-scale image structure is well-characterized by low-rank filters, \eg edges and gradients. Our experiments training a separable (rank-1) model (`vgg-gmp-sf') on ILSVRC and MIT Places show surprisingly high accuracy on what are considered challenging problems --- approx.\ 88\% top-5 accuracy on ILSVRC --- but not enough to obtain comparable accuracies to the models on which they are based.
     
     Given that most discriminative filters learned for image classification appear to be low-rank, we instead structure our architectures with a set of basis filters in the way illustrated in \cref{fig:ourmethodfullrank}. This allows our networks to learn the most effective combinations of complex (\eg $k\times k$) and simple (\eg $1\times k$, $k\times 1$) filters. Furthermore, in restricting how many complex spatial filters may be learned, this architecture prevents over-fitting, and helps improve generalization. Even in our models where we do not use square $k\times k$ filters, we obtain comparable accuracies to the baseline model, since the rank-2 cross-shaped filters effectively learned as a combination of $3 \times 1$ and $1 \times 3$ filters are capable of representing more complex local pixel relations than rank-1 filters.
-    
-    \section{Conclusion}
-    This chapter has presented a method to train convolutional neural networks from scratch using low-rank filters. This is made possible by a new way of initializing the network’s weights which takes into consideration the presence of differently shape filters in composite layers. 
-    Validation on image classification in three popular datasets confirms similar or higher accuracy than state of the art, with much greater computational efficiency. 
-    
+
     Recent advances in state-of-the-art accuracy with CNNs for image classification have come at the cost of increasingly large and computational complex models. We believe our results to show that learning computationally efficient models with fewer, more relevant parameters, can prevent over-fitting, increase generalization and thus also increase accuracy.
-    
-    %\subsection*{Future Work}
-    %This paper has addressed the spatial extents of convolutional filters in CNNs, however the channel extents also exhibit some redundancy, as highlighted by \citet{journals/corr/JaderbergVZ14}, and exploited in the form of low-dimensional embeddings by \citet{Lin2014,Szegedy2014going}. We intend to further explore how our methods can be extended to learn and combine even smaller basis filters and filters with more diverse shapes.
-    
 \end{document}
