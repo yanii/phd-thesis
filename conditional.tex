@@ -139,8 +139,7 @@
 	\subsection{Conditional Networks}
 	The generalization, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
 	
-	\section{Results}
-	
+	\section[Results]{Results\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
 	\subsection{Imagenet Large Scale Visual Recognition Challenge (ILSVRC)}
 	We first validate the use of conditional networks for image classification on the ILSVRC dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\citep{Krizhevsky2012} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
 	
@@ -182,7 +181,7 @@
 	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
 	training time given its higher efficiency.
 	
-	\subsection{Accuracy \vs efficiency results}
+	\subsection{Imagenet}
 	In order to compare different network architectures as fairly as possible, here we did not use any training
 	augmentation aside from that supported by Caffe~\citep{Jia2014} (mirroring/random crops). Similarly we report test-time 
 	accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
@@ -212,7 +211,7 @@
 	
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time 
-	cost\footnote{measured here as number of multiply-accumulate operations. We have observed this measure 
+	cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure 
 		to correlate very well with CPU time.} and model size. 
 	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
 	GoogLeNet and Alexnet~\citep{Krizhevsky2012} (in light blue) are in fact instances of conditional networks 
@@ -256,7 +255,7 @@
 	%\item They have such a complex and long structure that they need to train using intermediate losses with manually set weights.
 	%\end{itemize}
 	
-	\section{CIFAR10}
+	\subsection{CIFAR10}
 	Here we validate conditional networks for the classification of images in the CIFAR10 dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state of the art Network in Network (NiN) model 
@@ -273,7 +272,7 @@
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
-	\subsection{Designing a family of conditional networks}
+	\subsubsection{Designing a family of conditional networks}
 	The NiN model has a large number (192) of initial image-level filters in the first convolutional layer (`conv1'), 
 	representing a sizable amount of the overall compute.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
 	
@@ -285,7 +284,7 @@
 	By changing the number of routes at each level of the NiN-64 model (from conv2) we can 
 	generate a whole family of possible conditional architectures. 
 	
-	\subsection{Learning the optimal network architecture}
+	\subsubsection{Learning the optimal network architecture}
 	In this experiment we have optimized the network structure {\em automatically}, 
 	by using Bayesian optimization~\citep{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
 	This has allowed us to search the large joint space of parameters and structures in a principled way, 

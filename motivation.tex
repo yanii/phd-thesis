@@ -232,10 +232,12 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 
 \section{Growing Neural Network Architectures}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
-	Given the effect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
+	Given the effect of structure and network design on generalization, what if instead of designing a neural network before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,frean1990upstart,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
 	
+	\subsection{Tiling Algorithm}
 	The earliest proposals for building neural network structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron is fist used to provide the best linear separation of the data, and then ancillary neurons are added until perfect classification of the training data is achieved. In practice this is not necessarily good for generalization to the validation set however. 
 	
+	\subsection{Cascade Correlation}
 	Cascade Correlation~\citep{Fahlman1989} is a constructive algorithm for building general neural networks from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
 	
 	\begin{figure}[tbp]
@@ -254,8 +256,8 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
 	
 	Since each new neuron produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks, likely due to their greedy training strategy, as compared to deep networks trained with backpropagation where no weights are frozen during training.
-	
-	
+	\subsection{Upstart}
+	\mynote{todo}
 	\subsection{Hyper-Networks}
 	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an RNN allows the concise summary of a potentially infinite depth RNN\@.
 	\mynote{todo talk about MaKay's work, hyper-networks}
