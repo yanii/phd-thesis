@@ -220,24 +220,25 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{colorbrewer}
+
 \usepackage{pgfplots, pgfplotstable}
 \usepgfplotslibrary{statistics}
-%\usepgfplotslibrary{groupplots}
 \usepgfplotslibrary{colorbrewer}
 \pgfplotsset{compat=newest}
-\input{pgftablehighlight}
-\usepackage{tabularx}
-%\usepackage{mathabx}
-\usepackage{afterpage}
-\usepackage{engord}
-
-\newcommand{\convolution}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
-
 %\pgfplotsset{
 %	cycle list={Set1-9}
 %}
-\newtheorem{theorem}{Theorem}
 
+\usepackage{tabularx}
+\usepackage{afterpage}
+\usepackage{engord}
+\usepackage[toc=true,acronym]{glossaries}
 \usepackage[inline]{enumitem}
 
+\input{pgftablehighlight}
 \include{acsettings}
+
+\newcommand{\convolution}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
+\newtheorem{theorem}{Theorem}
+
+

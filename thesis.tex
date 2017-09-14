@@ -108,6 +108,10 @@
 % \includeonly{chapter3}
 %\fi
 
+% ******************************** Glossary ********************************
+
+\makeglossaries
+\include{glossary}
 % ******************************** Front Matter ********************************
 \begin{document}
 
@@ -132,6 +136,8 @@
 %\printnomenclature[3em]
 \printnomenclature
 
+\glossarystyle{altlist}
+\printglossaries
 % ******************************** Main Matter *********************************
 \mainmatter
 
