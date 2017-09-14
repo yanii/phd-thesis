@@ -14,14 +14,14 @@
 	
 	\section{On Methods of Discriminative Classification}
 	
-	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks have even replaced the research in local features (\eg SIFT), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep convolutional neural networks (\emph{CNNs}) on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network with one hidden layer, however the converse does not necessarily hold true.
+	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks have even replaced the research in local features (\eg SIFT), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network with one hidden layer, however the converse does not necessarily hold true.
 	
 	Despite this fundamental relationship, decision forests and neural networks have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks can be trained with far more parameters than actual samples. At test time neural networks are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time, due to sample routing only a small part of a tree need be computed, \ie{}conditional computation, neural networks must on the other hand compute the response at every node even if many of these responses are approximately zero.
 	
 	\section{Generalizing Neural Networks and Decision Trees}
-	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks trained with back-propagation, specifically convolutional neural networks, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
+	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks trained with back-propagation, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
-	Towards this objective, we generalize neural networks and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr. Antonio Criminisi, and is not a contribution of this thesis. Some figures used with the permission of Dr. Antonio Criminisi/Microsoft Research.}.
+	Towards this objective, we generalize neural networks and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this thesis. Some figures used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
 	
 	\section{A New Graphical Notation}
 	The proposals we will make require a re-interpretation of existing classification models, that is neural networks and decision trees, but standard graphical diagrams for both of these models hides the implicit functional similarities on which we will build our models, and are instead connection-centric --- focused on showing the connectivity of the models rather than the underlying data transformations. As such, before we are able to explain the concept of a conditional network, a new graphical language is proposed.
@@ -47,7 +47,7 @@
 	
 	In this simple example of a fully-connected neural network, between layers $i$ and $j$, every node outputs the non-linear transformation, $\vec v_j = \sigma(\mat P \vec v_i)$, a composition of the non-linear function $\sigma$ (\eg a ReLU or sigmoid) and the projection of the input units with a projection matrix $\mat P$, which includes the bias term in homogeneous coordinates. We denote this operation explicitly as $\mat P_{ij} \wr$, where $\mat P_{ij}$ is the projection matrix and $\wr$ represents a non-linearity. In short $\mat P_{ij} \wr$ denotes the standard neural net layer's non-linear transformation $\vec v_j = \sigma(\mat P \vec v_i)$. 
 	
-	Convolutional neural networks (CNNs) typically include layers with pooling operations (\eg max pooling), or local response normalization. Any of these operations may also be represented by the function $\sigma$.
+	\Glspl{cnn} typically include layers with pooling operations (\eg \gls{gap}), or local response normalization. Any of these operations may also be represented by the function $\sigma$.
 	
 	\subsection{Decision Trees and Random Forests}
 	
@@ -294,7 +294,7 @@
 	In the optimization we maximized the {\em size-normalized} accuracy $\alpha =\frac{\textrm{validation accuracy}}{\textrm{model size}}$ with respect to the parameters $R_l = 2^i, \left\{i\in \mathbb{N} : 0 \le i \le 5\right\}$, where $R_l$ is the number of nodes at layer $l$ in the conditional network. 
 	\cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in CIFAR10. 
 	It is a DAG-structured conditional network with 10 layers.
-	To our knowledge this is the first attempt at learning automatically the architecture of a deep CNN for image classification.
+	To our knowledge this is the first attempt at learning automatically the architecture of a deep \gls{cnn} for image classification.
 	
 	\subsubsection{Accuracy \vs{}efficiency}
 	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters. 
@@ -341,9 +341,9 @@
 This chapter has investigated similarities and differences between decision trees/forests and convolutional networks. This has led us to introduce a hybrid model (namely conditional network) which can be thought both as: 
 \begin{enumerate*}[label= (\textbf{\roman*})]
 \item trees which have been augmented with representation learning capabilities, and
-\item CNNs which have been augmented with explicit data routers and a rich, branched architecture.
+\item \glspl{cnn} which have been augmented with explicit data routers and a rich, branched architecture.
 \end{enumerate*}
-Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or CNNs. The desired accuracy-efficiency ratio can be selected \emph{at run time}, without the need to train a new network.
-%Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of CNNs, without loss of accuracy.
+Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or \glspl{cnn}. The desired accuracy-efficiency ratio can be selected \emph{at run time}, without the need to train a new network.
+%Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of \glspl{cnn}, without loss of accuracy.
 	
 \end{document}

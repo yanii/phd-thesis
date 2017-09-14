@@ -92,7 +92,7 @@
 \title[Structural Priors in Deep Neural Networks] % (optional, use only with long paper titles)
 {Structural Priors in Deep Neural Networks}
 %\subtitle
-%{Improving CNN
+%{Improving \gls{cnn}
 %Generalization and
 %Efficiency}
 
@@ -159,8 +159,8 @@
 \begin{frame}{First Author Publications during PhD}
 \begin{itemize}
     \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.}%\\MSR Technical Report 2015} 
-    \item Training CNNs with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi.}% \\ICLR 2016}
-    \item Deep roots: Improving CNN efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.}%\\CVPR 2017}
+    \item Training \glspl{cnn} with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi.}% \\ICLR 2016}
+    \item Deep roots: Improving \gls{cnn} efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.}%\\CVPR 2017}
     
 \end{itemize}
 \end{frame}
@@ -171,7 +171,7 @@
     \item \textbf{Medical Computer Vision}
     \begin{itemize}
         \item Segmentation of brain tumor tissues with convolutional neural networks\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
-        \item Using CNNs for Malaria Diagnosis\\{\footnotesize Intellectual Ventures/Gates Foundation}
+        \item Using \glspl{cnn} for Malaria Diagnosis\\{\footnotesize Intellectual Ventures/Gates Foundation}
     \end{itemize}
     \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
     \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
@@ -248,7 +248,7 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \begin{itemize}
     \item Without knowing the appropriate model size or structure for a problem, we err on the side of over-parameterization
     \item Hinton recommends creating a much bigger model that appropriate for the data, and regularizing ``the hell'' out of it\footnote{Geoffery Hinton, Cambridge, June 2015}
-    \item This has worked surprisingly well in practice for deep CNNs
+    \item This has worked surprisingly well in practice for deep \glspl{cnn}
 \end{itemize}
 \end{frame}
 
@@ -279,7 +279,7 @@ But what about the practicalities of using deep learning:
 \begin{itemize}
     \item Deep networks need many more parameters than data points because we don't exactly know the underlying structure of the solution
     \item As a consequence, they aren't just learning to model data, but also learning what \emph{\color{blue}not} to learn. 
-    %\item At each level in a CNN, the transformed data exists both as weights and spatial/channel information.
+    %\item At each level in a \gls{cnn}, the transformed data exists both as weights and spatial/channel information.
     %\begin{itemize}
     %    \item Isn't this what regularization is for? Yes, but it's more like using a sledgehammer on a small nail.
     %\end{itemize}
@@ -372,7 +372,7 @@ The Atlas Slave\\(Accademia, Florence)
     \includegraphics[width=\textwidth]{../Figs/PDF/sparseconn4}
 \end{figure}
 \begin{itemize}
-    \item A CNN can be represented as a fully connected network
+    \item A \gls{cnn} can be represented as a fully connected network
     \item Shared filters can be represented with duplicated weights
     \item Filters replaced by sparse connectivity
 \end{itemize}
@@ -417,7 +417,7 @@ The Atlas Slave\\(Accademia, Florence)
 
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Why are CNNs uniformly structured?}
+\begin{frame}{Why are \glspl{cnn} uniformly structured?}
 \begin{quote}
 ``The marvelous powers of the brain emerge not from any single, uniformly structured
 connectionist network but from highly evolved arrangements of smaller, specialized
@@ -697,7 +697,7 @@ Or better results if you tune it on GoogLeNet more\ldots
 
 \begin{frame}{Imagenet Results}
 
-%We propose a new method for creating computationally efficient and compact convolutional neural networks (CNNs) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep CNNs, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art CNN architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
+%We propose a new method for creating computationally efficient and compact convolutional neural networks (\glspl{cnn}) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep \glspl{cnn}, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art \gls{cnn} architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
 Networks with root modules have similar or higher accuracy than the baseline architectures with much less computation.
 \begin{itemize}
     \item ResNet 50\footnote{Caffe Re-implementation}: \textbf{40\%} smaller, \textbf{45\%} fewer FLOPS%, and is 31\% (12\%) faster on a CPU (GPU).
