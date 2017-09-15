@@ -40,7 +40,7 @@
 			\includegraphics[width=0.9\textwidth]{newnotation}
 			\caption{New notation showing transformation between layers explicitly.}\label{fig:newnotation}
 		\end{subfigure}
-		\caption[New graphical notation for neural networks.]{\textbf{The proposed compact graphical notation for neural networks.} Non-linear transformations in a standard neural network\index{neural network} with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}\label{fig:newGraphLanguage}
+		\caption[New graphical notation for neural networks]{\textbf{The proposed compact graphical notation for neural networks.} Non-linear transformations in a standard neural network\index{neural network} with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}\label{fig:newGraphLanguage}
 	\end{figure}
 	
 	The standard depiction of a neural network\index{neural network} with one hidden layer is shown in \cref{fig:oldnotation}, where each of the layers is fully connected, and these connecting weights are illustrated as lines between the neurons\index{neuron} represented as circles. While this image illustrates the connectivity of the model, it assumes the function of the neurons\index{neuron} themselves to be known or otherwise described. In \cref{fig:newnotation}\ we use a different notation to show both connectivity and function of each layer, with the assumption that all nodes on a particular layer have the same function.
@@ -70,7 +70,7 @@
 			\includegraphics[width=0.9\textwidth]{selectionnotation}
 			\caption{Selection projection, found in random forests.}\label{fig:selectionnotation}
 		\end{subfigure}
-		\caption[Various projection matrices in conditional networks.]{\textbf{The proposed compact graphical notation for various types of projection in a conditional network.}}\label{fig:projections}
+		\caption[Various projection matrices in conditional networks]{\textbf{The proposed compact graphical notation for various types of projection in a conditional network.}}\label{fig:projections}
 	\end{figure}
 	
 	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in \cref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks\index{neural network}, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in \cref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in \cref{fig:identitynotation}.
@@ -81,7 +81,7 @@
 	\begin{figure}[htbp!] 
 		\centering
 		\includegraphics[width=0.95\textwidth]{treenotation}
-		\caption[Proposed graphical notation for a decision stump.]{\textbf{The proposed compact graphical notation for a ``decision stump''.}}\label{fig:treeNotation}
+		\caption[Proposed graphical notation for a decision stump]{\textbf{The proposed compact graphical notation for a ``decision stump''.}}\label{fig:treeNotation}
 	\end{figure}
 	
 	\begin{figure}[tbp] 
@@ -97,7 +97,7 @@
 			\includegraphics[width=0.8\textwidth]{newtreenotation}
 			\caption{New explicit graphical notation.}\label{fig:newtreenotation}
 		\end{subfigure}
-		\caption[Proposed compact graphical notation for a decision tree.]{\textbf{The proposed compact graphical notation for a full decision tree.}}\label{fig:complexDecisionTree}
+		\caption[Proposed compact graphical notation for a decision tree]{\textbf{The proposed compact graphical notation for a full decision tree.}}\label{fig:complexDecisionTree}
 	\end{figure}
 	
 	We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
@@ -118,7 +118,7 @@
 			\includegraphics[width=0.95\textwidth]{explicit}
 			\caption{Implcitly routed network.}\label{fig:implicitRouter}
 		\end{subfigure}
-		\caption[Explicit \vs{}implicitly routed networks.]{\textbf{Explicit \vs{}implicitly routed networks.}}\label{fig:routerConnections}
+		\caption[Explicit \vs{}implicitly routed networks]{\textbf{Explicit \vs{}implicitly routed networks.}}\label{fig:routerConnections}
 	\end{figure}
 	
 	\subsection{Implicit Routing}
@@ -158,7 +158,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
-		\caption[Conditional network used with ILSVRC experiments.]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, non-routed \glspl{dnn}.}\label{fig:Imagenet_CondNet}
+		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, non-routed \glspl{dnn}.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
 	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
@@ -204,7 +204,7 @@
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art.]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
 	\end{figure}
 	
 	
@@ -234,7 +234,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{vgg11costs}
-		\caption[Computational cost of VGG-11 based networks per layer.]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
+		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
 	GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
@@ -267,7 +267,7 @@
 		\centerline{
 			\includegraphics[width=1.1\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically learned conditional architecture for \gls{cifar10}.]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
+		\caption[Automatically learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
@@ -320,7 +320,7 @@
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on \gls{cifar10}.]{\textbf{Comparing network architectures on \gls{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
+		\caption[Comparing network architectures on \gls{cifar10}]{\textbf{Comparing network architectures on \gls{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
 	\end{figure}
 	%
 	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.

@@ -19,7 +19,7 @@ We will not cover the long and colourful history of neural networks\index{neural
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
-\caption[An illustration of a typical artificial neural network neuron.]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron\index{neuron} is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\caption[An illustration of a typical artificial neural network neuron]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron\index{neuron} is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
 \label{fig:neuron}
 \end{figure}
 A neuron\index{neuron|textbf} is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
@@ -46,14 +46,14 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{singlelayer}
-\caption[A single-layer neural network.]{\textbf{An illustration of a simple single-layer neural network, such as a perceptron network.}}
+\caption[A single-layer neural network]{\textbf{An illustration of a simple single-layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
 then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption[The interpretation of a perceptron\index{perceptron} as a hyperplane.]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron\index{perceptron} as a hyperplane]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
 The perceptron\index{perceptron} also has a geometric interpretation, as shown in \cref{fig:hyperplane} \citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie{}$N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
@@ -68,7 +68,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronxor}
-\caption[An illustration of the inability of a single line to correctly classify the XOR function.]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
+\caption[An illustration of the inability of a single line to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
 A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
@@ -311,7 +311,7 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.85\textwidth]{learningratedecrease}
-\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
+\caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
 Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. 
 
@@ -343,7 +343,7 @@ and mixed partial derivatives, \eg
 \includegraphics[width=\textwidth]{narrowvalleymomentum}
 \caption{Momentum}\label{fig:narrowvalleymomentum}
 \end{subfigure}
-\caption[Pathological curvature.]{\textbf{Pathological curvature.} An error surface $E(x, y)$ exhibiting a narrow valley, and the optimal path from the starting point to the minima shown by the red arrow. In a pathological error surface such as this, first order methods cannot use the information provided by the Hessian on the surface curvature to avoid bouncing along the walls of the valley, slowing descent. Momentum alleviates this somewhat in damping the change in direction, by preserving information on previous gradients, allowing a quicker descent. Inspired by a similar diagram by \citet{martens2010deep}.}
+\caption[Pathological curvature]{\textbf{Pathological curvature.} An error surface $E(x, y)$ exhibiting a narrow valley, and the optimal path from the starting point to the minima shown by the red arrow. In a pathological error surface such as this, first order methods cannot use the information provided by the Hessian on the surface curvature to avoid bouncing along the walls of the valley, slowing descent. Momentum alleviates this somewhat in damping the change in direction, by preserving information on previous gradients, allowing a quicker descent. Inspired by a similar diagram by \citet{martens2010deep}.}
 \label{fig:pathological}
 \end{figure}
 These second-order partials give important information about the curvature of the error surface $E$. For example, in \cref{fig:learningrate}, the error surface takes on an elliptical shape, which causes problems when we only consider the direction of maximum decrease $-\nabla E$. The classic example of such a pathological error surface for first order methods is an error surface that looks like a narrow valley, as shown in \cref{fig:narrowvalleysgd}. With an initialization outside the bottom of the valley, gradient descent will bounce along the walls of the valley, leading to a very slow learning convergence.
@@ -608,7 +608,7 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 		\end{tikzpicture}
 		\caption{Derivative $\frac{d \max(0,x)}{dx}$}\label{fig:relugradient}
 	\end{subfigure}
-	\caption[Activation functions.]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
+	\caption[Activation functions]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
 \end{figure}
 
 An integral part of any useful neuron\index{neuron} in a neural network\index{neural network} is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks\index{neural network} have used sigmoidal activation functions. These functions include the hyperbolic tangent,
@@ -659,7 +659,7 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 	};
 	\end{scope}
 	\end{tikzpicture}
-	\caption[Vanishing gradients.]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
+	\caption[Vanishing gradients]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
 \end{figure}
 \begin{equation}
 \begin{aligned}
@@ -791,7 +791,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 };
 \end{scope}
 \end{tikzpicture}
-\caption[\gls{nin} architecture.]{\textbf{\gls{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. \Gls{gap} is used at the end of the network.
+\caption[\gls{nin} architecture]{\textbf{\gls{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. \Gls{gap} is used at the end of the network.
 }
 \label{fig:networkinnetwork}
 \end{figure}
@@ -815,7 +815,7 @@ VGG is an evolution of the AlexNet models, with the same number of max-pooling l
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\textwidth, page=7]{sparsification}
-	\caption[Illustration of the Inception unit.]{\textbf{Inception unit.} The building block of the Inception/GoogLeNet architecture. Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1), followed by a low-dimensional embedding (1$\times$1) layer.}\label{fig:inceptionunit}
+	\caption[Illustration of the Inception unit]{\textbf{Inception unit.} The building block of the Inception/GoogLeNet architecture. Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1), followed by a low-dimensional embedding (1$\times$1) layer.}\label{fig:inceptionunit}
 \end{figure}
 The winner of the \gls{ilsvrc}2014 challenge, as measured by classification accuracy alone, was the Inception architecture, or GoogLeNet~\citep{Szegedy2014going}. The Inception architecture is particularly interesting, in that it was created explicitly to minimize computation and learn a more efficient representation. Although it uses the low dimensional embeddings of \gls{nin}, this is combined with a novel combination of filters of different spatial size, within what is called an `inception' unit, illustrated in \cref{fig:inceptionunit}.
 
@@ -842,7 +842,7 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \includegraphics[height=0.33\textheight]{resnet-3}
 \caption{}\label{fig:resnet-3}
 \end{subfigure}
-\caption[Residual networks.]{\textbf{Residual networks.} \subref{fig:resnet-1} a convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$ .}
+\caption[Residual networks]{\textbf{Residual networks.} \subref{fig:resnet-1} a convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$ .}
 \label{fig:resnet}
 \end{figure}
 \citet{He2015} introduced residual networks, which provide an important insight on a problem with the training of very deep networks. While deeper networks generally improve generalization, especially with large datasets, at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.

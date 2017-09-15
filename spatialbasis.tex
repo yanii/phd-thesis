@@ -119,7 +119,7 @@
                 \includegraphics[width=0.25\textheight]{linearcombinations}
             }\\
         \end{tabular}
-        \caption[Learned Cross-Shaped Filters]{{\bf Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the \gls{ilsvrc} dataset.}\label{fig:conv1filters}
+        \caption[Learned cross-shaped filters]{\textbf{Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1 \times 3$ and (c) $3 \times 1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the \gls{ilsvrc} dataset.}\label{fig:conv1filters}
     \end{figure}
     
     Note that, in general, more than two different sizes of basis filter might be used in the composite layer. For example,  \cref{fig:ourmethodfullrank} shows a combination of three sets of filters with spatial dimensions $w \times 1$, $1 \times h$, and $w \times h$. Also note that an interesting option is to omit the $1 \times 1$ linear combination layer and instead allow the connection weights in a subsequent network layer to learn to combine the basis filters of the preceding layer (despite any intermediate non-linearity, \eg \glspl{relu}). This possibility is explored in practice in the Results section.
@@ -188,7 +188,7 @@
     \begin{figure}[tbp]
         \centering
         \includegraphics[width=0.95\textwidth]{composite}
-        \caption[A composite convolutional layer.]{{\bf A composite convolutional layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
+        \caption[A composite convolutional layer]{{\bf A composite convolutional layer}. Composite layers convolve an input feature map with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output feature map. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
         \label{fig:compositelayers}
     \end{figure}
     %%%
