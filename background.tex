@@ -8,27 +8,27 @@
 \chapter{Background}
 \label{background}
 \section{Neural Networks}
-Artificial neural networks (or simply neural networks) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
+Artificial neural networks (or simply neural networks\index{neural network|textbf}) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
 %, used in regression and classification problems.
- Although initially biologically inspired, \gls{nn} within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Artificial neural networks are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
+ Although initially biologically inspired, \gls{nn} within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Neural networks\index{neural network} are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, medical imagery. 
 
-We will not cover the long and colourful history of neural networks (for this we recommend reading the introduction of \citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks we refer the reader to the excellent reference of \citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to \citet{goodfellow2016deep}. 
+We will not cover the long and colourful history of neural networks\index{neural network} (for this we recommend reading the introduction of \citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks\index{neural network} we refer the reader to the excellent reference of \citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to \citet{goodfellow2016deep}. 
 
 \subsection{The Neuron}
 
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
-\caption[An illustration of a typical artificial neural network neuron.]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\caption[An illustration of a typical artificial neural network neuron.]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron\index{neuron} is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
 \label{fig:neuron}
 \end{figure}
-A neuron is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
+A neuron\index{neuron|textbf} is a function of the weighted aggregation of its many inputs ${x_0,\ldots,x_N}$,
 
 \begin{equation}
 	y = f\left(\sum_{i}^{N} w_i x_i + b\right),
 \end{equation}
 
-where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation function}, and $b$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $b$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
+where $w_i$ is the weight of the input $x_i$, and $f$ is an \emph{activation function}, and $b$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $b$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
 
 \begin{equation}
     y = f\left(\mathbf{w}^T\mathbf{x} + b \right).
@@ -49,44 +49,44 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \caption[A single layer neural network.]{\textbf{An illustration of a simple single layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron is also called a \emph{perceptron}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron network is a single layer neural network (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network.
+then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single layer neural network\index{neural network} (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption[The interpretation of a perceptron as a hyperplane.]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron\index{perceptron} as a hyperplane.]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
-The perceptron also has a geometric interpretation, as shown in \cref{fig:hyperplane} \citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron only has a single input, \ie{}$N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
+The perceptron\index{perceptron} also has a geometric interpretation, as shown in \cref{fig:hyperplane} \citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie{}$N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
 
 \begin{equation}
 y = a x + c.
 \end{equation}
 
-In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron can be visualized as a hyperplane functioning as a single decision boundary.
+In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron\index{neuron} can be visualized as a hyperplane functioning as a single decision boundary.
 
 \subsection{The Limitations of Single-Layer Networks}\label{singlelayernetworks}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronxor}
-\caption[An illustration of the inability of a single line to correctly classify the XOR function.]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
+\caption[An illustration of the inability of a single line to correctly classify the XOR function.]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
-A single layer neural network, such as the perceptron, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
+A single layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
-At the time, it was not obvious how to train networks with more than one layer of neurons, since the methods of learning neuron weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons, only applied to single-layered networks. %This became known as the credit-assignment problem.
+At the time, it was not obvious how to train networks with more than one layer of neurons\index{neuron}, since the methods of learning neuron\index{neuron} weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons\index{perceptron} or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons\index{neuron}, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
 \subsection{Training Single Layer Networks: The Delta Rule}
 \label{deltarule}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
-The delta rule for single-layered neural networks is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
+The delta rule for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
 
-Training is performed on a training dataset $X$, where each training sample $\mathbf{x}^n\in X$ is a vector $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\mathbf{x}^n$, the $i$th neuron in our single-layer neural network has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
+Training is performed on a training dataset $X$, where each training sample $\mathbf{x}^n\in X$ is a vector $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\mathbf{x}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
 
 We want to know how to change a given weight $w_{ji}$ given the output of node $j$ for a given input data sample $\mathbf{x}^n$, 
 \begin{equation}
@@ -188,18 +188,18 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 
 
 \subsection{Backpropagation}
-The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks. It is somewhat controversial who first `discovered' backpropagation, since it is essentially the application of the chain rule to neural networks, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
+The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial who first `discovered' backpropagation, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
+Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label= (\textbf{\roman*})]
-  \item\label{enum:outputneuron} those belonging to \emph{output layer neurons}, \ie{}neurons lying directly before the output, such as $w_{kj}$ in \cref{fig:neurontwolayer}, and
-  \item\label{enum:hiddenneuron} weights belonging to hidden layer neurons, such as $w_{ji}$ in \cref{fig:neurontwolayer}.
+  \item\label{enum:outputneuron} those belonging to \emph{output layer neurons\index{neuron}}, \ie{}neurons\index{neuron} lying directly before the output, such as $w_{kj}$ in \cref{fig:neurontwolayer}, and
+  \item\label{enum:hiddenneuron} weights belonging to hidden layer neurons\index{neuron}, such as $w_{ji}$ in \cref{fig:neurontwolayer}.
 \end{enumerate*}
 
 \paragraph{\ref{enum:outputneuron}~Output Layer.}
-The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie$e^n_j$. Indeed the derivation in \cref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network. With some change of notation (now indexing by $k$ rather than $j$ to match \cref{fig:neurontwolayer}), we can use the sensitivity found in \cref{eqn:deltasensitivity},
+The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie$e^n_j$. Indeed the derivation in \cref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network\index{neural network}. With some change of notation (now indexing by $k$ rather than $j$ to match \cref{fig:neurontwolayer}), we can use the sensitivity found in \cref{eqn:deltasensitivity},
 
 \begin{equation}
 \begin{aligned}
@@ -216,10 +216,10 @@ The output weights are relatively easy to find, since they correspond to the sam
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.8\textwidth]{neurontwolayer}
-\caption[An illustration of a neural network with a single hidden layer]{\textbf{An illustration of a neural network with a single hidden layer.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
+\caption[An illustration of a neural network with a single hidden layer]{\textbf{An illustration of a neural network with a single hidden layer.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron to the error (\ie{}every output neuron $y_k$).
+We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons\index{neuron} have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron\index{neuron} to the error (\ie{}every output neuron\index{neuron} $y_k$).
 
 Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E^n$,
 \begin{equation}
@@ -231,9 +231,9 @@ Following from chain rule we can write the partial derivative of a hidden weight
 \end{aligned}
 \end{equation}
 
-where the sum arises from the fact that, unlike in \cref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons in the subsequent layer (see \cref{fig:neurontwolayer}).
+where the sum arises from the fact that, unlike in \cref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons\index{neuron} in the subsequent layer (see \cref{fig:neurontwolayer}).
 
-We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from \cref{eqn:outputlayer} for the output neuron and error partial derivatives,
+We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from \cref{eqn:outputlayer} for the output neuron\index{neuron} and error partial derivatives,
 
 \begin{equation}
 \begin{aligned}
@@ -284,12 +284,12 @@ The derivation above was based on the specific case of a single hidden layer net
 The delta is defined,
 \begin{equation}
 \delta^n_i = \begin{cases}
-        f'\left( a^n_j \right) e^n_j \,& \textrm{when neuron $j$ is output}\\
-        f'\left( a^n_j \right) \left( \sum_j \delta^n_j y^n_i w_{ji} \right)& \textrm{when neuron $j$ is hidden},
+        f'\left( a^n_j \right) e^n_j \,& \textrm{when neuron\index{neuron} $j$ is output}\\
+        f'\left( a^n_j \right) \left( \sum_j \delta^n_j y^n_i w_{ji} \right)& \textrm{when neuron\index{neuron} $j$ is hidden},
         \end{cases}
 \label{eqn:fulldeltadefinition}
 \end{equation}
-for any adjacent neural network layers $i, j$, including the output layer where the outputs are considered to have an index $j$. The sensitivity is then, 
+for any adjacent neural network\index{neural network} layers $i, j$, including the output layer where the outputs are considered to have an index $j$. The sensitivity is then, 
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j y_i.
@@ -306,7 +306,7 @@ Learning with backpropagation is much like the delta rule; sensitivities are use
      \label{eqn:backproplearningrule}
 \end{aligned}
 \end{equation}
-where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron $i$.
+where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron\index{neuron} $i$.
 
 \begin{figure}[tbp]
 \centering
@@ -401,13 +401,13 @@ where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enoug
 It has been observed in practice that adding noise to the gradient by using stochastic gradient descent often helps generalization compared to batch gradient descent, perhaps by preventing overfitting. Note that even if we use the true gradient for the training dataset, the training set $X$ is only a sampling of the population distribution we want our network to generalize to.
 
 \subsection{Activation Functions}
-As we have seen with the perceptron, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron towards a binary classification. However the activation function has a much more important function in multi-layer neural networks. Without a non-linear activation function, even a large multi-layer neural network would only have the representational power of a linear classifier --- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron to allow multi-layer networks to learn complex non-linear functions,
+As we have seen with the perceptron\index{perceptron}, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron\index{neuron} towards a binary classification. However the activation function has a much more important function in multi-layer neural networks\index{neural network}. Without a non-linear activation function, even a large multi-layer neural network\index{neural network} would only have the representational power of a linear classifier --- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron\index{neuron} to allow multi-layer networks to learn complex non-linear functions,
 
 \begin{equation}
 y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
 \end{equation}
 
-In the field of neural networks, activation functions have classically chosen to be a \emph{sigmoid} function, \ie{}a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
+In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie{}a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
 	f(x) = \frac{1}{1+e^{-x}},
@@ -418,20 +418,20 @@ and they hyperbolic tangent,
 	f(x) = \tanh(x).
 \end{equation}
 
-An issue with sigmoidal activations functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks tend to use the \gls{relu} activation function, as described in \cref{section:relu}.
+An issue with sigmoidal activations functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks\index{neural network} tend to use the \gls{relu} activation function, as described in \cref{section:relu}.
 
 
 \subsection{Deep \vs Shallow Neural Networks}
-Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator --- \ie such a neural network can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. This is in stark contrast to the limitations of neural networks without hidden layers, as explained in \cref{singlelayernetworks}.
+Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator --- \ie such a neural network\index{neural network} can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. This is in stark contrast to the limitations of neural networks\index{neural network} without hidden layers, as explained in \cref{singlelayernetworks}.
 
-In practice however we do not find that a network with only a single hidden layer, of even a very large width, can learn to represent complex functions as well as networks with many hidden layers layers. Indeed the observation that networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks, represents some of the progress made in learning with neural networks in recent years. Unfortunately the reasons why this mismatch between theory and practice occurs is still poorly understood, and an active area of research.
+In practice however we do not find that a network with only a single hidden layer, of even a very large width, can learn to represent complex functions as well as networks with many hidden layers layers. Indeed the observation that networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks, represents some of the progress made in learning with neural networks\index{neural network} in recent years. Unfortunately the reasons why this mismatch between theory and practice occurs is still poorly understood, and an active area of research.
 
 \subsection{Convolutional Neural Networks}\label{cnns}
 The earliest work on what are now termed \glspl{cnn} was by \citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The Neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie{}alternating convolution and pooling layers, much as seen in state of the art convolutional networks.
 
 Despite the pioneering novelty of the work on Neocognitron, it was only following the simplification and improvement of \citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state of the art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
 
-The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks\index{neural network} fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
 
 \subsubsection{Convolution Layers}
 \begin{figure}[tb]
@@ -611,7 +611,7 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 	\caption[Activation functions.]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
 \end{figure}
 
-An integral part of any useful neuron in a neural network is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks have used sigmoidal activation functions. These functions include the hyperbolic tangent,
+An integral part of any useful neuron\index{neuron} in a neural network\index{neural network} is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks\index{neural network} have used sigmoidal activation functions. These functions include the hyperbolic tangent,
 
 \begin{equation}
     f(x) = \tanh(x),
@@ -625,14 +625,14 @@ Both of these functions have the nice properties that their range is normalized 
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons have a piecewise activation function plotted in \cref{fig:relu}, 
+\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons\index{neuron} have a piecewise activation function plotted in \cref{fig:relu}, 
 \begin{equation}
 f(x) = \max(0,x).
 \end{equation} 
 \glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
-Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
+Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks\index{neural network}~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very deep networks. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
 
 For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\beta$ for each layer.
 
@@ -678,9 +678,9 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 
 where $(f \circ g)(x)$ is the composition $f(g(x))$.
 
-Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussiaan initialization, and given the number of outgoing/incoming connections to each neuron, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
+Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussiaan initialization, and given the number of outgoing/incoming connections to each neuron\index{neuron}, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
 
-In practice however, most networks have layers of different numbers of neurons. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, \citet{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron:
+In practice however, most networks have layers of different numbers of neurons\index{neuron}. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron\index{neuron}, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, \citet{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron\index{neuron}:
 
 \begin{equation}
 \begin{aligned}
@@ -701,7 +701,7 @@ For the more typically used rectified linear unit, a variation of this initializ
 \end{equation}
 
 \subsection{Batch Normalization}
-Some network architectures are sufficiently complex, \eg{}networks with neurons with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, \citet{Ioffe2015} proposed a more direct approach of maintaining the desired zero-mean, unit Gaussian response distribution. Batch normalization proposes to use batch statistics to whiten the responses of layers it is applied to during training.
+Some network architectures are sufficiently complex, \eg{}networks with neurons\index{neuron} with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, \citet{Ioffe2015} proposed a more direct approach of maintaining the desired zero-mean, unit Gaussian response distribution. Batch normalization proposes to use batch statistics to whiten the responses of layers it is applied to during training.
 
 %Batch normalization maintains per-batch response statistics during training, and uses them to reshape the response distribution during training.
 Full whitening (\ie{}de-correlating the responses) is prohibitively expensive however, instead batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. Using batch-normalization during training can make a dramatic difference, in many cases networks that would previous not converge, will converge, and it can sometimes speed up training.
@@ -728,7 +728,7 @@ Most state-of-the-art supervised deep networks now use batch normalization along
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this thesis, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
 
 \subsection{AlexNet}
-Training \emph{deep} networks, that is neural networks with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, \gls{relu} activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
+Training \emph{deep} networks, that is neural networks\index{neural network} with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks\index{neural network}, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks\index{neural network} possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, \gls{relu} activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state of the art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
 
 AlexNet notably used training-time and test-time augmentation to achieve its state of the art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the \gls{pca} components over all \gls{rgb} pixels in the image are used to perturb the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and its mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these models. 
 
@@ -878,13 +878,13 @@ In practice these residual layers greatly help the training of very deep network
 % where $f$ is the random forest prediction, $x$ is the input, and $f_i$ are the individual decision trees.
 
 % \section{The relationship between Decision Forests and Neural Networks}
-% There has been work in the past exploring the relationship between decision forests and neural networks. Although this work has identified that neural networks are a generalization of decision forests, it focused on exploiting tree training towards either the initialization or training of neural networks, rather than creating hybrid models exploiting the conditional computation in random forests, while preserving end-to-end training found in state of the art deep neural networks.
+% There has been work in the past exploring the relationship between decision forests and neural networks\index{neural network}. Although this work has identified that neural networks\index{neural network} are a generalization of decision forests, it focused on exploiting tree training towards either the initialization or training of neural networks\index{neural network}, rather than creating hybrid models exploiting the conditional computation in random forests, while preserving end-to-end training found in state of the art deep neural networks\index{neural network}.
 
 
 % \subsection{Entropy Nets}
-% The relationship between decision forests and neural networks was first described by \citet{Sethi1990}, the primary intuition of which is that the decision boundaries which are explicitly expressed in a decision tree can also be represented by a three-layer neural network, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer.
+% The relationship between decision forests and neural networks\index{neural network} was first described by \citet{Sethi1990}, the primary intuition of which is that the decision boundaries which are explicitly expressed in a decision tree can also be represented by a three-layer neural network\index{neural network}, where the decision nodes of the tree are on the first layer, the leaf nodes on the second layer.
 
 % \subsection{Casting Random Forests as Artificial Neural Networks}
-% More recently this relationship was rediscovered~\citep{Welbl2014casting}, in a very similar manner a method of initializing a neural network with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network in order to avoid the neural network from over-fitting during stochastic gradient descent.
+% More recently this relationship was rediscovered~\citep{Welbl2014casting}, in a very similar manner a method of initializing a neural network\index{neural network} with a trained Random Forest in described. The primary motivation of this is to use the trained random forest as a good initialization of a neural network\index{neural network} in order to avoid the neural network\index{neural network} from over-fitting during stochastic gradient descent.
 
 \end{document}
