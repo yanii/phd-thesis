@@ -217,7 +217,7 @@
     \sigma = \sqrt{\frac{2}{\sum{ w^{[i]} h^{[i]} d^{[i]}}}}.
     \end{equation}
     
-    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $w^{[i]} h^{[i]} d^{[i]}$ outgoing connections should be initialized as if it is a single layer with  $\hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation:
+    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $w^{[i]} h^{[i]} d^{[i]}$ outgoing connections should be initialized as if it is a single-layer with  $\hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation:
     
     \begin{equation}
     \sigma = \sqrt{\frac{2}{\sum{ w^{[i]} h^{[i]} d^{[i]}}}}.

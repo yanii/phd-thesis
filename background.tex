@@ -46,10 +46,10 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{singlelayer}
-\caption[A single layer neural network.]{\textbf{An illustration of a simple single layer neural network, such as a perceptron network.}}
+\caption[A single-layer neural network.]{\textbf{An illustration of a simple single-layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single layer neural network\index{neural network} (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
+then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
@@ -71,7 +71,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \caption[An illustration of the inability of a single line to correctly classify the XOR function.]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
-A single layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
+A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
 At the time, it was not obvious how to train networks with more than one layer of neurons\index{neuron}, since the methods of learning neuron\index{neuron} weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons\index{perceptron} or the \emph{delta rule}\index{delta rule}~\citep{widrow1960adaptive} for general neurons\index{neuron}, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
@@ -80,7 +80,7 @@ At the time, it was not obvious how to train networks with more than one layer o
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single-layer neural network]{\textbf{Detailed illustration of a single-layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
@@ -190,7 +190,7 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 \subsection{Backpropagation}
 The credit-assignment problem was solved with the discovery of \emph{backpropagation}\index{backpropagation|textbf} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial who first `discovered' backpropagation\index{backpropagation}, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation\index{backpropagation} in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation\index{backpropagation} loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule\index{delta rule} in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
+Following is a derivation of backpropagation\index{backpropagation} loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule\index{delta rule} in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single-layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label= (\textbf{\roman*})]
@@ -199,7 +199,7 @@ We are interested in finding the sensitivity of the error $E$ to a given weight 
 \end{enumerate*}
 
 \paragraph{\ref{enum:outputneuron}~Output Layer.}
-The output weights are relatively easy to find, since they correspond to the same types of weights found in single layer networks, and have direct access to the error signal, \ie$e^n_j$. Indeed the derivation in \cref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network\index{neural network}. With some change of notation (now indexing by $k$ rather than $j$ to match \cref{fig:neurontwolayer}), we can use the sensitivity found in \cref{eqn:deltasensitivity},
+The output weights are relatively easy to find, since they correspond to the same types of weights found in single-layer networks, and have direct access to the error signal, \ie$e^n_j$. Indeed the derivation in \cref{deltarule} also describes the sensitivity of the weights in the output layer of a multi-layer neural network\index{neural network}. With some change of notation (now indexing by $k$ rather than $j$ to match \cref{fig:neurontwolayer}), we can use the sensitivity found in \cref{eqn:deltasensitivity},
 
 \begin{equation}
 \begin{aligned}
@@ -259,7 +259,7 @@ and substituting from \cref{eqn:partialdyda} and \cref{eqn:sumonetermpartial} in
 \end{aligned}
 \end{equation}
 
-This bears some resemblance to the derived expression for a single layer, and just as in \cref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
+This bears some resemblance to the derived expression for a single-layer, and just as in \cref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
 \begin{equation}
 \label{eqn:deltahidden}
 \begin{aligned}
@@ -809,7 +809,7 @@ Since AlexNet, there have been many improvements to the state of the art on the 
 \item learning stacked small filters, \ie three 3$\times$3 convolutional layers is more computationally efficient than learning a single convolutional layer of 7$\times$7 filters, and also improves generalization.
 \end{enumerate*}.
 
-VGG is an evolution of the AlexNet models, with the same number of max-pooling layers, however using very small convolutional filters ($3 \times 3$) in the convolutional layers, and many more of these convolutional layers between pooling, instead of the relatively large single layers of convolutional filters in AlexNet ($7\times 7$). In addition VGG uses small non-overlapping max-pooling ($2\times 2$), and the \emph{fully convolutional trick} introduced by \citet{Sermanet2013overfeat} to do test-time oversampling more efficiently. VGG uses extensive training augmentation, extending the augmentation used in AlexNet~\citep{Krizhevsky2012} by adding scale augmentation, where crops are taken from images of different rescaled sizes. 
+VGG is an evolution of the AlexNet models, with the same number of max-pooling layers, however using very small convolutional filters ($3 \times 3$) in the convolutional layers, and many more of these convolutional layers between pooling, instead of the relatively large single-layers of convolutional filters in AlexNet ($7\times 7$). In addition VGG uses small non-overlapping max-pooling ($2\times 2$), and the \emph{fully convolutional trick} introduced by \citet{Sermanet2013overfeat} to do test-time oversampling more efficiently. VGG uses extensive training augmentation, extending the augmentation used in AlexNet~\citep{Krizhevsky2012} by adding scale augmentation, where crops are taken from images of different rescaled sizes. 
 
 \subsection{Inception}
 \begin{figure}
@@ -847,7 +847,7 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \end{figure}
 \citet{He2015} introduced residual networks, which provide an important insight on a problem with the training of very deep networks. While deeper networks generally improve generalization, especially with large datasets, at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
-The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having training a deep network with good generalization (\eg{}\cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single layer to the otherwise identical deep network architecture (\eg{}\cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
+The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having training a deep network with good generalization (\eg{}\cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\eg{}\cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
 
 Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identify transformation $H(\mathbf{x})=x$. 
 
