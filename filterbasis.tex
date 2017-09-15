@@ -94,7 +94,7 @@
 		\caption[AlexNet performance and filter groups.]{\textbf{AlexNet performance and filter groups.} Model Parameters \vs top-5 error for variants of the AlexNet model on \gls{ilsvrc} image classification dataset. Models with moderate numbers of filter groups have far fewer parameters, yet surprisingly maintain comparable error.}\label{fig:alexnetplots}
 	\end{figure}
 	
-	\paragraph{AlexNet Filter groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a \gls{cnn} (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features \vs{}texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
+	\paragraph{AlexNet Filter groups.} Amongst the seminal contributions made by \citet{Krizhevsky2012}~is the use of `filter groups' in the convolutional layers of a \gls{cnn} (see \cref{fig:groupconfig}). While their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple \gls{gpu}s, the side effects are somewhat surprising. Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features \vs{}texture features) that is consistent over different random initializations. Also surprising, and not explicitly stated in~\citep{Krizhevsky2012}, is the fact that the AlexNet network has approximately 57\% fewer connection weights than the corresponding network without filter groups. This is due to the reduction in the input channel dimension of the grouped convolution filters (see \cref{fig:alexnetplots}).
 	Despite the large difference in the number of parameters between the models, both achieve comparable accuracy on \gls{ilsvrc} --- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This paper builds upon these findings and extends them to state-of-the-art networks.
 	
 	\paragraph{Low-dimensional Embeddings.}
@@ -213,11 +213,11 @@
 			precision=4
 		},
 		columns/gpu/.style={
-			column name=GPU (ms),
+			column name=\gls{gpu} (ms),
 			precision=3
 		},
 		columns/cpu/.style={
-			column name=CPU (ms),
+			column name=\gls{cpu} (ms),
 			precision=1
 		},
 		%    column type/.add={@{}lrrrrrr@{}}{},
@@ -359,7 +359,7 @@
 			%(left) Parameters \vs Error, (right) \gls{flops} \vs Error.
 		}\label{fig:nincifarplotsconvonly}
 	\end{figure}
-	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the \gls{flops}, 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \cref{gpuexplanation} for an explanation of the GPU timing disparity).
+	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z \gls{gpu} and 2 10-core Intel Xeon E5-2680 v2 \gls{cpu}s.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the \gls{flops}, 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster \gls{cpu} and \gls{gpu} timings (see \cref{gpuexplanation} for an explanation of the \gls{gpu} timing disparity).
 	
 	\newcommand{\covarlabels}[5]{%
 		\begin{tikzpicture}[anchor=south west]
@@ -791,7 +791,7 @@
 	
 	\subsubsection{ResNet 50}
 	\label{resnet50results}
-	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 GPUs with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
+	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 \gls{gpu}s with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
 	For training, we used the initialization scheme described by~\citep{He2015b} modified for compound layers~\citep{Ioannou2016} and batch normalization~\citep{Ioffe2015}.
 	\begin{table}[tp]
 		\caption[ResNet 50 root architectures.]{\textbf{ResNet 50}. Filter groups in each conv.\ layer.}
@@ -849,7 +849,7 @@
 			precision=1
 		},
 		columns/singlecpu/.style={
-			column name=CPU (ms),
+			column name=\gls{cpu} (ms),
 			precision=0
 		},
 		columns/Multiply-Acc./.style={
@@ -879,7 +879,7 @@
 			
 			\pgfplotstableset{
 				create on use/singlecpu/.style={
-					create col/expr={\thisrow{CPU Forward} / \thisrow{Batch Size}}},
+					create col/expr={\thisrow{\gls{cpu} Forward} / \thisrow{Batch Size}}},
 			}
 			
 			\centering
@@ -986,7 +986,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=GPU Forward (ms),
+			xlabel=\gls{gpu} Forward (ms),
 			axis lines=left,
 			enlarge x limits=0.05,
 			%enlarge y limits=0.1,
@@ -1025,7 +1025,7 @@
 			%\legend{ResNet 50, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{GPU Forward Time \vs Top-5 Error.}}
+			\caption{\textbf{\gls{gpu} Forward Time \vs Top-5 Error.}}
 			\label{fig:resnet5050gpuforward}
 		\end{subfigure}
 		~
@@ -1041,7 +1041,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=CPU Forward (ms),
+			xlabel=\gls{cpu} Forward (ms),
 			axis lines=left,
 			enlarge x limits=0.05,
 			%enlarge y limits=0.1,
@@ -1087,7 +1087,7 @@
 		\caption[ResNet-50 \gls{ilsvrc} results.]{\textbf{ResNet-50 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet50plots}
 	\end{figure}
-	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. CPU timings were 23\% faster, while GPU timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. CPU timings were 31\% faster, while GPU timings were 12\% faster. 
+	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. \gls{cpu} timings were 23\% faster, while \gls{gpu} timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. \gls{cpu} timings were 31\% faster, while \gls{gpu} timings were 12\% faster. 
 	
 	\subsubsection{ResNet 200}
 	\label{resnet200results}
@@ -1171,11 +1171,11 @@
 			string type
 		},
 		columns/singlegpu/.style={
-			column name=GPU (ms),
+			column name=\gls{gpu} (ms),
 			precision=2
 		},
 		columns/singlecpu/.style={
-			column name=CPU (ms),
+			column name=\gls{cpu} (ms),
 			precision=0
 		},
 		columns/Multiply-Acc./.style={
@@ -1329,7 +1329,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=GPU Forward (ms),
+			xlabel=\gls{gpu} Forward (ms),
 			axis lines=left,
 			enlarge x limits=0.05,
 			grid=major,
@@ -1365,7 +1365,7 @@
 			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{GPU Forward Time \vs Top-5 Error.}}
+			\caption{\textbf{\gls{gpu} Forward Time \vs Top-5 Error.}}
 			\label{fig:googlenet50gpuforward}
 		\end{subfigure}
 		~
@@ -1381,7 +1381,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=CPU Forward (ms),
+			xlabel=\gls{cpu} Forward (ms),
 			axis lines=left,
 			enlarge x limits=0.05,
 			grid=major,
@@ -1417,7 +1417,7 @@
 			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{CPU Forward Time \vs Top-5 Error.}}
+			\caption{\textbf{\gls{cpu} Forward Time \vs Top-5 Error.}}
 			\label{fig:googlenet50cpuforward}
 		\end{subfigure}
 		
@@ -1425,17 +1425,17 @@
 		\label{fig:googlenet50plots}
 	\end{figure}
 	
-	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in \gls{flops} (multiply-adds), CPU and GPU timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
-	The highest accuracy result, is 0.1\% off the top-5 accuracy of the baseline model, but has a 0.1\% higher top-1 accuracy -- within the error bounds resulting from training with different random initializations. While maintaining the same accuracy, this network has 9\% faster CPU and GPU timings. However, a model with only 0.3\% lower top-5 accuracy than the baseline has much higher gains in computational efficiency -- 44\% fewer floating point operations (multiply-add), 7\% fewer model parameters, 21\% faster CPU and 16\% faster GPU timings.
+	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in \gls{flops} (multiply-adds), \gls{cpu} and \gls{gpu} timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
+	The highest accuracy result, is 0.1\% off the top-5 accuracy of the baseline model, but has a 0.1\% higher top-1 accuracy -- within the error bounds resulting from training with different random initializations. While maintaining the same accuracy, this network has 9\% faster \gls{cpu} and \gls{gpu} timings. However, a model with only 0.3\% lower top-5 accuracy than the baseline has much higher gains in computational efficiency -- 44\% fewer floating point operations (multiply-add), 7\% fewer model parameters, 21\% faster \gls{cpu} and 16\% faster \gls{gpu} timings.
 	
 	While these results may seem modest compared to the results for ResNet, GoogLeNet is by far the smallest and fastest near state-of-the-art model \gls{ilsvrc} model. We believe that more experimentation in using different cardinalities of filter grouping in the heterogeneously-sized filter groups within each inception module will improve results further.
 	
-	\section{GPU Implementation}
+	\section{\gls{gpu} Implementation}
 	\label{gpuexplanation}
-	%\subsection{GPU Implementation.}
-	Our experiments show that our method can achieve a significant reduction in CPU and GPU runtimes for state-of-the-art \glspl{cnn} without compromising accuracy. However, the reductions in GPU runtime were smaller than might have been expected based on theoretical predictions of computational complexity (FLOPs). We believe this is largely a consequence of the optimization of Caffe for existing network architectures (particularly AlexNet and GoogLeNet) that do not use a high degree of filter grouping.
+	%\subsection{\gls{gpu} Implementation.}
+	Our experiments show that our method can achieve a significant reduction in \gls{cpu} and \gls{gpu} runtimes for state-of-the-art \glspl{cnn} without compromising accuracy. However, the reductions in \gls{gpu} runtime were smaller than might have been expected based on theoretical predictions of computational complexity (FLOPs). We believe this is largely a consequence of the optimization of Caffe for existing network architectures (particularly AlexNet and GoogLeNet) that do not use a high degree of filter grouping.
 	
-	Caffe presently parallelizes over filter groups by using multiple \gls{cuda} streams to run multiple \gls{cublas} matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling \gls{cublas} from the host can take approximately as long as the matrix computation itself. To avoid this overhead, \gls{cublas} provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using GPUs to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the \gls{cublas} batched calls.
+	Caffe presently parallelizes over filter groups by using multiple \gls{cuda} streams to run multiple \gls{cublas} matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling \gls{cublas} from the host can take approximately as long as the matrix computation itself. To avoid this overhead, \gls{cublas} provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using \gls{gpu}s to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the \gls{cublas} batched calls.
 	We have modified Caffe to use \gls{cublas} batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\%\ speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of \gls{cublas}-style batching into CuDNN could improve the performance of filter groups significantly.
 	
 	\subsection{The Effect on Image-level Filters of Root Modules}
@@ -1575,9 +1575,9 @@
 	\section{Discussion}
 	We explored the effect of using complex hierarchical arrangements of filter groups in \glspl{cnn} and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
 	
-	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and ResNet architectures, which were evaluated on the \gls{cifar10} and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For \gls{nin} on \gls{cifar10}, our model has 47\% of the parameters of the original network, and approximately 22\% faster CPU and GPU timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
+	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and ResNet architectures, which were evaluated on the \gls{cifar10} and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by \gls{cpu} and \gls{gpu} timings). For \gls{nin} on \gls{cifar10}, our model has 47\% of the parameters of the original network, and approximately 22\% faster \gls{cpu} and \gls{gpu} timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a \gls{cpu} (\gls{gpu}). 
 	%For ResNet 200 our model has 25\% fewer \gls{flops} and 44\% fewer parameters.
-	Even for the most efficient of the near state-of-the-art \gls{ilsvrc} network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
+	Even for the most efficient of the near state-of-the-art \gls{ilsvrc} network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a \gls{cpu} (\gls{gpu}).
 	\mynote{Update with newer resnet-200 results}
 	
 	
