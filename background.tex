@@ -73,18 +73,18 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \end{figure}
 A single layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
-At the time, it was not obvious how to train networks with more than one layer of neurons\index{neuron}, since the methods of learning neuron\index{neuron} weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons\index{perceptron} or the \emph{delta rule}~\citep{widrow1960adaptive} for general neurons\index{neuron}, only applied to single-layered networks. %This became known as the credit-assignment problem.
+At the time, it was not obvious how to train networks with more than one layer of neurons\index{neuron}, since the methods of learning neuron\index{neuron} weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons\index{perceptron} or the \emph{delta rule}\index{delta rule}~\citep{widrow1960adaptive} for general neurons\index{neuron}, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
 \subsection{Training Single Layer Networks: The Delta Rule}
 \label{deltarule}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single layer neural network]{\textbf{Detailed illustration of a single layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
-The delta rule for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
+The delta rule\index{delta rule|textbf} for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
 
 Training is performed on a training dataset $X$, where each training sample $\mathbf{x}^n\in X$ is a vector $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\mathbf{x}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
 
@@ -172,7 +172,7 @@ such that \cref{eqn:deltasensitivity} can be rewritten,
 \end{equation}
 
 
-The delta rule adjusts each weight $w_{ji}$ proportional to the sensitivity, 
+The delta rule\index{delta rule} adjusts each weight $w_{ji}$ proportional to the sensitivity, 
 \begin{equation}
 \begin{aligned}
     \Delta w_{ji} &= -\gamma \frac{\partial E^n}{\partial w_{ji}},
@@ -188,9 +188,9 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 
 
 \subsection{Backpropagation}
-The credit-assignment problem was solved with the discovery of \emph{backpropagation} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial who first `discovered' backpropagation, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
+The credit-assignment problem was solved with the discovery of \emph{backpropagation}\index{backpropagation|textbf} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial who first `discovered' backpropagation\index{backpropagation}, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation\index{backpropagation} in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
+Following is a derivation of backpropagation\index{backpropagation} loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule\index{delta rule} in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label= (\textbf{\roman*})]
@@ -233,7 +233,7 @@ Following from chain rule we can write the partial derivative of a hidden weight
 
 where the sum arises from the fact that, unlike in \cref{eqn:sumonetermpartial} where the weight $w_{kj}$ affects only a single output, the hidden weight $w_{ji}$ affects all neurons\index{neuron} in the subsequent layer (see \cref{fig:neurontwolayer}).
 
-We already know how to calculate the partials for the output layer from the derivation of the delta rule for single-layer networks, and we can substitute these from \cref{eqn:outputlayer} for the output neuron\index{neuron} and error partial derivatives,
+We already know how to calculate the partials for the output layer from the derivation of the delta rule\index{delta rule} for single-layer networks, and we can substitute these from \cref{eqn:outputlayer} for the output neuron\index{neuron} and error partial derivatives,
 
 \begin{equation}
 \begin{aligned}
@@ -298,7 +298,7 @@ for any adjacent neural network\index{neural network} layers $i, j$, including t
 \end{equation}
 
 \subsection{Learning with Backpropagation}
-Learning with backpropagation is much like the delta rule; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note, that rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
+Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note, that rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
     \Delta w^n_{ij} &= -\lambda \frac{\partial E^n}{\partial w_{ji}}\\
@@ -311,9 +311,9 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.85\textwidth]{learningratedecrease}
-\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
+\caption[Learning rate and convergence.]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
-Backpropagation is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. 
+Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. 
 
 In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while too slow a rate of decrease and it will take a very long time to enter the basin of attraction, such as with $\lambda_3$. 
 
@@ -373,7 +373,7 @@ where $\lambda$ is the learning rate, $t$ is the iteration, and $\nabla E$ is th
 r a summary of some of the more popular methods.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
-Although the backpropagation weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
+Although the backpropagation\index{backpropagation} weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
 
 \subsubsection{Batch Gradient Descent}
 At the opposite end of the spectrum there is \emph{batch} training where the gradient is computed over all data samples in the training set,
@@ -625,7 +625,7 @@ Both of these functions have the nice properties that their range is normalized 
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with back propagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation. These neurons\index{neuron} have a piecewise activation function plotted in \cref{fig:relu}, 
+\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation\index{backpropagation}. These neurons\index{neuron} have a piecewise activation function plotted in \cref{fig:relu}, 
 \begin{equation}
 f(x) = \max(0,x).
 \end{equation} 
