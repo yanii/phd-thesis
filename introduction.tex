@@ -40,9 +40,9 @@ Novel work on optimization algorithms used to train neural networks\index{neural
 
 This lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. The approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization --- an approach that has found success in practice for accuracy, but leaves much to desire in efficiency.
 
-In this thesis, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and computational efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. This is not a completely new idea, and had received focus in an earlier iteration of connectionist research progress, in the late 80's and early 90's --- \glspl{cnn} are perhaps the most successful example of this approach --- the significance of which is often misunderstood by contemporary research in the field.
+In this dissertation, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and computational efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. This is not a completely new idea, and had received focus in an earlier iteration of connectionist research progress, in the late 80's and early 90's --- \glspl{cnn} are perhaps the most successful example of this approach --- the significance of which is often misunderstood by contemporary research in the field.
 \section{Contributions}
-While this philosophy defines our approach, deep neural networks\index{neural network} have a large number of degrees of freedom, and there are many facets of deep neural networks\index{neural network} that warrant such analysis. In this thesis, we have looked at several interrelated aspects of deep \gls{cnn}:
+While this philosophy defines our approach, deep neural networks\index{neural network} have a large number of degrees of freedom, and there are many facets of deep neural networks\index{neural network} that warrant such analysis. In this dissertation, we have looked at several interrelated aspects of deep \gls{cnn}:
 \begin{enumerate*}[label=(\textbf{\roman*)}]
 \item spatial connectivity (\cref{lowrankfilters}),
 \item inter-filter connectivity (\cref{deeproots}),
@@ -55,7 +55,7 @@ This dissertation is organized as follows:
 	%decision forests and their applications, 
 	with particular emphasis on image classification, in order to understand our work and motivation.
 	
-	\item[\Cref{motivation}] explores the effect of structure on learning in neural networks\index{neural network}, in particular machine learning theory and early practical results towards understanding the effect of the size and structure of neural networks\index{neural network} on their generalization, motivating the focus of this thesis.
+	\item[\Cref{motivation}] explores the effect of structure on learning in neural networks\index{neural network}, in particular machine learning theory and early practical results towards understanding the effect of the size and structure of neural networks\index{neural network} on their generalization, motivating the focus of this dissertation.
 	
 	\item[\Cref{lowrankfilters}] addresses the spatial extents of convolutional filters, proposing to exploit our knowledge of the low-rank nature of most filters learned for image recognition by structuring a deep network to learn a low-rank basis for filters.
 	
@@ -75,9 +75,9 @@ This dissertation is organized as follows:
 	
 	In addition to improving test and training efficiency, conditional networks yield smaller models, are highly interpretable, and offer test-time flexibility. Validation is performed on standard image classification tasks. Compared to the state-of-the-art, our results demonstrate superior efficiency for at-par accuracy both on the ImageNet and CIFAR datasets.
 	
-	\item[\Cref{conclusion}] summarizes the contributions made in this thesis, and reviews the results.
+	\item[\Cref{conclusion}] summarizes the contributions made in this dissertation, and reviews the results.
 	
-	\item[\Cref{futurework}] looks at the research questions that arise from the work presented in this thesis, in particular the importance of the significant hand-design still present in ``end-to-end'' learning, the effectiveness of structural priors, and the ineffectiveness of current optimization methods. Proposals are made for future research directions which are pertinent given our results.
+	\item[\Cref{futurework}] looks at the research questions that arise from the work presented in this dissertation, in particular the importance of the significant hand-design still present in ``end-to-end'' learning, the effectiveness of structural priors, and the ineffectiveness of current optimization methods. Proposals are made for future research directions which are pertinent given our results.
 	
 \end{description}
 
