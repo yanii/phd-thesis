@@ -184,7 +184,7 @@
 	In order to compare different network architectures as fairly as possible, here we did not use any training
 	augmentation aside from that supported by Caffe~\citep{Jia2014} (mirroring/random crops). Similarly we report test-time 
 	accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
-	This reduces the overall accuracy (w.r.t.\ to state of the art), but constitutes a fairer test bed for teasing out the effects of different network architectures. This is because each architecture uses a different method of augmentation and has a different affect on the increase in inference time.
+	This reduces the overall accuracy (w.r.t.\ to state-of-the-art), but constitutes a fairer test bed for teasing out the effects of different network architectures. This is because each architecture uses a different method of augmentation and has a different affect on the increase in inference time.
 	Applying the same oversampling to all networks produced a nearly identical accuracy improvement in 
 	all models, without changing their ranking.
 	
@@ -204,7 +204,7 @@
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state of the art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
 	\end{figure}
 	
 	
@@ -239,7 +239,7 @@
 	% Removed to save space
 	GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
 	
-	The most efficient of the state of the art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
+	The most efficient of the state-of-the-art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
 	Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional feature map are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
 	
@@ -257,7 +257,7 @@
 	\subsection{\gls{cifar10}}
 	Here we validate conditional networks for the classification of images in the \gls{cifar10} dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
-	We take the state of the art \gls{nin} (NiN) model 
+	We take the state-of-the-art \gls{nin} (NiN) model 
 	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in \cref{fig:Cifar_CondNet}. 
 	Then we go on to show its increased efficiency compared to the original NiN model.
 	%\acnote{there is another net which is 0.1\% better.}
