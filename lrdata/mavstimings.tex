@@ -1,5 +1,3 @@
-\section{Multiply-Accumulate Operations and Caffe \gls{cpu}/\gls{gpu} Timings.}
-
 \begin{figure}[tbp]
 \centering
 \pgfplotstableread[col sep=comma]{lrdata/matimings.csv}\datatable
@@ -49,7 +47,7 @@
   axis y line=right,
   xmin=-1,xmax=48,
   ymin=0,
-  ylabel=\gls{cpu} Time (ms),
+  ylabel=CPU Time (ms),
   ylabel near ticks,
   yticklabel pos=right,
   color=green!30!black,
@@ -66,7 +64,7 @@
   axis y line=right,
   xmin=-1,xmax=48,
   ymin=0,
-  ylabel=\gls{gpu} Time (ms),
+  ylabel=GPU Time (ms),
   ylabel near ticks,
   yticklabel pos=right,
   color=red!70!black,
@@ -74,13 +72,14 @@
   legend style={at={(0.98,0.98)},anchor=north east},
 ]
 \pgfplotsset{every outer y axis line/.style={xshift=4em}, every tick/.style={xshift=4em}, every y tick label/.style={xshift=4em} }
-\addlegendimage{/pgfplots/refstyle=maaxis}\addlegendentry{M.A.}
-\addlegendimage{/pgfplots/refstyle=cpuaxis}\addlegendentry{\gls{cpu}}
+\addlegendimage{/pgfplots/refstyle=maaxis}\addlegendentry{FLOPS}
+\addlegendimage{/pgfplots/refstyle=cpuaxis}\addlegendentry{CPU}
 \addplot[style={black,fill=red!90!black,opacity=0.5},area legend] table[x expr=3*\coordindex+2,y=GPU Timing]{\datatable};\label{gpuaxis}
-\addlegendentry{\gls{gpu}}
+\addlegendentry{GPU}
 \end{axis}
 \end{tikzpicture}
 }
-\caption[Multiply-Accumulate \gls{flops}\vs \gls{cpu}/\gls{gpu} Timings]{\textbf{Multiply-Accumulate Operations and Caffe \gls{cpu}/\gls{gpu} Timings.} For the forward pass of each convolutional layer in the `vgg-gmp-lr' network. Caffe \gls{cpu} and \gls{gpu} timings were well correlated with multiply-accumulate operations for most layers.}
+%TODO why does \gls{ilsvrc} not work here properly?
+\caption[Multiply-Accumulate FLOPS\vs{}CPU/GPU Timings]{\textbf{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.} For the forward pass of each convolutional layer in the `vgg-gmp-lr' network. Caffe CPU and GPU timings were well correlated with multiply-accumulate operations for most layers.}
 \label{fig:mavstimings}
 \end{figure}

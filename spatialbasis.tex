@@ -225,7 +225,7 @@
     
     \section{Results and Comparisons}
     To validate our approach, we show that we can replace the filters used in existing state-of-the-art network architectures with low-rank representations as described above to reduce computational complexity without reducing accuracy. Here we characterize the computational complexity of a \gls{cnn} using the number of multiply accumulate operations required for a forward pass (which depends on the size of the filters in each convolutional layer as well as the input image size and stride). 
-    \section{Multiply-Accumulate Operations and Caffe \gls{cpu}/\gls{gpu} Timings.}\label{mavstimings}
+    \section{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.}\label{mavstimings}
     We have characterized the computational complexity of a \gls{cnn} using the number of multiply accumulate operations required for a forward pass (which depends on the size of the filters in each convolutional layer as well as the input image size and stride), to give as close as possible to a hardware and implementation independent evaluation the computational complexity of our method. 
     
     \input{lrdata/mavstimings}
@@ -649,7 +649,7 @@
     
     This architecture uses $5\times5$ filters in some layers. We found that we could replace all of these with $3\times 3$ filters, with comparable accuracy. As suggested by \citet{Simonyan2014verydeep}, stacked  $3\times 3$ filters have the effective receptive field of larger filters with less computational complexity. In this \textbf{nin-c3} network, we replaced the first convolutional layer with one $3\times 3$ layer, and the second convolutional layer with two $3\times 3$ layers. This network is 26\% faster than the standard NiN model, with only 54\% of the model parameters. Using our low-rank filters in this network, we trained the \textbf{nin-c3-lr} network, which is of similar accuracy (91.8\% \vs 91.9\%) but is approximately 54\% of the original network's computational complexity, with only 45\% of the model parameters.
     
-    \section{Comparing with State of the Art Networks for \gls{ilsvrc}}
+    \section{Comparing with State of the Art Networks for ILSVRC}
     \Cref{fig:bigpicturema,fig:bigpictureparam} compare published top-5 \gls{ilsvrc} validation error \vs multiply-accumulate operations and number of model parameters (respectively) for several state-of-the-art networks~\citep{Simonyan2014verydeep,Szegedy2014going,He2015b}. The error rates for these networks are only reported as obtained with different combinations of computationally expensive training and test time augmentation methods, including scale, photometric, ensembles (multi-model), and multi-view/dense oversampling. This can makes it difficult to compare model architectures, especially with respect to computational requirements.
     
     State-of-the-art networks, such as MSRA-C, VGG-19 and oversampled GoogLeNet are orders of magnitude larger in computational complexity than our networks. From \cref{fig:bigpicturema}, where the multiply-accumulate operations are plotted on a log scale, increasing the model size and/or computational complexity of test-time augmentation of \glspl{cnn} appears to have diminishing returns for decreasing validation error. Our models \emph{without} training or test time augmentation show comparable accuracy to networks such as VGG-13 \emph{with} training and test time augmentation, while having far less computational complexity and model size. In particular, the `googlenet-lr' model has a much smaller test-time model size than any network of comparable accuracy. 
@@ -697,8 +697,9 @@
     	] table[meta=Real Name,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
-    	\end{tikzpicture}
-    	\caption[Computational complexity of state-of-the-Art \gls{ilsvrc} models]{\textbf{Computational complexity of state-of-the-art \gls{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
+        \end{tikzpicture}
+        %TODO why does \gls{ilsvrc} not work here properly?
+    	\caption[Computational complexity of state-of-the-Art ILSVRC models]{\textbf{Computational complexity of state-of-the-art \Gls{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state of the art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
     	\label{fig:bigpicturema}
     \end{figure}
     \end{landscape}
@@ -756,7 +757,7 @@
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
     	\end{tikzpicture}
-    	\caption[The number of parameters of state-of-the-Art \gls{ilsvrc} models]{\textbf{Number of Parameters of State-of-the-Art \gls{ilsvrc} Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
+    	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art \Gls{ilsvrc} Models.} Test time parameters \vs top-5 error for state of the art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
     	\label{fig:bigpictureparam}
     \end{figure}
     \end{landscape}
@@ -778,11 +779,11 @@
     	columns={Real Name, Multiply-Acc., Test Multiply-Acc., Param., Top-5 Acc.},
     	column type/.add={lrrrrrr}{},
     	columns/Multiply-Acc./.style={
-    		column name=\gls{flops} {\small $\times 10^{9}$},
+    		column name=FLOPS {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Test Multiply-Acc./.style={
-    		column name=Test \gls{flops} w/ Aug. {\small $\times 10^{9}$},
+    		column name=Test FLOPS w/ Aug. {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Param./.style={
