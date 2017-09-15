@@ -26,10 +26,10 @@ Although empirically dropout works well, the claim that hidden units learn to co
 
 A crude but effective method of analyzing the importance of hidden units in neural networks is ablation -- zeroing out certain units in a trained network of interest, and observing the effect on the training and test loss. This method can be extended to empirically evaluate the importance of pairs of hidden units in trained neural networks. For each pair of hidden units, zero out the parameters of both units, and observe the effect on the loss calculated over the training/test set: pairwise ablation. This is however very expensive since each pair of hidden units must be evaluated over the entire dataset.
 
-We will focus on layer-wise filter co-dependence, and thus only needed to evaluate the pairwise ablation within each layer. In addition for large datasets, such as ILSVRC2012~\citep{ILSVRC2015}, a random subset of the dataset was evaluated.
+We will focus on layer-wise filter co-dependence, and thus only needed to evaluate the pairwise ablation within each layer. In addition for large datasets, such as \gls{ilsvrc}2012~\citep{ILSVRC2015}, a random subset of the dataset was evaluated.
 
 \paragraph{ResNet-50.}
-\Cref{fig:resnet50ablation_conv1_top5} shows the results of pairwise ablation on a Resnet-50 \citet{He2015} network trained on ILSVRC2012, on both the training set (\cref{fig:resnet50ablation_conv1_top5_train, fig:resnet50ablation_conv1_top5_train_hist}) and validation set (\cref{fig:resnet50ablation_conv1_top5_test, fig:resnet50ablation_conv1_top5_test_hist}).
+\Cref{fig:resnet50ablation_conv1_top5} shows the results of pairwise ablation on a Resnet-50 \citet{He2015} network trained on \gls{ilsvrc}2012, on both the training set (\cref{fig:resnet50ablation_conv1_top5_train, fig:resnet50ablation_conv1_top5_train_hist}) and validation set (\cref{fig:resnet50ablation_conv1_top5_test, fig:resnet50ablation_conv1_top5_test_hist}).
 
 \begin{figure}[tp]
 \centering
@@ -122,14 +122,14 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \end{subfigure}
 
 %\input{resnet50fig.tex}
-\caption[Pairwise filter ablations in ResNet 50]{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the ILSVRC training/validation set in \texttt{conv1} of ResNet-50.}
+\caption[Pairwise filter ablations in ResNet 50]{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the \gls{ilsvrc} training/validation set in \texttt{conv1} of ResNet-50.}
 \label{fig:resnet50ablation_conv1_top5}
 \end{figure}
 
 While, as expected, most pairwise ablations result in a decrease in accuracy, a small but significant number of pairwise ablations result in an \emph{increase} in accuracy (and decrease in loss). For the validation set this seems to provide clear evidence of hidden units co-adapting, and hence over-fitting to the training data. Surprisingly however, this effect is also evident when evaluating on the training set, and by definition cannot be explained by over-fitting. We observed similar effects on all other layers of the network (see supplemental).
 
 
-\paragraph{MNIST.} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer MNIST network. With a fully-connected network with one hidden layer, \gls{relu} activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
+\paragraph{\gls{mnist}.} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer \gls{mnist} network. With a fully-connected network with one hidden layer, \gls{relu} activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
 
 \begin{figure}[tp]
 \centering

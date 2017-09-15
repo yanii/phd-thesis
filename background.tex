@@ -734,11 +734,11 @@ AlexNet notably used training-time and test-time augmentation to achieve its sta
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation and model parameters across two GPUs, the motivation being that at the time GPUs did not have enough memory to fit such a large model. The authors observed that the filters on each GPU appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where GPU memory has increased enough that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 
-\subsection{Network in Network}
+\subsection{\gls{nin}}
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the Network in Network architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie{}\gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
+    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the \gls{nin} architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie{}\gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
 \afterpage{
 \begin{landscape}
@@ -787,23 +787,23 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 	\&\node (3c) {
 		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=20]{groupfig}}
 	};\\
-	\&\draw node{\footnotesize \textit{GAP/output}};\\
+	\&\draw node{\footnotesize \textit{\gls{ilsvrc}/output}};\\
 };
 \end{scope}
 \end{tikzpicture}
-\caption[Network in Network architecture.]{\textbf{Network in Network Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. Global average pooling (GAP) is used at the end of the network.
+\caption[\gls{nin} architecture.]{\textbf{\gls{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate feature maps over which a layer's filters operate. \Gls{gap} is used at the end of the network.
 }
 \label{fig:networkinnetwork}
 \end{figure}
 \end{landscape}
 }
 
-\citet{Lin2013NiN} introduced \emph{Network in Network} (NiN), in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input feature map into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
+\citet{Lin2013NiN} introduced \emph{\gls{nin}} (NiN), in which the main contribution was the use of so called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input feature map into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional feature map onto a lower-dimensional feature map. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
 
 \citet{Lin2013NiN} also introduced \emph{global average pooling}, in which the spatial extents at the end of the convolutional layers (\ie pool5 for NiN/AlexNet) are aggregated such that there is only a single scalar output response for each filter in the pooled layer. After global average pooling a layer with $f$ filters/feature maps, the input to the classification layer is simply a vector of $f$ responses, as illustrated in \cref{fig:networkinnetwork}. This reduces the parameters network dramatically since the majority of the parameters in the network are typically between the last convolutional layer and the fully-connected classification layer. Lin \etal showed that on CIFAR-10 global average pooling by itself achieved a lower error than having a fully connected layer with dropout.
 
 \subsection{VGG}
-Since AlexNet, there have been many improvements to the state of the art on the ILSVRC challenge, every one of which has been an improved \gls{cnn} architecture. One particular model that has lent itself to both high accuracy and being a natural extension of the original network has been the models proposed by \citet{Simonyan2014verydeep} of the Visual Geometry Group (VGG) at Oxford. The primary contributions of the VGG network ares
+Since AlexNet, there have been many improvements to the state of the art on the \gls{ilsvrc} challenge, every one of which has been an improved \gls{cnn} architecture. One particular model that has lent itself to both high accuracy and being a natural extension of the original network has been the models proposed by \citet{Simonyan2014verydeep} of the Visual Geometry Group (VGG) at Oxford. The primary contributions of the VGG network ares
 \begin{enumerate*}[label = (\textbf{\roman*})]
 \item showing that very deep networks improve generalization, and
 \item learning stacked small filters, \ie three 3$\times$3 convolutional layers is more computationally efficient than learning a single convolutional layer of 7$\times$7 filters, and also improves generalization.
@@ -817,7 +817,7 @@ VGG is an evolution of the AlexNet models, with the same number of max-pooling l
 	\includegraphics[width=0.7\textwidth, page=7]{sparsification}
 	\caption[Illustration of the Inception unit.]{\textbf{Inception unit.} The building block of the Inception/GoogLeNet architecture. Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1), followed by a low-dimensional embedding (1$\times$1) layer.}\label{fig:inceptionunit}
 \end{figure}
-The winner of the ILSVRC2014 challenge, as measured by classification accuracy alone, was the Inception architecture, or GoogLeNet~\citep{Szegedy2014going}. The Inception architecture is particularly interesting, in that it was created explicitly to minimize computation and learn a more efficient representation. Although it uses the low dimensional embeddings of Network in Network, this is combined with a novel combination of filters of different spatial size, within what is called an `inception' unit, illustrated in \cref{fig:inceptionunit}.
+The winner of the \gls{ilsvrc}2014 challenge, as measured by classification accuracy alone, was the Inception architecture, or GoogLeNet~\citep{Szegedy2014going}. The Inception architecture is particularly interesting, in that it was created explicitly to minimize computation and learn a more efficient representation. Although it uses the low dimensional embeddings of \gls{nin}, this is combined with a novel combination of filters of different spatial size, within what is called an `inception' unit, illustrated in \cref{fig:inceptionunit}.
 
 The motivation of the architecture is that most of the important correlations in natural images are very localized, are advantageous in the problem of image class recognition, so much so that even 3$\times$3 filters can learn most of the important features, for example image gradients and edges --- as demonstrated by the VGG networks~\citep{Simonyan2014verydeep}. However, a few of the correlations are less localized, more complex, and better captured by 5$\times$5 or even 7$\times$7 filters. Instead of learning a lot of large and computationally expensive 7$\times$7 filters, the inception unit learns mostly 1$\times$1, and 3$\times$3 filters, with fewer 5$\times$5 and even fewer 7$\times$7 filters. This represents a balance between representation and efficiency.
 
