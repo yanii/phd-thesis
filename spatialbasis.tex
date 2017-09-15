@@ -32,7 +32,7 @@
     
     Our contributions include a novel method of learning a set of small basis filters that are combined to represent larger filters efficiently. Rather than approximating previously trained networks, we train networks \emph{from scratch} and show that our convolutional layer representation can improve both efficiency and classification accuracy. Unlike methods that approximate previously-trained models (as listed in \cref{approxmethods,factorized}) this allows us to reduce training time, and even increase accuracy over the original model. We further describe how to initialize connection weights effectively for training networks with composite convolutional layers containing groups of differently-shaped filters, which we found to be of critical importance to our training method.
     
-    \subsection{Related Work}
+    \section{Related Work}
     \label{relatedwork}
     There has been much previous work on increasing the test-time efficiency of \glspl{cnn}. Some promising approaches work by making use of more hardware-efficient representations. For example \citet{1502.02551v1} and \citet{vanhoucke2011improving} achieve training- and test-time compute savings by further quantization of network weights that were originally represented as 32 bit floating point numbers. However, more relevant to our work are approaches that depend on new network connection structures, efficient approximations of previously trained networks, and learning low rank filters. 
     
