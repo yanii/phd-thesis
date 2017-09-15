@@ -99,7 +99,7 @@
 	
 	\paragraph{Low-dimensional Embeddings.}
 	\citet{Lin2013NiN} proposed a method to reduce the dimensionality of convolutional feature maps. 
-	By using relatively cheap `1$\times$1' convolutional layers (\ie{}layers comprising $d$ filters of size $1\times 1 \times c$, where $d<c$), they learn to map feature maps into lower-dimensional spaces, \ie to new feature maps with fewer channels. Subsequent spatial filters operating on this lower dimensional input space require significantly less computation. This method is used in most state of the art networks for image classification to reduce computation~\citep{Szegedy2014going,He2015}. Our method is complementary.
+	By using relatively cheap `1$\times$1' convolutional layers (\ie{}layers comprising $d$ filters of size 1$\times$1$\times$$c$, where $d<c$), they learn to map feature maps into lower-dimensional spaces, \ie to new feature maps with fewer channels. Subsequent spatial filters operating on this lower dimensional input space require significantly less computation. This method is used in most state of the art networks for image classification to reduce computation~\citep{Szegedy2014going,He2015}. Our method is complementary.
 	
 	\paragraph{GoogLeNet.} In contrast to much other work, \citet{Szegedy2014going} propose a \gls{cnn} architecture that is highly optimized for computational efficiency. GoogLeNet uses, as a basic building block, a mixture of low-dimensional embeddings~\citep{Lin2013NiN} and heterogeneously sized spatial filters --- collectively an `inception' module. 
 	There are two distinct forms of convolutional layers in the inception module, low-dimensional embeddings (1$\times$1) and spatial (3$\times$3, 5$\times $5). GoogLeNet keeps large, expensive spatial convolutions (\ie 5$\times$5) to a minimum by using few of these filters, using more 3$\times$3 convolutions, and even more 1$\times$1 filters. The motivation is that most of the convolutional filters respond to localized patterns in a small receptive field, with few requiring a larger receptive field. The number of filters in each successive inception module increases slowly with decreasing feature map size, in order to maintain computational performance. GoogLeNet is by far the most efficient state-of-the-art network for \gls{ilsvrc}, achieving near state-of-the-art accuracy with the lowest computation/model size. However, we will show that even such an efficient and optimized network architecture benefits from our method.
@@ -155,7 +155,7 @@
 	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \cref{method}) .
 	
 	\subsection{Improving \Gls{nin} on \Gls{cifar10}}
-	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, ZCA whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
+	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as in~\citep{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, \gls{zca} whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
 	
 	\begin{table}[tbp]
 		\caption[\Gls{nin} root architectures.]{\textbf{\Gls{nin}}. Filter groups in each convolutional layer.}
@@ -178,7 +178,7 @@
 		%}
 	\end{table}
 	\begin{table}[tp]
-		\caption[\Gls{nin} CIFAR10 results.]{\textbf{\Gls{nin} CIFAR10}}
+		\caption[\Gls{nin} \gls{cifar10} results.]{\textbf{\Gls{nin} \gls{cifar10}}}
 		\label{table:nincifarresults}
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
@@ -201,7 +201,7 @@
 			string type
 		},
 		columns/ma/.style={
-			column name=FLOPS {\small $\times 10^{8}$},
+			column name=\gls{flops} {\small $\times 10^{8}$},
 			preproc/expr={{##1/1e8}}
 		},
 		columns/param/.style={
@@ -310,7 +310,7 @@
 			height=0.66\textwidth,
 			axis x line=bottom,
 			ylabel=Error,
-			xlabel=FLOPS (Multiply-Add),
+			xlabel=\gls{flops} (Multiply-Add),
 			axis lines=left,
 			enlarge x limits=0.05,
 			enlarge y limits=0.05,
@@ -351,15 +351,15 @@
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\cdatatable};
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{FLOPS (Multiply-Add) \vs Error.}}
+			%\caption{\textbf{\gls{flops} (Multiply-Add) \vs Error.}}
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		
-		\caption[\Gls{nin} CIFAR10 results.]{\textbf{\Gls{nin} CIFAR10 Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
-			%(left) Parameters \vs Error, (right) FLOPS \vs Error.
+		\caption[\Gls{nin} \gls{cifar10} results.]{\textbf{\Gls{nin} \gls{cifar10} Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
+			%(left) Parameters \vs Error, (right) \gls{flops} \vs Error.
 		}\label{fig:nincifarplotsconvonly}
 	\end{figure}
-	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the floating point operations (FLOPS), 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \cref{gpuexplanation} for an explanation of the GPU timing disparity).
+	Results are shown in \cref{table:nincifarresults} and \cref{fig:nincifarplotsconvonly} for various network architectures\footnote{Here (and subsequently unless stated otherwise) timings are per image for a forward pass computed on a large batch. Networks were implemented using Caffe (with CuDNN and MKL) and run on an Nvidia Titan Z GPU and 2 10-core Intel Xeon E5-2680 v2 CPUs.}. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the root-8 architecture gives equivalent accuracy with only 46\% of the \gls{flops}, 33\% of the model parameters of the original network, and approximately 37\% and 23\% faster CPU and GPU timings (see \cref{gpuexplanation} for an explanation of the GPU timing disparity).
 	
 	\newcommand{\covarlabels}[5]{%
 		\begin{tikzpicture}[anchor=south west]
@@ -462,18 +462,18 @@
 		\label{fig:whitevsnot}
 	\end{figure}
 	
-	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using ZCA~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
+	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using \gls{zca}~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
 	
 	\begin{equation}
 	cov(X, X) = \frac{1}{N-1} XX^\textrm{T},
 	\end{equation}
 	
-	The ZCA whitening transformation is given by,
+	The \gls{zca} whitening transformation is given by,
 	\begin{equation}
 	W = \sqrt{N-1}\left(XX^\textrm{T}\right)^{-\frac{1}{2}}.
 	\end{equation}
 	
-	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie PCA),
+	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie \gls{pca}),
 	\begin{align}
 	cov(X, X) &= \frac{1}{N-1} XX^\textrm{T},\\
 	&=\frac{1}{N-1} PDP^\textrm{T},\\
@@ -853,7 +853,7 @@
 			precision=0
 		},
 		columns/Multiply-Acc./.style={
-			column name=FLOPS {\small $\times 10^{9}$},
+			column name=\gls{flops} {\small $\times 10^{9}$},
 			preproc/expr={{##1/1e9}}
 		},
 		columns/Param./.style={
@@ -938,7 +938,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=FLOPS (Multiply-Add),
+			xlabel=\gls{flops} (Multiply-Add),
 			axis lines=left,
 			enlarge x limits=0.05,
 			%enlarge y limits=0.1,
@@ -970,7 +970,7 @@
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{FLOPS (Multiply-Add) \vs Top-5 Error.}}
+			\caption{\textbf{\gls{flops} (Multiply-Add) \vs Top-5 Error.}}
 			\label{fig:resnet50ma}
 		\end{subfigure}
 		~
@@ -1110,7 +1110,7 @@
 			string type
 		},
 		columns/ma/.style={
-			column name=FLOPS~{\small$\times 10^{12}$},
+			column name=\gls{flops}~{\small$\times 10^{12}$},
 			fixed zerofill,
 			preproc/expr={{##1/1e12}},
 		},
@@ -1137,7 +1137,7 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for \gls{ilsvrc} 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer FLOPS and 44\% fewer parameters than ResNet 200.
+	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for \gls{ilsvrc} 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer \gls{flops} and 44\% fewer parameters than ResNet 200.
 	
 	\subsection{Improving GoogLeNet on \gls{ilsvrc}}
 	\label{googlenet50results}
@@ -1179,7 +1179,7 @@
 			precision=0
 		},
 		columns/Multiply-Acc./.style={
-			column name=FLOPS {\small $\times 10^{9}$},
+			column name=\gls{flops} {\small $\times 10^{9}$},
 			preproc/expr={{##1/1e9}}
 		},
 		columns/Param./.style={
@@ -1281,7 +1281,7 @@
 			height=0.24\textheight,
 			axis x line=bottom,
 			ylabel=Top-5 Error,
-			xlabel=FLOPS (Multiply-Add),
+			xlabel=\gls{flops} (Multiply-Add),
 			axis lines=left,
 			enlarge x limits=0.05,
 			grid=major,
@@ -1313,7 +1313,7 @@
 			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{FLOPS (Multiply-Add) \vs Top-5 Error.}}
+			\caption{\textbf{\gls{flops} (Multiply-Add) \vs Top-5 Error.}}
 			\label{fig:googlenet50ma}
 		\end{subfigure}
 		~
@@ -1425,7 +1425,7 @@
 		\label{fig:googlenet50plots}
 	\end{figure}
 	
-	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in FLOPS (multiply-adds), CPU and GPU timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
+	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in \gls{flops} (multiply-adds), CPU and GPU timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
 	The highest accuracy result, is 0.1\% off the top-5 accuracy of the baseline model, but has a 0.1\% higher top-1 accuracy -- within the error bounds resulting from training with different random initializations. While maintaining the same accuracy, this network has 9\% faster CPU and GPU timings. However, a model with only 0.3\% lower top-5 accuracy than the baseline has much higher gains in computational efficiency -- 44\% fewer floating point operations (multiply-add), 7\% fewer model parameters, 21\% faster CPU and 16\% faster GPU timings.
 	
 	While these results may seem modest compared to the results for ResNet, GoogLeNet is by far the smallest and fastest near state-of-the-art model \gls{ilsvrc} model. We believe that more experimentation in using different cardinalities of filter grouping in the heterogeneously-sized filter groups within each inception module will improve results further.
@@ -1435,8 +1435,8 @@
 	%\subsection{GPU Implementation.}
 	Our experiments show that our method can achieve a significant reduction in CPU and GPU runtimes for state-of-the-art \glspl{cnn} without compromising accuracy. However, the reductions in GPU runtime were smaller than might have been expected based on theoretical predictions of computational complexity (FLOPs). We believe this is largely a consequence of the optimization of Caffe for existing network architectures (particularly AlexNet and GoogLeNet) that do not use a high degree of filter grouping.
 	
-	Caffe presently parallelizes over filter groups by using multiple CUDA streams to run multiple CuBLAS matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling CuBLAS from the host can take approximately as long as the matrix computation itself. To avoid this overhead, CuBLAS provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using GPUs to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the CuBLAS batched calls.
-	We have modified Caffe to use CuBLAS batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\%\ speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of CuBLAS-style batching into CuDNN could improve the performance of filter groups significantly.
+	Caffe presently parallelizes over filter groups by using multiple \gls{cuda} streams to run multiple \gls{cublas} matrix multiplications simultaneously. However, with a large degree of filter grouping, and hence more, smaller matrix multiplications, the overhead associated with calling \gls{cublas} from the host can take approximately as long as the matrix computation itself. To avoid this overhead, \gls{cublas} provides batched methods (\eg \texttt{cublasXgemmBatched}), where many small matrix multiplications can be batched together in one call. \citet{Jhurani2015} explore in depth the problem of using GPUs to accelerate the multiplication of very small matrices (smaller than 16$\times$16), and show it is possible to achieve high throughput with large batches, by implementing a more efficient interface than that used in the \gls{cublas} batched calls.
+	We have modified Caffe to use \gls{cublas} batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without CuDNN, e.g. a 25\%\ speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with CuDNN (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) CuDNN library. Therefore we suggest that direct integration of \gls{cublas}-style batching into CuDNN could improve the performance of filter groups significantly.
 	
 	\subsection{The Effect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
@@ -1507,7 +1507,7 @@
 			width=0.95\linewidth,
 			height=0.4\textheight,
 			enlarge x limits=0.02,
-			ylabel=FLOPS,
+			ylabel=\gls{flops},
 			y label style={at={(axis description cs:-0.04,.5)},anchor=south},
 			y tick label style={
 				/pgf/number format/.cd,
@@ -1563,7 +1563,7 @@
 			\end{tikzpicture}
 			
 		\end{subfigure}
-		\caption[ResNet 50 layer-wise FLOPS/parameters.]{\textbf{ResNet 50 Layer-wise FLOPS/Parameters.} 
+		\caption[ResNet 50 layer-wise \gls{flops}/parameters.]{\textbf{ResNet 50 Layer-wise \gls{flops}/Parameters.} 
 		}
 		
 		\label{fig:resnet50layerwisema}
@@ -1575,8 +1575,8 @@
 	\section{Discussion}
 	We explored the effect of using complex hierarchical arrangements of filter groups in \glspl{cnn} and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
 	
-	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and ResNet architectures, which were evaluated on the CIFAR10 and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For \gls{nin} on CIFAR10, our model has 47\% of the parameters of the original network, and approximately 22\% faster CPU and GPU timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
-	%For ResNet 200 our model has 25\% fewer FLOPS and 44\% fewer parameters.
+	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and ResNet architectures, which were evaluated on the \gls{cifar10} and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by CPU and GPU timings). For \gls{nin} on \gls{cifar10}, our model has 47\% of the parameters of the original network, and approximately 22\% faster CPU and GPU timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a CPU (GPU). 
+	%For ResNet 200 our model has 25\% fewer \gls{flops} and 44\% fewer parameters.
 	Even for the most efficient of the near state-of-the-art \gls{ilsvrc} network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU).
 	\mynote{Update with newer resnet-200 results}
 	

@@ -625,11 +625,11 @@ DP-Random}
 \label{fig:cifar_dropproject_test_acc}
 \end{subfigure}
 
-\caption[Dropout \vs dropproject for VGG/CIFAR-10]{Training and test curves for a VGG network on CIFAR comparing dropout to dropproject.}
+\caption[Dropout \vs dropproject for VGG/\gls{cifar10}]{Training and test curves for a VGG network on CIFAR comparing dropout to dropproject.}
 \label{fig:cifar_dropproject}
 \end{figure}
 
-\cref{fig:cifar_dropproject} compares the effect of dropout, and various forms of dropproject, on a large VGG model trained on the CIFAR-10~\citep{CIFAR10} dataset. Both dropout and dropproject are only applied to the two large fully connected layers of the VGG network. With \textbf{Dropproject}, one random rotation matrix is generated and used for the duration of training. For \textbf{DP-Random10}, 10 random rotation matrices are generated and a single rotation matrix is randomly chosen from these for each mini-batch during training. Finally, \textbf{DP-Random} generates a random rotation matrix for each mini-batch.
+\cref{fig:cifar_dropproject} compares the effect of dropout, and various forms of dropproject, on a large VGG model trained on the \gls{cifar10}~\citep{CIFAR10} dataset. Both dropout and dropproject are only applied to the two large fully connected layers of the VGG network. With \textbf{Dropproject}, one random rotation matrix is generated and used for the duration of training. For \textbf{DP-Random10}, 10 random rotation matrices are generated and a single rotation matrix is randomly chosen from these for each mini-batch during training. Finally, \textbf{DP-Random} generates a random rotation matrix for each mini-batch.
 
 Both methods have close to identical effect on training loss/error, and are drastically different than the plots of the standard network without dropout/dropproject. At test time, both methods also achieve comparable minimum error, but in the loss curve it can be seen that dropproject appears to start overfitting earlier than dropout. While the projection (and not regularization) appears to be responsible for the increased generalization and speed of training, the zeroing out of units for dropout also has a small regularization effect not seen in dropproject. None of the variants of dropproject seem to be different, indicating that the random projection itself rather than the random rotation into a different co-ordinate basis is important for the effect.
 

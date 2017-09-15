@@ -229,7 +229,7 @@
     We have characterized the computational complexity of a \gls{cnn} using the number of multiply accumulate operations required for a forward pass (which depends on the size of the filters in each convolutional layer as well as the input image size and stride), to give as close as possible to a hardware and implementation independent evaluation the computational complexity of our method. 
     
     \input{lrdata/mavstimings}
-    However, we have observed strong correlation between multiply-accumulate counts and runtime for both CPU and GPU implementations of the networks described here (as shown in \cref{fig:mavstimings}). Note that the Caffe timings differ more for the initial convolutional layers where the input sizes are much smaller (3-channels), and \text{BLAS} is less efficient for the relatively small matrices being multiplied.
+    However, we have observed strong correlation between multiply-accumulate counts and runtime for both CPU and GPU implementations of the networks described here (as shown in \cref{fig:mavstimings}). Note that the Caffe timings differ more for the initial convolutional layers where the input sizes are much smaller (3-channels), and \text{\gls{blas}} is less efficient for the relatively small matrices being multiplied.
     
     \paragraph{Methodology.} We augment our training set with randomly cropped and mirrored images, but do not use any scale or photometric augmentation, or over-sampling. This allows us to compare the efficiency of different network architectures without having to factor in the computational cost of the various augmentation methods used elsewhere. During training, for every model except GoogLeNet, we adjust the learning rate according to the schedule $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. When the validation accuracy levels off we manually reduce the learning rate by further factors of 10 until the validation accuracy no longer increases. Unless otherwise indicated, aside from changing the standard deviation of the normally distributed weight initialization, as explained in \cref{initialization}, we used the standard hyper-parameters for each given model. Our results use no test-time augmentation.  
     
@@ -560,14 +560,14 @@
         \label{fig:googlenetimagenetresultsch4}
     \end{figure}
     
-    \subsection{\gls{nin} for CIFAR-10 Object Classification}
-    The CIFAR-10 dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the CIFAR-10 dataset, we used the \gls{nin} architecture~\citep{Lin2014}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state of the art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. 
+    \subsection{\gls{nin} for \gls{cifar10} Object Classification}
+    The \gls{cifar10} dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the \gls{cifar10} dataset, we used the \gls{nin} architecture~\citep{Lin2014}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state of the art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. 
 
     The results of our CIFAR experiments are listed in \cref{table:cifarresultsch4} and plotted in \cref{fig:cifarresultsch4}.
     
     \begin{table}[tbp]
         \centering
-        \caption[Low-rank CIFAR-10 results]{{\bf \gls{nin} CIFAR-10 Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline \gls{nin} model and more efficient versions created by the methods described in this chapter.}
+        \caption[Low-rank \gls{cifar10} results]{{\bf \gls{nin} \gls{cifar10} Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline \gls{nin} model and more efficient versions created by the methods described in this chapter.}
         %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\data
         \pgfplotstabletypeset[
@@ -643,7 +643,7 @@
         \legend{Baseline Networks, Our Results}
         \end{axis}
         \end{tikzpicture}
-        \caption[Low-rank CIFAR-10 results]{\textbf{\gls{nin} CIFAR-10 Results.} Multiply-accumulate operations \vs error for \gls{nin} derived models on CIFAR-10 object classification dataset.}
+        \caption[Low-rank \gls{cifar10} results]{\textbf{\gls{nin} \gls{cifar10} Results.} Multiply-accumulate operations \vs error for \gls{nin} derived models on \gls{cifar10} object classification dataset.}
         \label{fig:cifarresultsch4}
     \end{figure}
     
@@ -778,11 +778,11 @@
     	columns={Real Name, Multiply-Acc., Test Multiply-Acc., Param., Top-5 Acc.},
     	column type/.add={lrrrrrr}{},
     	columns/Multiply-Acc./.style={
-    		column name=FLOPS {\small $\times 10^{9}$},
+    		column name=\gls{flops} {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Test Multiply-Acc./.style={
-    		column name=Test FLOPS w/ Aug. {\small $\times 10^{9}$},
+    		column name=Test \gls{flops} w/ Aug. {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Param./.style={

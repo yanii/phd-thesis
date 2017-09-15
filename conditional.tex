@@ -254,8 +254,8 @@
 	%\item They have such a complex and long structure that they need to train using intermediate losses with manually set weights.
 	%\end{itemize}
 	
-	\subsection{CIFAR10}
-	Here we validate conditional networks for the classification of images in the CIFAR10 dataset~\citep{CIFAR10}. 
+	\subsection{\gls{cifar10}}
+	Here we validate conditional networks for the classification of images in the \gls{cifar10} dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state of the art \gls{nin} (NiN) model 
 	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in \cref{fig:Cifar_CondNet}. 
@@ -267,7 +267,7 @@
 		\centerline{
 			\includegraphics[width=1.1\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically learned conditional architecture for CIFAR10.]{\textbf{Automatically learned conditional architecture for image classification in CIFAR10.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
+		\caption[Automatically learned conditional architecture for \gls{cifar10}.]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
@@ -291,7 +291,7 @@
 	%\acnote{we have not done this in Imagenet because too big.}
 	
 	In the optimization we maximized the {\em size-normalized} accuracy $\alpha =\frac{\textrm{validation accuracy}}{\textrm{model size}}$ with respect to the parameters $R_l = 2^i, \left\{i\in \mathbb{N} : 0 \le i \le 5\right\}$, where $R_l$ is the number of nodes at layer $l$ in the conditional network. 
-	\cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in CIFAR10. 
+	\cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in \gls{cifar10}. 
 	It is a DAG-structured conditional network with 10 layers.
 	To our knowledge this is the first attempt at learning automatically the architecture of a deep \gls{cnn} for image classification.
 	
@@ -302,7 +302,7 @@
 	All networks were trained with the same hyperparameters as~\citep{Lin2013NiN}, 
 	except for using the initialization strategy of~\citep{He2015b}, 
 	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
-	We split the original CIFAR10 training set into 40,000 training images and 
+	We split the original \gls{cifar10} training set into 40,000 training images and 
 	10,000 validation images. 
 	The standard 10,000 held-out images are used for testing.
 	
@@ -320,7 +320,7 @@
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on CIFAR10.]{\textbf{Comparing network architectures on CIFAR10.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
+		\caption[Comparing network architectures on \gls{cifar10}.]{\textbf{Comparing network architectures on \gls{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
 	\end{figure}
 	%
 	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
