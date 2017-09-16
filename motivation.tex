@@ -234,7 +234,7 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
 	Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,frean1990upstart,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
 	
-	\subsection{Tiling Algorithm}
+	\subsection{Tiling Algorithm}\label{tilingalgo}
 	The earliest proposals for building neural network\index{neural network} structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron\index{neuron} is fist used to provide the best linear separation of the data, and then ancillary neurons\index{neuron} are added until perfect classification of the training data is achieved. In practice this is not necessarily good for generalization to the validation set however. 
 	
 	\subsection{Cascade Correlation}
@@ -256,8 +256,10 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
 	
 	Since each new neuron\index{neuron} produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron\index{neuron} wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks\index{neural network}, likely due to their greedy training strategy, as compared to deep networks trained with backpropagation\index{backpropagation} where no weights are frozen during training.
+
 	\subsection{Upstart}
-	\mynote{todo}
+	The Upstart algorithm is a method for building neural networks using \emph{\gls{ltu}}\index{LTU}, a neuron , at a high level like the Tiling Algorithm\cref{tilingalgo}, but instead of building up layers from the input, 
+
 	\subsection{Hyper-Networks}
 	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}\@.
 	\mynote{todo talk about MaKay's work, hyper-networks}
