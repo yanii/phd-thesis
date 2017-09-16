@@ -71,7 +71,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \caption[An illustration of the inability of a single line to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
-A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
+A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
 
 At the time, it was not obvious how to train networks with more than one layer of neurons\index{neuron}, since the methods of learning neuron\index{neuron} weights, the \emph{perceptron learning rule}~\citep{rosenblatt1961principles} for perceptrons\index{perceptron} or the \emph{delta rule}\index{delta rule}~\citep{widrow1960adaptive} for general neurons\index{neuron}, only applied to single-layered networks. %This became known as the credit-assignment problem.
 
@@ -186,9 +186,9 @@ where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}
 \end{equation}
 %
 \subsection{Backpropagation}
-The credit-assignment problem was solved with the discovery of \emph{backpropagation}\index{backpropagation|textbf} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial who first `discovered' backpropagation\index{backpropagation}, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation\index{backpropagation} in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
+The credit-assignment problem was solved with the discovery of \emph{backpropagation}\index{backpropagation|textbf} (also known as the \emph{generalized delta rule}), allowing learning in multi-layer neural networks\index{neural network}. It is somewhat controversial as to who first `discovered' backpropagation\index{backpropagation}, since it is essentially the application of the chain rule to neural networks\index{neural network}, however it's generally accepted that it was first demonstrated experimentally by \citet{rumelhartbackprop}. Although it is ``just the chain rule'', to dismiss this first demonstration of backpropagation\index{backpropagation} in neural networks\index{neural network} is to understate the importance of this discovery to the field, and to dismiss the practical difficulties in first implementing the algorithm --- a fact that will be attested to by anyone who has since attempted.
 
-Following is a derivation of backpropagation\index{backpropagation} loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule\index{delta rule} in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single-layer case.
+The following is a derivation of backpropagation\index{backpropagation} loosely based on the excellent references of \citet{haykin1994neural,Bishop1995}, although with different notation. This derivation builds upon the derivation for the delta rule\index{delta rule} in the previous section, although it is important to note that, as shown in \cref{fig:neurontwolayer}, the indexing we will use to refer to neurons\index{neuron} of different layers differs from that in \cref{fig:neurononelayer} for the single-layer case.
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label= (\textbf{\roman*})]
@@ -217,9 +217,9 @@ The output weights are relatively easy to find, since they correspond to the sam
 \caption[An illustration of a neural network with a single hidden layer]{\textbf{An illustration of a neural network with a single hidden layer.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons\index{neuron} have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron\index{neuron} to the error (\ie every output neuron\index{neuron} $y_k$).
+We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons\index{neuron} have no direct access to the error signal, instead we must calculate the error signal from all of the neurons that indirectly connect the neuron\index{neuron} to the error (\ie every output neuron\index{neuron} $y_k$).
 
-Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E^n$,
+Following from the chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E^n$,
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &= \underbrace{\left( \sum_k \frac{\partial E^n}{\partial e^n_{k}}
@@ -257,7 +257,7 @@ and substituting from \cref{eqn:partialdyda} and \cref{eqn:sumonetermpartial} in
 \end{aligned}
 \end{equation}
 %
-This bears some resemblance to the derived expression for a single-layer, and just as in \cref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as,
+This bears some resemblance to the derived expression for a single-layer, and just as in \cref{eqn:delta}, we can use our definition of the delta to simplify it. For hidden layers this evaluates as
 \begin{equation}
 \label{eqn:deltahidden}
 \begin{aligned}
@@ -267,7 +267,7 @@ This bears some resemblance to the derived expression for a single-layer, and ju
 \end{aligned}
 \end{equation}
 %
-This leaves us with the more convenient (as we will see in \cref{arbitraryhidden}) expression,
+This leaves us with the more convenient expression (as we will see in \cref{arbitraryhidden}),
 \begin{equation}
 \begin{aligned}
     \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j x_i.
@@ -296,7 +296,7 @@ for any adjacent neural network\index{neural network} layers $i, j$, including t
 \end{equation}
 %
 \subsection{Learning with Backpropagation}
-Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note, that rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
+Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note that, rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
     \Delta w^n_{ij} &= -\lambda \frac{\partial E^n}{\partial w_{ji}}\\
@@ -311,9 +311,9 @@ where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is
 \includegraphics[width=0.85\textwidth]{learningratedecrease}
 \caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
-Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing the it altogether. 
+Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing it altogether. 
 
-In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while too slow a rate of decrease and it will take a very long time to enter the basin of attraction, such as with $\lambda_3$. 
+In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while if the rate of decrease is too slow it will take a very long time to enter the basin of attraction, such as with $\lambda_3$. 
 
 The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training deep networks which comes from experience, but~\citep{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
 
@@ -341,26 +341,26 @@ and mixed partial derivatives, \eg
 \includegraphics[width=\textwidth]{narrowvalleymomentum}
 \caption{Momentum}\label{fig:narrowvalleymomentum}
 \end{subfigure}
-\caption[Pathological curvature]{\textbf{Pathological curvature.} An error surface $E(x, y)$ exhibiting a narrow valley, and the optimal path from the starting point to the minima shown by the red arrow. In a pathological error surface such as this, first order methods cannot use the information provided by the Hessian on the surface curvature to avoid bouncing along the walls of the valley, slowing descent. Momentum alleviates this somewhat in damping the change in direction, by preserving information on previous gradients, allowing a quicker descent. Inspired by a similar diagram by \citet{martens2010deep}.}
+\caption[Pathological curvature]{\textbf{Pathological curvature.} An error surface $E(x, y)$ exhibiting a narrow valley, and the optimal path from the starting point to the minima shown by the red arrow. In a pathological error surface such as this, first-order methods cannot use the information provided by the Hessian on the surface curvature to avoid bouncing along the walls of the valley, slowing descent. Momentum alleviates this somewhat in damping the change in direction, by preserving information on previous gradients, allowing a quicker descent. Inspired by a similar diagram by \citet{martens2010deep}.}
 \label{fig:pathological}
 \end{figure}
-These second-order partials give important information about the curvature of the error surface $E$. For example, in \cref{fig:learningrate}, the error surface takes on an elliptical shape, which causes problems when we only consider the direction of maximum decrease $-\nabla E$. The classic example of such a pathological error surface for first order methods is an error surface that looks like a narrow valley, as shown in \cref{fig:narrowvalleysgd}. With an initialization outside the bottom of the valley, gradient descent will bounce along the walls of the valley, leading to a very slow learning convergence.
+These second-order partials give important information about the curvature of the error surface $E$. For example, in \cref{fig:learningrate}, the error surface takes on an elliptical shape, which causes problems when we only consider the direction of maximum decrease $-\nabla E$. The classic example of such a pathological error surface for first-order methods is an error surface that looks like a narrow valley, as shown in \cref{fig:narrowvalleysgd}. With an initialization outside the bottom of the valley, gradient descent will bounce along the walls of the valley, leading to a very slow learning convergence.
 
 For well-behaved surfaces where the scaling of parameters is similar
 %, \ie surfaces where the mixed partial derivatives, \eg
 %\begin{equation}
 %    \frac{\partial^2 E}{\partial x\,\partial y} \approx 1,
 %\end{equation}
-basins of attraction around a minima are roughly circular, and thus avoid this problem, since the first order gradients will point almost directly at the minima for any location on the error surface.
+basins of attraction around a minima are roughly circular, and thus avoid this problem, since the first-order gradients will point almost directly at the minima for any location on the error surface.
 
-There are second-order optimization methods based on Newton's method, however the issue is that they do not scale to the size of any practical deep networks. The matrix of second order partial derivatives for a vector function, the Hessian, is required for any full second-order optimization method, however the Hessian is square in the number of parameters in the network. For networks of millions of parameters this means storing the Hessian is infeasible.
+There are second-order optimization methods based on Newton's method, however the issue is that they do not scale to the size of any practical deep networks. The matrix of second-order partial derivatives for a vector function, the Hessian, is required for any full second-order optimization method, however the Hessian is square in the number of parameters in the network. For networks of millions of parameters this means storing the Hessian is infeasible.
 
-There are a whole slew of optimization tricks for gradient descent, often attempting to to compensate for the shortcomings of first-order optimization without using the Hessian, or using some approximation to it. We will not cover those here, since none of these were used in our experiments. A full background of the issues of optimization in deep networks is outside the scope of this dissertation, however interested readers should refer to \citet{goodfellow2016deep} to learn more about these methods, and \citet{martens2010deep} for an excellent introduction to the problems of first and second order optimization in deep networks.
+There are a whole slew of optimization tricks for gradient descent, often attempting to to compensate for the shortcomings of first-order optimization without using the Hessian, or using some approximation to it. We will not cover those here, since none of these were used in our experiments. A full background of the issues of optimization in deep networks is outside the scope of this dissertation, however interested readers should refer to \citet{goodfellow2016deep} to learn more about these methods, and \citet{martens2010deep} for an excellent introduction to the problems of first and second-order optimization in deep networks.
 
 \subsection{Momentum}
-A common improvement to gradient descent is momentum~\citep{polyak1964some,rumelhartbackprop}, a trick for minimizing the effect of pathological curvature on gradient descent, which also helps with variance in gradients. The name comes from the analogy of the update to physical momentum $p$ for a moving particle, $\mathbf{p}=m\mathbf{v}$, where we assume unit mass, $m=1$.
+A common improvement to gradient descent is momentum~\citep{polyak1964some,rumelhartbackprop}, a trick for minimizing the effect of pathological curvature on gradient descent, which also helps with variance in gradients. The name comes from the analogy of the update to physical momentum $\rho$ for a moving particle, $\mathbf{p}=m\mathbf{v}$, where we assume unit mass, $m=1$.
 
-In momentum the gradients over multiple iterations are accumulated into a velocity gradient, 
+In momentum, the gradients over multiple iterations are accumulated into a velocity gradient, 
 \begin{equation}
 \begin{aligned}
 \mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \lambda\nabla E(\mathbf{w})\\
