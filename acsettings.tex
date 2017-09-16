@@ -13,25 +13,21 @@
 \definecolor{myred}{rgb}{0.6, 0, 0}
 \definecolor{myblue}{rgb}{0.3, 0.1, 0.9}
 
-%\definecolor{acgreen}{rgb}{0.1,0.5,0.1}
-%\definecolor{acblue}{rgb}{0.1,0.1,0.5}
-%\newcommand{\bl}[1]{\textcolor{acgreen}{#1}}
-%\newcommand{\gr}[1]{\textcolor{acblue}{#1}}
+\usepackage{xspace}
 
-\newcommand{\eg}{{\it e.g.}\ }
-\newcommand{\ie}{{\it i.e.}\ }
-\newcommand{\vs}{{vs.}\ }
-\newcommand{\etal}{{et al.}\ }
-%\newcommand{\cf}{{\it cf}}
+% Add a period to the end of an abbreviation unless there's one
+% already, then \xspace.
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
 
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-\newcommand{\bea}{\begin{eqnarray}}
-\newcommand{\eea}{\end{eqnarray}}
-\newcommand{\beas}{\begin{eqnarray*}}
-\newcommand{\eeas}{\end{eqnarray*}}
-
-\usepackage{tikz}
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\def\vs{\emph{vs}\onedot} \def\Vs{\emph{Vs}\onedot}
+\def\etc{\emph{etc}\onedot} \def\vs{\emph{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{\emph{et al}\onedot}
+\makeatother
 
 \newcommand{\circleplus}{ 
   \mathbin{

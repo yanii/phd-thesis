@@ -49,26 +49,26 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \caption[A single-layer neural network]{\textbf{An illustration of a simple single-layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie{}a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
+then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
-\caption[The interpretation of a perceptron\index{perceptron} as a hyperplane]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie{}a line, in $\mathbb{R}^2$.}
+\caption[The interpretation of a perceptron\index{perceptron} as a hyperplane]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
-The perceptron\index{perceptron} also has a geometric interpretation, as shown in \cref{fig:hyperplane} \citet{Bishop1995}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie{}$N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
+The perceptron\index{perceptron} also has a geometric interpretation~\citep{Bishop1995}, as shown in \cref{fig:hyperplane}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
 %
 \begin{equation}
 y = a x + c.
 \end{equation}
 %
-In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in 3 dimensions. Neural networks are a discriminative classifier, and each neuron\index{neuron} can be visualized as a hyperplane functioning as a single decision boundary.
+In general a perceptron defines a \emph{hyperplane}, a separating manifold of dimension $d - 1$ for an input space of dimension $d$, a line in two dimensions, or plane in three dimensions. Neural networks are a discriminative classifier, and each neuron\index{neuron} can be visualized as a hyperplane functioning as a single decision boundary.
 
 \subsection{The Limitations of Single-Layer Networks}\label{singlelayernetworks}
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronxor}
-\caption[An illustration of the inability of a single line to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie{}a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie{}multiple layers.}
+\caption[An illustration of the inability of a single line to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
 A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors Marvin Minsky and Seymour Papert showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.
@@ -192,7 +192,7 @@ Following is a derivation of backpropagation\index{backpropagation} loosely base
 
 We are interested in finding the sensitivity of the error $E$ to a given weight in the network $w_{ij}$. There are two classes of weights for which we must derive different rules, 
 \begin{enumerate*}[label= (\textbf{\roman*})]
-  \item\label{enum:outputneuron} those belonging to \emph{output layer neurons\index{neuron}}, \ie{}neurons\index{neuron} lying directly before the output, such as $w_{kj}$ in \cref{fig:neurontwolayer}, and
+  \item\label{enum:outputneuron} those belonging to \emph{output layer neurons\index{neuron}}, \ie neurons\index{neuron} lying directly before the output, such as $w_{kj}$ in \cref{fig:neurontwolayer}, and
   \item\label{enum:hiddenneuron} weights belonging to hidden layer neurons\index{neuron}, such as $w_{ji}$ in \cref{fig:neurontwolayer}.
 \end{enumerate*}
 %
@@ -217,7 +217,7 @@ The output weights are relatively easy to find, since they correspond to the sam
 \caption[An illustration of a neural network with a single hidden layer]{\textbf{An illustration of a neural network with a single hidden layer.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The hidden layer has weights $\{w_{i0}, \ldots, w_{iN}\}$, bias $b_i$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$. The output layer with output $y_k$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_k$, $e_k$, is calculated using the target label $t_k$. Note that $x^n_{kj} \equiv y^n	_j$.}
 \label{fig:neurontwolayer}
 \end{figure}
-We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons\index{neuron} have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron\index{neuron} to the error (\ie{}every output neuron\index{neuron} $y_k$).
+We will first derive the partial derivative ${\partial E^n}/{\partial w_{ji}}$, for a single hidden layer network, such as that illustrated in \cref{fig:neurontwolayer}. Unlike in the first case, the weights belonging to hidden neurons\index{neuron} have no direct access to the error signal, instead we must calculate the error signal from all the neurons that indirectly connect the neuron\index{neuron} to the error (\ie every output neuron\index{neuron} $y_k$).
 
 Following from chain rule we can write the partial derivative of a hidden weight $w_{ji}$ with respect to the error $E^n$,
 \begin{equation}
@@ -394,7 +394,7 @@ When using \gls{sgd}, we randomly sample (without replacement) a subset of the t
      \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
-where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie{}for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie{}a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of \gls{sgd}. 
+where the size of the mini-batch $|X_{\textrm{mb}}|$ should be significant enough a sample to represent the statistics of the training set distribution, \ie for a classification problem the mini-batch should capture a significant number of the classes in the training set. Using a mini-batch size of one, \ie a single sample as shown in \cref{eqn:backproplearningrule}, is a special case of \gls{sgd}. 
 
 It has been observed in practice that adding noise to the gradient by using stochastic gradient descent often helps generalization compared to batch gradient descent, perhaps by preventing overfitting. Note that even if we use the true gradient for the training dataset, the training set $X$ is only a sampling of the population distribution we want our network to generalize to.
 
@@ -405,7 +405,7 @@ As we have seen with the perceptron\index{perceptron}, the activation function f
 y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
 \end{equation}
 %
-In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie{}a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
+In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined and gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
 	f(x) = \frac{1}{1+e^{-x}},
@@ -425,7 +425,7 @@ Neural networks with at least one (infinitely wide) \emph{hidden} layer have bee
 In practice however we do not find that a network with only a single hidden layer, of even a very large width, can learn to represent complex functions as well as networks with many hidden layers layers. Indeed the observation that networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks, represents some of the progress made in learning with neural networks\index{neural network} in recent years. Unfortunately the reasons why this mismatch between theory and practice occurs is still poorly understood, and an active area of research.
 
 \subsection{Convolutional Neural Networks}\label{cnns}
-The earliest work on what are now termed \glspl{cnn} was by \citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The Neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie{}alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks.
+The earliest work on what are now termed \glspl{cnn} was by \citet{Fuk80}, on the \emph{Neocognitron}~\citep{fukushima2013artificial}. The Neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks.
 
 Despite the pioneering novelty of the work on Neocognitron, it was only following the simplification and improvement of \citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state-of-the-art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
 
@@ -699,10 +699,10 @@ For the more typically used rectified linear unit, a variation of this initializ
 \end{equation}
 %
 \subsection{Batch Normalization}
-Some network architectures are sufficiently complex, \eg{}networks with neurons\index{neuron} with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, \citet{Ioffe2015} proposed a more direct approach of maintaining the desired zero-mean, unit Gaussian response distribution. Batch normalization proposes to use batch statistics to whiten the responses of layers it is applied to during training.
+Some network architectures are sufficiently complex, \ie networks with neurons\index{neuron} with drastically different number of outgoing/incoming connections, that even careful initialization will not prevent exploding/vanishing gradients. Instead, \citet{Ioffe2015} proposed a more direct approach of maintaining the desired zero-mean, unit Gaussian response distribution. Batch normalization proposes to use batch statistics to whiten the responses of layers it is applied to during training.
 
 %Batch normalization maintains per-batch response statistics during training, and uses them to reshape the response distribution during training.
-Full whitening (\ie{}de-correlating the responses) is prohibitively expensive however, instead batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. Using batch-normalization during training can make a dramatic difference, in many cases networks that would previous not converge, will converge, and it can sometimes speed up training.
+Full whitening (\ie de-correlating the responses) is prohibitively expensive however, instead batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. Using batch-normalization during training can make a dramatic difference, in many cases networks that would previous not converge, will converge, and it can sometimes speed up training.
 
 %Batch normalization uses batch statistics to whiten the responses of layers it is applied to during training. Batch normalization calculates the the mini-batch mean and variance, and prevents vanishing gradients by normalizing responses/gradients according to the batch statistics. 
 
@@ -726,7 +726,7 @@ Most state-of-the-art supervised deep networks now use batch normalization along
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this dissertation, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
 
 \subsection{AlexNet}
-Training \emph{deep} networks, that is neural networks\index{neural network} with many (\ie{}two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks\index{neural network}, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks\index{neural network} possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, \gls{relu} activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state-of-the-art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
+Training \emph{deep} networks, that is neural networks\index{neural network} with many (\ie two or more) hidden layers, had proven difficult due to the high computational complexity, and the so called `vanishing gradient' problem~\citep{bengio:ieeenn94}. However, recent advances in training neural networks\index{neural network}, as covered in \cref{section:contemporary}, along with appropriately large datasets and sufficient compute resources have made training deep neural networks\index{neural network} possible. \citet{Krizhevsky2012} used a combination of these advances, along with a very large dataset~\citep{ILSVRC2015}, to show that a deep convolutional network (since referred to as AlexNet) with appropriate initialization~\citep{Sutskever2013momentum}, weight decay, \gls{relu} activation functions~\citep{conf/icml/NairH10} and drop out regularization~\citep{Hinton2012} could beat state-of-the-art methods on large scale object class recognition methods based on hand-crafted features by a large margin. 
 
 AlexNet notably used training-time and test-time augmentation to achieve its state-of-the-art accuracy. During training random $224 \times 224$ crops of a $256 \times 256$ image are used, along with random mirroring of these crops. In addition \emph{relighting augmentation} is used, where the \gls{pca} components over all \gls{rgb} pixels in the image are used to perturb the ``brightness'' of the image, and give some robustness to photometric variations in the test images. At test time ``$10\times$ oversampling'' is used, that is for each $256\times 256$ test image, and its mirrored image, 4 corner and one centre crop are pushed through the network, and the prediction is simply the averaged over these 10 crops. Finally, for the best results reported (Top-5 error of 15.4\%), an \emph{ensemble} of 7 models is used, where the prediction is the average of all these models. 
 
@@ -736,7 +736,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the \gls{nin} architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie{}\gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
+    \caption[Low-dimensional embedding]{\textbf{Low-dimensional embedding.} Introduced in the \gls{nin} architecture, a low-dimensional embedding consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie \gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
 \afterpage{
 \begin{landscape}
@@ -845,7 +845,7 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \end{figure}
 \citet{He2015} introduced residual networks, which provide an important insight on a problem with the training of very deep networks. While deeper networks generally improve generalization, especially with large datasets, at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
-The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having training a deep network with good generalization (\eg{}\cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\eg{}\cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
+The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having training a deep network with good generalization (\ie \cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\ie \cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
 
 Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identify transformation $H(\mathbf{x})=x$. 
 
