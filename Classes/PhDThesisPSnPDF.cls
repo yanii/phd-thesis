@@ -31,6 +31,10 @@
 \newif\ifPHD@index\PHD@indexfalse
 \DeclareOption{index}{\PHD@indextrue}
 
+% ***************************** PDF1/A Support *********************************
+\newif\if@pdfa\@pdfafalse
+\DeclareOption{pdfa}{\@printtrue}
+
 % ******************************* Font Option **********************************
 \newif\ifsetFont\setFontfalse                 % Font is not set
 
@@ -607,7 +611,20 @@ supported!}
 % Moved below other usepackage definitions to fix PDFLaTeX footnote warning
 % Based on the suggestion by John Plaice
 
-\RequirePackage[unicode=true]{hyperref}
+% from https://github.com/holgern/TUB_PhDThesisTemplate/blob/master/Classes/PhDthesisTUB.cls
+%:-------------------------- Enable pdfa-1b generation -----------------------
+\if@pdfa
+  \let\tmpa\textsuperscript
+  \DeclareTextCommandDefault{\textsuperscript}{\tmpa}
+  \RequirePackage[a-1b]{pdfx}
+  %\RequirePackage[x-3]{pdfx}
+  \RequirePackage{xmpincl}
+  %\includexmp{pdfa-1b}pdfa,
+  \RequirePackage[unicode=true,pdftex,pdf1a]{hyperref}
+\else
+  \RequirePackage[unicode=true]{hyperref}
+\fi
+%: ----------------------------------------------------------------------------
 
 \if@print
   % For Print version
