@@ -230,21 +230,24 @@ The NFL theorem leads many to claim that there is no such thing as a universal l
 \subsubsection{No Free Lunch and Structural Priors}
 The NFL theorem highlights the need to focus on designing learning algorithms that work well for the real-world data distributions we are interested in. This may be considered to be the \emph{raison d'\^{e}tre} of structural priors, however this discounts the generality of the theorem. All neural network\index{neural network} makes implicit assumptions even without structural priors. For example, using a single-hidden  layer neural network\index{neural network} assumes that the problem being learned is not linear. If the problem is linear, instead a single-layer network would suffice, and likely generalize better. The NFL is, however, important in pointing out that structural priors in neural networks\index{neural network} are not a `hack'. In fact well-informed assumptions are the reason machine learning works in practice.
 
-\section{Growing Neural Network Architectures}
+\section{Constructive Neural Network Algorithms}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
-	Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research has been the approach taken by \citet{mezard1989learning,Fahlman1989,frean1990upstart,MacKay91,mackay1992practical,hypernetworks} amongst others. A survey of such methods is presented by \citet{parekh2000constructive}.
+	Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research was prominent in the late 80's and early 90's, but has started to regain focus. 	
+	\subsection{Perfect Binary Training Classification}
+Constructive approaches to binary classification neural network architectures were the approach taken by \citet{mezard1989learning,Fahlman1989,frean1990upstart} among others. A survey of such methods is presented by \citet{parekh2000constructive}. These methods share one issue however, they  present algorithms to build neural networks that can classify a binary training set \emph{perfectly}, as pointed out by~\citet{Bishop1995}. Rather, our interest is usually in a classifier that generalizes well --- neural networks that classify the training set perfectly are likely instead to have over-fit the training set.
 	
-	\subsection{Tiling Algorithm}\label{tilingalgo}
-	The earliest proposals for building neural network\index{neural network} structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron\index{neuron} is fist used to provide the best linear separation of the data, and then ancillary neurons\index{neuron} are added until perfect classification of the training data is achieved. In practice this is not necessarily good for generalization to the validation set however. 
+	\subsubsection{Tiling Algorithm}\label{tilingalgo}
+	The earliest proposals for building neural network\index{neural network} structures from the data itself were proposed for \emph{boolean classification} networks, \ie classifying binary patterns and returning a binary result. The \emph{tiling algorithm}\index{tiling algorithm|textbf}~\citep{mezard1989learning} is guaranteed to build a network that can achieve perfect classification of the training set. For each layer in the network, a master neuron\index{neuron} is fist used to provide the best linear separation of the data (trained using the \emph{pocket algorithm}\index{pocket algorithm|textbf}~\citep{gallant1986optimal}), and then ancillary neurons\index{neuron} are added until perfect classification of the training data is achieved. 
 	
-	\subsection{Cascade Correlation}
-	Cascade Correlation~\citep{Fahlman1989} is a constructive algorithm for building general neural networks\index{neural network} from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
+	\subsubsection{Cascade Correlation}
+	Cascade correlation\index{cascade correlation|textbf}~\citep{Fahlman1989} is a constructive algorithm for building general neural networks\index{neural network} from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
 	
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics{Figs/PDF/fahlmancascade}
 		\caption[Cascade correlation]{\textbf{Cascade Correlation.} Connections marked with a $\square$ are frozen, while $\times$ connections are learned continuously. \copyright \citet{Fahlman1989}}
 		\label{fig:cascadecorrelation}
+		\mynote{TODO: replace this with our own figure, or remove?}
 	\end{figure}
 	
 	At the beginning of training only the input and output layers exist, as shown in \cref{fig:cascadecorrelation} and since this is a single-layer network with no hidden units, any of the simpler perceptron training rules can be used. After sufficient training, which is heuristically determined, the network is expanded by a single new hidden unit at a time.
@@ -255,15 +258,21 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 	\end{equation}
 	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
 	
-	Since each new neuron\index{neuron} produces a new layer, cascade correlation leads to very deep networks with low throughput, since each layer is only one neuron\index{neuron} wide, making them very inefficient computationally. Cascade correlation networks do not seem to generalize as well as standard neural networks\index{neural network}, likely due to their greedy training strategy, as compared to deep networks trained with backpropagation\index{backpropagation} where no weights are frozen during training.
+	Since each new neuron\index{neuron} produces a new layer, cascade correlation\index{cascade correlation} leads to very deep networks with low throughput, since each layer is only one neuron\index{neuron} wide, making them very inefficient computationally. Cascade correlation\index{cascade correlation} networks do not seem to generalize as well as standard neural networks\index{neural network}, likely due to their greedy training strategy, as compared to deep networks trained with backpropagation\index{backpropagation} where no weights are frozen during training.
 
-	\subsection{Upstart}
-	The Upstart algorithm is a method for building neural networks using \emph{\gls{ltu}}\index{LTU}, a neuron , at a high level like the Tiling Algorithm\cref{tilingalgo}, but instead of building up layers from the input, 
-
-	\subsection{Hyper-Networks}
-	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}\@.
-	\mynote{todo talk about MaKay's work, hyper-networks}
-	\section{Pruning Neural Networks}
+	\subsubsection{Upstart Algorithm}
+	The \emph{upstart algorithm}\index{upstart algorithm|textbf} is a method for building binary classification networks, and is guaranteed to find an architecture with perfect training classification. At a high level it sounds like the tiling algorithm\index{tiling algorithm}\cref{tilingalgo}, but instead of building up layers from the input, in the upstart algorithm\index{upstart algorithm} all the neurons in the network are connected directly to the inputs, and new `child' neurons are added to compensate for the misclassification errors of existing `parent' neurons.
+	
+	Initially the network consists of one neuron that is trained with the \emph{pocket algorithm}\index{pocket algorithm}~\citep{gallant1986optimal}. This `parent' neuron, now frozen, will misclassify some of the training samples, and to correct these two `child' neurons are added. Since the neurons in the upstart algorithm are binary threshold units, the `parent' neuron will either misclassify samples as negative or positive. The two `child' neurons are then trained (also by the pocket algorithm\index{pocket algorithm}) to provide enough of a negative/positive signal to cause the parent neuron to give correct classifications for one or more of the misclassified samples. The `child' neurons become `parents', and their offspring also learn to correct their mistakes. Empirical results showed that the upstart algorithm produces networks with fewer neurons than the tiling algorithm\index{tiling algorithm}.
+	
+    \subsection{Bayesian Method for Adaptive Models}
+    % downside is it requires hessian?
+    \citet{MacKay91,mackay1992practical} proposed a Bayesian approach to adaptive model and hyperparameter selection. \mynote{TODO}
+    
+%	\subsection{Hyper-Networks}
+%	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}.
+	
+	\section{Pruning Algorithms}
     Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,han2015deep,ullrich2017soft,}
 %Xing2009???
  differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
