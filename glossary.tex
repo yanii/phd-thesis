@@ -12,6 +12,8 @@
   \makeglossaries
   \newacronym[see={[Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
 }
+%https://tex.stackexchange.com/questions/127648/how-can-i-add-every-glossary-entry-to-the-index#127671
+\defglsdisplayfirst[\acronymtype]{#1#4\index{#1}}
 
 \newdualentry{cnn}{CNN}{Convolutional Neural Network}{A neural network designed for learning representations of image inputs, with shared parameters in the form of a set of convolutional filters}
 \newdualentry{dnn}{DNN}{Deep Neural Network}{A neural network with two or more hidden layers}
@@ -43,7 +45,7 @@
 \newacronym{msr}{MSR}{Microsoft Research}
 \newacronym{cvpr}{CVPR}{Computer Vision and Pattern Recognition}
 \newacronym{iclr}{ICLR}{International Conference on Learning Representations}
-\newacronym{lde}{LDE}{Low Dimensional Embeddings}
+\newacronym{lde}{LDE}{Low-Dimensional Embeddings}
 \newacronym{gap}{GAP}{Global Average Pooling}
 \newacronym{gmp}{GMP}{Global Max Pooling}
 \newacronym{vc}{VC}{Vapnik-Chervonenkis}
@@ -53,3 +55,4 @@
 \newacronym{flops}{FLOPS}{Floating Point Operations}
 \newacronym{api}{API}{Application Programming Interface}
 \newacronym{doi}{DOI}{Digital Object Identifier}
+\newacronym{sift}{SIFT}{Scale-Invariant Feature Transform}
