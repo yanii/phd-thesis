@@ -7,10 +7,15 @@
 %*******************************************************************************
 \chapter{Background}
 \label{background}
+\begin{chapquote}{Mozer \etal, \textit{Using Relevance to Reduce Network Size Automatically, 1989}}
+    ``One thing that connectionist networks have in common with brains is that if you open them up and peer inside, all you can see is a big pile of goo.''
+\end{chapquote}
+Somewhat like their biologically inspiration, artificial neural networks (or simply \emph{neural networks}\index{neural network}) are easier to understand at the low-level --- the individual neuron itself lacks in complexity --- it is the whole that it becomes hard to understand. While we will focus on the latter in the remainder of this dissertation, here we will present the basics behind the structure and training of neural networks and contemporary deep networks.
+
 \section{Neural Networks}
-Artificial neural networks (or simply \emph{neural networks}\index{neural network|textbf}) are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
+Neural networks\index{neural network|textbf} are a broad range of statistical models characterized by consisting of a set of inter-connected nodes with non-linear \emph{activation functions} with learnable parameters, or \emph{weights}.
 %, used in regression and classification problems.
- Although initially biologically inspired, \gls{nn} within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Neural networks\index{neural network} are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, and medical imagery. 
+ Although initially biologically inspired, neural networks within the field of machine learning have moved away from biologically-plausible models and towards entirely practical models guided by empirical results. Neural networks\index{neural network} are now the most popular statistical model used for learning applications in a diverse set of fields including computer vision, speech recognition, and medical imagery. 
 
 We will not cover the long and colourful history of neural networks\index{neural network} (for this we recommend reading the introduction of \citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks\index{neural network} we refer the reader to the excellent reference of \citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to \citet{goodfellow2016deep}. 
 
