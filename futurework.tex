@@ -35,7 +35,7 @@ At least three factors prevented this line of research from being successful his
 In the shorter term, there is an obvious question arising from the work presented in \cref{lowrankfilters,deeproots} that explore learning more efficiently by reducing the learned parameters in the spatial and channel extents, respectively, of convolutional filters. These naturally lend themselves to being merged into a single effective method for training with low-rank basis filters. We plan to submit a journal article in which both methods are merged and explored in new results on state-of-the-art deep networks.
 
 \section{Optimization and Structural Priors}
-It is notable that many structural priors can be viewed as enforcing sparsity on fully connected networks. For example, in the case of a \gls{cnn}, any learned \gls{cnn} is representable in a fully connected network, since a \gls{cnn} can be viewed as a fully-connected network with a specific arrangement of zeroed connect weights, and some duplicated weights (shared weights) as illustrated in \cref{fig:sparseconn}.
+It is notable that many structural priors can be viewed as enforcing sparsity on fully-connected networks. For example, in the case of a \gls{cnn}, any learned \gls{cnn} is representable in a fully-connected network, since a \gls{cnn} can be viewed as a fully-connected network with a specific arrangement of zeroed connect weights, and some duplicated weights (shared weights) as illustrated in \cref{fig:sparseconn}.
 
 The question arises then, why can we not learn these in fully-connected networks? Structural priors give lower training loss, and yet when we optimize 
 \mynote{TODO}

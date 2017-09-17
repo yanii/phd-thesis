@@ -326,7 +326,7 @@ Constructive approaches to binary classification neural network architectures we
 	
 	\section{Neural Networks with for Vision}\label{neuralnetsforvision}
 	\subsection{The Neocognitron}
-	In an era in which fully connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks.
+	In an era in which fully-connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks.
 
 	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks\index{neural network}, the article's neurological focus and explanation, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. %In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
 	
@@ -391,7 +391,7 @@ Constructive approaches to binary classification neural network architectures we
 	
 	
 	% \begin{chapquote}{David MacKay, \textit{A Practical Bayesian Framework for Backprop Networks, 1991}}
-	% 	``There are many knobs on the black box of `backprop' (learning by back-propagation of
+	% 	``There are many knobs on the black box of `backprop' (learning by backpropagation\index{backpropagation} of
 	% 	errors). Generally these knobs are set by rules of thumb, trial and error, and the use of reserved test data to assess generalization ability (or more sophisticated cross-validation).''
 	% \end{chapquote}
 	
