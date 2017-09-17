@@ -621,6 +621,7 @@ supported!}
   \RequirePackage{xmpincl}
   %\includexmp{pdfa-1b}pdfa,
   \RequirePackage[unicode=true,pdftex,pdf1a]{hyperref}
+  \message{PhDThesisPSnPDF: Using PDF/A-1b support}
 \else
   \RequirePackage[unicode=true]{hyperref}
 \fi
