@@ -33,7 +33,7 @@
 
 % ***************************** PDF1/A Support *********************************
 \newif\if@pdfa\@pdfafalse
-\DeclareOption{pdfa}{\@printtrue}
+\DeclareOption{pdfa}{\@pdfatrue}
 
 % ******************************* Font Option **********************************
 \newif\ifsetFont\setFontfalse                 % Font is not set
@@ -524,6 +524,87 @@ supported!}
   biblatex package with required style in the Preamble.tex file}
 \fi
 
+%******************************* Print / Online ********************************
+% Defines a print / online version to define page-layout and hyperrefering
+
+% Moved below other usepackage definitions to fix PDFLaTeX footnote warning
+% Based on the suggestion by John Plaice
+
+% from https://github.com/holgern/TUB_PhDThesisTemplate/blob/master/Classes/PhDthesisTUB.cls
+%:-------------------------- Enable pdfa-1b generation -----------------------
+\if@pdfa
+  \RequirePackage{xmpincl}
+  \RequirePackage[a-1b]{pdfx}
+  \hypersetup{
+    unicode=true,
+  }
+  \message{PhDThesisPSnPDF: Using PDF/A-1b support}
+\else
+  \RequirePackage[unicode=true]{hyperref}
+  \message{PhDThesisPSnPDF: Not using PDF/A-1b support!}
+\fi
+%: ----------------------------------------------------------------------------
+
+\if@print
+  % For Print version
+  \hypersetup{
+    final=true,
+    plainpages=false,
+    pdfstartview=FitV,
+    pdftoolbar=true,
+    pdfmenubar=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    breaklinks=true,
+    linktocpage,
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    anchorcolor=black
+  }
+  \ifsetCustomMargin
+  % Margin to be define in preamble using geometry package
+  \else
+    \RequirePackage[paper=\PHD@papersize,hmarginratio=1:1,
+      vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
+  \fi
+
+  \if@twoside
+    \hypersetup{pdfpagelayout=TwoPageRight}
+  \else
+    \hypersetup{pdfpagelayout=OneColumn}
+  \fi
+
+\else
+  % For PDF Online version
+  \hypersetup{
+    final=true,
+    plainpages=false,
+    pdfstartview=FitV,
+    pdftoolbar=true,
+    pdfmenubar=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    breaklinks=true,
+    linktocpage,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    anchorcolor=green
+  }
+
+  \ifsetCustomMargin
+    % Margin to be define in preamble using geometry package
+    \else
+      % No Margin staggering on Odd and Even side
+      \RequirePackage[paper=\PHD@papersize,hmarginratio=1:1,
+        vmarginratio=1:1,scale=0.75]{geometry} % dvips
+    \fi
+    \hypersetup{pdfpagelayout=OneColumn}
+\fi
+
 % ********************************** Fonts **********************************
 \RequirePackage[full]{textcomp}
 % Font Selection
@@ -604,88 +685,6 @@ supported!}
 % Don't break enumeration (etc.) across pages in an ugly manner
 \clubpenalty=10000
 \widowpenalty=10000
-
-%******************************* Print / Online ********************************
-% Defines a print / online version to define page-layout and hyperrefering
-
-% Moved below other usepackage definitions to fix PDFLaTeX footnote warning
-% Based on the suggestion by John Plaice
-
-% from https://github.com/holgern/TUB_PhDThesisTemplate/blob/master/Classes/PhDthesisTUB.cls
-%:-------------------------- Enable pdfa-1b generation -----------------------
-\if@pdfa
-  \let\tmpa\textsuperscript
-  \DeclareTextCommandDefault{\textsuperscript}{\tmpa}
-  \RequirePackage[a-1b]{pdfx}
-  %\RequirePackage[x-3]{pdfx}
-  \RequirePackage{xmpincl}
-  %\includexmp{pdfa-1b}pdfa,
-  \RequirePackage[unicode=true,pdftex,pdf1a]{hyperref}
-  \message{PhDThesisPSnPDF: Using PDF/A-1b support}
-\else
-  \RequirePackage[unicode=true]{hyperref}
-\fi
-%: ----------------------------------------------------------------------------
-
-\if@print
-  % For Print version
-  \hypersetup{
-    final=true,
-    plainpages=false,
-    pdfstartview=FitV,
-    pdftoolbar=true,
-    pdfmenubar=true,
-    bookmarksopen=true,
-    bookmarksnumbered=true,
-    breaklinks=true,
-    linktocpage,
-    colorlinks=true,
-    linkcolor=black,
-    urlcolor=black,
-    citecolor=black,
-    anchorcolor=black
-  }
-  \ifsetCustomMargin
-  % Margin to be define in preamble using geometry package
-  \else
-    \RequirePackage[paper=\PHD@papersize,hmarginratio=1:1,
-      vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
-  \fi
-
-  \if@twoside
-    \hypersetup{pdfpagelayout=TwoPageRight}
-  \else
-    \hypersetup{pdfpagelayout=OneColumn}
-  \fi
-
-\else
-  % For PDF Online version
-  \hypersetup{
-    final=true,
-    plainpages=false,
-    pdfstartview=FitV,
-    pdftoolbar=true,
-    pdfmenubar=true,
-    bookmarksopen=true,
-    bookmarksnumbered=true,
-    breaklinks=true,
-    linktocpage,
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue,
-    anchorcolor=green
-  }
-
-  \ifsetCustomMargin
-    % Margin to be define in preamble using geometry package
-    \else
-      % No Margin staggering on Odd and Even side
-      \RequirePackage[paper=\PHD@papersize,hmarginratio=1:1,
-        vmarginratio=1:1,scale=0.75]{geometry} % dvips
-    \fi
-    \hypersetup{pdfpagelayout=OneColumn}
-\fi
 
 % ************************ URL Package and Definition **************************
 \RequirePackage{url}
