@@ -163,12 +163,12 @@
 	%
 	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
 	introduces a DAG-like routed structure to split the filters in the convolutional section.
-	The assumption here is that each filter should only need to be applied to a small number of channels in the input feature map.
+	The assumption here is that each filter should only need to be applied to a small number of channels in the input feature map\index{feature map}.
 	
 	Data routing is implemented via `filter groups', as originally used in~\citep{Krizhevsky2012}. 
 	Thus, at each level $\textrm{conv}\_n\_\{1,2\}, n=3\ldots 5$, the convolutional filters of VGG11-GMP are 
 	divided into $2^{(n-2)}$ groups. Each group depends only on the results of exactly 128 previous filters. 
-	The feature maps of the last convolutional layer are concatenated together, and globally max-pooled
+	The feature maps\index{feature map} of the last convolutional layer are concatenated together, and globally max-pooled
 	before the fully-connected layers, which remain the same as those in VGG11-GMP.
 	
 	\subsubsection{Training}
@@ -241,7 +241,7 @@
 	
 	The most efficient of the state-of-the-art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
-	Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional feature map are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
+	Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional feature map\index{feature map} are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
 	
 	%\begin{itemize}
 	%\item Our convtree has much more potential for distributed computation.
@@ -278,7 +278,7 @@
 	We build a variant (`NiN-64') that prepends a layer of 64 filters to the NiN model.
 	While this variant is more complex than NiN, when routed (as described later) it allows us 
 	to split the larger layers into many routes and increase the efficiency.
-	In fact, for a convolutional layer with $N$ groups of filters, each filter operates on $1/N$ channels of the input feature map, thus yielding reduced test-time computation and learning filters with fewer channels. 
+	In fact, for a convolutional layer with $N$ groups of filters, each filter operates on $1/N$ channels of the input feature map\index{feature map}, thus yielding reduced test-time computation and learning filters with fewer channels. 
 	Additionally, training routed convolutional layers means that filters are exposed only to the training subset of data that flows through that route, thus allowing for a potentially higher degree of specialization.
 	By changing the number of routes at each level of the NiN-64 model (from conv2) we can 
 	generate a whole family of possible conditional architectures. 
