@@ -250,7 +250,9 @@ Constructive approaches to binary classification neural network architectures we
 	% 	\mynote{TODO: replace this with our own figure, or remove?}
 	% \end{figure}
 	
-	At the beginning of training only the input and output layers exist, as shown in \cref{fig:cascadecorrelation} and since this is a single-layer network with no hidden units, any of the simpler perceptron training rules can be used. After sufficient training, which is heuristically determined, the network is expanded by a single new hidden unit at a time.
+	At the beginning of training only the input and output layers exist,
+	% as shown in \cref{fig:cascadecorrelation} %
+	and since this is a single-layer network with no hidden units, any of the simpler perceptron training rules can be used. After sufficient training, which is heuristically determined, the network is expanded by a single new hidden unit at a time.
 	Each new (candidate) hidden unit that is added to the network is connected to all the network inputs, in addition to all of the outputs of the previous hidden units. The candidate unit is treated as a new hidden layer, and since all other connections are frozen, can be trained as if it was a single-layer --- \ie with the delta rule\index{delta rule}, or other similar single-layer training algorithm, rather than backpropagation\index{backpropagation}. The candidate unit's input weights are adjusted so as to maximize the covariance of the candidate unit's output with the error output of the network:
 	% http://www.ra.cs.uni-tuebingen.de/SNNS/UserManual/node167.html#SECTION001081200000000000000
 	\begin{equation}
