@@ -82,9 +82,16 @@
 \CoverDisplayDate{September 2017}
 \CoverDisplayDate{29/09/2017}
 \Journaltitle{Ph.D. Thesis, Department of Engineering, University of Cambridge}
-\Copyright{\copyright Yani Ioannou, 2017}
+Copyright{\copyright\ 2014 Yani Ioannou}
 \Copyrighted{True}
 \Doi{10.5281/zenodo.893378}
-\Keywords{Deep Learning\sep Neural Networks\sep Computer Vision\sep Structural Priors\sep Conditional Computation\sep Filter Groups\ Low-Rank Filters\sep Deep Roots}
-\Subject{Deep learning has in recent years come to dominate the previously separate fields of research in machine learning, computer vision, natural language understanding and speech recognition. Despite breakthroughs in training deep networks, many relatively simple questions remain unanswered about the representations learned within these networks. In addition this lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. The approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization - an approach that has, in practice, found success in improving the generalization of deep networks, but leaves much to desire in efficiency. Instead, within this work, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and compute efficiency of state-of-the art networks, and even increase accuracy through structurally-induced regularization - what we propose to denote as structural priors. We present two such structural priors for convolutional neural networks, and evaluate them in state-of-the-art image classification architectures. Both methods are found to improve the generalization of these architectures while also decreasing the size and increasing the efficiency of their training and test time computation. Finally, we begin to explore auchecktomatically finding structural priors in deep networks by presenting our work on adding conditional computation to deep networks. Although results show this is not optimal, the method shows promise in producing a better compute-generalization trade-off than naive approaches to reducing computation in deep networks, hopefully leading towards a better approach to automatically learning structural priors in deep networks.}
+\Keywords{Deep Learning\sep
+    Neural Networks\sep
+    Computer Vision\sep
+    Structural Priors\sep
+    Conditional Computation\sep
+    Filter Groups\sep
+    Low-Rank Filters\sep
+    Deep Roots}
+\Subject{Ph.D. Thesis, Department of Engineering, University of Cambridge}
 \setRGBcolorprofile{macbook.icc}{Color LCD 2013-11-09 sRGB MQ-HQ 3xCurve+MTX}{Color LCD 2013-11-09 sRGB MQ-HQ 3xCurve+MTX}{http://www.argyllcms.com/}

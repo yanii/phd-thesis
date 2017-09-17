@@ -242,13 +242,13 @@ Constructive approaches to binary classification neural network architectures we
 	\subsubsection{Cascade Correlation}
 	Cascade correlation\index{cascade correlation|textbf}~\citep{Fahlman1989} is a constructive algorithm for building general neural networks\index{neural network} from only a basic two-layer network of input and output nodes. It is based on two key ideas, a \emph{cascade} where hidden units are added to the network one at a time, and \emph{correlation}\footnote{In fact it is covariance that is used rather than correlation, since no normalizing factors are used, as noted by \citet{Fahlman1989}.} where the output of the new hidden unit is learned such that it is highly correlated with the error residual being minimized in the existing network.
 	
-	\begin{figure}[tbp]
-		\centering
-		\includegraphics{Figs/PDF/fahlmancascade}
-		\caption[Cascade correlation]{\textbf{Cascade Correlation.} Connections marked with a $\square$ are frozen, while $\times$ connections are learned continuously. \copyright \citet{Fahlman1989}}
-		\label{fig:cascadecorrelation}
-		\mynote{TODO: replace this with our own figure, or remove?}
-	\end{figure}
+	% \begin{figure}[tbp]
+	% 	\centering
+	% 	\includegraphics{Figs/PDF/fahlmancascade}
+	% 	\caption[Cascade correlation]{\textbf{Cascade Correlation.} Connections marked with a $\square$ are frozen, while $\times$ connections are learned continuously. \copyright \citet{Fahlman1989}}
+	% 	\label{fig:cascadecorrelation}
+	% 	\mynote{TODO: replace this with our own figure, or remove?}
+	% \end{figure}
 	
 	At the beginning of training only the input and output layers exist, as shown in \cref{fig:cascadecorrelation} and since this is a single-layer network with no hidden units, any of the simpler perceptron training rules can be used. After sufficient training, which is heuristically determined, the network is expanded by a single new hidden unit at a time.
 	Each new (candidate) hidden unit that is added to the network is connected to all the network inputs, in addition to all of the outputs of the previous hidden units. The candidate unit is treated as a new hidden layer, and since all other connections are frozen, can be trained as if it was a single-layer --- \ie with the delta rule\index{delta rule}, or other similar single-layer training algorithm, rather than backpropagation\index{backpropagation}. The candidate unit's input weights are adjusted so as to maximize the covariance of the candidate unit's output with the error output of the network:
@@ -267,7 +267,12 @@ Constructive approaches to binary classification neural network architectures we
 	
     \subsection{Bayesian Method for Adaptive Models}
     % downside is it requires hessian?
-    \citet{MacKay91,mackay1992practical} proposed a Bayesian approach to adaptive model and hyperparameter selection. \mynote{TODO}
+	\citet{mackay1992practical} proposed a Bayesian approach to adaptive model and hyperparameter selection. The author points to the relationship of Occam's razor to Bayesian approaches. Rather than performing model selection by using cross-validation, the author proposes to predict the likelihood of models to generalize well using only the training set itself.
+	
+	Of particular interest are the empirical results showing that Occams's razor is very much a principle on which neural network design should be structured. \citet{MacKay91}, in \textsection{3.4}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
+	
+
+	\mynote{TODO}
     
 %	\subsection{Hyper-Networks}
 %	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}.
