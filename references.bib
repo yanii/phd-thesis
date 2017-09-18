@@ -294,36 +294,30 @@
   YEAR = {2012},
 }
 
-% CLEANED UP TO HERE
 @ARTICLE{hinton2006reducing,
-  ABSTRACT = {High-dimensional data can be converted to low-dimensional codes by training a multilayer neural$\backslash$rnetwork with a small central layer to reconstruct high-dimensional input vectors. Gradient descent$\backslash$r$\backslash$ncan be used for fine-tuning the weights in such {\lq}{\lq}autoencoder'' networks, but this works well only if$\backslash$r$\backslash$nthe initial weights are close to a good solution. We describe an effective way of initializing the$\backslash$r$\backslash$nweights that allows deep autoencoder networks to learn low-dimensional codes that work much$\backslash$r$\backslash$nbetter than principal components analysis as a tool to reduce the dimensionality of data.$\backslash$r$\backslash$n},
-  ARXIVID = {20},
-  AUTHOR = {Hinton, Geoffrey E and Salakhutdinov, Ruslan R},
+  AUTHOR = {Hinton, Geoffrey E. and Salakhutdinov, Ruslan R.},
   DOI = {10.1126/science.1127647},
-  EPRINT = {20},
-  EPRINTTYPE = {arXiv},
-  ISSN = {1095-9203},
+  ISSN = {0036-8075},
   JOURNALTITLE = {Science},
   NUMBER = {5786},
   PAGES = {504--507},
   PMID = {16873662},
   PUBLISHER = {American Association for the Advancement of Science},
-  TITLE = {{Reducing the Dimensionality of Data with Neural Networks$\backslash$r}},
+  TITLE = {{Reducing the Dimensionality of Data with Neural Networks}},
   VOLUME = {313},
   YEAR = {2006},
 }
-
 @INPROCEEDINGS{He2015b,
-  ABSTRACT = {Rectified activation units (rectifiers) are essential for state-of-the-art neural networks. In this work, we study rectifier neural networks for image classification from two aspects. First, we propose a Parametric Rectified Linear Unit (PReLU) that generalizes the traditional rectified unit. PReLU improves model fitting with nearly zero extra com-putational cost and little overfitting risk. Second, we derive a robust initialization method that particularly considers the rectifier nonlinearities. This method enables us to train extremely deep rectified models directly from scratch and to investigate deeper or wider network architectures. Based on the learnable activation and advanced initialization, we achieve 4.94{\%} top-5 test error on the ImageNet 2012 clas-sification dataset. This is a 26{\%} relative improvement over the ILSVRC 2014 winner (GoogLeNet, 6.66{\%} [33]). To our knowledge, our result is the first 1 to surpass the reported human-level performance (5.1{\%}, [26]) on this dataset.},
   ARXIVID = {1502.01852},
   AUTHOR = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
-  BOOKTITLE = {{IEEE Conference on Computer Vision and Patern Recognition (ICCV)}},
+  BOOKTITLE = {{IEEE International Conference on Computer Vision (ICCV)}},
+  VENUE = {Santiago, Chile},
+  EVENTDATE = {2015-12-07/2015-12-13},
   DOI = {10.1109/ICCV.2015.123},
   EPRINT = {1502.01852},
   EPRINTTYPE = {arXiv},
   ISBN = {978-1-4673-8391-2},
-  ISSN = {15505499},
-  KEYWORDS = {dblp},
+  ISSN = {2380-7504},
   PAGES = {1026--1034},
   PUBLISHER = {IEEE},
   TITLE = {{Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification}},
@@ -332,21 +326,41 @@
 
 @INPROCEEDINGS{Ioffe2015,
   AUTHOR = {Ioffe, Sergey and Szegedy, Christian},
-  BOOKTITLE = {{Proceedings of the 32 nd International Conference on Machine Learning, Lille, France, 2015}},
-  TITLE = {{Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.}},
+  BOOKTITLE = {{Proceedings of the 32nd International Conference on Machine Learning (ICML)}},
+  VENUE = {Lille, France},
+  EVENTDATE = {2015-07-07/2015-07-09},
+  TITLE = {{Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift}},
   YEAR = {2015},
+  pages = 	 {448--456},
+  volume = 	 {37},
 }
-
 @ARTICLE{bengio:ieeenn94,
   AUTHOR = {Bengio, Yoshua and Simard, Patrick and Frasconi, Paolo},
   JOURNALTITLE = {IEEE Transactions on Neural Networks},
-  KEYWORDS = {nn},
+  MONTH = {March},
   NUMBER = {2},
   PAGES = {157--166},
   TITLE = {{Learning Long-Term Dependencies With Gradient Descent Is Difficult}},
   VOLUME = {5},
   YEAR = {1994},
+  DOI = {10.1109/72.279181},
+  PUBLISHER = {IEEE Press},
+  ISSN = {1045-9227},
 }
+
+@INPROCEEDINGS{Simonyan2014verydeep,
+  AUTHOR = {Simonyan, Karen and Zisserman, Andrew},
+  ARXIVID = {1409.1556},
+  EPRINT = {1409.1556},
+  EPRINTTYPE = {arXiv},
+  BOOKTITLE = {International Conference on Learning Representations (ICLR)},
+  VENUE = {San Diego, CA, USA},
+  EVENTDATE = {2015-05-07/2015-05-09},
+  TITLE = {{Very deep convolutional networks for large-scale image recognition}},
+  YEAR = {2015},
+}
+
+% CLEANED UP TO HERE
 
 @ARTICLE{ILSVRC2015,
   AUTHOR = {Russakovsky, Olga and Deng, Jia and Su, Hao and Krause, Jonathan and Satheesh, Sanjeev and Ma, Sean and Huang, Zhiheng and Karpathy, Andrej and Khosla, Aditya and Bernstein, Michael and Berg, Alexander C and Fei-Fei, Li},
@@ -369,7 +383,6 @@
 }
 
 @MISC{Hinton2012,
-  ABSTRACT = {When a large feedforward neural network is trained on a small training set, it typically performs poorly on held-out test data. This "overfitting" is greatly reduced by randomly omitting half of the feature detectors on each training case. This prevents complex co-adaptations in which a feature detector is only helpful in the context of several other specific feature detectors. Instead, each neuron learns to detect a feature that is generally helpful for producing the correct answer given the combinatorially large variety of internal contexts in which it must operate. Random "dropout" gives big improvements on many benchmark tasks and sets new records for speech and object recognition.},
   ARXIVID = {1207.0580},
   AUTHOR = {Hinton, Geoffrey E. and Srivastava, Nitish and Krizhevsky, Alex and Sutskever, Ilya and Salakhutdinov, Ruslan R.},
   BOOKTITLE = {{ArXiv e-prints}},
@@ -386,7 +399,6 @@
 }
 
 @ARTICLE{Lin2013NiN,
-  ABSTRACT = {We propose a novel deep network structure called "Network In Network" (NIN) to enhance model discriminability for local patches within the receptive field. The conventional convolutional layer uses linear filters followed by a nonlinear activation function to scan the input. Instead, we build micro neural networks with more complex structures to abstract the data within the receptive field. We instantiate the micro neural network with a multilayer perceptron, which is a potent function approximator. The feature maps are obtained by sliding the micro networks over the input in a similar manner as CNN; they are then fed into the next layer. Deep NIN can be implemented by stacking mutiple of the above described structure. With enhanced local modeling via the micro network, we are able to utilize global average pooling over feature maps in the classification layer, which is easier to interpret and less prone to overfitting than traditional fully connected layers. We demonstrated the state-of-the-art classification performances with NIN on CIFAR-10 and CIFAR-100, and reasonable performances on SVHN and MNIST datasets.},
   ARXIVID = {1312.4400},
   AUTHOR = {Lin, Min and Chen, Qiang and Yan, Shuicheng},
   DOI = {10.1109/ASRU.2015.7404828},
@@ -400,14 +412,6 @@
   URL = {http://arxiv.org/abs/1312.4400},
   VOLUME = {abs/1312.4},
   YEAR = {2013},
-}
-
-@INPROCEEDINGS{Simonyan2014verydeep,
-  ABSTRACT = {Abstract: In this work we investigate the effect of the convolutional network depth on its accuracy in the large-scale image recognition setting. Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3x3) ...},
-  AUTHOR = {Simonyan, K and Zisserman, A},
-  BOOKTITLE = {{eprint ar{\{}X{\}}iv:arXiv:1409.1556v5}},
-  TITLE = {{Very deep convolutional networks for large-scale image recognition}},
-  YEAR = {2014},
 }
 
 @INPROCEEDINGS{Sermanet2013overfeat,
