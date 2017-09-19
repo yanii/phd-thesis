@@ -38,15 +38,19 @@ Novel work on optimization algorithms used to train neural networks\index{neural
 
 This lack of understanding in both the optimization and structure of deep networks has meant that contemporary deep network architectures for image classification have high computational and memory complexity. This is a direct result of the inability to identify the optimal architecture for datasets. The approach advocated by many researchers in the field has been to train monolithic networks with excess complexity, and strong regularization --- an approach that has found success in practice for accuracy, but leaves much to desire in efficiency.
 
-In this dissertation, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and computational efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. This is not a completely new idea, and had received focus in an earlier iteration of connectionist research progress, in the late 80's and early 90's --- \glspl{cnn} are perhaps the most successful example of this approach --- the significance of which is often misunderstood by contemporary research in the field.
+In this dissertation, we propose that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and computational efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. This is not a completely new idea, and had received focus in an earlier iteration of connectionist research progress, in the late 80's and early 90's --- \glspl{cnn} are perhaps the most successful example of this approach --- the significance of which is often underestimated by contemporary research in the field.
+
 \section{Contributions}
-While this philosophy defines our approach, deep neural networks\index{neural network} have a large number of degrees of freedom, and there are many facets of deep neural networks\index{neural network} that warrant such analysis. In this dissertation, we have looked at several interrelated aspects of deep \gls{cnn}:
-\begin{enumerate*}[label= (\textbf{\roman*})]
-\item spatial connectivity (\cref{lowrankfilters}),
-\item inter-filter connectivity (\cref{deeproots}),
-\item and conditional connectivity (\cref{conditionalnetworks})
-\end{enumerate*}.
-So as to not conflate the methods and results, we have attempted to present each of these in isolation. 
+While this philosophy defines our approach, deep neural networks\index{neural network} have a large number of degrees of freedom, and there are many facets of deep neural networks\index{neural network} that warrant such analysis. In this dissertation, we have looked at several interrelated aspects of deep \gls{cnn}, for each of which we have made a novel contribution:
+\begin{enumerate}[label= (\textbf{\roman*})]
+	\item \textbf{Spatial connectivity (\cref{lowrankfilters}):} a novel spatial structural prior for \glspl{cnn}, by structuring the network to learn a mixed low/full rank basis for filters,
+	\item \textbf{Inter-filter connectivity (\cref{deeproots}):} a novel inter-filter structural prior for \glspl{dnn}, by structuring the network to learn a reduced inter-layer filter/neuron connectivity,
+	\item \textbf{Conditional connectivity (\cref{conditionalnetworks}):} a novel method of learning conditional routing inside a \gls{dnn}, and using this conditional routing to reduce computation at test time.
+\end{enumerate}
+
+So as to not conflate the methods and results, we have presented each of these in isolation in this dissertation. However, the methods address different aspects of sparsity in \glspl{dnn}, and we believe them to be complementary.
+
+\section{Organization}
 This dissertation is organized as follows:
 \begin{description}
 	\item[\Cref{background}] gives the necessary background on neural networks\index{neural network}, and contemporary deep learning architectures
