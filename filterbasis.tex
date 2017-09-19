@@ -1506,7 +1506,10 @@
 				/tikz/.cd
 			},
 			ymin=0,
-			xmajorticks=false,
+			xticklabels from table={\datatable}{layer},
+			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
+			xtick=data,
+			%xmajorticks=false,
 			legend style={at={(0.5,1.2)},
 				draw=none, anchor=north,legend columns=-1},
 			area legend,
