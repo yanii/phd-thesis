@@ -237,7 +237,7 @@
 		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
-	GoogLeNet divides filters within each ``inception'' module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
+	GoogLeNet divides filters within each \gls{inception}\index{inception} module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
 	
 	The most efficient of the state-of-the-art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
