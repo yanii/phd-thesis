@@ -919,8 +919,8 @@
 			\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{Model Parameters \vs Top-5 Error.}}
-			\label{fig:resnet5050param}
+			\caption{Model Parameters \vs Top-5 Error}
+			\label{fig:resnet50param}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{\textwidth}
@@ -967,7 +967,7 @@
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{\gls{flops} (Multiply-Add) \vs Top-5 Error.}}
+			\caption{\gls{flops} (Multiply-Add) \vs Top-5 Error}
 			\label{fig:resnet50ma}
 		\end{subfigure}
 		~
@@ -1022,8 +1022,8 @@
 			%\legend{ResNet 50, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{\gls{gpu} Forward Time \vs Top-5 Error.}}
-			\label{fig:resnet5050gpuforward}
+			\caption{\gls{gpu} Forward Time \vs Top-5 Error}
+			\label{fig:resnet50gpuforward}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{\textwidth}
@@ -1077,17 +1077,15 @@
 			%\legend{ResNet 50, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{CPU Forward Time \vs Top-5 Error.}}
-			\label{fig:resnet5050cpuforward}
+			\caption{CPU Forward Time \vs Top-5 Error}
+			\label{fig:resnet50cpuforward}
 		\end{subfigure}
-		
 		\caption[ResNet-50 \gls{ilsvrc} results]{\textbf{ResNet-50 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet50plots}
 	\end{figure}
 	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. \gls{cpu} timings were 23\% faster, while \gls{gpu} timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. \gls{cpu} timings were 31\% faster, while \gls{gpu} timings were 12\% faster. 
 	
-	\subsubsection{ResNet 200}
-	\label{resnet200results}
+	\subsubsection{ResNet 200}\label{resnet200results}
 	\begin{table}[tp]
 		\caption[ResNet 200 \gls{ilsvrc} results]{\textbf{ResNet-200 \gls{ilsvrc} Results}}
 		\label{table:resnet200imagenetresults}
@@ -1134,8 +1132,114 @@
 		col sep=comma]{\data}
 		%}
 	\end{table}
-	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for \gls{ilsvrc} 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} shows the results of these experiments, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable error to the baseline network, with fewer parameters and less computation. The root-32 model has 25\% fewer \gls{flops} and 44\% fewer parameters than ResNet 200.
-	
+	\begin{figure}[tbp]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\pgfplotstableread[col sep=comma]{rootdata/resnet200orig.csv}\gdatatable
+			\pgfplotstableread[col sep=comma]{rootdata/resnet200roots.csv}\codatatable
+			\pgfplotsset{major grid style={dotted,red}}
+			
+			\pgfplotstableset{
+				create on use/singlecpu/.style={
+					create col/expr={\thisrow{\gls{cpu} Forward} / \thisrow{Batch Size}}},
+			}
+			
+			\centering
+			\begin{tikzpicture}
+			\begin{axis}[
+			width=0.95\textwidth,
+			height=0.24\textheight,
+			axis x line=bottom,
+			ylabel=Top-5 Error,
+			xlabel=Model Parameters (\# Floats),
+			axis lines=left,
+			enlarge x limits=0.05,
+			%enlarge y limits=0.1,
+			grid=major,
+			%xmin=0,
+			%ytick={0.01,0.02,...,0.2},
+			ymin=5.6,ymax=6.6,
+			xticklabel style={
+				  /pgf/number format/fixed zerofill,
+				  /pgf/number format/precision=1
+			},
+			yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+				  /pgf/number format/fixed zerofill,
+				  /pgf/number format/precision=1
+			},
+			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+			legend columns=3,
+			]
+			\addplot[mark=*,mark options={fill=red},
+			%nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\gdatatable};
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords, nodes near coords align = {below}, only marks,
+			every node near coord/.append style={inner sep=4pt},
+			only marks,
+			point meta=explicit symbolic,
+			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\codatatable};
+			\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
+			\end{axis}
+			\end{tikzpicture}
+			\caption{Model Parameters \vs Top-5 Error}
+			\label{fig:resnet200param}
+		\end{subfigure}
+		~
+		\begin{subfigure}[b]{\textwidth}
+			\pgfplotstableread[col sep=comma]{rootdata/resnet200orig.csv}\gdatatable
+			\pgfplotstableread[col sep=comma]{rootdata/resnet200roots.csv}\codatatable
+			\pgfplotsset{major grid style={dotted,red}}
+			
+			\centering
+			\begin{tikzpicture}
+			\begin{axis}[
+			width=0.95\textwidth,
+			height=0.24\textheight,
+			axis x line=bottom,
+			ylabel=Top-5 Error,
+			xlabel=\gls{flops} (Multiply-Add),
+			axis lines=left,
+			enlarge x limits=0.05,
+			%enlarge y limits=0.1,
+			grid=major,
+			%xmin=0,
+			%ytick={0.01,0.02,...,0.2},
+			ymin=5.6,ymax=6.6,
+			xticklabel style={
+				/pgf/number format/fixed zerofill,
+				/pgf/number format/precision=1
+		    },
+			yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+				  /pgf/number format/fixed zerofill,
+				  /pgf/number format/precision=1
+			},
+			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+			legend columns=3,
+			]
+			\addplot[mark=*,mark options={fill=red},
+			%nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\gdatatable};
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords, nodes near coords align = {below}, only marks,
+			every node near coord/.append style={inner sep=4pt},
+			only marks,
+			point meta=explicit symbolic,
+			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\codatatable};
+			\end{axis}
+			\end{tikzpicture}
+			\caption{\gls{flops} (Multiply-Add) \vs Top-5 Error.}
+			\label{fig:resnet200ma}
+		\end{subfigure}
+		\caption[ResNet-200 \gls{ilsvrc} results]{\textbf{ResNet-200 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\label{fig:resnet200plots}
+	\end{figure}
+	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} and \cref{fig:resnet200plots} show the results, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable or lower error, with fewer parameters and less computation. The root-64 model has 27\% fewer FLOPS and 48\% fewer parameters than ResNet 200.
+
 	\subsection{Improving GoogLeNet on \gls{ilsvrc}}
 	\label{googlenet50results}
 	\begin{table}[tp]
