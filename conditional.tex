@@ -15,12 +15,12 @@
 	\section{On Methods of Discriminative Classification}
 	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks\index{neural network} have even replaced the research in local features (\eg \gls{sift}), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network\index{neural network} with one hidden layer, however the converse does not necessarily hold true.
 	
-	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time, due to sample routing only a small part of a tree need be computed, \ie conditional computation, neural networks\index{neural network} must on the other hand compute the response at every node even if many of these responses are approximately zero.
+	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, compute the response at every node, even if many of these responses are approximately zero or not useful to the final output.
 	
 	\section{Generalizing Neural Networks and Decision Trees}
 	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
-	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
+	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures are used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
 	
 	\section{A New Graphical Notation}
 	The proposals we will make require a re-interpretation of existing classification models, that is neural networks\index{neural network} and decision trees, but standard graphical diagrams for both of these models hides the implicit functional similarities on which we will build our models, and are instead connection-centric --- focused on showing the connectivity of the models rather than the underlying data transformations. As such, before we are able to explain the concept of a conditional network, a new graphical language is proposed.
@@ -39,7 +39,7 @@
 			\includegraphics[width=0.9\textwidth]{newnotation}
 			\caption{New notation showing transformation between layers explicitly.}\label{fig:newnotation}
 		\end{subfigure}
-		\caption[New graphical notation for neural networks]{\textbf{The proposed compact graphical notation for neural networks.} Non-linear transformations in a standard neural network\index{neural network} with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$.}\label{fig:newGraphLanguage}
+		\caption[New graphical notation for neural networks]{\textbf{The proposed compact graphical notation for neural networks.} Non-linear transformations in a standard neural network\index{neural network} with one hidden layer are indicated by the projection matrix $\mat P$ between the two layers, followed by a generic non-linearity, represented with the symbol $\wr$. \copyright Antonio Criminisi, used with permission.}\label{fig:newGraphLanguage}
 	\end{figure}
 	
 	The standard depiction of a neural network\index{neural network} with one hidden layer is shown in \cref{fig:oldnotation}, where each of the layers is fully-connected, and these connecting weights are illustrated as lines between the neurons\index{neuron} represented as circles. While this image illustrates the connectivity of the model, it assumes the function of the neurons\index{neuron} themselves to be known or otherwise described. In \cref{fig:newnotation}\ we use a different notation to show both connectivity and function of each layer, with the assumption that all nodes on a particular layer have the same function.
@@ -69,7 +69,7 @@
 			\includegraphics[width=0.9\textwidth]{selectionnotation}
 			\caption{Selection projection, found in random forests.}\label{fig:selectionnotation}
 		\end{subfigure}
-		\caption[Various projection matrices in conditional networks]{\textbf{The proposed compact graphical notation for various types of projection in a conditional network.}}\label{fig:projections}
+		\caption[Various projection matrices in conditional networks]{\textbf{The proposed compact graphical notation for various types of projection in a conditional network.} \copyright Antonio Criminisi, used with permission.}\label{fig:projections}
 	\end{figure}
 	
 	This graphical language may also represent decision trees, also typically depicted in a connection-centric graphical diagram as shown in \cref{fig:oldtreenotation}. Decision trees typically copy, or reference, samples from the root of the tree down to the leaf (or leaves) without transformation. This is notably in contrast with representation learning approaches, such as neural networks\index{neural network}, which try to learn optimal data transformations during training with a full projection matrix, as illustrated in \cref{fig:projectionnotation}. There have, however, been attempts to incorporate representation learning within decision forests~\citep{montillo2011entangled,BuloKontsch2014}. The copying of the sample may also be considered as a special case of the transformation $\vec v_j = \sigma(\mat P \vec v_i)$, where the projection is the identity matrix $\mat P_{ij} = \mat I$, and the function $\sigma$ is the identity function $\sigma(\vec v_i) = \vec v_i$. As such, we use the identity $\mat I$ in our graphical language to denote the routing between each tree level. This is explained graphically in \cref{fig:identitynotation}.
@@ -96,7 +96,7 @@
 			\includegraphics[width=0.8\textwidth]{newtreenotation}
 			\caption{New explicit graphical notation.}\label{fig:newtreenotation}
 		\end{subfigure}
-		\caption[Proposed compact graphical notation for a decision tree]{\textbf{The proposed compact graphical notation for a full decision tree.}}\label{fig:complexDecisionTree}
+		\caption[Proposed compact graphical notation for a decision tree]{\textbf{The proposed compact graphical notation for a full decision tree.} \copyright Antonio Criminisi, used with permission.}\label{fig:complexDecisionTree}
 	\end{figure}
 	
 	We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
@@ -117,7 +117,7 @@
 			\includegraphics[width=0.95\textwidth]{explicit}
 			\caption{Implcitly routed network.}\label{fig:implicitRouter}
 		\end{subfigure}
-		\caption[Explicit \vs{}implicitly routed networks]{\textbf{Explicit \vs{}implicitly routed networks.}}\label{fig:routerConnections}
+		\caption[Explicit \vs{}implicitly routed networks]{\textbf{Explicit \vs{}implicitly routed networks.} \copyright Antonio Criminisi, used with permission.}\label{fig:routerConnections}
 	\end{figure}
 	
 	\subsection{Implicit Routing}
@@ -126,13 +126,13 @@
 	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in \cref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
 	
 	\begin{equation}
-	y_1 = \{y_1^j\} \forall j\circleplus \vec r = \sum_j r_j \sigma(P^j \vec v_1^j ).
+	y_1 = \left\{y_1^j\right\} \forall j\circleplus \vec r = \sum_j r_j \sigma\left(P^j \vec v_1^j \right).
 	\end{equation}
 	
-	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and \gls{relu}, \ie for \cref{fig:implicitRouter}, the output of $\vec v_2$,  is simply,
+	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and \gls{relu}, \ie for \cref{fig:implicitRouter}, the output of $\vec v_2$, is simply,
 	
 	\begin{equation}
-	y_1 = \max (0, ~\sum_j v_1^j \sigma(P^j \vec v_0) ).
+	y_1 = \max \left(0, ~\sum_j v_1^j \sigma(P^j \vec v_0) \right).
 	\end{equation}
 	
 	\subsection{Conditional Networks}
@@ -192,20 +192,20 @@
 	
 	\begin{figure}[tbp] 
 		\centering
-		\begin{subfigure}[b]{0.95\linewidth}
+		\begin{subfigure}[b]{0.9\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsEff}
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}compute for various network architectures.}\label{fig:resultsImagenet_AccVsEff}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.95\linewidth}
+		\begin{subfigure}[b]{0.99\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Best viewed on screen.}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. \copyright Antonio Criminisi, used with permission.}\label{fig:Imagenet_results}
 	\end{figure}
-	
+	\mynote{TODO: replace this with more consistent results graph}
 	
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time 
@@ -232,7 +232,7 @@
 	%%% Figure ---------------
 	\begin{figure}[tbp]
 		\centering
-		\includegraphics[width=\linewidth]{vgg11costs}
+		\includegraphics[width=0.98\linewidth]{vgg11costs}
 		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
@@ -264,9 +264,9 @@
 	% figure 
 	\begin{figure}[tbp]
 		\centerline{
-			\includegraphics[width=1.1\linewidth]{resultsCifar_conditionalNetwork}
+			\includegraphics[width=0.98\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. Best viewed on screen.}
+		\caption[Automatically learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
