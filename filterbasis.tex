@@ -158,7 +158,7 @@
 	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as used by \citet{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, \gls{zca} whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
 	
 	\begin{table}[tbp]
-		\caption[\Gls{nin} root architectures]{\textbf{\Gls{nin}}. Filter groups in each convolutional layer.}
+		\caption[\Gls{nin} root architectures]{\textbf{\Gls{nin} Root Architectures}. Filter groups in each convolutional layer.}
 		\label{table:ninconfig}
 		\centering
 		%\resizebox{\textwidth}{!}{
@@ -178,7 +178,7 @@
 		%}
 	\end{table}
 	\begin{table}[tp]
-		\caption[\Gls{nin} \gls{cifar10} results]{\textbf{\Gls{nin} \gls{cifar10}}}
+		\caption[\Gls{nin} \gls{cifar10} results]{\textbf{\Gls{nin} \gls{cifar10} Results}}
 		\label{table:nincifarresults}
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
@@ -374,11 +374,11 @@
 		\settowidth{\covarwidth}{#5}
 		\settoheight{\covarheight}{#5}
 		\path[use as bounding box] (c.south west) rectangle (c.north east);
-		\node [anchor=south west, xshift=-0.5em, yshift=-0.5em, rotate=45] at (c.north west) {\footnotesize 0};
-		\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\footnotesize #4};
-		\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\footnotesize #2};
-		\node [anchor=south, xshift=0.5\covarwidth] at (c.north west) {\footnotesize\texttt{#3}};
-		\node [anchor=south, xshift=0.2em, yshift=-0.5\covarheight, rotate=90] at (c.north west) {\footnotesize \texttt{#1}};
+		%\node [anchor=south west, xshift=-0.3em, yshift=-0.3em, rotate=45] at (c.north west) {\tiny 0};
+		\node [anchor=south east, xshift=\covarwidth, yshift=-0.2em] at (c.north west) {\tiny #4};
+		\node [anchor=south west, xshift=0.25em, yshift=-1.05\covarheight, rotate=90] at (c.north west) {\tiny #2};
+		\node [anchor=south, xshift=0.2\covarwidth, yshift=-0.2em] at (c.north west) {\scriptsize\texttt{#3}};
+		\node [anchor=south, xshift=0.2em, yshift=-0.2\covarheight, rotate=90] at (c.north west) {\scriptsize\texttt{#1}};
 		\end{tikzpicture}%
 	}
 	
@@ -465,29 +465,26 @@
 	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using \gls{zca}~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
 	
 	\begin{equation}
-	cov(X, X) = \frac{1}{N-1} XX^\textrm{T},
+	\textrm{cov}(X, X) = \frac{1}{N-1} XX^\textrm{T},
 	\end{equation}
-	
 	The \gls{zca} whitening transformation is given by,
 	\begin{equation}
 	W = \sqrt{N-1}\left(XX^\textrm{T}\right)^{-\frac{1}{2}}.
 	\end{equation}
-	
 	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie \gls{pca}),
 	\begin{align}
-	cov(X, X) &= \frac{1}{N-1} XX^\textrm{T},\\
-	&=\frac{1}{N-1} PDP^\textrm{T},\\
+	\textrm{cov}(X, X) &= \frac{1}{N-1} PDP^\textrm{T},\\
 	\end{align}
 	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in Appendix A of \citet{CIFAR10}),
 	
 	\begin{equation}
-	W = \sqrt{N-1}PD^{-\frac{1}{2}}P^\textrm{T},
+	W = \sqrt{N-1}PD^{\circ-\frac{1}{2}}P^\textrm{T},
 	\end{equation}
-	where $D^{-\frac{1}{2}}$ is simply D with an element-wise power of $-\frac{1}{2}$.
+	where $D^{\circ-\frac{1}{2}}$ is simply $D$ with an element-wise power of $-\frac{1}{2}$.
 	
 	The covariance between the whitened featuremap responses is then,
 	\begin{equation}
-	cov(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
+	\textrm{cov}(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
 	\end{equation}
 	\afterpage{%
 	    \begin{landscape}
@@ -580,14 +577,14 @@
     				\centering
 	    			\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
 				\end{subfigure}
-				\caption[Intra-layer filter correlation]{\textbf{\Gls{nin} Intra-Layer Correlation.} Absolute Correlation of filters within each layer of a NiN model variant.}
+				\caption[Intra-layer filter correlation]{\textbf{\Gls{nin} Intra-Layer Correlation.} Absolute correlation of filters within each layer of a NiN model variant.}
 				\label{fig:nincorr}
 			\end{figure}
 		\end{landscape}
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{0.95\linewidth}
-					\centering
+				\begin{subfigure}[c]{0.88\paperheight}
+					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/nin/layercovarwhite_conv1}}
 					~
 					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/nin/layercovarwhite_conv2}}
@@ -608,8 +605,8 @@
 					\label{fig:covaroot1}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{0.95\linewidth}
-					\centering
+				\begin{subfigure}[c]{0.88\paperheight}
+					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv1}}
 					~
 					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot4/layercovarwhite_conv2}}
@@ -629,8 +626,8 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot4}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.95\linewidth}
-					\centering
+				\begin{subfigure}[c]{0.88\paperheight}
+					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv1}}
 					~
 					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot8/layercovarwhite_conv2}}
@@ -650,8 +647,8 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot8}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.95\linewidth}
-					\centering
+				\begin{subfigure}[c]{0.88\paperheight}
+					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv1}}
 					~
 					\covarlabels{conv1b}{160}{conv1c}{96}{\includegraphics[width=0.05\linewidth]{Figs/Raster/ninroot32/layercovarwhite_conv2}}
@@ -670,13 +667,13 @@
 					\caption{Root-32}
 					\label{fig:covarroot32}
 				\end{subfigure}
-				\caption[Inter-layer covariance (all layers)]{\textbf{\Gls{nin} Inter-layer Absolute Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
+				\caption[Inter-layer covariance (all layers)]{\textbf{\Gls{nin} Inter-layer Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
 				\label{fig:suppcovariances}
 			\end{figure}
 		\end{landscape}
 	}%afterpage
 	
-	\Cref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters they correlate strongly with.
+	\Cref{fig:nincorr} shows the per-layer (intra-layer) filter correlation. This shows the correlation of filters is more structured in root-networks, filters are learned to be linearly combined into useful filters by the root module, and thus filters are often grouped together with other filters with which they correlate strongly.
 	
 	\Cref{fig:covar} shows the inter-layer filter covariances between layers \texttt{conv3a} and \texttt{conv2c}. \Cref{fig:suppcovariances} shows the full set of inter-layer covariances between all convolutional layers in the NiN models. Block-diagonal sparsity is visible on the layers with filter groups, \texttt{conv2a} and \texttt{conv3a}. This block-diagonal is shown for all variants in more detail in \cref{fig:suppcovariances}.
 	
@@ -685,36 +682,36 @@
 	\begin{landscape}
 	\begin{figure}[p]
 		\begin{subfigure}[b]{0.98\linewidth}
-			\centering
+			%\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.065\linewidth, page=15]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.07\linewidth, page=15]{groupfig}}
 				};\&
 				\node (1b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (1c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (2a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.075\linewidth, page=16]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=16]{groupfig}}
 				};\&
 				\node (2b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (2c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (3a) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.075\linewidth, page=16]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=16]{groupfig}}
 				};\&
 				\node (3b) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (3c) {
-					\raisebox{-0.5\height}{\includegraphics[height=0.095\linewidth, page=17]{groupfig}}
+					\raisebox{-0.5\height}{\includegraphics[height=0.1\linewidth, page=17]{groupfig}}
 				};\&
 				\node (7) {
 					{\large $\cdots$}
@@ -735,36 +732,36 @@
 			\label{fig:standardtopology}
 		\end{subfigure}\\
 		\begin{subfigure}[b]{0.98\linewidth}
-			\centering
+			%\centering
 			\begin{tikzpicture}[ampersand replacement=\&]
 			\begin{scope}[]
 			\matrix[column sep=0em]{
 				\node (1a) {
-					\includegraphics[height=0.065\linewidth, page=15]{groupfig}
+					\includegraphics[height=0.07\linewidth, page=15]{groupfig}
 				};\&
 				\node (1b) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\& 
 				\node (1c) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\& 
 				\node (2a) {
 					\includegraphics[height=0.13\linewidth, page=19]{groupfig}
 				};\&
 				\node (2b) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\&
 				\node (2c) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\&
 				\node (3a) {
-					\includegraphics[height=0.075\linewidth, page=18]{groupfig}
+					\includegraphics[height=0.08\linewidth, page=18]{groupfig}
 				};\&
 				\node (3b) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\&
 				\node (3c) {
-					\includegraphics[height=0.095\linewidth, page=17]{groupfig}
+					\includegraphics[height=0.1\linewidth, page=17]{groupfig}
 				};\&
 				\node (4) {
 					{\large $\cdots$}
