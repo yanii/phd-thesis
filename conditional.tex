@@ -15,7 +15,7 @@
 	\section{On Methods of Discriminative Classification}
 	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks\index{neural network} have even replaced the research in local features (\eg \gls{sift}), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network\index{neural network} with one hidden layer, however the converse does not necessarily hold true.
 	
-	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, compute the response at every node, even if many of these responses are approximately zero or not useful to the final output.
+	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, computation the response at every node, even if many of these responses are approximately zero or not useful to the final output.
 	
 	\section{Generalizing Neural Networks and Decision Trees}
 	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
@@ -140,9 +140,9 @@
 	
 	\section[Results]{Results\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
 	\subsection{\acrshort{ilsvrc}}
-	We first validate the use of conditional networks for image classification on the \gls{ilsvrc} dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images. The ILSVRC dataset has been of particular focus in recent research following the the results of Krizhevsky et al.~\citep{Krizhevsky2012} with the \emph{SuperVision} network, now commonly referred to as \emph{AlexNet}.
+	We first validate the use of conditional networks for image classification on the \gls{ilsvrc} dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images.
 	
-	AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two \gls{gpu}s. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
+	As discussed in \cref{alexnetfiltergroups}, AlexNet uses two filter groups throughout most of the layers of the model in order to split computation across two \gls{gpu}s. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 	
 	We based our experiments on the VGG network~\citep{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\citep{He2015b}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe~\citep{Jia2014} on a single Nvidia K40 \gls{gpu}). It notably does not have any filter grouping, as found in AlexNet, or low-dimensional embeddings, as found in \gls{nin}. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
 	
@@ -157,7 +157,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
-		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher compute efficiency than the corresponding, non-routed \glspl{dnn}.}\label{fig:Imagenet_CondNet}
+		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glspl{dnn}.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
 	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
@@ -195,7 +195,7 @@
 		\begin{subfigure}[b]{0.9\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsEff}
-			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}compute for various network architectures.}\label{fig:resultsImagenet_AccVsEff}
+			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}computation for various network architectures.}\label{fig:resultsImagenet_AccVsEff}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.9\linewidth}
@@ -204,8 +204,8 @@
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
 		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. \copyright Antonio Criminisi, used with permission.}\label{fig:Imagenet_results}
+		\mynote{TODO: replace this with more consistent results graph}
 	\end{figure}
-	\mynote{TODO: replace this with more consistent results graph}
 	
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time 
@@ -213,7 +213,7 @@
 		to correlate very well with \gls{cpu} time.} and model size. 
 	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
 	GoogLeNet and Alexnet~\citep{Krizhevsky2012} (in light blue) are in fact instances of conditional networks 
-	(though they were not presented that way). In both networks much of the compute saving is obtained by routing
+	(though they were not presented that way). In both networks much of the computational saving is obtained by routing
 	subsets of features to different branches of the network.
 	In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very 
 	different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
@@ -221,9 +221,9 @@
 	The conditional network of \cref{fig:Imagenet_CondNet} 
 	corresponds to the green circle in \cref{fig:Imagenet_results}.
 	It achieves a top-5, centre-crop error of
-	13.9\% compared to 13.8\% for the VGG11 network, while requiring less than half of the compute (45\%),
+	13.9\% compared to 13.8\% for the VGG11 network, while requiring less than half of the computation (45\%),
 	and almost one-fifth (21\%) of the parameters.
-	Although it is the second closest to the origin (after GoogLeNet) we believe that better results can be achieved 
+	Although it is the second closest to the origin (after GoogLeNet), we believe that better results can be achieved 
 	by using routes of different (learned) cardinality, as well as incorporating low-dimensional embedding and multiple-loss training. This is left for future work. 
 	Note that the most efficient model in~\citep{He2015b} uses 1.9E+10 flops which is just outside the plot. 
 	More accurate versions of~\citep{He2015b} are more expensive still.
@@ -233,14 +233,14 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=0.98\linewidth]{vgg11costs}
-		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the compute cost.}\label{fig:VggPerLayerCost}
+		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks (dark and light green) reduce both the memory use and the computational cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
-	GoogLeNet divides filters within each \gls{inception}\index{inception} module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces compute and parameters of the network even further.
+	GoogLeNet divides filters within each \gls{inception}\index{inception} module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces computatation and parameters of the network even further.
 	
 	The most efficient of the state-of-the-art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
-	Another unique feature of these two networks is global average pooling, where the spatial dimensions of the last convolutional feature map\index{feature map} are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
+	Another unique feature of these two networks is \gls{gap}, where the spatial dimensions of the last convolutional feature map\index{feature map} are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
 	
 	%\begin{itemize}
 	%\item Our convtree has much more potential for distributed computation.
@@ -266,13 +266,13 @@
 		\centerline{
 			\includegraphics[width=0.98\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
+		\caption[Automatically-learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
 	\subsubsection{Designing a Family of Conditional Networks}
 	The NiN model has a large number (192) of initial image-level filters in the first convolutional layer (`conv1'), 
-	representing a sizable amount of the overall compute.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
+	representing a sizable amount of the overall computation.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
 	
 	We build a variant (`NiN-64') that prepends a layer of 64 filters to the NiN model.
 	While this variant is more complex than NiN, when routed (as described later) it allows us 
@@ -311,7 +311,7 @@
 		\begin{subfigure}[b]{0.95\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsEff}
-			\caption{Test error \vs test-time compute for various architectures used in the CIFAR experiments.}\label{fig:resultsCifar_AccVsEff}
+			\caption{Test error \vs test-time computation for various architectures used in the CIFAR experiments.}\label{fig:resultsCifar_AccVsEff}
 		\end{subfigure}
 		~
 		\begin{subfigure}[b]{0.95\linewidth}
@@ -330,7 +330,7 @@
 	3D space $(test-error,test-cost,model-size)$.
 	Most of the conditional networks proposed by the Bayesian search procedure are distributed along a curve characterized by either high accuracy, or low model size, or both. 
 	Reducing the NiN model by filter reduction (pink diamonds in the figure) does not yield the same gains as data routing.
-	Despite NiN achieving the highest accuracy (it has been optimized for accuracy alone), the optimal conditional network is much closer to the origin of the 3D space, thus indicating much higher efficiency (in terms of memory and compute) for a small loss in accuracy.
+	Despite NiN achieving the highest accuracy (it has been optimized for accuracy alone), the optimal conditional network is much closer to the origin of the 3D space, thus indicating much higher efficiency (in terms of memory and computation) for a small loss in accuracy.
 	
 	\section{Discussion}
 
