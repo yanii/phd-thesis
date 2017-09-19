@@ -2,7 +2,7 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-	\chapter{Conditional Connecitivity}\label{conditionalnetworks}
+	\chapter{Conditional Connectivity}\label{conditionalnetworks}
 	%\chapter{Conditional Computation in Deep Neural Networks}
 	\begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
 		``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
@@ -10,10 +10,9 @@
 	
 	The ideal discriminative model desired for most tasks would have all the advantages of both neural networks and decision forests, and none of the weaknesses. It would have good generalization with computational efficiency, lend itself to semantic understanding and yet have sufficient functional complexity to solve complex problems. 
 	
-	In this chapter we intend to explore the continuum of discriminative models that exist between decision forests and neural networks\index{neural network}, to try and find such a balance. We will explore the theory and applications behind such models, with a focus on contemporary problems such as object class recognition, \ie the ImageNet \gls{ilsvrc} challenge which has been the focus of much of the recent work on deep learning.
+	In this chapter we intend to explore the continuum of discriminative models that exist between decision forests and neural networks\index{neural network}, to try to find such a balance. We will explore the theory and applications behind such models, with a focus on contemporary problems such as object class recognition, \ie the ImageNet \gls{ilsvrc} challenge which has been the focus of much of the recent work on deep learning.
 	
 	\section{On Methods of Discriminative Classification}
-	
 	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks\index{neural network} have even replaced the research in local features (\eg \gls{sift}), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network\index{neural network} with one hidden layer, however the converse does not necessarily hold true.
 	
 	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time, due to sample routing only a small part of a tree need be computed, \ie conditional computation, neural networks\index{neural network} must on the other hand compute the response at every node even if many of these responses are approximately zero.
@@ -152,7 +151,7 @@
 	We trained a new network (`VGG11-GMP') with such pooling, and achieved lower top-5 error than the baseline VGG11 
 	network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see \cref{fig:VggPerLayerCost}).
 	
-	\subsubsection{Designing an efficient conditional architecture}
+	\subsubsection{Designing an Efficient Conditional Architecture}
 	Starting from the already improved, non-routed VGG11-GMP architecture, we designed the conditional network in \cref{fig:Imagenet_CondNet}.
 	% figure 
 	\begin{figure}[tbp]
@@ -180,7 +179,7 @@
 	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
 	training time given its higher efficiency.
 
-	\subsubsection{Accuracy \vs{}efficiency}
+	\subsubsection{Accuracy \vs{}Efficiency}
 	In order to compare different network architectures as fairly as possible, here we did not use any training
 	augmentation aside from that supported by Caffe~\citep{Jia2014} (mirroring/random crops). Similarly we report test-time 
 	accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
@@ -271,7 +270,7 @@
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
-	\subsubsection{Designing a family of conditional networks}
+	\subsubsection{Designing a Family of Conditional Networks}
 	The NiN model has a large number (192) of initial image-level filters in the first convolutional layer (`conv1'), 
 	representing a sizable amount of the overall compute.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
 	
@@ -283,7 +282,7 @@
 	By changing the number of routes at each level of the NiN-64 model (from conv2) we can 
 	generate a whole family of possible conditional architectures. 
 	
-	\subsubsection{Learning the optimal network architecture}
+	\subsubsection{Learning the Optimal Network Architecture}
 	In this experiment we have optimized the network structure {\em automatically}, 
 	by using Bayesian optimization~\citep{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
 	This has allowed us to search the large joint space of parameters and structures in a principled way, 
