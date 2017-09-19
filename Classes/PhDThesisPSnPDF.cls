@@ -534,11 +534,11 @@ supported!}
 %:-------------------------- Enable pdfa-1b generation -----------------------
 \if@pdfa
   \RequirePackage{xmpincl}
-  \RequirePackage[utf8]{inputenc}
   \RequirePackage[a-1b]{pdfx}
   \hypersetup{
     unicode=true,
   }
+  \RequirePackage[utf8]{inputenc}
   \message{PhDThesisPSnPDF: Using PDF/A-1b support}
 \else
   \RequirePackage[unicode=true]{hyperref}
