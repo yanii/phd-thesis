@@ -231,12 +231,54 @@
 \usetikzlibrary{colorbrewer}
 
 \usepackage{pgfplots, pgfplotstable}
-\usepgfplotslibrary{statistics}
-\usepgfplotslibrary{colorbrewer}
-\pgfplotsset{compat=newest}
-%\pgfplotsset{
-%	cycle list={Set1-9}
-%}
+\usepgfplotslibrary{statistics, groupplots, colorbrewer}
+\pgfplotsset{
+  compat=newest,
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% begin color
+% https://tex.stackexchange.com/questions/64131/implementing-switch-cases#64132
+\usepackage{pdftexcmds}
+\makeatletter
+\newcommand{\stringcases}[3]{%
+\romannumeral
+  \str@case{#1}#2{#1}{#3}\q@stop
+}
+
+\newcommand{\str@case}[3]{%
+\ifnum\pdf@strcmp{\unexpanded{#1}}{\unexpanded{#2}}=\z@
+  \expandafter\@firstoftwo
+\else
+  \expandafter\@secondoftwo
+\fi
+  {\str@case@end{#3}}
+  {\str@case{#1}}%
+}
+
+\newcommand{\str@case@end}{}
+\long\def\str@case@end#1#2\q@stop{\z@#1}
+\makeatother
+
+% define colour cycles to use throughout for given number of items
+\newcommand*{\setplotcycle}[1]{%
+\stringcases
+  {#1}%
+  {%
+    {1}{cycle list name = PuOr-2}%
+    {2}{cycle list name = PuOr-2}%
+    {3}{cycle list name = PuOr-3}%
+    {4}{cycle list name = PuOr-4}%
+    {5}{cycle list name = PuOr-5}%
+    {6}{cycle list name = PuOr-6}%
+    {7}{cycle list name = PuOr-7}%
+    {8}{cycle list name = PuOr-8}%
+    {9}{cycle list name = PuOr-9}%
+  }%
+  {cycle list name = PuOr-9}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% end color
 
 \usepackage{tabularx}
 \usepackage{afterpage}
