@@ -280,16 +280,18 @@ Constructive approaches to binary classification neural network architectures we
 %	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}.
 	
 	\section{Pruning Algorithms}
-    Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training. There have been many proposals of methods of pruning network connections~\citep{lecun1989optimal,sietsma1988neural,han2015deep,ullrich2017soft,}
-%Xing2009???
- differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
-    
+	Rather than the progressive construction of networks, an alternative approach to learning efficient networks is \emph{pruning}, the removal of unimportant network weights after training.
+
+	Amongst the earliest work on pruning was by \citeauthor{sietsma1988neural}, who investigated the effect of pruning weights in very small perceptron networks. The pruning rules were summarized as ``If the output of a unit does not change for any input pattern that unit is not contributing to the solution. If the outputs of any two units are the same or opposite across all patterns the two units duplicate and one can be removed.''~\citep{sietsma1988neural}. Even in these small networks, the complexity of pruning emerges. The authors propose removing weights close to zero, or weights that similarly do not affect the output of the neuron, and removing complementary but opposite (\ie{}duplicate) weights. %It is claimed that aside from being faster, pruned networks are also less noise-sensitive.
+	
+	There have been many proposals of methods of pruning network connections since~\citep{mozer1989using, lecun1989optimal, mozer1989skeletonization,gorodkin1993quantitative,setiono1997penalty,castellano1997iterative,han2015learning,han2015deep,han2016dsd,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization. 
+
     In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks\index{neural network} where training times can be measured in weeks.
 
     The simplest saliency measure would be to simply measure the effect of removing a weight on the training error of the network. For each weight in the network, the training error can be evaluated, and the difference in error used as the saliency measure for that weight. In practice this straightforward method is infeasible however, since we must evaluate over the training set for each weight of the network. For a network with $n$ weights, and $p$ training samples, calculating the saliencies for the whole network in this manner is $\mathcal{O}(np)$~\citep{hanson1989comparing}.
 %    A simpler naive saliency measure, weight magnitude, is overly simplistic in practice since it does not account for the larger distributed representation learned in a neural networks\index{neural network} and can lead to a large reduction in accuracy if used for pruning.
-    
-    \citet{lecun1989optimal} proposed Optimal Brain Damage (OBD) to iteratively remove neurons\index{neuron} after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure --- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
+	\subsection{Optimal Brain Damage}
+    \citet{lecun1989optimal} proposed \gls{obd} to iteratively remove neurons\index{neuron} after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure --- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of objective function with respect to the weights using the second-order Taylor series expansion, $f(a) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
        
     % From optimal brain surgeon paper
     % https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
@@ -314,7 +316,8 @@ Constructive approaches to binary classification neural network architectures we
     \end{align}
 
     To calculate the second derivative, chain rule is used, and the second derivatives are back-propagated through the network. This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
-    
+	
+	\subsection{Gating}
     \citet{hanson1989comparing} proposed using a per-neuron\index{neuron} gating mechanism to measure saliency
     
 	\mynote{TODO}
@@ -356,9 +359,6 @@ Constructive approaches to binary classification neural network architectures we
 \section{Other Notable Works}
 \subsection{Pruning}
 \citep{mozer1989using, mozer1989skeletonization, castellano1997iterative,gorodkin1993quantitative,han2016dsd,han2015learning,setiono1997penalty,}
-
-\subsection{Growing}
-\citep{Fahlman1989,frean1990upstart,}
 
 \subsection{Network Size and Generalization}
 \citep{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing,}
