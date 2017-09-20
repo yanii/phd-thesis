@@ -1,0 +1,4 @@
+Network Name,Real Name,Stride,Top-1 A (centre crop),Top-1 Error (centre crop),Top-5 A (centre crop),Top-5 Error (centre crop),Top-1 A (10x OS),Top-1 Error (10x OS),Top-5 A (10x OS),Top-5 Error (10x OS),Multiply-Acc Ops,Num Parameters,Iteration
+VGG-11,msrc-vgg-11-latelr,1,0.649141,0.350859,0.861688,0.138312,0.6724,0.3276,0.87608,0.12392,7609101992,132863336,415000
+GMP,msrc-vgg-11-ns-fixed2-wmomentum,1,0.67492,0.32508,0.882226,0.117774,0.69128,0.30872,0.89156,0.10844,7508438696,32200040,480000
+Cond. Network,msrc-vgg-11-ns-inv-grouptree-conv2-nonencoded-wmomentum,1,0.649842,0.350158,0.863089,0.136911,0.66374,0.33626,0.87068,0.12932,3464344232,28252520,790000

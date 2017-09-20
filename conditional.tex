@@ -188,26 +188,12 @@
 	all models, without changing their ranking.
 
 	%%% Figure ---------------
-	\begin{figure}[tbp] 
-		\centering
-		\begin{subfigure}[b]{0.9\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{resultsImagenet_AccVsEff}
-			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}computation for various network architectures.}\label{fig:resultsImagenet_AccVsEff}
-		\end{subfigure}
-		~
-		\begin{subfigure}[b]{0.9\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
-			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
-		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
-		\mynote{TODO: replace this with more consistent results graph}
-	\end{figure}
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\textwidth}
-			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata.csv}\datatablea
+		\begin{subfigure}[b]{0.98\linewidth}
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride1.csv}\datatablea
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride2.csv}\datatableb
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride4.csv}\datatablec
 			\pgfplotsset{major grid style={dotted,red}}
 			
 			\centering
@@ -217,10 +203,10 @@
 				width=0.95\linewidth,
 				height=0.4\textheight,
 				axis x line=bottom,
-				ylabel=Top-5 (Centre-Crop) Error,
+				ylabel=Top-5 Error (Centre-Crop),
 				xlabel=\gls{flops} (Multiply-Add),
 				axis lines=left,
-				enlarge x limits=0.05,
+				enlarge x limits=0.1,
 				enlarge y limits=0.05,
 				grid=major,
 				%xmin=0,
@@ -231,15 +217,31 @@
 					/pgf/number format/precision=1
 				},
 				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
-					/pgf/number format/fixed zerofill,
+					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
+				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
+				legend columns=4,
 			]
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, only marks,
-			every node near coord/.append style={inner sep=4pt},
+			\addplot[mark=*,mark options={fill=green},
+			nodes near coords,
+			only marks,
 			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
 			] table[meta=Network Name,x=Multiply-Acc Ops,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablea};
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+			] table[meta=Network Name,x=Multiply-Acc Ops,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatableb};
+			\addplot[mark=diamond*,mark options={fill=green},
+			nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+			] table[meta=Network Name,x=Multiply-Acc Ops,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablec};
+			\legend{\texttt{conv1}/1, \texttt{conv1}/2, \texttt{conv1}/4}
 			\end{axis}
 			\end{tikzpicture}
 			%\caption{\textbf{\gls{flops} (Multiply-Add) \vs Error.}}
@@ -247,7 +249,9 @@
 		\end{subfigure}
 		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
-			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata.csv}\datatablea
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride1.csv}\datatablea
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride2.csv}\datatableb
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride4.csv}\datatablec
 			\pgfplotsset{major grid style={dotted,red}}
 			
 			\centering
@@ -257,13 +261,13 @@
 				width=0.95\linewidth,
 				height=0.4\textheight,
 				axis x line=bottom,
-				ylabel=Top-5 (Centre-Crop),
+				ylabel=Top-5 Error (Centre-Crop),
 				xlabel=Model Parameters,
 				axis lines=left,
-				enlarge x limits=0.05,
+				enlarge x limits=0.1,
 				enlarge y limits=0.05,
 				grid=major,
-				%xmin=0,
+				xmin=0,
 				%ytick={0.002,0.004,...,1.0},
 				%ymin=0.075,ymax=0.09,
 				xticklabel style={
@@ -271,24 +275,34 @@
 					/pgf/number format/precision=1
 				},
 				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
-					/pgf/number format/fixed zerofill,
+					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
-				legend columns=4,
 			]
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, only marks,
-			every node near coord/.append style={inner sep=4pt},
+			\addplot[mark=*,mark options={fill=green},
+			nodes near coords,
+			only marks,
 			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
 			] table[meta=Network Name,x=Num Parameters,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablea};
-			\legend{stride-1, stride-2, stride-4}
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+			] table[meta=Network Name,x=Num Parameters,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatableb};
+			\addplot[mark=diamond*,mark options={fill=green},
+			nodes near coords,
+			only marks,
+			point meta=explicit symbolic,
+			every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+			] table[meta=Network Name,x=Num Parameters,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablec};
 			\end{axis}
 			\end{tikzpicture}
 			%\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride), corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
 	\end{figure}
 
 	\Cref{fig:Imagenet_results} summarizes the results.

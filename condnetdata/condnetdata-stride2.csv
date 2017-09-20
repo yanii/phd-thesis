@@ -1,0 +1,3 @@
+Network Name,Real Name,Stride,Top-1 A (centre crop),Top-1 Error (centre crop),Top-5 A (centre crop),Top-5 Error (centre crop),Top-1 A (10x OS),Top-1 Error (10x OS),Top-5 A (10x OS),Top-5 Error (10x OS),Multiply-Acc Ops,Num Parameters,Iteration
+Cond. Network,msrc-vgg-11-ns-inv-grouptree-conv2-stride2,2,0.579201,0.420799,0.814001,0.185999,,1,,1,884896424,28252520,
+GoogLeNet,bvlc_googlenet,2,0.687,0.313,0.889,0.111,0.7018,0.2982,0.89922,0.10078,1591056680,13378280,
