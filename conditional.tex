@@ -186,10 +186,8 @@
 	This reduces the overall accuracy (w.r.t.\ to state-of-the-art), but constitutes a fairer test bed for teasing out the effects of different network architectures. This is because each architecture uses a different method of augmentation and has a different affect on the increase in inference time.
 	Applying the same oversampling to all networks produced a nearly identical accuracy improvement in 
 	all models, without changing their ranking.
-	
+
 	%%% Figure ---------------
-	
-	
 	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{0.9\linewidth}
@@ -203,7 +201,7 @@
 			\includegraphics[width=\linewidth]{resultsImagenet_AccVsSize}
 			\caption{Top-5 \gls{ilsvrc} validation error (centre crop) \vs{}model size for various architectures.}\label{fig:resultsImagenet_AccVsSize}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off. \copyright Antonio Criminisi, used with permission.}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
 		\mynote{TODO: replace this with more consistent results graph}
 	\end{figure}
 	
