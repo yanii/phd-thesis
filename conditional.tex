@@ -235,7 +235,7 @@
 		\begin{subfigure}[b]{0.98\linewidth}
 			%msrc-vgg-11-latelr,msrc-vgg-11-ns-fixed2,msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum,msrc-vgg-11-ns-latelr2
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatableb
+			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum-layerma.csv}\datatablec
 			\begin{tikzpicture}
 			\begin{axis}[		
@@ -244,7 +244,7 @@
 				ybar=0pt,
 				bar width=0.8em,
 				width=0.95\linewidth,
-				height=0.45\textheight,
+				height=0.4\textheight,
 				enlarge x limits=0.05,
 				ylabel=\gls{flops},
 				%y label style={at={(axis description cs:-0.8,.5)},anchor=south},
@@ -261,7 +261,7 @@
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				%xmajorticks=false,
-				legend style={at={(0.2,1.0)},
+				legend style={at={(0.9,1.0)},
 				anchor=north,legend columns=1]},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
@@ -278,7 +278,7 @@
 		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatableb
+			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum-layerma.csv}\datatablec
 			\begin{tikzpicture}
 			\begin{axis}[
@@ -287,7 +287,7 @@
 				ybar=0pt,
 				bar width=0.8em,
 				width=0.95\linewidth,
-				height=0.45\textheight,
+				height=0.4\textheight,
 				enlarge x limits=0.05,
 				ylabel=Parameters,
 				y label style={at={(axis description cs:-0.08,.5)},anchor=south},
