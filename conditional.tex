@@ -204,7 +204,93 @@
 		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
 		\mynote{TODO: replace this with more consistent results graph}
 	\end{figure}
-	
+	\begin{figure}[tbp]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata.csv}\datatablea
+			\pgfplotsset{major grid style={dotted,red}}
+			
+			\centering
+			\begin{tikzpicture}
+			%\tikzstyle{every node}=[font=\footnotesize]
+			\begin{axis}[
+				width=0.95\linewidth,
+				height=0.4\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 (Centre-Crop) Error,
+				xlabel=\gls{flops} (Multiply-Add),
+				axis lines=left,
+				enlarge x limits=0.05,
+				enlarge y limits=0.05,
+				grid=major,
+				%xmin=0,
+				%ytick={0.002,0.004,...,1.0},
+				%ymin=0.075,ymax=0.09,
+				xticklabel style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+			]
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords, only marks,
+			every node near coord/.append style={inner sep=4pt},
+			point meta=explicit symbolic,
+			] table[meta=Network Name,x=Multiply-Acc Ops,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablea};
+			\end{axis}
+			\end{tikzpicture}
+			%\caption{\textbf{\gls{flops} (Multiply-Add) \vs Error.}}
+			%\label{fig:nincifarmaconvonly}
+		\end{subfigure}
+		\vfill
+		\begin{subfigure}[b]{0.98\linewidth}
+			\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata.csv}\datatablea
+			\pgfplotsset{major grid style={dotted,red}}
+			
+			\centering
+			\begin{tikzpicture}
+			%\tikzstyle{every node}=[font=\footnotesize]
+			\begin{axis}[
+				width=0.95\linewidth,
+				height=0.4\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 (Centre-Crop),
+				xlabel=Model Parameters,
+				axis lines=left,
+				enlarge x limits=0.05,
+				enlarge y limits=0.05,
+				grid=major,
+				%xmin=0,
+				%ytick={0.002,0.004,...,1.0},
+				%ymin=0.075,ymax=0.09,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
+				legend columns=4,
+			]
+			\addplot[mark=square*,mark options={fill=green},
+			nodes near coords, only marks,
+			every node near coord/.append style={inner sep=4pt},
+			point meta=explicit symbolic,
+			] table[meta=Network Name,x=Num Parameters,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablea};
+			\legend{stride-1, stride-2, stride-4}
+			\end{axis}
+			\end{tikzpicture}
+			%\caption{\textbf{Model Parameters \vs Error.}}
+			%\label{fig:nincifarparamconvonly}
+		\end{subfigure}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (green diamond in \cref{fig:Imagenet_results} reduces model size significantly. Conditional networks (denoted with circles) yield points closest to the origin, corresponding to the best accuracy-efficiency trade-off.}\label{fig:Imagenet_results}
+	\end{figure}
+
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time 
 	cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure 
