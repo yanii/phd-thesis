@@ -235,18 +235,17 @@
 		\begin{subfigure}[b]{0.98\linewidth}
 			%msrc-vgg-11-latelr,msrc-vgg-11-ns-fixed2,msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum,msrc-vgg-11-ns-latelr2
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
+			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatableb
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum-layerma.csv}\datatablec
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatabled
 			\begin{tikzpicture}
 			\begin{axis}[		
 				axis x line=bottom,
 				axis y line=left,
 				ybar=0pt,
-				bar width=0.3em,
+				bar width=0.8em,
 				width=0.95\linewidth,
-				height=0.33\textheight,
-				enlarge x limits=0.02,
+				height=0.45\textheight,
+				enlarge x limits=0.05,
 				ylabel=\gls{flops},
 				%y label style={at={(axis description cs:-0.8,.5)},anchor=south},
 				y tick label style={
@@ -257,39 +256,39 @@
 					/tikz/.cd
 				},
 				ymin=0,
+				%ymode=log,
 				xticklabels from table={\datatablea}{layer},
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				%xmajorticks=false,
-				legend style={at={(0.5,1.2)},
+				legend style={at={(0.2,1.0)},
 				anchor=north,legend columns=1]},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcycle{4},
+				\setplotcycle{3},
 			]
 			\addplot table [x expr=\coordindex,y=MA]{\datatablea};
 			\addplot table [x expr=\coordindex,y=MA]{\datatableb};
 			\addplot table [x expr=\coordindex,y=MA]{\datatablec};
-			\addplot table [x expr=\coordindex,y=MA]{\datatablec};
-			\legend{VGG-11, msrc-vgg-11-ns conv5 512, Conditional Network,VGG11-GMP};
+			\legend{VGG-11, VGG-11 GMP, Cond.\ Network,};
 			\end{axis}
 			\end{tikzpicture}
 		\end{subfigure}
-		~
+		\caption[\# FLOPS for each layer]{\# \Gls{flops} for each layer} 
+		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
+			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatableb
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum-layerma.csv}\datatablec
-			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-latelr2-layerma.csv}\datatabled
 			\begin{tikzpicture}
 			\begin{axis}[
 				axis x line=bottom,
 				axis y line=left,
 				ybar=0pt,
-				bar width=0.3em,
+				bar width=0.8em,
 				width=0.95\linewidth,
-				height=0.33\textheight,
-				enlarge x limits=0.02,
+				height=0.45\textheight,
+				enlarge x limits=0.05,
 				ylabel=Parameters,
 				y label style={at={(axis description cs:-0.08,.5)},anchor=south},
 				y tick label style={
@@ -300,22 +299,21 @@
 					/tikz/.cd
 				},
 				ymin=0,
+				%ymode=log,
 				xticklabels from table={\datatablea}{layer},
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcycle{4},
+				\setplotcycle{3},
 			]
 			\addplot table [x expr=\coordindex,y=param]{\datatablea};
 			\addplot table [x expr=\coordindex,y=param]{\datatableb};
 			\addplot table [x expr=\coordindex,y=param]{\datatablec};
-			\addplot table [x expr=\coordindex,y=param]{\datatabled};
 			\end{axis}
 			\end{tikzpicture}
+			\caption[\# Parameters for each layer]{\# Parameters for each layer} 
 		\end{subfigure}
-		% \caption[Conditional networks layer-wise FLOPS/parameters]{\textbf{Conditional Network Layer-wise \gls{flops}/Parameters.} 
-		% }
-		\caption[Computational cost of VGG-11 based networks per layer]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks reduce both the memory use and the computational cost.}\label{fig:VggPerLayerCost}
+		\caption[VGG-11 layer-wise FLOPS/parameters]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks reduce both the memory use and the computational cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
 	GoogLeNet divides filters within each \gls{inception}\index{inception} module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces computatation and parameters of the network even further.

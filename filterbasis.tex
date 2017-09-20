@@ -1587,47 +1587,46 @@
 	\begin{landscape}
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.97\linewidth}
-			
+		\begin{subfigure}[b]{0.97\linewidth}	
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerma.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerma.csv}\datatablea
 			\begin{tikzpicture}
 			\begin{axis}[
-			axis x line=bottom,
-			axis y line=left,
-			ybar=0pt,
-			bar width=0.3em,
-			width=0.95\linewidth,
-			height=0.4\textheight,
-			enlarge x limits=0.02,
-			ylabel=\gls{flops},
-			y label style={at={(axis description cs:-0.04,.5)},anchor=south},
-			y tick label style={
-				/pgf/number format/.cd,
-				fixed,
-				fixed zerofill,
-				precision=1,
-				/tikz/.cd
-			},
-			ymin=0,
-			xticklabels from table={\datatable}{layer},
-			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
-			xtick=data,
-			%xmajorticks=false,
-			legend style={at={(0.5,1.2)},
+				axis x line=bottom,
+				axis y line=left,
+				ybar=0pt,
+				bar width=0.3em,
+				width=0.95\linewidth,
+				height=0.4\textheight,
+				enlarge x limits=0.02,
+				ylabel=\gls{flops},
+				y label style={at={(axis description cs:-0.04,.5)},anchor=south},
+				y tick label style={
+					/pgf/number format/.cd,
+					fixed,
+					fixed zerofill,
+					precision=1,
+					/tikz/.cd
+				},
+				ymin=0,
+				xticklabels from table={\datatable}{layer},
+				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
+				xtick=data,
+				%xmajorticks=false,
+				legend style={at={(0.5,1.2)},
 				draw=none, anchor=north,legend columns=-1},
-			area legend,
+				area legend,
+				every axis plot/.append style={fill, draw=none},
+				\setplotcycle{2},
 			]
-			\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=MA]{\datatable};
-			\addplot[ybar, draw=none, fill=blue!40] table [x expr=\coordindex,y=MA]{\datatablea};
+			\addplot table [x expr=\coordindex,y=MA]{\datatable};
+			\addplot table [x expr=\coordindex,y=MA]{\datatablea};
 			\legend{ResNet 50, Root-64};
 			\end{axis}
-			\end{tikzpicture}
-			
+			\end{tikzpicture}	
 		\end{subfigure}
-		
+		~
 		\begin{subfigure}[b]{0.97\linewidth}
-			
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-layerparam.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerparam.csv}\datatablea
 			\begin{tikzpicture}
@@ -1652,14 +1651,16 @@
 			xticklabels from table={\datatable}{layer},
 			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 			xtick=data,
+			every axis plot/.append style={fill, draw=none},
+			\setplotcycle{2},
 			]
-			\addplot[ybar, draw=none, fill=red!40] table [x expr=\coordindex,y=param]{\datatable};
-			\addplot[ybar, draw=none, fill=blue!40] table [x expr=\coordindex,y=param]{\datatablea};
+			\addplot table [x expr=\coordindex,y=param]{\datatable};
+			\addplot table [x expr=\coordindex,y=param]{\datatablea};
 			\end{axis}
 			\end{tikzpicture}
 			
 		\end{subfigure}
-		\caption[ResNet 50 layer-wise \gls{flops}/parameters]{\textbf{ResNet 50 Layer-wise \gls{flops}/Parameters.} 
+		\caption[ResNet 50 layer-wise FLOPS/parameters]{\textbf{ResNet 50 Layer-wise \gls{flops}/Parameters.} 
 		}
 		
 		\label{fig:resnet50layerwisema}
