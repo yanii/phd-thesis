@@ -227,13 +227,40 @@
 \fi
 
 \usepackage{tikz}
-\usetikzlibrary{arrows}
-\usetikzlibrary{colorbrewer}
+\usetikzlibrary{arrows, colorbrewer}
+
+\definecolor{Set2-A}{RGB}{102,194,165}
+\definecolor{Set2-B}{RGB}{252,141,98}
+\definecolor{Set2-C}{RGB}{141,160,203}
+\definecolor{Set2-D}{RGB}{231,138,195}
+\definecolor{Set2-E}{RGB}{166,216,84}
+\definecolor{Set2-F}{RGB}{255,217,47}
+\definecolor{Set2-G}{RGB}{229,196,148}
+\definecolor{Set2-H}{RGB}{179,179,179}
 
 \usepackage{pgfplots, pgfplotstable}
-\usepgfplotslibrary{statistics, groupplots, colorbrewer}
+\usepgfplotslibrary{statistics, colorbrewer}
 \pgfplotsset{
   compat=newest,
+  cycle list/Set2-3,
+  cycle list/Set2-4,
+  cycle list/Set2-5,
+  cycle list/Set2-6,
+  cycle list/Set2-7,
+  cycle list/Set2-8,
+  cycle list/PuOr-3,
+  cycle list/PuOr-4,
+  cycle list/PuOr-5,
+  cycle list/PuOr-6,
+  cycle list/PuOr-8,
+  cycle list/PuOr-9,
+  cycle list/OrRd-3,
+  cycle list/OrRd-4,
+  cycle list/OrRd-5,
+  cycle list/OrRd-6,
+  cycle list/OrRd-7,
+  cycle list/OrRd-8,
+  cycle list/OrRd-9,
 }
 
 % matplotlib parula JET replacement
@@ -288,11 +315,11 @@
 \long\def\str@case@end#1#2\q@stop{\z@#1}
 \makeatother
 
+
 % for other plots that can't use colormaps
-\definecolor{orrd1}{HTML}{5E3C99}
-\definecolor{orrd2}{HTML}{FDB863}
-\definecolor{orrd3}{HTML}{E66101}
-%index of colormap=3
+\newcommand{\colora}{Set2-A}
+\newcommand{\colorb}{Set2-B}
+\newcommand{\colorc}{Set2-C}
 % https://tex.stackexchange.com/questions/170221/pgfplots-line-colors#170223
 %%%%%%%%%%%%%%%%%%%%%%%%%%% define marker list
 \pgfplotsset{
@@ -305,6 +332,22 @@
   },
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end marker list
+% define colour cycles to use throughout for given number of items
+\newcommand*{\setplotcyclecat}[1]{%
+\stringcases
+  {#1}%
+  {%
+    {1}{cycle list name = Set2-3}%
+    {2}{cycle list name = Set2-3}
+    {3}{cycle list name = Set2-3}%
+    {4}{cycle list name = Set2-4}%
+    {5}{cycle list name = Set2-5}%
+    {6}{cycle list name = Set2-6}%
+    {7}{cycle list name = Set2-7}%
+    {8}{cycle list name = Set2-8}%
+  }%
+  {cycle list name = Set2-8}%
+}
 
 % define colour cycles to use throughout for given number of items
 \newcommand*{\setplotcyclediv}[1]{%
