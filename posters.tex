@@ -8,13 +8,21 @@
 
 \chapter{Conference Posters}
 \label{posters}
-Sometimes posters achieve what a paper cannot in explaining a concept, and although we hope this is not the case in this dissertation, for completeness we have included the conference posters here, and have archived these with permanent \acrlongpl{doi}.
+Sometimes posters achieve what a paper cannot in explaining a concept, and although we hope this is not the case in this dissertation, for completeness we have included the links to relevant conference posters, and have archived these with permanent \acrlongpl{doi}.
 \section*{\Cref{lowrankfilters}: ICLR 2016}
 The poster presented at \gls{iclr} 2016 is available here:\\
 \href{https://doi.org/10.5281/zenodo.53187}{doi:10.5281/zenodo.53187}
-\afterpage{\includepdf[pages=1, angle=90]{posters/iclr2016}}
+\if@print
+    %\afterpage{\includepdf[pages=1, angle=90]{posters/iclr2016}}
+\else
+    \afterpage{\includepdf[pages=1, fitpaper]{posters/iclr2016}}
+\fi
 \section*{\Cref{deeproots}: CVPR 2017}
 The poster presented at \gls{cvpr} 2017 is available here:\\
 \href{https://doi.org/10.5281/zenodo.831418}{doi:10.5281/zenodo.831418}
-\afterpage{\includepdf[pages=1, angle=90]{posters/cvpr2017}}
+\if@print
+    %\afterpage{\includepdf[pages=1, angle=90]{posters/cvpr2017}}
+\else
+    \afterpage{\includepdf[pages=1, fitpaper]{posters/cvpr2017}}
+\fi
 \end{document}
