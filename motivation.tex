@@ -297,7 +297,7 @@ Constructive approaches to binary classification neural network architectures we
 	\end{equation}
 	where $y_{po}$ is the output of the output unit o with input pattern p, $E_{po}$ is the error The trained unit's input weights are then frozen after training, and if an error threshold hasn't been met, a new layer is again added.
 	
-	Since each new neuron\index{neuron} produces a new layer, cascade correlation\index{cascade correlation} leads to very deep networks with low throughput, since each layer is only one neuron\index{neuron} wide, making them very inefficient computationally. Cascade correlation\index{cascade correlation} networks do not seem to generalize as well as standard neural networks\index{neural network}, likely due to their greedy training strategy, as compared to deep networks trained with backpropagation\index{backpropagation} where no weights are frozen during training.
+	Since each new neuron\index{neuron} produces a new layer, cascade correlation\index{cascade correlation} leads to very \glspl{dnn}\index{DNN} with low throughput, since each layer is only one neuron\index{neuron} wide, making them very inefficient computationally. Cascade correlation\index{cascade correlation} networks do not seem to generalize as well as standard neural networks\index{neural network}, likely due to their greedy training strategy, as compared to \glspl{dnn}\index{DNN} trained with backpropagation\index{backpropagation} where no weights are frozen during training.
 
 	\subsubsection{Upstart Algorithm}
 	The \emph{upstart algorithm}\index{upstart algorithm|textbf} is a method for building binary classification networks, and is guaranteed to find an architecture with perfect training classification. At a high level it sounds like the tiling algorithm\index{tiling algorithm}\cref{tilingalgo}, but instead of building up layers from the input, in the upstart algorithm\index{upstart algorithm} all the neurons in the network are connected directly to the inputs, and new `child' neurons are added to compensate for the misclassification errors of existing `parent' neurons.
@@ -352,23 +352,26 @@ Constructive approaches to binary classification neural network architectures we
 	\mynote{TODO}
 	\citet{ullrich2017soft,}
 	%,Xing2009??
-    \section{Compression \& Quantization}
-    In order to use deep neural networks\index{neural network} on embedded devices, and in many applications, first a compact representation is required. There have been many papers on compressing deep networks, notably the work of ~\citep{han2016dsd} looked at combining a naive weight magnitude-based pruning method with both quantization and Huffman coding. In all the method can take a trained network
+	\section{Compression \& Quantization}
+	In order to use deep neural networks\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. 
+	Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}.
+
+	There have been many papers on the topic~\citep{han2015learning,han2016dsd}, here we will only cover a few of the most cited papers.
+	
+	\subsection{Learning both Weights and Connections}
+	\citet{han2015learning} looked at combining a naive weight magnitude-based pruning method with both quantization and Huffman coding. In all the method can take a trained network
+	\mynote{TODO}
+
+	\subsection{Deep-Sparse-Dense Training}
+	\citet{han2016dsd}
+	\mynote{TODO}
+	\subsection{XOR-Net: Binary Convolutional Neural Networks}
+	\citet{rastegari2016xnor} proposed two methods, one in which filter parameters were quantized to binary values, from the typical 16-bit floating point representation. Surprisingly even when the method was applied to models trained on \gls{ilsvrc}, such as \gls{alexnet}, the accuracy was little effected.
 	\mynote{TODO}
 	
-	\section{Neural Networks with for Vision}\label{neuralnetsforvision}
-	\subsection{The Neocognitron}
-	In an era in which fully-connected networks were used to learn any input type, \citet{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. The \emph{Neocognitron}~\citep{Fuk80, fukushima2013artificial} was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1), as found by \citet{Hubel1959a}. To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks.
-
-	While the Neocognitron was ahead of its time, and is now recognized as the first iteration of what were to become convolutional neural networks\index{neural network}, the article's neurological focus and explanation, timing, and to some degree country of origin, meant that it was somewhat unnoticed in the mainstream field of connectionist research. %In fact Yann LeCun recounts specifically his interest in Japan, rather than any particular citation, having lead to his discovery of the work\footnote{As related in a Q\&A session at the 2016 International Computer Vision Summer School (ICVSS)}.
-	
-	\subsection{Convolutional Neural Networks}
-	Despite the pioneering novelty of the work on Neocognitrons, it was only following the simplification and improvement of \citet{lecun1989backpropagation,Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state-of-the-art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
-	
-	The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks\index{neural network} fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
-	
 \section{Structural Priors}
-    This section has shown that the concept we have denoted `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts covered by this large body of work in a compact nomenclature. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
+	This section has shown that the concept we have denoted `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts covered by this large body of work in a compact nomenclature. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
+	\mynote{TODO: change this section}
     
 	In practice when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network\index{neural network} we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parametrize our models appropriately~\citep{jain2016structural}). Instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but likely sparse solution. The problem with this approach is that over-parametrization of a model generally leads to poor generalization due to overfitting. To prevent this, there are two general types of methods in which we can relate our prior knowledge that the model is over-parametrized to the optimization:
 	\begin{description}
