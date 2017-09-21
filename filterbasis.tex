@@ -267,35 +267,27 @@
 				},
 				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
 				legend columns=4,
-				cycle multiindex* list={
-					PuOr-4
-						\nextlist
-					markercycle
-						\nextlist
-					[3 of]linestyles
-						\nextlist
-					very thick
-						\nextlist
-				},
+				\setplotcyclediv{4},
+				every axis plot/.append style={fill},
 			]
-			\addplot+[
+			\addplot+[mark=*,
 				%nodes near coords,
 				only marks,
 				point meta=explicit symbolic,
 				error bars/y dir=both,
 				error bars/y fixed=0.00131497782,
 			] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\datatable};
-			\addplot+[
+			\addplot+[mark=square*,
 				nodes near coords, only marks,
 				every node near coord/.append style={inner sep=4pt},
 				point meta=explicit symbolic,
 			] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
-			\addplot+[
+			\addplot+[mark=triangle*,
 				nodes near coords, nodes near coords align = {below}, only marks,
 				every node near coord/.append style={inner sep=4pt},
 				point meta=explicit symbolic,
 			] table[meta=name,x=param,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
-			\addplot+[
+			\addplot+[mark=diamond*,
 				nodes near coords, nodes near coords align = {below}, only marks,
 				every node near coord/.append style={inner sep=4pt},
 				point meta=explicit symbolic,
@@ -318,48 +310,50 @@
 			\begin{tikzpicture}
 			%\tikzstyle{every node}=[font=\footnotesize]
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.66\textwidth,
-			axis x line=bottom,
-			ylabel=Error,
-			xlabel=\gls{flops} (Multiply-Add),
-			axis lines=left,
-			enlarge x limits=0.05,
-			enlarge y limits=0.05,
-			grid=major,
-			%xmin=0,
-			ytick={0.002,0.004,...,1.0},
-			%ymin=0.075,ymax=0.09,
-			xticklabel style={
-				/pgf/number format/fixed zerofill,
-				/pgf/number format/precision=1
-			},
-			yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed zerofill,
-				/pgf/number format/precision=1
-			},
+				width=0.95\textwidth,
+				height=0.66\textwidth,
+				axis x line=bottom,
+				ylabel=Error,
+				xlabel=\gls{flops} (Multiply-Add),
+				axis lines=left,
+				enlarge x limits=0.05,
+				enlarge y limits=0.05,
+				grid=major,
+				%xmin=0,
+				ytick={0.002,0.004,...,1.0},
+				%ymin=0.075,ymax=0.09,
+				xticklabel style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{4},
+				every axis plot/.append style={fill},
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
-			error bars/y dir=both,
-			error bars/y fixed=0.00131497782,
+			\addplot[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
+				error bars/y dir=both,
+				error bars/y fixed=0.00131497782,
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\datatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\rdatatable};
-			\addplot[mark=triangle*,mark options={fill=blue},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			point meta=explicit symbolic,
+			\addplot+[mark=triangle*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\tdatatable};
-			\addplot[mark=diamond*,mark options={fill=yellow},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			point meta=explicit symbolic,
+			\addplot+[mark=diamond*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\cdatatable};
 			\end{axis}
 			\end{tikzpicture}
@@ -894,41 +888,43 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=Model Parameters (\# Floats),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.07,ymax=0.1,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=Model Parameters (\# Floats),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.07,ymax=0.1,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
-			\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
+			\legend{ResNet 50, Roots}
 			\end{axis}
 			\end{tikzpicture}
 			\caption{Model Parameters \vs Top-5 Error}
@@ -943,39 +939,41 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{flops} (Multiply-Add),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.07,ymax=0.1,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{flops} (Multiply-Add),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.07,ymax=0.1,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
@@ -991,42 +989,44 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{gpu} Forward (ms),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.07,ymax=0.1,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{gpu} Forward (ms),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.07,ymax=0.1,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,
 			x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
 			y expr={1 - \thisrow{Top-5 Acc.} }
 			]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,
 			x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
 			y expr={1 - \thisrow{Top-5 Acc.} },
@@ -1046,42 +1046,44 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{cpu} Forward (ms),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.07,ymax=0.1,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{cpu} Forward (ms),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.07,ymax=0.1,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
-			] table[meta=Network,
-			x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
-			y expr={1 - \thisrow{Top-5 Acc.} },
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
+				] table[meta=Network,
+				x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+				y expr={1 - \thisrow{Top-5 Acc.} },
 			]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,
 			x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
 			y expr={1 - \thisrow{Top-5 Acc.} },
@@ -1159,41 +1161,43 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=Model Parameters (\# Floats),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			%ytick={0.01,0.02,...,0.2},
-			ymin=5.6,ymax=6.6,
-			xticklabel style={
-				  /pgf/number format/fixed zerofill,
-				  /pgf/number format/precision=1
-			},
-			yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				  /pgf/number format/fixed zerofill,
-				  /pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=Model Parameters (\# Floats),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				%ytick={0.01,0.02,...,0.2},
+				ymin=5.6,ymax=6.6,
+				xticklabel style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\codatatable};
-			\legend{ResNet 50, All Filters, Spatial Filters, LDE Half}
+			\legend{ResNet 50, Roots}
 			\end{axis}
 			\end{tikzpicture}
 			\caption{Model Parameters \vs Top-5 Error}
@@ -1208,39 +1212,41 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{flops} (Multiply-Add),
-			axis lines=left,
-			enlarge x limits=0.05,
-			%enlarge y limits=0.1,
-			grid=major,
-			%xmin=0,
-			%ytick={0.01,0.02,...,0.2},
-			ymin=5.6,ymax=6.6,
-			xticklabel style={
-				/pgf/number format/fixed zerofill,
-				/pgf/number format/precision=1
-		    },
-			yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				  /pgf/number format/fixed zerofill,
-				  /pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{flops} (Multiply-Add),
+				axis lines=left,
+				enlarge x limits=0.05,
+				%enlarge y limits=0.1,
+				grid=major,
+				%xmin=0,
+				%ytick={0.01,0.02,...,0.2},
+				ymin=5.6,ymax=6.6,
+				xticklabel style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				yticklabel={\pgfmathparse{\tick*1}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed zerofill,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
@@ -1342,40 +1348,42 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=Model Parameters (\# Floats),
-			axis lines=left,
-			enlarge x limits=0.05,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.095,ymax=0.125,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=Model Parameters (\# Floats),
+				axis lines=left,
+				enlarge x limits=0.05,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.095,ymax=0.125,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
 			]
-			\addplot[mark=*,mark options={fill=red},
+			\addplot+[mark=*,
 			%nodes near coords,
 			only marks,
 			point meta=explicit symbolic,
 			] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
-			\legend{GoogLeNet, All Filters, Spatial Filters}
+			\legend{GoogLeNet, Roots}
 			\end{axis}
 			\end{tikzpicture}
 			\caption{\textbf{Model Parameters \vs Top-5 Error.}}
@@ -1390,40 +1398,41 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{flops} (Multiply-Add),
-			axis lines=left,
-			enlarge x limits=0.05,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.095,ymax=0.125,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{flops} (Multiply-Add),
+				axis lines=left,
+				enlarge x limits=0.05,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.095,ymax=0.125,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
-			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
 			\caption{\textbf{\gls{flops} (Multiply-Add) \vs Top-5 Error.}}
@@ -1438,40 +1447,42 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{gpu} Forward (ms),
-			axis lines=left,
-			enlarge x limits=0.05,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.095,ymax=0.125,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{gpu} Forward (ms),
+				axis lines=left,
+				enlarge x limits=0.05,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.095,ymax=0.125,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
-			] table[meta=Network,
-			x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
-			y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
+				] table[meta=Network,
+				x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
+				y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,
 			x expr={\thisrow{GPU Forward} / \thisrow{Batch Size}},
 			y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
@@ -1490,40 +1501,42 @@
 			\centering
 			\begin{tikzpicture}
 			\begin{axis}[
-			width=0.95\textwidth,
-			height=0.24\textheight,
-			axis x line=bottom,
-			ylabel=Top-5 Error,
-			xlabel=\gls{cpu} Forward (ms),
-			axis lines=left,
-			enlarge x limits=0.05,
-			grid=major,
-			%xmin=0,
-			ytick={0.01,0.02,...,0.2},
-			ymin=0.095,ymax=0.125,
-			xticklabel style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=3
-			},
-			yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-				/pgf/number format/fixed,
-				/pgf/number format/precision=1
-			},
-			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-			legend columns=3,
+				width=0.95\textwidth,
+				height=0.24\textheight,
+				axis x line=bottom,
+				ylabel=Top-5 Error,
+				xlabel=\gls{cpu} Forward (ms),
+				axis lines=left,
+				enlarge x limits=0.05,
+				grid=major,
+				%xmin=0,
+				ytick={0.01,0.02,...,0.2},
+				ymin=0.095,ymax=0.125,
+				xticklabel style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=3
+				},
+				yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+					/pgf/number format/fixed,
+					/pgf/number format/precision=1
+				},
+				\setplotcyclediv{2},
+				every axis plot/.append style={fill},
+				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+				legend columns=3,
 			]
-			\addplot[mark=*,mark options={fill=red},
-			%nodes near coords,
-			only marks,
-			point meta=explicit symbolic,
-			] table[meta=Network,
-			x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
-			y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
-			\addplot[mark=square*,mark options={fill=green},
-			nodes near coords, nodes near coords align = {below}, only marks,
-			every node near coord/.append style={inner sep=4pt},
-			only marks,
-			point meta=explicit symbolic,
+			\addplot+[mark=*,
+				%nodes near coords,
+				only marks,
+				point meta=explicit symbolic,
+				] table[meta=Network,
+				x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
+				y expr={1 - \thisrow{Top-5 Acc.} },]{\gdatatable};
+			\addplot+[mark=square*,
+				nodes near coords, nodes near coords align = {below}, only marks,
+				every node near coord/.append style={inner sep=4pt},
+				only marks,
+				point meta=explicit symbolic,
 			] table[meta=Network,
 			x expr={\thisrow{CPU Forward} / \thisrow{Batch Size}},
 			y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
