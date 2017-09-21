@@ -251,20 +251,21 @@ In the case of model selection, we are interested in,
 \end{equation}
 where $p(\mathcal{M}_i)$ is the prior (subjective) probability we assign to model $\mathcal{M}_i$. If all models are considered to be of equal probability, then inference is based wholly on the evidence.
 
-The evidence is a marginalization over all the parameters of the model,
+The evidence itself is given by the marginalization,
 \begin{equation}
 	p(D|\mathcal{M}_i) = \int p(D|\mathbf{\theta},\mathcal{M}_i) p(\mathbf{\theta}|\mathcal{M}_i) d\mathbf{\theta}.
 \end{equation}
+\Citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie{}$p(\mathbf{\theta}|D,\mathcal{M}_i$
 
 \subsection{Occam's Razor}
-Of particular interest are the empirical results showing that \gls{occam} is very much a principle on which neural network design should be structured. \citet[\textsection{3.4}]{MacKay91}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
+Of particular interest to the question of the effect of structure and regularization on generalization, are \citeauthor{MacKay91}'s empirical results showing that \gls{occam} is very much a principle on which neural network design should be structured. \citet[\textsection{3.4}]{MacKay91}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
 
-In fact \citeauthor{mackay1992practical} points out that the Bayesian approach encodes the \gls{occam} approach.
+In fact \citeauthor{mackay1992practical} the argument that the Bayesian approach naturally encodes the \gls{occam} approach, since given two models that predict the training data, the simpler model with fewer parameters will have less flexibility. This means that the model will explain only a more narrow range of data points (and probably only those, as compared to a more complex model which, with more parameters, will be able to explain a wider range of data. Given that both of these models are assigning probabilities, the simpler model will necessarily assign higher probability to the narrow range in which the data of interest lies\footnote{Figure 1 in \citet{mackay1995} explains this concept particularly well}.
 
 \subsection{Practical Implementation}
 While presenting a nice theory on model selection, the practical implementation of this work is rather more difficult~\citep{chipman2001}. In particular, like all Bayesian approaches, having the correct prior probabilities for both the models and weights is important, and yet this is practically difficult in large neural networks.
 
-\mynote{TODO}
+Besides the difficulty of assigning correct priors, \citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie{}$p(\mathbf{\theta}|D,\mathcal{M}_i$. As explained in \cref{fig:pathological}, the Hessian is difficult to represent for even reasonably sized contemporary deep neural networks.
 
 \section{Constructive Neural Network Algorithms}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
@@ -334,9 +335,9 @@ Constructive approaches to binary classification neural network architectures we
     \begin{align}
        \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
     \end{align}
-    where $\mathbf{w}$ is the vector of network weights, and $h_{ij}=\partial^2 E / \partial w_i \partial w_j$ is the Hessian matrix of second order derivatives. 
+    where $\mathbf{w}$ is the vector of network weights, and $h_{ij}=\partial^2 E / \partial w_i \partial w_j$ is the Hessian\index{Hessian} matrix of second order derivatives. 
 
-    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
+    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
 
     \begin{align}
        \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
