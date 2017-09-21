@@ -293,6 +293,18 @@
 \definecolor{orrd2}{HTML}{FDB863}
 \definecolor{orrd3}{HTML}{E66101}
 %index of colormap=3
+% https://tex.stackexchange.com/questions/170221/pgfplots-line-colors#170223
+%%%%%%%%%%%%%%%%%%%%%%%%%%% define marker list
+\pgfplotsset{
+  % define a `cycle list' for marker
+  cycle list/.define={markercycle}{
+      every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=*\\
+      every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=square*\\
+      every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=triangle*\\
+      every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=diamond*\\
+  },
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% end marker list
 
 % define colour cycles to use throughout for given number of items
 \newcommand*{\setplotcyclediv}[1]{%

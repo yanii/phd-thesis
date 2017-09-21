@@ -365,9 +365,9 @@
 				every axis plot/.append style={fill, draw=none},
 				\setplotcyclediv{3},
 			]
-			\addplot table [x expr=\coordindex,y=MA]{\datatablea};
-			\addplot table [x expr=\coordindex,y=MA]{\datatableb};
-			\addplot table [x expr=\coordindex,y=MA]{\datatablec};
+			\addplot+ table [x expr=\coordindex,y=MA]{\datatablea};
+			\addplot+ table [x expr=\coordindex,y=MA]{\datatableb};
+			\addplot+ table [x expr=\coordindex,y=MA]{\datatablec};
 			\legend{VGG-11, VGG-11 GMP, Cond.\ Network,};
 			\end{axis}
 			\end{tikzpicture}
@@ -404,9 +404,9 @@
 				every axis plot/.append style={fill, draw=none},
 				\setplotcyclediv{3},
 			]
-			\addplot table [x expr=\coordindex,y=param]{\datatablea};
-			\addplot table [x expr=\coordindex,y=param]{\datatableb};
-			\addplot table [x expr=\coordindex,y=param]{\datatablec};
+			\addplot+ table [x expr=\coordindex,y=param]{\datatablea};
+			\addplot+ table [x expr=\coordindex,y=param]{\datatableb};
+			\addplot+ table [x expr=\coordindex,y=param]{\datatablec};
 			\end{axis}
 			\end{tikzpicture}
 			\caption[\# Parameters for each layer]{\# Parameters for each layer} 
