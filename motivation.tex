@@ -232,13 +232,13 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 
 \section{Bayesian Model Selection}
 Model selection is the problem of choosing, with generalization in mind, between several model architectures with different numbers of layers, neurons, etc. 
-\citet{mackay1992practical} proposed a Bayesian approach to model selection\index{bayesianmodelselection|textbf}. \citeauthor{mackay1992practical} points to the relationship of \gls{occam} to Bayesian approaches and, rather than performing model selection by using cross-validation, \citeauthor{mackay1992practical} proposes to predict the likelihood of models given onlt the training data. Assume we have several trained models $\mathcal{M}_i$, and a training dataset $D$. In the problem of model selection we are interested in solving:
+\citet{mackay1992practical} proposed a Bayesian approach to model selection\index{Bayesian model selection|textbf}. \citeauthor{mackay1992practical} points to the relationship of \gls{occam} to Bayesian approaches and, rather than performing model selection by using cross-validation, \citeauthor{mackay1992practical} proposes to predict the likelihood of models given onlt the training data. Assume we have several trained models $\mathcal{M}_i$, and a training dataset $D$. In the problem of model selection we are interested in solving:
 \begin{equation}
 	\argmax_i p(\mathcal{M}_i|D),
 \end{equation}
 where $p(\mathcal{M}_i|D)$ is the probability of the model conditioned on the training data.
 
-The basic principle behind Bayesian model selection\index{bayesianmodelselection} is explained by Bayes rule. For a neural network model $\mathcal{M}_i$ with parameters $\mathbf{\theta}$,
+The basic principle behind Bayesian model selection\index{Bayesian model selection} is explained by Bayes rule. For a neural network model $\mathcal{M}_i$ with parameters $\mathbf{\theta}$,
 \begin{equation}
 	p(\mathbf{\theta}|\mathcal{M}_i,D) = \frac{p(D|\mathbf{\theta},\mathcal{M}_i) p(\mathbf{\theta}|\mathcal{M}_i)}{p(D|\mathcal{M}_i)},
 \end{equation}
