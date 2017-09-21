@@ -346,29 +346,35 @@ Constructive approaches to binary classification neural network architectures we
 	%
     To calculate the second derivative, chain rule is used, and the second derivatives are back-propagated through the network. This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
 	
-	\subsection{Gating}
-    \citet{hanson1989comparing} proposed using a per-neuron\index{neuron} gating mechanism to measure saliency
+	%\subsection{Gating}
+    %\citet{hanson1989comparing} proposed using a per-neuron\index{neuron} gating mechanism to measure saliency
     
-	\mynote{TODO}
-	\citet{ullrich2017soft,}
 	%,Xing2009??
+
+	\subsection{Learning both Weights and Connections}
+	\citet{han2015learning} begins by pruning a trained model using a naive weight magnitude saliency, and then re-training the network in a layer-wise manner. Although the novelty of this method is arguable given the past work on pruning, it presents results on contemporary deep networks. Despite using a naive weight magnitude-based saliency the results are reasonable with a 9-fold decrease in parameters, with only a small loss in accuracy. However, the experiments were performed on AlexNet which had a very large fully-connected layer composing most of its parameters.
+
 	\section{Compression \& Quantization}
 	In order to use deep neural networks\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. 
 	Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}.
 
-	There have been many papers on the topic~\citep{han2015learning,han2016dsd}, here we will only cover a few of the most cited papers.
-	
-	\subsection{Learning both Weights and Connections}
-	\citet{han2015learning} looked at combining a naive weight magnitude-based pruning method with both quantization and Huffman coding. In all the method can take a trained network
-	\mynote{TODO}
+	There have been many papers on the topic~\citep{han2015deep,han2016dsd}, here we will only cover a few of the most cited papers.
+
+	\subsection{Deep Compression}
+	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization and Huffman coding. The quantization uses a look-up table to store a limited number of weights (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease of a factor of 40$\times$.
 
 	\subsection{Deep-Sparse-Dense Training}
 	\citet{han2016dsd}
 	\mynote{TODO}
+	
 	\subsection{XOR-Net: Binary Convolutional Neural Networks}
 	\citet{rastegari2016xnor} proposed two methods, one in which filter parameters were quantized to binary values, from the typical 16-bit floating point representation. Surprisingly even when the method was applied to models trained on \gls{ilsvrc}, such as \gls{alexnet}, the accuracy was little effected.
 	\mynote{TODO}
 	
+	\subsection{Soft Weight Sharing}
+	\citet{ullrich2017soft,}
+	\mynote{TODO}
+
 \section{Structural Priors}
 	This section has shown that the concept we have denoted `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts covered by this large body of work in a compact nomenclature. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
 	\mynote{TODO: change this section}
