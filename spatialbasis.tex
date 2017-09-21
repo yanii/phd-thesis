@@ -379,35 +379,37 @@
     
     \begin{tikzpicture}
     \begin{axis}[
-    width=0.95\textwidth,
-    height=0.33\textheight,
-    axis x line=bottom,
-    ylabel=Top-5 Error,
-    xlabel=Multiply-Accumulate Operations,
-    axis lines=left,
-    enlarge x limits=0.10,
-    grid=major,
-    %xmin=0,
-    ytick={0.01,0.02,...,0.21},
-    ymin=0.1,ymax=0.15,
-    yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-        /pgf/number format/fixed,
-        /pgf/number format/precision=1
-    },
-    legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
-    legend columns=2,
+        width=0.95\textwidth,
+        height=0.33\textheight,
+        axis x line=bottom,
+        ylabel=Top-5 Error,
+        xlabel=Multiply-Accumulate Operations,
+        axis lines=left,
+        enlarge x limits=0.10,
+        grid=major,
+        %xmin=0,
+        ytick={0.01,0.02,...,0.21},
+        ymin=0.1,ymax=0.15,
+        yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=1
+        },
+        legend style={at={(0.01,0.98)}, anchor=north west, column sep=0.5em},
+        legend columns=2,
+        \setplotcyclediv{2},
+        every axis plot/.append style={fill},
     ]
-    \addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
-    point meta=explicit symbolic,
-    x filter/.code={
-        \ifnum\coordindex>2\def\pgfmathresult{}\fi
-    },
+    \addplot+[mark=square*,nodes near coords,only marks,
+        point meta=explicit symbolic,
+        x filter/.code={
+            \ifnum\coordindex>2\def\pgfmathresult{}\fi
+        },
     ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
-    \addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
-    point meta=explicit symbolic,
-    x filter/.code={
-        \ifnum\coordindex<3\def\pgfmathresult{}\fi
-    },
+    \addplot+[mark=*,nodes near coords,only marks,
+        point meta=explicit symbolic,
+        x filter/.code={
+            \ifnum\coordindex<3\def\pgfmathresult{}\fi
+        },
     ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
     \legend{Baseline Networks, Our Results}
     \end{axis}
@@ -421,30 +423,30 @@
     %\resizebox{\textwidth}{!}{
     \pgfplotstableread[col sep=comma]{lrdata/mitma.csv}\data
     \pgfplotstabletypeset[
-    every head row/.style={
-        before row=\toprule,after row=\midrule},
-    every last row/.style={
-        after row=\bottomrule},
-    fixed zerofill,     % Fill numbers with zeros
-    columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
-    column type/.add={lrrrrrr}{},
-    columns/Multiply-Acc./.style={
-        column name=Multiple-Acc. {\small $\times 10^{8}$},
-        preproc/expr={{##1/1e8}}
-    },
-    columns/Param./.style={
-        column name=Param. {\small $\times 10^{7}$},
-        preproc/expr={{##1/1e7}}
-    },
-    columns/Network/.style={string type},
-    columns/Stride/.style={precision=0},
-    columns/Top-1 Acc./.style={precision=3},
-    columns/Top-5 Acc./.style={precision=3},
-    highlight col max ={\data}{Top-1 Acc.},
-    highlight col max ={\data}{Top-5 Acc.}, 
-    highlight col min ={\data}{Param.}, 
-    highlight col min ={\data}{Multiply-Acc.}, 
-    col sep=comma]{\data}
+        every head row/.style={
+            before row=\toprule,after row=\midrule},
+        every last row/.style={
+            after row=\bottomrule},
+        fixed zerofill,     % Fill numbers with zeros
+        columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
+        column type/.add={lrrrrrr}{},
+        columns/Multiply-Acc./.style={
+            column name=Multiple-Acc. {\small $\times 10^{8}$},
+            preproc/expr={{##1/1e8}}
+        },
+        columns/Param./.style={
+            column name=Param. {\small $\times 10^{7}$},
+            preproc/expr={{##1/1e7}}
+        },
+        columns/Network/.style={string type},
+        columns/Stride/.style={precision=0},
+        columns/Top-1 Acc./.style={precision=3},
+        columns/Top-5 Acc./.style={precision=3},
+        highlight col max ={\data}{Top-1 Acc.},
+        highlight col max ={\data}{Top-5 Acc.}, 
+        highlight col min ={\data}{Param.}, 
+        highlight col min ={\data}{Multiply-Acc.}, 
+        col sep=comma]{\data}
     %}
     \label{table:placesresults}
 \end{table}
@@ -518,34 +520,36 @@
         
         \begin{tikzpicture}
         \begin{axis}[
-        width=0.95\textwidth,
-        height=0.33\textwidth,
-        axis x line=bottom,
-        ylabel=Top-5 Error,
-        xlabel=Multiply-Accumulate Operations,
-        axis lines=left,
-        enlarge x limits=0.10,
-        grid=major,
-        ytick={0.01,0.02,...,0.21},
-        ymin=0.10,ymax=0.15,
-        yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-            /pgf/number format/fixed,
-            /pgf/number format/precision=1
-        },
-        legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
-        legend columns=2,
+            width=0.95\textwidth,
+            height=0.33\textwidth,
+            axis x line=bottom,
+            ylabel=Top-5 Error,
+            xlabel=Multiply-Accumulate Operations,
+            axis lines=left,
+            enlarge x limits=0.10,
+            grid=major,
+            ytick={0.01,0.02,...,0.21},
+            ymin=0.10,ymax=0.15,
+            yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+                /pgf/number format/fixed,
+                /pgf/number format/precision=1
+            },
+            legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
+            legend columns=2,
+            \setplotcyclediv{2},
+            every axis plot/.append style={fill},
         ]
-        \addplot[mark=square*,mark options={fill=blue},nodes near coords,only marks,
-        point meta=explicit symbolic,
-        x filter/.code={
-            \ifnum\coordindex>0\def\pgfmathresult{}\fi
-        }
+        \addplot+[mark=square*,nodes near coords,only marks,
+            point meta=explicit symbolic,
+            x filter/.code={
+                \ifnum\coordindex>0\def\pgfmathresult{}\fi
+            }
         ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
-        \addplot[mark=*,mark options={fill=green},nodes near coords,only marks,
-        point meta=explicit symbolic,
-        x filter/.code={
-            \ifnum\coordindex<1\def\pgfmathresult{}\fi
-        }
+        \addplot+[mark=*,nodes near coords,only marks,
+            point meta=explicit symbolic,
+            x filter/.code={
+                \ifnum\coordindex<1\def\pgfmathresult{}\fi
+            }
         ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\datatable};
         \legend{Baseline, Our Results}
         \end{axis}

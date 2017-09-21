@@ -473,24 +473,25 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
-		thick,
-		width=\textwidth,
-		height=0.85\textwidth,
-		grid=major,
-		xmin=-5,
-		xmax=5,
-		axis x line=bottom,
-		ytick={-1,0,1},
-		ymax=1,
-		ymin=-1,
-		axis y line=middle,
+			thick,
+			width=\textwidth,
+			height=0.85\textwidth,
+			grid=major,
+			xmin=-5,
+			xmax=5,
+			axis x line=bottom,
+			ytick={-1,0,1},
+			ymax=1,
+			ymin=-1,
+			axis y line=middle,
+			\setplotcycleseq{1},
 		]
-		\addplot%
+		\addplot+%
 		[
-		blue,%
-		mark=none,
-		samples=500,
-		domain=-5:5,
+			%blue,
+			%mark=none,
+			samples=500,
+			domain=-5:5,
 		]
 		(x,{tanh(x)});
 		\end{axis}
@@ -502,24 +503,25 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
-		thick,
-		width=\textwidth,
-		height=0.85\textwidth,
-		grid=major,
-		xmin=-1,
-		xmax=1,
-		axis x line=bottom,
-		ytick={-1,0,1},
-		ymax=1,
-		ymin=-1,
-		axis y line=middle,
+			thick,
+			width=\textwidth,
+			height=0.85\textwidth,
+			grid=major,
+			xmin=-1,
+			xmax=1,
+			axis x line=bottom,
+			ytick={-1,0,1},
+			ymax=1,
+			ymin=-1,
+			axis y line=middle,
+			\setplotcycleseq{1},
 		]
-		\addplot%
+		\addplot+%
 		[
-		blue,%
-		mark=none,
-		samples=500,
-		domain=-5:5,
+			%blue,%
+			mark=none,
+			samples=500,
+			domain=-5:5,
 		]
 		(x,{max(x,0)});
 		\end{axis}
@@ -530,24 +532,25 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 		\begin{tikzpicture}
 		\begin{axis}%
 		[
-		thick,
-		width=\textwidth,
-		height=0.85\textwidth,
-		grid=major,
-		xmin=-5,
-		xmax=5,
-		axis x line=bottom,
-		ytick={-1,0,1},
-		ymax=1,
-		ymin=-1,
-		axis y line=middle,
+			thick,
+			width=\textwidth,
+			height=0.85\textwidth,
+			grid=major,
+			xmin=-5,
+			xmax=5,
+			axis x line=bottom,
+			ytick={-1,0,1},
+			ymax=1,
+			ymin=-1,
+			axis y line=middle,
+			\setplotcycleseq{1},
 		]
-		\addplot%
+		\addplot+%
 		[
-		blue,%
-		mark=none,
-		samples=500,
-		domain=-5:5,
+			%blue,%
+			mark=none,
+			samples=500,
+			domain=-5:5,
 		]
 		(x,{1-tanh(x)*tanh(x)});
 		\end{axis}
@@ -563,47 +566,49 @@ Pooling layers divide the image into non-overlapping pooling regions, in which t
 		]
 		\begin{axis}%
 		[
-		thick,
-		width=\textwidth,
-		height=0.85\textwidth,
-		grid=major,
-		xmin=-1,
-		xmax=1,
-		axis x line=bottom,
-		ytick={-1,0,1},
-		ymax=1,
-		ymin=-1,
-		axis y line=middle,
+			thick,
+			width=\textwidth,
+			height=0.85\textwidth,
+			grid=major,
+			xmin=-1,
+			xmax=1,
+			axis x line=bottom,
+			ytick={-1,0,1},
+			ymax=1,
+			ymin=-1,
+			axis y line=middle,
+			\setplotcycleseq{1},
 		]
-		\addplot%
+		\addplot+%
 		[
-		blue,%
-		mark=none,
-		samples=500,
-		domain=0:5,
+			%blue,%
+			mark=none,
+			samples=500,
+			domain=0:5,
 		]
 		(x, {1});
 		\end{axis}
 		\begin{axis}%
 		[
-		thick,
-		width=\textwidth,
-		height=0.85\textwidth,
-		grid=major,
-		xmin=-1,
-		xmax=1,
-		axis x line=bottom,
-		ytick={-1,0,1},
-		ymax=1,
-		ymin=-1,
-		axis y line=middle,
+			thick,
+			width=\textwidth,
+			height=0.85\textwidth,
+			grid=major,
+			xmin=-1,
+			xmax=1,
+			axis x line=bottom,
+			ytick={-1,0,1},
+			ymax=1,
+			ymin=-1,
+			axis y line=middle,
+			\setplotcycleseq{1},
 		]
-		\addplot%
+		\addplot+%
 		[
-		blue,%
-		mark=none,
-		samples=500,
-		domain=-5:0,
+			%blue,%
+			mark=none,
+			samples=500,
+			domain=-5:0,
 		]
 		(x, {0});
 		\end{axis}

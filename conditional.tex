@@ -363,7 +363,7 @@
 				anchor=north,legend columns=1]},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcycle{3},
+				\setplotcyclediv{3},
 			]
 			\addplot table [x expr=\coordindex,y=MA]{\datatablea};
 			\addplot table [x expr=\coordindex,y=MA]{\datatableb};
@@ -402,7 +402,7 @@
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcycle{3},
+				\setplotcyclediv{3},
 			]
 			\addplot table [x expr=\coordindex,y=param]{\datatablea};
 			\addplot table [x expr=\coordindex,y=param]{\datatableb};

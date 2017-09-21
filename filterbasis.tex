@@ -1617,7 +1617,7 @@
 				draw=none, anchor=north,legend columns=-1},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcycle{2},
+				\setplotcyclediv{2},
 			]
 			\addplot table [x expr=\coordindex,y=MA]{\datatable};
 			\addplot table [x expr=\coordindex,y=MA]{\datatablea};
@@ -1652,7 +1652,7 @@
 			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 			xtick=data,
 			every axis plot/.append style={fill, draw=none},
-			\setplotcycle{2},
+			\setplotcyclediv{2},
 			]
 			\addplot table [x expr=\coordindex,y=param]{\datatable};
 			\addplot table [x expr=\coordindex,y=param]{\datatablea};
