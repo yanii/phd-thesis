@@ -627,17 +627,18 @@
             \setplotcyclediv{2},
             every axis plot/.append style={fill},
         ]
-        \addplot+[mark=square*,nodes near coords,only marks,
-        point meta=explicit symbolic,
-        x filter/.code={
-            \ifnum\coordindex>1\def\pgfmathresult{}\fi
-        }
+        \addplot+[mark=square*,
+            nodes near coords,only marks,
+            point meta=explicit symbolic,
+            x filter/.code={
+                \ifnum\coordindex>1\def\pgfmathresult{}\fi
+            }
         ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Accuracy} }]{\datatable};
         \addplot+[mark=*,nodes near coords,only marks,
-        point meta=explicit symbolic,
-        x filter/.code={
-            \ifnum\coordindex<2\def\pgfmathresult{}\fi
-        }
+            point meta=explicit symbolic,
+            x filter/.code={
+                \ifnum\coordindex<2\def\pgfmathresult{}\fi
+            }
         ] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Accuracy} }]{\datatable};
         \legend{Baseline Networks, Our Results}
         \end{axis}
@@ -665,36 +666,41 @@
     	
     	\begin{tikzpicture}
     	\begin{axis}[
-    	width=1.37\textwidth,
-    	height=0.95\textheight,
-    	axis x line=bottom,
-    	ylabel=Top-5 Error,
-    	xlabel=$\log_{10}$(Multiply-Accumulate Operations),
-    	axis lines=left,
-    	enlarge x limits=0.10,
-    	enlarge y limits=0.05,
-    	grid=both,
-    	ytick={0.01,0.02,...,0.2},
-    	xmode=log,
-    	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-    		/pgf/number format/fixed,
-    		/pgf/number format/precision=1
-    	},
-    	legend style={at={(0.01,0.01)},anchor=south west},
-    	]
-    	\addplot[mark=*,mark options={fill=green!70!black},nodes near coords,only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
-    	] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
-    	\addplot[mark=*,mark options={fill=blue},nodes near coords,only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
-    	] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
-    	\addplot[mark=square*,mark options={fill=red},nodes near coords,only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
-    	] table[meta=Real Name,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
-    	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
+            width=1.37\textwidth,
+            height=0.95\textheight,
+            axis x line=bottom,
+            ylabel=Top-5 Error,
+            xlabel=$\log_{10}$(Multiply-Accumulate Operations),
+            axis lines=left,
+            enlarge x limits=0.10,
+            enlarge y limits=0.05,
+            grid=both,
+            ytick={0.01,0.02,...,0.2},
+            xmode=log,
+            yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+                /pgf/number format/fixed,
+                /pgf/number format/precision=1
+            },
+            \setplotcyclediv{2},
+            every axis plot/.append style={fill},
+            legend style={at={(0.01,0.01)},anchor=south west},
+            ]
+            \addplot+[mark=*,
+                nodes near coords,only marks,
+                point meta=explicit symbolic,
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            ] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
+            \addplot+[mark=*,
+                nodes near coords,only marks,
+                point meta=explicit symbolic,
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            ] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
+            \addplot+[mark=square*,
+                nodes near coords,only marks,
+                point meta=explicit symbolic,
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            ] table[meta=Real Name,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
+            \legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
         \end{tikzpicture}
         %TODO why does \gls{ilsvrc} not work here properly?
@@ -717,41 +723,43 @@
     	
     	\begin{tikzpicture}
     	\begin{axis}[
-    	width=1.37\textwidth,
-    	height=0.95\textheight,
-    	axis x line=bottom,
-    	ylabel=Top-5 Error,
-    	xlabel=$\log_{10}$(Number of Parameters),
-    	axis lines=left,
-    	enlarge y limits=0.05,
-    	grid=both,
-    	ytick={0.01,0.02,...,0.2},
-    	xmode=log,
-    	xmin=10e5,xmax=10e8,
-    	yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
-    		/pgf/number format/fixed,
-    		/pgf/number format/precision=1
-    	},
-    	legend style={at={(0.01,0.01)},anchor=south west},
+            width=1.37\textwidth,
+            height=0.95\textheight,
+            axis x line=bottom,
+            ylabel=Top-5 Error,
+            xlabel=$\log_{10}$(Number of Parameters),
+            axis lines=left,
+            enlarge y limits=0.05,
+            grid=both,
+            ytick={0.01,0.02,...,0.2},
+            xmode=log,
+            xmin=10e5,xmax=10e8,
+            yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},style={
+                /pgf/number format/fixed,
+                /pgf/number format/precision=1
+            },
+            \setplotcyclediv{2},
+            every axis plot/.append style={fill},
+            legend style={at={(0.01,0.01)},anchor=south west},
     	]
-    	\addplot[mark=*,mark options={fill=green!70!black},
-    	nodes near coords,
-    	only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+    	\addplot+[mark=*,
+            nodes near coords,
+            only marks,
+            point meta=explicit symbolic,
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
-    	\addplot[mark=*,mark options={fill=blue},
-    	nodes near coords,
-    	only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+    	\addplot[mark=*,
+            nodes near coords,
+            only marks,
+            point meta=explicit symbolic,
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
-    	\addplot[mark=square*,mark options={fill=red},
-    	nodes near coords,
-    	only marks,
-    	point meta=explicit symbolic,
-    	every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
-    	every node near coord/.append style={font=\tiny},
+    	\addplot[mark=square*,
+            nodes near coords,
+            only marks,
+            point meta=explicit symbolic,
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            every node near coord/.append style={font=\tiny},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
