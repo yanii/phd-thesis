@@ -230,6 +230,37 @@ The NFL theorem leads many to claim that there is no such thing as a universal l
 \subsubsection{No Free Lunch and Structural Priors}
 The NFL theorem highlights the need to focus on designing learning algorithms that work well for the real-world data distributions we are interested in. This may be considered to be the \emph{raison d'\^{e}tre} of structural priors, however this discounts the generality of the theorem. All neural network\index{neural network} makes implicit assumptions even without structural priors. For example, using a single-hidden  layer neural network\index{neural network} assumes that the problem being learned is not linear. If the problem is linear, instead a single-layer network would suffice, and likely generalize better. The NFL is, however, important in pointing out that structural priors in neural networks\index{neural network} are not a `hack'. In fact well-informed assumptions are the reason machine learning works in practice.
 
+\section{Bayesian Model Selection}
+Model selection is the problem of choosing, with generalization in mind, between several model architectures with different numbers of layers, neurons, etc. 
+\citet{mackay1992practical} proposed a Bayesian approach to model selection\index{bayesianmodelselection|textbf}. \citeauthor{mackay1992practical} points to the relationship of \gls{occam} to Bayesian approaches and, rather than performing model selection by using cross-validation, \citeauthor{mackay1992practical} proposes to predict the likelihood of models given onlt the training data. Assume we have several trained models $\mathcal{M}_i$, and a training dataset $D$. In the problem of model selection we are interested in solving:
+\begin{equation}
+	\argmax_i p(\mathcal{M}_i|D),
+\end{equation}
+where $p(\mathcal{M}_i|D)$ is the probability of the model conditioned on the training data.
+
+The basic principle behind Bayesian model selection\index{bayesianmodelselection} is explained by Bayes rule. For a neural network model $\mathcal{M}_i$ with parameters $\mathbf{\theta}$,
+\begin{equation}
+	p(\mathbf{\theta}|\mathcal{M}_i,D) = \frac{p(D|\mathbf{\theta},\mathcal{M}_i) p(\mathbf{\theta}|\mathcal{M}_i)}{p(D|\mathcal{M})},
+\end{equation}
+where $p(\mathbf{\theta}|\mathcal{M}_i,D)$, or the \emph{posterior}\index{posterior}, is what we commonly attempt to solve for using gradient descent when training a neural network.
+The \emph{prior}\index{prior}, $p(\mathbf{\theta}|\mathcal{M}_i)$, are the probabilities on what values we expect the weights of the model to be. The normalization term, $p(D|\mathcal{M}_i)$, is the probability of the data given the model --- what \citeauthor{mackay1992practical} calls the `evidence' for the model $\mathcal{M}_i$.
+
+In the case of model selection, we are interested in,
+\begin{equation}
+	p(\mathcal{M}_i|D) = \frac{p(D|\mathcal{M}_i) p(\mathcal{M}_i)}{p(D)},
+\end{equation}
+where $p(\mathcal{M}_i)$ is the prior (subjective) probability we assign to model $\mathcal{M}_i$. If all models are considered to be of equal probability, then inference is based wholly on the evidence.
+
+\subsection{Occam's Razor}
+Of particular interest are the empirical results showing that \gls{occam} is very much a principle on which neural network design should be structured. \citet[\textsection{3.4}]{MacKay91}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
+
+In fact \citeauthor{mackay1992practical} points out that the Bayesian approach encodes the \gls{occam} approach.
+
+\subsection{Practical Implementation}
+While presenting a nice theory on model selection the practical implementation of this work is rather more difficult~\citep{chipman2001}. In particular, like all Bayesian approaches, having the correct prior probabilities for both the models and weights is important, and yet this is practically difficult in large neural networks.
+
+\mynote{TODO}
+
 \section{Constructive Neural Network Algorithms}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
 	Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research was prominent in the late 80's and early 90's, but has started to regain focus. 	
@@ -267,15 +298,6 @@ Constructive approaches to binary classification neural network architectures we
 	
 	Initially the network consists of one neuron that is trained with the \emph{pocket algorithm}\index{pocket algorithm}~\citep{gallant1986optimal}. This `parent' neuron, now frozen, will misclassify some of the training samples, and to correct these two `child' neurons are added. Since the neurons in the upstart algorithm are binary threshold units, the `parent' neuron will either misclassify samples as negative or positive. The two `child' neurons are then trained (also by the pocket algorithm\index{pocket algorithm}) to provide enough of a negative/positive signal to cause the parent neuron to give correct classifications for one or more of the misclassified samples. The `child' neurons become `parents', and their offspring also learn to correct their mistakes. Empirical results showed that the upstart algorithm produces networks with fewer neurons than the tiling algorithm\index{tiling algorithm}.
 	
-    \subsection{Bayesian Method for Adaptive Models}
-    % downside is it requires hessian?
-	\citet{mackay1992practical} proposed a Bayesian approach to adaptive model and hyperparameter selection. The author points to the relationship of Occam's razor to Bayesian approaches. Rather than performing model selection by using cross-validation, the author proposes to predict the likelihood of models to generalize well using only the training set itself.
-	
-	Of particular interest are the empirical results showing that Occams's razor is very much a principle on which neural network design should be structured. \citet{MacKay91}, in \textsection{3.4}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
-	
-
-	\mynote{TODO}
-    
 %	\subsection{Hyper-Networks}
 %	More recently \citet{hypernetworks} looked at trying to learn a compact representation of a network, much like weight sharing in an \gls{rnn} allows the concise summary of a potentially infinite depth \gls{rnn}.
 	
