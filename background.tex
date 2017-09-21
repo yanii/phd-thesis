@@ -322,7 +322,7 @@ In order to settle into a local minima, the learning rate must also be decreased
 
 The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training deep networks which comes from experience, but~\citep{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
 
-\subsection{The Problem with First-order Optimization}
+\subsection{The Problem with First-order Optimization}\label{pathological}
 The underlying reason learning rate and learning policy has such a large effect is that gradient descent is a \emph{first-order} optimization method, and only considers the first-order partial derivatives, \ie for a 2D error surface $E(x, y)$, gradient descent moves in the opposite direction of the gradient,
 \begin{equation}
     \nabla E(x, y) = {\left(\frac{\partial E}{\partial x}, \frac{\partial E}{\partial y}\right)}.
