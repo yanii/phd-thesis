@@ -375,8 +375,7 @@ Constructive approaches to binary classification neural network architectures we
 	\subsection{XOR-Net: Binary Convolutional Neural Networks}
 	\citet{rastegari2016xnor} proposed two methods, one in which filter parameters were quantized to binary values, from the typical 16-bit floating point representation. Surprisingly even when the method was applied to models trained on \gls{ilsvrc}, such as \gls{alexnet}, the accuracy was little effected.
 
-	A further method, XNOR networks\index{XNOR networks}, is proposed where both the filter parameters and \glspl{featuremap}
-	\mynote{TODO}
+	A further method, XNOR networks\index{XNOR networks}, is proposed where both the filter parameters and \glspl{featuremap} are reduced binary representations. XNOR networks claim 58$\times$ faster and 32$\times$ smaller convolutional layers. The evaluation for \gls{ilsvrc} is based on the AlexNet architecture however, which does not represent a good accuracy/model size tradeoff compared to more recent deep network architectures.
 	
 	\subsection{Soft Weight Sharing}
 	\citet{ullrich2017soft,}
