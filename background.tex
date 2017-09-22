@@ -724,6 +724,14 @@ Batch normalization then uses these statistics, along with two parameters learne
 \end{equation}
 %
 Most state-of-the-art supervised \glspl{dnn}\index{DNN} now use batch normalization along with the initialization presented above to train.
+
+\subsection{Dropout}
+\citet{dropout,dropoutjmlr} introduced \emph{dropout}\index{dropout}, a method of preventing overfitting in large networks during training. The implementation of dropout is to effectively zero out a set of neurons, sampled randomly from each layer with a fixed probability $p$. At test time all the neurons are active, and to maintain the expected responses, a multiplicative factor of $p$ is used.
+
+The mechanism of the effect of dropout is explained several different ways, and notably different explanations are given by \citet{dropout} and \citet{dropoutjmlr}. The explanation by \citet{dropout} is that dropout is a form of regularization by noise. The main explanation given by \citet{dropoutjmlr} is that dropout is a form of model integration, averaging over a large number of random `thinner' model architectures at training time in order to improve generalization. At training time however, averaging over all the models considered during training would be extremely computationally expensive, since there are an exponential ($2^n$) number of possible models considered during training.
+
+Empirically dropout improves generalization of networks with very large layers, in particular the large fully-connected layers to be found at the end of the \gls{alexnet} and \gls{vgg} architectures. It has less effect on models train with batch normalization however, as observed by the authors~\citep{Ioffe2015}, and in practice is not used in more recent deep network architectures such as \gls{resnet}.
+
 \section{Deep Neural Network Architectures}
 An exhaustive list of every novel deep learning architecture would be infeasible, and outside the scope of this dissertation, however here we have made an effort to cover the recent architectures which have both inspired our work and formed the basis of many of our results.
 
@@ -845,7 +853,7 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \caption[Residual networks]{\textbf{Residual networks.} \subref{fig:resnet-1} A convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$.}
 \label{fig:resnet}
 \end{figure}
-\citet{He2015} introduced residual networks, which provide an important insight on a problem with the training of very deep networks. While deeper networks have been found to improve generalization, especially with large datasets; at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
+\citet{He2015} introduced residual networks\index{ResNet|textbf}, which provide an important insight on a problem with the training of very deep networks. While deeper networks have been found to improve generalization, especially with large datasets; at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
 The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having trained a deep network with good generalization (\ie \cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\ie \cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
 
