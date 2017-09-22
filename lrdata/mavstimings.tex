@@ -33,10 +33,10 @@
   ylabel near ticks,
   yticklabel pos=left,
   %enlarge x limits=0.25,
-  color=orrd1,
+  color=\colora,
   %color of colormap={0},
 ]
-\addplot[style={black,fill=orrd1,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex,y=Multiply-Accumulate]{\datatable};\label{maaxis}
+\addplot[style={black,fill=\colora,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex,y=Multiply-Accumulate]{\datatable};\label{maaxis}
 \end{axis}
 
 \begin{axis}[
@@ -51,10 +51,10 @@
   ylabel=CPU Time (ms),
   ylabel near ticks,
   yticklabel pos=right,
-  color=orrd2,
+  color=\colorb,
   %color of colormap={500},
 ]
-\addplot+[style={black,fill=orrd2,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex+1,y=CPU Timing]{\datatable};\label{cpuaxis}
+\addplot+[style={black,fill=\colorb,opacity=0.5,mark=none},area legend] table[x expr=3*\coordindex+1,y=CPU Timing]{\datatable};\label{cpuaxis}
 \end{axis}
 
 \begin{axis}[
@@ -69,7 +69,7 @@
   ylabel=GPU Time (ms),
   ylabel near ticks,
   yticklabel pos=right,
-  color=orrd3,
+  color=\colorc,
   %color of colormap={1000},
   ytick={0,1,...,5},
   legend style={at={(0.98,0.98)},anchor=north east},
@@ -77,7 +77,7 @@
 \pgfplotsset{every outer y axis line/.style={xshift=4em}, every tick/.style={xshift=4em}, every y tick label/.style={xshift=4em} }
 \addlegendimage{/pgfplots/refstyle=maaxis}\addlegendentry{FLOPS}
 \addlegendimage{/pgfplots/refstyle=cpuaxis}\addlegendentry{CPU}
-\addplot[style={black,fill=orrd3,opacity=0.5},area legend] table[x expr=3*\coordindex+2,y=GPU Timing]{\datatable};\label{gpuaxis}
+\addplot[style={black,fill=\colorc,opacity=0.5},area legend] table[x expr=3*\coordindex+2,y=GPU Timing]{\datatable};\label{gpuaxis}
 \addlegendentry{GPU}
 \end{axis}
 \end{tikzpicture}

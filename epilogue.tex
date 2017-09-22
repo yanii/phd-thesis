@@ -29,13 +29,14 @@ In this section, we will briefly outline the significant derivative papers publi
     \item Deep Roots: Improving \gls{cnn} Efficiency with Hierarchical Filter Groups~\citep{ioannou2016e}
     \begin{description}
         \item[Pre-print] arXiv:1605.06489 (20 May 2016)
-        \item[Peer-reviewed publication date] 21 July, 2017
+        \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
     \end{description}
 \end{itemize}
 
 \section*{Rethinking the Inception Architecture for Computer Vision}
 \begin{description}
     \item[Pre-print] arxiv:1512.00567 (2 Dec.\ 2015)
+    \item[Peer-reviewed publication date] CVPR 2016 (28 June, 2017)
 \end{description}
 The Google Brain research team published an update to the \Gls{inception} architecture around 3 weeks after our publication, making it likely that their work was independent. Nevertheless, the method they present is identical to our proposal~\citep{Ioannou2016} --- the training of the \Gls{inception} architecture with low-rank (\ie 1$\times$3 and 3$\times$1) filters to reduce computation and improve generalization. They call these `factorized filters' which we disagree with, since being simply concatenated they are not a factorization (\ie separation of a multiplication), rather we argue they are linearly combined, and so represent a basis.
 
@@ -44,14 +45,47 @@ Nevertheless, the method proposed in this paper (and identical to our proposed m
 \section*{Xception: Deep Learning with Depthwise Separable Convolutions}
 \begin{description}
     \item[Pre-print] arXiv:1610.02357 (7 Oct.\ 2016)
+    \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
 \end{description}
-\mynote{TODO}
+The author proposes the `Xception' module, which is a special case of our proposed root modules~\cite{ioannou2016e}, where, if $c_1$ is the number of input feature map channels, and $g$ is the number of groups (as in \cref{fig:rootmodule}), an `Xception' module is the extreme case where $g \equiv c_1$. This works only because the number of filters is greatly increased, however by using convolutional groups of the same size as input channels, any of the computational advantages of root modules are lost, for all the reasons described in \cref{gpuexplanation}.
+
+In correspondence with the author however, he denies the relationship, and does not cite our work.
+% \lstset{
+% basicstyle=\small\ttfamily,
+% columns=flexible,
+% breaklines=true
+% }
+% \begin{lstlisting}
+% Hi Yani,
+
+% A few big technical differences are:
+% - separable convolution = depthwise convolution + pointwise convolution. There is no notion of pointwise convolution in filter groups.
+% - depthwise convolution works depthwise and doesn't involve the notion of groups of filters.
+% - filter groups involve 2-4 different kernels, while depthwise convolution involves as many kernels as input channels. In that sense it would be more accurate to relate filter groups to Inception modules.
+% - the motivations are different, with separable convolution aiming at factorizing convolution kernels while filter groups aim at distributing workload on different GPUs.
+
+% All in all, the relationship seems extremely tenuous. I asked Laurent Sifre about it, and it seems he was not inspired by filter groups at all during his work on developing separable convolutions. Depthwise separable convolutions are actually much more closely related to spatially separable convolutions, which have been in use for decades in the image processing community. Laurent's thesis has some pretty interesting insight about it.
+
+% Cheers,
+% Francois
+% \end{lstlisting}
+% I have pointed out that our root modules also used 1x1 convolutions after the filter groups in our resnet experiments, similar to what the author names `separable convolution'. Following adjacent (and independent) filter groups/`depthwise' convolution by a 1$\times$1 convolution, the network is not learning a `separable' (\ie{}factorized) convolution --- we are not separating a multiplication, you are separating a sum. This (if you are generous in ignoring the non-linearities) is in fact learning a basis - the 1$\times$1 convolution is linearly combining multiple convolutions.
+
+% Unfortunately no further correspondence or acknowledgement was received, and the author does not cite our work.
 
 \section*{Aggregated Residual Transformations for Deep Neural Networks}
 \begin{description}
     \item[Pre-print] arXiv:1611.05431 (16 Nov.\ 2016)
+    \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
 \end{description}
-The ResNeXt architecture, as proposed in this paper, cites our work~\citep{ioannou2016e}, and while the method is identical to ours, they explore a different compute-generalization trade-off. Rather than using the better representation to save parameters and computation as in \citet{ioannou2016e}, the authors propose to maintain the original computational footprint of the model, and increase the number of filters learned.
+The ResNeXt architecture proposed in this paper is technically identical to ours (and cites our work~\citep{ioannou2016e}), they explore a different compute-generalization trade-off. Rather than using the better representation to save parameters and computation as in \citet{ioannou2016e}, the authors propose to maintain the original computational footprint of the model, and increase the number of filters learned.
+\mynote{TODO}
+
+\section*{ShuffleNet: An Extremely Efficient Convolutional
+Neural Network for Mobile Devices}
+\begin{description}
+    \item[Pre-print] arXiv:1707.01083 (4 Jul.\ 2017)
+\end{description}
 \mynote{TODO}
 
 \section*{Interleaved Group Convolutions for Deep Neural Networks}

@@ -8,12 +8,12 @@
 	\end{chapquote}
 	%Learning Filters with Limited Channel Extents
 	%It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones --- as shown by recent research~\citep{Krizhevsky2012,Szegedy2014going,Simonyan2014verydeep,He2015}.
-	%This does not appear to be a limitation of finite capacity, since it has been proposed that at least some deep networks are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of deep networks.
+	%This does not appear to be a limitation of finite capacity, since it has been proposed that at least some \glspl{dnn}\index{DNN} are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of \glspl{dnn}\index{DNN}.
 	
 	With few exceptions, state-of-the-art \glspl{cnn} for image recognition are largely monolithic, with each filter operating on the feature maps\index{feature map} of all filters on a previous layer. Interestingly, this is in stark contrast to what we understand of biological neural networks\index{neural network}, where we see ``highly evolved arrangements of smaller, specialized networks which are interconnected in very specific ways''~\citep{minsky1988perceptrons}.
 	
-	Yet it has been shown that a large proportion of the learned weights in deep networks are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks\index{neural network} smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. 
-	%It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization deep networks are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\citep{Hinton2012}. Furthermore
+	Yet it has been shown that a large proportion of the learned weights in \glspl{dnn}\index{DNN} are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks\index{neural network} smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. 
+	%It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization \glspl{dnn}\index{DNN} are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\citep{Hinton2012}. Furthermore
 	A carefully designed sparse network connection structure can have a regularizing effect. \Glspl{cnn}~\citep{Fuk80,Lecun1998} embody this idea, using a sparse convolutional connection structure to exploit the locality of natural image structure. In consequence, they are easier to train.
 	
 	In \cref{lowrankfilters} learning a low-rank spatial basis for filters was found to improve generalization while reducing the computational complexity and model size of a \gls{cnn} with only full rank filters. However, this work addressed only the spatial extents of the convolutional filters (\ie $h$ and $w$ in \cref{fig:normalconv}). In this work we will show that a similar idea can be applied to the channel extents --- \ie filter inter-connectivity --- by using \emph{filter groups}~\citep{Krizhevsky2012}. 
@@ -29,7 +29,7 @@
 	%\end{figure}
 	
 	% Maybe we need something like this here too, don't know
-	%It has been shown that reducing the co-adaption of filters is beneficial to generalization in deep networks~\citep{Hinton2012,goodfellow2013maxout,Cogswell2016}. Co-adaption occurs when hidden layer filters (or neurons\index{neuron}) rely on one another to fit training data, such that their outputs become highly correlated. However, instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use hierarchical filter groups (see \cref{regularizingstructure}) to allow the network itself to learn independent filters. By restricting the connectivity between filters on subsequent layers the network is forced to learn filters of limited dependence. We allow the standard network optimization (\eg \gls{sgd}) to learn appropriate weights within this restricted architecture.
+	%It has been shown that reducing the co-adaption of filters is beneficial to generalization in \glspl{dnn}\index{DNN}~\citep{Hinton2012,goodfellow2013maxout,Cogswell2016}. Co-adaption occurs when hidden layer filters (or neurons\index{neuron}) rely on one another to fit training data, such that their outputs become highly correlated. However, instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use hierarchical filter groups (see \cref{regularizingstructure}) to allow the network itself to learn independent filters. By restricting the connectivity between filters on subsequent layers the network is forced to learn filters of limited dependence. We allow the standard network optimization (\eg \gls{sgd}) to learn appropriate weights within this restricted architecture.
 	
 	In this chapter we show that simple alterations to the architecture of state-of-the-art \glspl{cnn} for image recognition can drastically reduce computational cost and model size while maintaining (or even increasing) accuracy, through structure-induced regularization, by reducing the connectivity in monolithic networks to reflect more closely the sparse, localized filter co-dependencies within a trained network.
 	
@@ -75,7 +75,7 @@
 			},
 			legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 			legend columns=2,
-			\setplotcyclediv{2},
+			\setplotcyclecat{2},
 			every axis plot/.append style={fill},
 		]
 		\addplot+[mark=*,nodes near coords,only marks,
@@ -119,10 +119,10 @@
 	Our approach is connected with that presented in \cref{lowrankfilters}, where we showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art \glspl{cnn}, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
 	\section{Root Architectures}
 	\label{method}
-	In this section we present the main contribution of our work: the use of novel sparsely-connected architectures resembling tree roots --- to decrease computational complexity and model size compared to state-of-the-art deep networks for image recognition.
+	In this section we present the main contribution of our work: the use of novel sparsely-connected architectures resembling tree roots --- to decrease computational complexity and model size compared to state-of-the-art \glspl{dnn}\index{DNN} for image recognition.
 	
 	\paragraph{Learning a Basis for Filter Dependencies}
-	It is unlikely that every filter (or neuron\index{neuron}) in a deep neural network\index{neural network} needs to depend on the output of all the filters in the previous layer. In fact, reducing filter co-dependence in deep networks has been shown to benefit generalization. For example, \citet{Hinton2012} introduced {\em dropout} for regularization of deep networks. When training a network layer with dropout, a random subset of neurons\index{neuron} is excluded from both the forward and backward pass for each mini-batch.  Furthermore, \citet{Cogswell2016} observe a correlation between the covariance of hidden unit activations and overfitting. To explicitly reduce the covariance of hidden activations, they train networks with a loss function, based on the covariance matrix of the activations in a hidden layer. 
+	It is unlikely that every filter (or neuron\index{neuron}) in a deep neural network\index{neural network} needs to depend on the output of all the filters in the previous layer. In fact, reducing filter co-dependence in \glspl{dnn}\index{DNN} has been shown to benefit generalization. For example, \citet{Hinton2012} introduced {\em dropout} for regularization of \glspl{dnn}\index{DNN}. When training a network layer with dropout, a random subset of neurons\index{neuron} is excluded from both the forward and backward pass for each mini-batch.  Furthermore, \citet{Cogswell2016} observe a correlation between the covariance of hidden unit activations and overfitting. To explicitly reduce the covariance of hidden activations, they train networks with a loss function, based on the covariance matrix of the activations in a hidden layer. 
 	
 	Instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use filter groups (see \cref{fig:groupconfig}) to force the network to learn filters with only limited dependence on previous layers. Each of the filters in the filter groups is smaller in the channel extent, since it operates on only a subset of the channels of the input feature map\index{feature map}. 
 	
@@ -148,7 +148,7 @@
 		}
 		\label{fig:rootmodule}
 	\end{figure}
-	This reduced connectivity also reduces computational complexity and model size since the size of filters in filter groups are reduced drastically, as is evident in \cref{fig:rootmodule}. Unlike methods for increasing the efficiency of deep networks by approximating pre-trained existing networks (see \cref{previouswork}), our models are trained from random initialization using stochastic gradient descent. This means that our method can also speed up training and, since we are not merely approximating an existing model's weights, the accuracy of the existing model is not an upper bound on accuracy of the modified model.
+	This reduced connectivity also reduces computational complexity and model size since the size of filters in filter groups are reduced drastically, as is evident in \cref{fig:rootmodule}. Unlike methods for increasing the efficiency of \glspl{dnn}\index{DNN} by approximating pre-trained existing networks (see \cref{previouswork}), our models are trained from random initialization using stochastic gradient descent. This means that our method can also speed up training and, since we are not merely approximating an existing model's weights, the accuracy of the existing model is not an upper bound on accuracy of the modified model.
 	
 	\paragraph{Root Module}
 	The basic element of our network architecture, a \emph{root module}, is shown in \cref{fig:rootmodule}. A root module has a given number of filter groups, the more filter groups, the fewer the number of connections to the previous layer's outputs. Each spatial convolutional layer is followed by a low-dimensional embedding (1$\times$1 convolution). Like in \cref{lowrankfilters}, this configuration  learns a linear combination of the basis filters (filter groups), implicitly representing a filter of full channel depth, but with limited filter dependence.
@@ -267,7 +267,7 @@
 				},
 				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\small},
 				legend columns=4,
-				\setplotcyclediv{4},
+				\setplotcyclecat{4},
 				every axis plot/.append style={fill},
 			]
 			\addplot+[mark=*,
@@ -330,7 +330,7 @@
 					/pgf/number format/fixed zerofill,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{4},
+				\setplotcyclecat{4},
 				every axis plot/.append style={fill},
 			]
 			\addplot[mark=*,
@@ -787,14 +787,14 @@
 	}
 	An interesting question concerns how the degree of grouping in our root modules should be varied as a function of depth in the network. For the \gls{nin}-like architectures described earlier, we might consider having the degree of grouping: (1) decrease with depth after the first convolutional layer, \eg 1--8--4 (`root'); (2) remain constant with depth after the first convolutional layer, \eg 1--4--4 (`column'); or (3) increase with depth, \eg 1--4--8 (`tree').
 	
-	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in \cref{fig:nincifarplotsconvonly}. The results show that the so-called root topology (illustrated in \cref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of deep networks for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
+	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in \cref{fig:nincifarplotsconvonly}. The results show that the so-called root topology (illustrated in \cref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of \glspl{dnn}\index{DNN} for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
 	
 	\subsection{Improving Residual Networks on \gls{ilsvrc}}
-	Residual networks (ResNets)~\citep{He2015} are the state-of-the art network for \gls{ilsvrc}\@. ResNets are more computationally efficient than the VGG architecture~\citep{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
+	Residual networks (\gls{resnet}\index{ResNet}s)~\citep{He2015} are the state-of-the art network for \gls{ilsvrc}\@. \Glspl{resnet}\index{ResNet} are more computationally efficient than the VGG architecture~\citep{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
 	
 	\subsubsection{ResNet 50}
 	\label{resnet50results}
-	As a baseline, we used the `ResNet 50' model~\citep{He2015} (the largest residual network model to fit onto 8 \gls{gpu}s with Caffe). ResNet 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
+	As a baseline, we used the \gls{resnet}\index{ResNet} 50 model~\citep{He2015} (the largest residual network model to fit onto 8 \gls{gpu}s with Caffe). \gls{resnet}\index{ResNet} 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
 	For training, we used the initialization scheme described by~\citep{He2015b} modified for compound layers, as presented in \cref{initialization}, and batch normalization~\citep{Ioffe2015}.
 	\begin{table}[tp]
 		\caption[ResNet 50 root architectures]{\textbf{ResNet 50.} Filter groups in each conv.\ layer.}
@@ -908,7 +908,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -959,7 +959,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1009,7 +1009,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1066,7 +1066,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1181,7 +1181,7 @@
 					/pgf/number format/fixed zerofill,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1232,7 +1232,7 @@
 					/pgf/number format/fixed zerofill,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1256,7 +1256,7 @@
 		\caption[ResNet-200 \gls{ilsvrc} results]{\textbf{ResNet-200 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet200plots}
 	\end{figure}
-	To show that the method applies to deeper architectures, we also applied our method to ResNet 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} and \cref{fig:resnet200plots} show the results, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable or lower error, with fewer parameters and less computation. The root-64 model has 27\% fewer FLOPS and 48\% fewer parameters than ResNet 200.
+	To show that the method applies to deeper architectures, we also applied our method to \gls{resnet}\index{ResNet} 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} and \cref{fig:resnet200plots} show the results, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable or lower error, with fewer parameters and less computation. The root-64 model has 27\% fewer FLOPS and 48\% fewer parameters than \gls{resnet}\index{ResNet} 200.
 
 	\subsection{Improving GoogLeNet on \gls{ilsvrc}}
 	\label{googlenet50results}
@@ -1318,7 +1318,7 @@
 	\end{table}
 	
 	\begin{table}[tp]
-		\caption[GoogLeNet root architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and \Gls{inception}\index module (\textit{incp}.)}
+		\caption[GoogLeNet root architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and \Gls{inception}\index{inception} module (\textit{incp}.)}
 		\label{table:googlenetconfig}
 		\centering
 		\begin{tabular}{@{}lcccccccccccc@{}}
@@ -1369,7 +1369,7 @@
 				},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 			]
 			\addplot+[mark=*,
@@ -1419,7 +1419,7 @@
 				},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 			]
 			\addplot+[mark=*,
@@ -1466,7 +1466,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1520,7 +1520,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 				every axis plot/.append style={fill},
 				legend style={at={(0.98,0.98)}, anchor=north east, column sep=0.5em},
 				legend columns=3,
@@ -1554,7 +1554,7 @@
 	As shown in \cref{table:googlenetimagenetresults}, and plotted in \cref{fig:googlenet50plots}, our method shows significant reduction in computational complexity -- as measured in \gls{flops} (multiply-adds), \gls{cpu} and \gls{gpu} timings -- and model size, as measured in the number of floating point parameters. For many of the configurations the top-5 accuracy remains within 0.5\% of the baseline model. 
 	The highest accuracy result, is 0.1\% off the top-5 accuracy of the baseline model, but has a 0.1\% higher top-1 accuracy -- within the error bounds resulting from training with different random initializations. While maintaining the same accuracy, this network has 9\% faster \gls{cpu} and \gls{gpu} timings. However, a model with only 0.3\% lower top-5 accuracy than the baseline has much higher gains in computational efficiency -- 44\% fewer floating point operations (multiply-add), 7\% fewer model parameters, 21\% faster \gls{cpu} and 16\% faster \gls{gpu} timings.
 	
-	While these results may seem modest compared to the results for ResNet, GoogLeNet is by far the smallest and fastest near state-of-the-art model \gls{ilsvrc} model. We believe that more experimentation in using different cardinalities of filter grouping in the heterogeneously-sized filter groups within each \gls{inception}\index{inception} module will improve results further.
+	While these results may seem modest compared to the results for \gls{resnet}\index{ResNet}, \gls{googlenet}\index{GoogLeNet} is by far the smallest and fastest near state-of-the-art model \gls{ilsvrc} model. We believe that more experimentation in using different cardinalities of filter grouping in the heterogeneously-sized filter groups within each \gls{inception}\index{inception} module will improve results further.
 	
 	\subsection{The Effect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
@@ -1603,7 +1603,7 @@
 		\caption[ResNet 50 conv1 filters]{\textbf{ResNet 50 \texttt{conv1} filters.} With filter groups directly after \texttt{conv1}, in \texttt{conv2}, some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks.}
 		\label{fig:resnet50conv0}
 	\end{figure}
-	In the ResNet root models, filter groups are used in \texttt{conv2},  directly after the image level filters of \texttt{conv1} some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks. \Cref{fig:resnet50conv0} shows the \texttt{conv0} filters learned for each of the ResNet 50 models. It is apparent that the filters learned in these networks are very similar to those learned in the original model, although sometimes inverted or with a different ordering. This ordering is somewhat consistent in models with filter groups however, even with different random initializations. This is because filter groups cause filters with strong mutual information to be grouped adjacent to each other.
+	In the \gls{resnet}\index{ResNet} root models, filter groups are used in \texttt{conv2},  directly after the image level filters of \texttt{conv1} some of the organization of filters can be directly observed, and give us intuition as to what is happening in root networks. \Cref{fig:resnet50conv0} shows the \texttt{conv0} filters learned for each of the \gls{resnet}\index{ResNet} 50 models. It is apparent that the filters learned in these networks are very similar to those learned in the original model, although sometimes inverted or with a different ordering. This ordering is somewhat consistent in models with filter groups however, even with different random initializations. This is because filter groups cause filters with strong mutual information to be grouped adjacent to each other.
 	
 	For example, in the root-8 network (\cref{fig:resnet50root8conv0}), each row of filters corresponds to the input of an independent filter group in \texttt{conv2}. We can see that the first row primarily is composed of filters giving various directions of the same color gradient. These filters can be combined in the next layer to produce color edges easily. Due to the shortcut layer and the learned combinations of filters however, not all filter groupings are so obvious.
 	
@@ -1642,7 +1642,7 @@
 				draw=none, anchor=north,legend columns=-1},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcyclediv{2},
+				\setplotcyclecat{2},
 			]
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatable};
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatablea};
@@ -1677,7 +1677,7 @@
 			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 			xtick=data,
 			every axis plot/.append style={fill, draw=none},
-			\setplotcyclediv{2},
+			\setplotcyclecat{2},
 			]
 			\addplot+ table [x expr=\coordindex,y=param]{\datatable};
 			\addplot+ table [x expr=\coordindex,y=param]{\datatablea};
@@ -1692,7 +1692,7 @@
 	\end{figure}
 	\end{landscape}
 	}
-	\Cref{fig:resnet50layerwisema} shows the difference in compute and parameters for each layer in a standard ResNet-50 model and a root-64 variant. The layers in the original networks with the highest computational complexity are clearly the spatial convolutional layers, \ie layers with 3$\times$3 spatial filters. When instead a root-module is used, the computational complexity of these layers is reduced dramatically. While the low dimensional embedding layers (1$\times$1) are not changed, these have less than half the compute of the spatial convolution layers. The number of parameters in spatial convolution layers with large numbers of input channels, which increase towards the end of the network, are similarly reduced.
+	\Cref{fig:resnet50layerwisema} shows the difference in compute and parameters for each layer in a standard \gls{resnet}\index{ResNet} 50 model and a root-64 variant. The layers in the original networks with the highest computational complexity are clearly the spatial convolutional layers, \ie layers with 3$\times$3 spatial filters. When instead a root-module is used, the computational complexity of these layers is reduced dramatically. While the low dimensional embedding layers (1$\times$1) are not changed, these have less than half the compute of the spatial convolution layers. The number of parameters in spatial convolution layers with large numbers of input channels, which increase towards the end of the network, are similarly reduced.
 	
 	\section{GPU Implementation}\label{gpuexplanation}
 	Our experiments show that our method can achieve a significant reduction in \gls{cpu} and \gls{gpu} runtimes for state-of-the-art \glspl{cnn} without compromising accuracy. However, the reductions in \gls{gpu} runtime were smaller than might have been expected based on theoretical predictions of computational complexity (FLOPs). We believe this is largely a consequence of the optimization of Caffe for existing network architectures (particularly AlexNet and GoogLeNet) that do not use a high degree of filter grouping.
@@ -1701,7 +1701,7 @@
 	We have modified Caffe to use \gls{cublas} batched calls, and achieved significant speedups for our  root-like network architectures compared to vanilla Caffe without \gls{cudnn}, e.g. a 25\%\ speed up on our root-16 modified version of the GoogleNet architecture. However, our optimized implementation still is not as fast as Caffe with \gls{cudnn} (which was used to generate the results in this paper), presumably because of other unrelated optimizations in the (proprietary) \gls{cudnn} library. Therefore we suggest that direct integration of \gls{cublas}-style batching into \gls{cudnn} could improve the performance of filter groups significantly.
 	
 	\section{Discussion}
-	We explored the effect of using complex hierarchical arrangements of filter groups in \glspl{cnn} and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train deep networks than methods that only approximate a pre-trained model's weights.
+	We explored the effect of using complex hierarchical arrangements of filter groups in \glspl{cnn} and show that imposing a structured decrease in the degree of filter grouping with depth --- a `root' (inverse tree) topology --- can allow us to obtain more efficient variants of state-of-the-art networks without compromising accuracy. Our method appears to be complementary to existing methods, such as low-dimensional embeddings, and can be used more efficiently to train \glspl{dnn}\index{DNN} than methods that only approximate a pre-trained model's weights.
 	
-	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and ResNet architectures, which were evaluated on the \gls{cifar10} and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by \gls{cpu} and \gls{gpu} timings). For \gls{nin} on \gls{cifar10}, our model has 47\% of the parameters of the original network, and approximately 22\% faster \gls{cpu} and \gls{gpu} timings. For ResNet 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a \gls{cpu} (\gls{gpu}).  For ResNet 200 our model has 27\% fewer FLOPS and 48\% fewer parameters. Even for the most efficient of the near state-of-the-art ILSVRC network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU). Even for the most efficient of the near state-of-the-art \gls{ilsvrc} network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a \gls{cpu} (\gls{gpu}).
+	We validated our method by using it to create more efficient variants of state-of-the-art \gls{nin}, Googlenet, and \gls{resnet}\index{ResNet} architectures, which were evaluated on the \gls{cifar10} and \gls{ilsvrc} datasets. Our results show comparable accuracy with the baseline architecture with fewer parameters and much less compute (as measured by \gls{cpu} and \gls{gpu} timings). For \gls{nin} on \gls{cifar10}, our model has 47\% of the parameters of the original network, and approximately 22\% faster \gls{cpu} and \gls{gpu} timings. For \gls{resnet}\index{ResNet} 50, our model has 27\% fewer parameters, and was 24\% (11\%) faster on a \gls{cpu} (\gls{gpu}).  For \gls{resnet}\index{ResNet} 200 our model has 27\% fewer FLOPS and 48\% fewer parameters. Even for the most efficient of the near state-of-the-art ILSVRC network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a CPU (GPU). Even for the most efficient of the near state-of-the-art \gls{ilsvrc} network, GoogLeNet, our model uses 7\% fewer parameters and is 21\% (16\%) faster on a \gls{cpu} (\gls{gpu}).
 \end{document}

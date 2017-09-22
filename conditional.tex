@@ -157,7 +157,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
-		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glspl{dnn}.}\label{fig:Imagenet_CondNet}
+		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glspl{dnn}\index{DNN}.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
 	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
@@ -220,7 +220,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{3},
+				\setplotcyclecat{3},
 				every axis plot/.append style={fill},
 				legend style={at={(1,1.1)}, anchor=south east, column sep=0.2em, font=\footnotesize},
 				legend columns=4,
@@ -280,7 +280,7 @@
 					/pgf/number format/fixed,
 					/pgf/number format/precision=1
 				},
-				\setplotcyclediv{3},
+				\setplotcyclecat{3},
 				every axis plot/.append style={fill},
 			]
 			\addplot+[mark=*,
@@ -367,7 +367,7 @@
 				anchor=north,legend columns=1]},
 				area legend,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcyclediv{3},
+				\setplotcyclecat{3},
 			]
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatablea};
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatableb};
@@ -406,7 +406,7 @@
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				every axis plot/.append style={fill, draw=none},
-				\setplotcyclediv{3},
+				\setplotcyclecat{3},
 			]
 			\addplot+ table [x expr=\coordindex,y=param]{\datatablea};
 			\addplot+ table [x expr=\coordindex,y=param]{\datatableb};
