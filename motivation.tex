@@ -172,29 +172,29 @@
 	\begin{landscape}
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[t]{0.48\linewidth}
+		\begin{subfigure}[t]{0.45\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmintrainloss.pgf}}
 			\caption{Training Loss}
 			\label{fig:tomplotmintrainloss}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.48\linewidth}
+		\begin{subfigure}[t]{0.45\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotminvalloss.pgf}}
 			\caption{Validation Loss}
 			\label{fig:tomplotminvalloss}
 		\end{subfigure}\\
-		\begin{subfigure}[t]{0.48\linewidth}
+		\begin{subfigure}[t]{0.45\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxtrainacc.pgf}}
 			\caption{Training Accuracy}
 			\label{fig:tomplotmaxtrainacc}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.48\linewidth}
+		\begin{subfigure}[t]{0.45\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxvalacc.pgf}}
 			\caption{Validation Accuracy}
 			\label{fig:tomplotmaxvalacc}
 		\end{subfigure}
-		\caption[Two-or-more clumps problem and structural priors]{\textbf{Two-or-more clumps problem and structural priors.} \mynote{TODO}Class imbalance responsible for cycle in loss?}
+		\caption[Two-or-more clumps problem and structural priors]{\textbf{Two-or-more clumps problem and structural priors.} Our results for of the learning curves for the experiment of \citet{denker1987large}. A small \gls{cnn} converges quicker than a much larger, fully-connected network that contains the super-set of weights not present in the sparser \gls{cnn}. The class-imbalance due to the numbers of samples for the two classes in a fixed-length binary string seems to cause instability in the convergence of both networks.}
 		\label{fig:tomplot}
 	\end{figure}
 \end{landscape}

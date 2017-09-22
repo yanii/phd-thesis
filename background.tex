@@ -463,8 +463,9 @@ Another key aspect of convolutional architectures is pooling, a form of non-line
 
 Pooling layers divide the image into non-overlapping pooling regions, in which the spatial extents of the input image/\gls{featuremap}\index{feature map} are aggregated into a single scalar. LeNet used the average to aggregate the pooling regions, \ie average pooling~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the \gls{featuremap}\index{feature map} sizes~\citep{He2015}.
 
-\section{Contemporary Methods of Training Neural Networks}
+\section[Contemporary Methods of Training Neural Networks]{Contemporary Methods of Training\\Neural Networks}
 \label{section:contemporary}
+Here we will outline the most relevant differences in training contemporary \gls{dnn} as compared to before the work of \citet{Krizhevsky2012}, less than 10 years ago.
 \subsection{Rectified Linear Activation Function}
 \label{section:relu}
 \begin{figure}[tbp]
