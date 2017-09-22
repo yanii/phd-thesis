@@ -476,9 +476,8 @@
 	It is a DAG-structured conditional network with 10 layers.
 	To our knowledge this is the first attempt at learning automatically the architecture of a deep \gls{cnn} for image classification.
 	
-	\subsubsection{Accuracy \vs{}efficiency}
-	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters. 
-	\ie we maximize $\alpha$ over $F_l = F_\textrm{orig}/2^i, \left\{i\in \mathbb{N} : 0 \le i \le 4\right\}$, where $F_\textrm{orig}$ is the number of filters in layer $l$ in NiN-64. 
+	\subsubsection{Accuracy \vs efficiency}
+	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters, \ie we maximize $\alpha$ over $F_l = F_\textrm{orig}/2^i, \left\{i\in \mathbb{N} : 0 \le i \le 4\right\}$, where $F_\textrm{orig}$ is the number of filters in layer $l$ in NiN-64. 
 	
 	All networks were trained with the same hyperparameters as~\citep{Lin2013NiN}, 
 	except for using the initialization strategy of~\citep{He2015b}, 
