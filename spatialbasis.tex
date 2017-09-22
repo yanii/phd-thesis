@@ -20,7 +20,7 @@
     \begin{landscape}
     \begin{figure}[p] 
         \centering
-        \includegraphics[height=0.97\textheight]{sparseconn3}
+        \includegraphics[height=0.8\textheight]{sparseconn3}
         \caption[Image access map visualizing sparsity of convolutional filters]{
             {\bf Network connection structure for convolutional layers.} An input image is transformed in one layer of an neural network\index{neural network} into an output image of same size. Connection weight maps show pairwise dependencies between input and output pixels. In (a), each node is connected to all input pixels. For (b,c,d), output pixels depend only on a subset of input pixels (shared weights are represented by unique colours). Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
         }
@@ -240,10 +240,10 @@
 \afterpage{
 \begin{landscape}
 {
-\renewcommand{\arraystretch}{1.1}
-\setlength{\tabcolsep}{0.02\textwidth}
+\renewcommand{\arraystretch}{1.2}
+%\setlength{\tabcolsep}{0.1em}
 \begin{table*}[p]
-\scriptsize
+\tiny
 \centering
 \caption[VGG model low-rank architectures]{{\bf VGG Model Architectures}. Here ``3$\times$3, 32'' denotes 32 3$\times$3 filters, ``/2'' denotes stride 2, ``fc'' denotes fully-connected, and ``$\|$'' denotes a concatenation within a composite layer.}
 %\resizebox{0.97\textwidth}{!}{
@@ -337,6 +337,7 @@
 }
 
 \begin{table}[tbp]
+    \centering
     \caption[Low-rank VGG \gls{ilsvrc} results]{{\bf VGG \gls{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this chapter.}\label{table:vggimagenetresults}
     \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
     
@@ -352,9 +353,9 @@
     %dec sep align,      % Align at decimal point
     fixed zerofill,     % Fill numbers with zeros
     columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
-    column type/.add={lrrrrrr}{},
+    column type/.add={lrp{5em}p{4em}rrr}{},
     columns/Multiply-Acc./.style={
-        column name=Multiple-Acc. {\small $\times 10^{9}$},
+        column name=FLOPS {\small $\times 10^{9}$},
         preproc/expr={{##1/1e9}}
     },
     columns/Param./.style={
@@ -429,9 +430,9 @@
             after row=\bottomrule},
         fixed zerofill,     % Fill numbers with zeros
         columns={Network, Stride, Multiply-Acc., Param., Top-1 Acc., Top-5 Acc.},
-        column type/.add={lrrrrrr}{},
+        column type/.add={lp{5em}p{5em}rrrr}{},
         columns/Multiply-Acc./.style={
-            column name=Multiple-Acc. {\small $\times 10^{8}$},
+            column name=FLOPS {\small $\times 10^{8}$},
             preproc/expr={{##1/1e8}}
         },
         columns/Param./.style={
@@ -493,7 +494,7 @@
         fixed zerofill,     % Fill numbers with zeros
         columns={Network, Multiply-Acc., Test Param., Top-1 Acc., Top-5 Acc.},
         columns/Multiply-Acc./.style={
-            column name=Multiple-Acc. {\small $\times 10^{9}$},
+            column name=FLOPS {\small $\times 10^{9}$},
             preproc/expr={{##1/1e9}}
         },
         columns/Test Param./.style={
@@ -577,7 +578,7 @@
         fixed zerofill,     % Fill numbers with zeros
         columns={Network, Multiply-Acc., Param., Accuracy},
         columns/Multiply-Acc./.style={
-            column name=Multiple-Acc. {\small $\times 10^{8}$},
+            column name=FLOPS {\small $\times 10^{8}$},
             preproc/expr={{##1/1e8}}
         },
         columns/Param./.style={
@@ -649,7 +650,7 @@
     
     This architecture uses $5\times5$ filters in some layers. We found that we could replace all of these with $3$$\times$$3$ filters, with comparable accuracy. As suggested by \citet{Simonyan2014verydeep}, stacked  $3$$\times$$3$ filters have the effective receptive field of larger filters with less computational complexity. In this \textbf{nin-c3} network, we replaced the first convolutional layer with one $3$$\times$$3$ layer, and the second convolutional layer with two $3$$\times$$3$ layers. This network is 26\% faster than the standard NiN model, with only 54\% of the model parameters. Using our low-rank filters in this network, we trained the \textbf{nin-c3-lr} network, which is of similar accuracy (91.8\% \vs 91.9\%) but is approximately 54\% of the original network's computational complexity, with only 45\% of the model parameters.
     
-    \subsection{Comparing with State-of-the-Art Networks for ILSVRC}
+    \subsection{Comparing with ILSVRC State-of-the-Art Networks}
     \Cref{fig:bigpicturema,fig:bigpictureparam} compare published top-5 \gls{ilsvrc} validation error \vs multiply-accumulate operations and number of model parameters (respectively) for several state-of-the-art networks~\citep{Simonyan2014verydeep,Szegedy2014going,He2015b}. The error rates for these networks are only reported as obtained with different combinations of computationally expensive training and test-time augmentation methods, including scale, photometric, ensembles (multi-model), and multi-view/dense oversampling. This can makes it difficult to compare model architectures, especially with respect to computational requirements.
     
     State-of-the-art networks, such as MSRA-C, VGG-19 and oversampled GoogLeNet are orders of magnitude larger in computational complexity than our networks. From \cref{fig:bigpicturema}, where the multiply-accumulate operations are plotted on a log scale, increasing the model size and/or computational complexity of test-time augmentation of \glspl{cnn} appears to have diminishing returns for decreasing validation error. Our models \emph{without} training or test-time augmentation show comparable accuracy to networks such as VGG-13 \emph{with} training and test-time augmentation, while having far less computational complexity and a smaller model size. In particular, the `googlenet-lr' model has a much smaller test-time model size than any network of comparable accuracy. 
@@ -790,7 +791,7 @@
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Test Multiply-Acc./.style={
-    		column name=Test FLOPS w/ Aug. {\small $\times 10^{9}$},
+    		column name=FLOPS w/ Aug. {\small $\times 10^{9}$},
     		preproc/expr={{##1/1e9}}
     	},
     	columns/Param./.style={

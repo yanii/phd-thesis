@@ -481,7 +481,7 @@
 	\begin{align}
 	\textrm{cov}(X, X) &= \frac{1}{N-1} PDP^\textrm{T},\\
 	\end{align}
-	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in Appendix A of \citet{CIFAR10}),
+	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in \citet[Appendix A]{CIFAR10}),
 	
 	\begin{equation}
 	W = \sqrt{N-1}PD^{\circ-\frac{1}{2}}P^\textrm{T},
@@ -495,7 +495,7 @@
 	\afterpage{%
 	    \begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{0.97\linewidth}
+				\begin{subfigure}[c]{0.75\paperheight}
 					\centering
     				\vspace{0.6em}
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/nin/corrcoef_conv0}}
@@ -516,7 +516,7 @@
 					\caption{\Gls{nin}}\label{fig:corrroot1}
     				\vspace{0.6em}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.97\linewidth}
+				\begin{subfigure}[c]{0.75\paperheight}
 					\centering
     				\vspace{0.6em}
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/ninroot4/corrcoef_conv0}}
@@ -537,7 +537,7 @@
 					\caption{Root-4}\label{fig:corrroot4}
 					\vspace*{0.6em}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.97\linewidth}
+				\begin{subfigure}[c]{0.75\paperheight}
 					\centering
     				\vspace{0.6em}
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/ninroot8/corrcoef_conv0}}
@@ -558,7 +558,7 @@
 					\caption{Root-8}\label{fig:corrroot8}
 					\vspace*{0.6em}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.97\linewidth}
+				\begin{subfigure}[c]{0.75\paperheight}
 					\centering
     				\vspace{0.6em}
 					\covarlabels{conv1a}{192}{conv1a}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/ninroot32/corrcoef_conv0}}
@@ -579,7 +579,7 @@
 					\caption{Root-32}\label{fig:corrroot32}
 					\vspace*{0.6em}
 				\end{subfigure}\\
-				\begin{subfigure}[c]{0.97\linewidth}
+				\begin{subfigure}[c]{0.77\paperheight}
     				\centering
 	    			\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
 				\end{subfigure}
@@ -868,8 +868,9 @@
 		highlight col max ={\data}{Top-1 Acc.},
 		highlight col max ={\data}{Top-5 Acc.}, 
 		highlight col min ={\data}{Param.}, 
-		highlight col min ={\data}{Multiply-Acc.}, 
-		column type/.add={@{}lp{3em}p{3em}p{3em}p{3em}p{3em}p{3em}@{}}{},
+		highlight col min ={\data}{Multiply-Acc.},
+		column type/.add={@{}llp{3em}lp{3em}rrrr@{}}{},
+		%column type/.add={@{}lp{3em}p{3em}p{3em}p{3em}p{3em}p{3em}@{}}{},
 		col sep=comma]{\data}
 		%}
 	\end{table}
@@ -1311,14 +1312,14 @@
 		highlight col max ={\data}{Top-5 Acc.}, 
 		highlight col min ={\data}{Param.}, 
 		highlight col min ={\data}{Multiply-Acc.}, 
-		%    column type/.add={@{}lrrrrrr@{}}{},
-		column type/.add={@{}lp{3em}p{3em}p{3em}p{3em}p{3em}p{3em}@{}}{},
+		column type/.add={@{}lp{4em}p{4em}rrrr@{}}{},
+		%column type/.add={@{}lp{3em}p{3em}p{3em}p{3em}p{3em}p{3em}@{}}{},
 		col sep=comma]{\data}
 		%}
 	\end{table}
 	
 	\begin{table}[tp]
-		\caption[GoogLeNet root architectures]{\textbf{GoogLeNet}. Filter groups in each convolutional layer and \Gls{inception}\index{inception} module (\textit{incp}.)}
+		\caption[GoogLeNet root architectures]{\textbf{GoogLeNet}. Filter groups in each conv.\ layer and \Gls{inception}\index{inception} module (\textit{incp}.)}
 		\label{table:googlenetconfig}
 		\centering
 		\begin{tabular}{@{}lcccccccccccc@{}}

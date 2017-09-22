@@ -23,7 +23,7 @@
     Empirical results have, however, shown that the realities of training neural networks\index{neural network} do not match what theory predicts. Deep networks of many hidden layers have been shown time and again to out-perform shallow networks~\citep{Krizhevsky2012,Simonyan2014verydeep,He2015,He2016}, perhaps due to our limited method of optimization~\citep{NIPS2014_5484}. Networks with many more parameters than training samples, that use early-stopping or are regularized strongly, generalize better in practice than networks with the theoretically sufficient capacity~\citep{caruana2001overfitting, Krizhevsky2012, HintonTalk2015}. Networks designed with a specialized connectivity structure closer reflecting the underlying solution have consistently generalized better than fully-connected networks with higher learning capacity~\citep{lecun1989backpropagation,He2016}. In fact these seemingly theoretically defying design strategies can claim to have been responsible for recent breakthroughs in generalization on previously difficult tasks such as image class recognition~\citep{Krizhevsky2012, HintonTalk2015}.
     
     \section{Model Capacity and Representational Power}
-    \begin{figure}
+    \begin{figure}[tbp]
         \centering
         \includegraphics[width=0.85\textwidth]{Figs/PDF/allpossibler3}
         \caption[Possible labellings of 3 points in $\mathbb{R}^2$. ]{\textbf{Possible labellings of 3 points in $\mathbb{R}^2$.} All possible labellings of 3 points in $\mathbb{R}^2$ can be separated by a oriented line (2D hyperplane). This is not possible for all labellings of 4 points in $\mathbb{R}^2$ however, and thus the \gls{vc} dimension of oriented hyperplanes in $\mathbb{R}^2$ is 3. Inspired by figure in \citet{burges1998tutorial}.}\label{fig:vcdim_r2line}
@@ -101,26 +101,26 @@
     \subsection{Model Size}
     \mynote{TODO: Include references to \citet{baum1989size, rethinking2016}}
     
-	\begin{figure}[tb]
+	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit3rd.pgf}}
 			\caption{\engordnumber{3}-order polynomial fitting 3 points}
 			\label{fig:polyfit3rd}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit20th.pgf}}
 			\caption{\engordnumber{20}-order polynomial fitting 3 points}
 			\label{fig:polyfit20th}
 		\end{subfigure}\\	
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit3rdlots.pgf}}
 			\caption{\engordnumber{3}-order polynomial fitting 10 points}
 			\label{fig:polyfit3rdlots}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/polyfit20thlots.pgf}}
 			\caption{\engordnumber{20}-order polynomial fitting 10 points}
 			\label{fig:polyfit20thlots}
@@ -137,7 +137,7 @@
 	%% Use example of sin wave? We can fit it with a polynomial, but better to re-parametrize into a basis
 	
 	\subsection{Generalization and Parameters in Neural Networks}
-	\begin{figure}[tb]
+	\begin{figure}[tbp]
 		\centering
 		\large
         \renewcommand{\ttdefault}{pcr}
@@ -168,27 +168,28 @@
 	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate (truth statement). The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in \cref{fig:tomclumps}. The predicate is largely based on the more general predicate of \emph{connectedness} explored by \citet{minsky1988perceptrons}, and is shown to be a problem not linearly separable, or more specifically solvable by a locally connected perceptron\index{perceptron}. 
 	
 	The authors illustrate some surprising properties of the generalization of fully-connected neural networks\index{neural network} learned with backpropagation\index{backpropagation}. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropagation\index{backpropagation}. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
-	
-	\begin{figure}[tb]
+	\afterpage{
+	\begin{landscape}
+	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmintrainloss.pgf}}
 			\caption{Training Loss}
 			\label{fig:tomplotmintrainloss}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotminvalloss.pgf}}
 			\caption{Validation Loss}
 			\label{fig:tomplotminvalloss}
 		\end{subfigure}\\
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxtrainacc.pgf}}
 			\caption{Training Accuracy}
 			\label{fig:tomplotmaxtrainacc}
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.49\textwidth}
+		\begin{subfigure}[t]{0.48\linewidth}
 			\resizebox{\linewidth}{!}{\input{Figs/matplotlib/tomplotmaxvalacc.pgf}}
 			\caption{Validation Accuracy}
 			\label{fig:tomplotmaxvalacc}
@@ -196,7 +197,8 @@
 		\caption[Two-or-more clumps problem and structural priors]{\textbf{Two-or-more clumps problem and structural priors.} \mynote{TODO}Class imbalance responsible for cycle in loss?}
 		\label{fig:tomplot}
 	\end{figure}
-
+\end{landscape}
+}
 \subsection{No Free Lunch Theorem}
 \label{nofreelunch}
 The \emph{No Free Lunch} theorem (NFL)~\citep{wolpert1996lack} states that no algorithm performs better than any other when averaged over all possible problems (\ie all possible data-generating distributions) of a particular type, as each algorithm makes assumptions which will bias it towards different types of data distributions. Intuitively, if you are tasked with predicting the unobserved members of a large set, only from a few samples, and without using any assumptions whatsoever, you cannot do better than random on average. Any assumptions you do make on the pattern or relationship between members of the set will give you better performance for some data types, and worse for others. The NFL theorem simply formalizes the notion that we cannot infer a rule describing an entire set without either information or assumptions on every member of the set.
