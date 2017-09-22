@@ -73,7 +73,7 @@ In general a perceptron defines a \emph{hyperplane}, a separating manifold of di
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronxor}
-\caption[An illustration of the inability of a single line to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
+\caption[An illustration of the inability to correctly classify the XOR function]{\textbf{An illustration of the inability of a single line (\ie a perceptron\index{perceptron}) to correctly classify the XOR function.} Instead, the composition of two lines is required to correctly separate these samples, \ie multiple layers.}
 \label{fig:perceptronxor}
 \end{figure}
 A single-layer neural network\index{neural network}, such as the perceptron\index{perceptron}, is only a linear classifier, and as such is ineffective at learning a large variety of tasks. Most notably, in the 1969 book \emph{Perceptrons}~\citep{minsky1988perceptrons}, the authors showed that single-layer perceptrons\index{perceptron} could not learn to model functions as simple as the XOR function, amongst other non-linearly separable classification problems. As shown in \cref{fig:perceptronxor}, no single line can separate even a sparse sampling of the XOR function --- \ie\emph{it is not linearly separable}. Instead, only a composition of lines is able to correctly separate and classify this function, and other non-linearly separable problems.

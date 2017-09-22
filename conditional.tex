@@ -306,19 +306,14 @@
 			%\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \gls{ilsvrc}]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
 	\end{figure}
-
 	\Cref{fig:Imagenet_results} summarizes the results.
-	It shows top-5 error as a function of test-time 
-	cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure 
-		to correlate very well with \gls{cpu} time.} and model size. 
+	It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. 
 	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
+	
 	GoogLeNet and Alexnet~\citep{Krizhevsky2012} (in light blue) are in fact instances of conditional networks 
-	(though they were not presented that way). In both networks much of the computational saving is obtained by routing
-	subsets of features to different branches of the network.
-	In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very 
-	different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
+	(though they were not presented that way). In both networks much of the computational saving is obtained by routing	subsets of features to different branches of the network.In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
 	
 	The conditional network of \cref{fig:Imagenet_CondNet} 
 	corresponds to the green circle in \cref{fig:Imagenet_results}.
@@ -375,8 +370,8 @@
 			\legend{VGG-11, VGG-11 GMP, Cond.\ Network,};
 			\end{axis}
 			\end{tikzpicture}
+			\caption{\# \Gls{flops} for each layer} 
 		\end{subfigure}
-		\caption[\# FLOPS for each layer]{\# \Gls{flops} for each layer} 
 		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
