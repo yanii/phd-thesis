@@ -314,7 +314,7 @@ Constructive approaches to binary classification neural network architectures we
 
 	Amongst the earliest work\footnote{Rumelhart is noted by \citet{hanson1989comparing} to have worked on a similar, albeit unpublished, method.} on pruning was by \citeauthor{sietsma1988neural}, who investigated the effect of pruning weights in very small perceptron networks. The pruning rules were summarized as ``If the output of a unit does not change for any input pattern that unit is not contributing to the solution. If the outputs of any two units are the same or opposite across all patterns the two units duplicate and one can be removed.''~\citep{sietsma1988neural}. Even in these small networks, the complexity of pruning emerges. The authors propose removing weights close to zero, or weights that similarly do not affect the output of the neuron, and removing complementary but opposite (\ie{}duplicate) weights. %It is claimed that aside from being faster, pruned networks are also less noise-sensitive.
 	
-	There have been many proposals of methods of pruning network connections since~\citep{hanson1989comparing, lecun1989optimal, mozer1989using, mozer1989skeletonization, gorodkin1993quantitative, setiono1997penalty,castellano1997iterative,han2015learning,han2015deep,han2016dsd,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization.  Here we will cover only a small selection of the most commonly cited methods.
+	There have been many proposals of methods of pruning network connections since~\citep{hanson1989comparing, lecun1989optimal, mozer1989using, mozer1989skeletonization, gorodkin1993quantitative, setiono1997penalty,castellano1997iterative,han2015learning,han2015deep,han2016dsd,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization.  Here we will cover only a small selection of the most relevant methods.
 	
 	As demonstrated even in the early approach of \citeauthor{sietsma1988neural}, a naive saliency measure, such as weight magnitude, is overly simplistic in practice since it does not account for the larger distributed representation learned in a neural networks\index{neural network} and can lead to a large reduction in accuracy if used for pruning.
 
@@ -357,20 +357,25 @@ Constructive approaches to binary classification neural network architectures we
 	\citet{han2015learning} begins by pruning a trained model using a naive weight magnitude saliency, and then re-training the network in a layer-wise manner. Although the novelty of this method is arguable given the past work on pruning, it presents results on contemporary deep networks. Despite using a naive weight magnitude-based saliency the results are reasonable with a 9-fold decrease in parameters, with only a small loss in accuracy. However, the experiments were performed on AlexNet which had a very large fully-connected layer composing most of its parameters.
 
 	\section{Compression \& Quantization}
-	In order to use deep neural networks\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. 
-	Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}.
-
-	There have been many papers on the topic~\citep{han2015deep,han2016dsd}, here we will only cover a few of the most cited papers.
+	In order to use \gls{dnn}\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}. There have been many papers on the topic, here we will only cover a few of the most relevant papers.
 
 	\subsection{Deep Compression}
-	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization and Huffman coding. The quantization uses a look-up table to store a limited number of weights (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease of a factor of 40$\times$.
+	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization\index{quantization} and Huffman coding. The quantization\index{quantization} uses a look-up table to store a limited number of weights (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease of a factor of 40$\times$.
 
 	\subsection{Deep-Sparse-Dense Training}
-	\citet{han2016dsd}
-	\mynote{TODO}
+	One of the most interesting recent papers on pruning is that of \citet{han2016dsd} who do something quite different. The authors propose to train a model in distinct initial, sparse and dense steps:
+	\begin{description}
+		\item[Intial] Train a \gls{dnn} as normal,
+		\item[Sparse] next prune\index{pruning} the network, as in \citet{han2015learning}, with the difference that a different threshold is learned for each layer. The network is then retrained with the pruned connections removed, recovering the original accuracy of the initial network. The authors claim this is akin to a `regularization' of the network,
+		\item[Dense] finally the pruned connections are re-introduced and initialzed to zero\footnote{This is considered to be a bad initializationwhen training neural networks from scratch due to the requirement to break symmetry, yet the authors do not explain the use here. Presumably, because there are already non-zero weights in the network however, symmetry is not as big of an issue.}, and the network is \gls{finetuned}\index{finetuning} at $1/10$ the original learning rate.
+	\end{description}
+
+	The results of this training method are that, even in an efficient large-scale deep network trained on \gls{ilsvrc}\index{ILSVRC} such as \gls{googlenet}\index{googlenet}, the top-5 error is decreased by almost 1\%, which is significant.
 	
 	\subsection{XOR-Net: Binary Convolutional Neural Networks}
 	\citet{rastegari2016xnor} proposed two methods, one in which filter parameters were quantized to binary values, from the typical 16-bit floating point representation. Surprisingly even when the method was applied to models trained on \gls{ilsvrc}, such as \gls{alexnet}, the accuracy was little effected.
+
+	A further method, XNOR networks\index{XNOR networks}, is proposed where both the filter parameters and \glspl{featuremap}
 	\mynote{TODO}
 	
 	\subsection{Soft Weight Sharing}

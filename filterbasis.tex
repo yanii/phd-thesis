@@ -10,7 +10,7 @@
 	%It is well understood that the structure of a neural network is critical to its ability to learn from labelled training data and to generalize. Whilst it has been shown that an infinitely wide hidden layer is a universal approximator~\citep{hornik89a}, in practice wide shallow networks do not learn as well as thinner deeper ones --- as shown by recent research~\citep{Krizhevsky2012,Szegedy2014going,Simonyan2014verydeep,He2015}.
 	%This does not appear to be a limitation of finite capacity, since it has been proposed that at least some \glspl{dnn}\index{DNN} are by representable by shallow networks~\citep{Ba2013dothey}. Rather it seems to be a consequence of limitations in our methods of learning the weights of \glspl{dnn}\index{DNN}.
 	
-	With few exceptions, state-of-the-art \glspl{cnn} for image recognition are largely monolithic, with each filter operating on the feature maps\index{feature map} of all filters on a previous layer. Interestingly, this is in stark contrast to what we understand of biological neural networks\index{neural network}, where we see ``highly evolved arrangements of smaller, specialized networks which are interconnected in very specific ways''~\citep{minsky1988perceptrons}.
+	With few exceptions, state-of-the-art \glspl{cnn} for image recognition are largely monolithic, with each filter operating on the \glspl{featuremap}\index{feature map} of all filters on a previous layer. Interestingly, this is in stark contrast to what we understand of biological neural networks\index{neural network}, where we see ``highly evolved arrangements of smaller, specialized networks which are interconnected in very specific ways''~\citep{minsky1988perceptrons}.
 	
 	Yet it has been shown that a large proportion of the learned weights in \glspl{dnn}\index{DNN} are redundant~\citep{Denil2013predicting}, a property that has been widely exploited to make neural networks\index{neural network} smaller and more computationally efficient~\citep{Szegedy2014going,Denton2014efficient}. 
 	%It is unsurprising then that regularization is a critical part of training such networks using large datasets~\citep{Krizhevsky2012}. Without regularization \glspl{dnn}\index{DNN} are susceptible to over-fitting. Regularization may be achieved by weight decay or dropout~\citep{Hinton2012}. Furthermore
@@ -48,7 +48,7 @@
 			\includegraphics[width=0.66\textwidth, page=2]{Figs/PDF/groupfig}
 			\caption{Convolution with filter groups}\label{fig:groupedconv}
 		\end{subfigure}
-		\caption[Convolutional filter groups]{\textbf{Convolutional Filter groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input feature maps\index{feature map} (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input feature map\index{feature map} channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output feature maps\index{feature map} but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
+		\caption[Convolutional filter groups]{\textbf{Convolutional Filter groups.} (a) Convolutional filters (yellow) typically have the same channel dimension $c_1$ as the input \glspl{featuremap}\index{feature map} (gray) on which they operate. However, (b) with filter grouping, $g$ independent groups of $c_2/g$ filters operate on a fraction $c_1/g$ of the input \gls{featuremap}\index{feature map} channels, reducing filter dimensions from $h$$\times$$w$$\times$$c_1$ to $h$$\times$$w$$\times$$c_1/g$. This change does not affect the dimensions of the input and output \glspl{featuremap}\index{feature map} but significantly reduces computational complexity and the number of model parameters.}\label{fig:groupconfig}
 	\end{figure}
 	\begin{figure}[tbp]
 		\centering
@@ -100,11 +100,11 @@
 	Despite the large difference in the number of parameters between the models, both achieve comparable accuracy on \gls{ilsvrc} --- in fact the smaller grouped network gets $\approx1$\% lower top-5 validation error. This paper builds upon these findings and extends them to state-of-the-art networks.
 	
 	\paragraph{Low-dimensional Embeddings}
-	\citet{Lin2013NiN} proposed a method to reduce the dimensionality of convolutional feature maps\index{feature map}. 
-	By using relatively cheap `1$\times$1' convolutional layers (\ie layers comprising $d$ filters of size 1$\times$1$\times$$c$, where $d<c$), they learn to map feature maps\index{feature map} into lower-dimensional spaces, \ie to new feature maps\index{feature map} with fewer channels. Subsequent spatial filters operating on this lower dimensional input space require significantly less computation. This method is used in most state-of-the-art networks for image classification to reduce computation~\citep{Szegedy2014going,He2015}. Our method is complementary.
+	\citet{Lin2013NiN} proposed a method to reduce the dimensionality of convolutional \glspl{featuremap}\index{feature map}. 
+	By using relatively cheap `1$\times$1' convolutional layers (\ie layers comprising $d$ filters of size 1$\times$1$\times$$c$, where $d<c$), they learn to map \glspl{featuremap}\index{feature map} into lower-dimensional spaces, \ie to new \glspl{featuremap}\index{feature map} with fewer channels. Subsequent spatial filters operating on this lower dimensional input space require significantly less computation. This method is used in most state-of-the-art networks for image classification to reduce computation~\citep{Szegedy2014going,He2015}. Our method is complementary.
 	
 	\paragraph{GoogLeNet} In contrast to much other work, \citet{Szegedy2014going} propose a \gls{cnn} architecture that is highly optimized for computational efficiency. GoogLeNet uses, as a basic building block, a mixture of low-dimensional embeddings~\citep{Lin2013NiN} and heterogeneously-sized spatial filters --- collectively an \Gls{inception} module. 
-	There are two distinct forms of convolutional layers in the \gls{inception}\index{inception} module, low-dimensional embeddings (1$\times$1) and spatial (3$\times$3, 5$\times $5). GoogLeNet keeps large, expensive spatial convolutions (\ie 5$\times$5) to a minimum by using few of these filters, using more 3$\times$3 convolutions, and even more 1$\times$1 filters. The motivation is that most of the convolutional filters respond to localized patterns in a small receptive field, with few requiring a larger receptive field. The number of filters in each successive \gls{inception}\index{inception} module increases slowly with decreasing feature map\index{feature map} size, in order to maintain computational performance. GoogLeNet is by far the most efficient state-of-the-art network for \gls{ilsvrc}, achieving near state-of-the-art accuracy with the lowest computation/model size. However, we will show that even such an efficient and optimized network architecture benefits from our method.
+	There are two distinct forms of convolutional layers in the \gls{inception}\index{inception} module, low-dimensional embeddings (1$\times$1) and spatial (3$\times$3, 5$\times $5). GoogLeNet keeps large, expensive spatial convolutions (\ie 5$\times$5) to a minimum by using few of these filters, using more 3$\times$3 convolutions, and even more 1$\times$1 filters. The motivation is that most of the convolutional filters respond to localized patterns in a small receptive field, with few requiring a larger receptive field. The number of filters in each successive \gls{inception}\index{inception} module increases slowly with decreasing \gls{featuremap}\index{feature map} size, in order to maintain computational performance. GoogLeNet is by far the most efficient state-of-the-art network for \gls{ilsvrc}, achieving near state-of-the-art accuracy with the lowest computation/model size. However, we will show that even such an efficient and optimized network architecture benefits from our method.
 	
 	\paragraph{Low-Rank Approximations}
 	Various authors have suggested approximating learned convolutional filters using tensor decomposition~\citep{journals/corr/JaderbergVZ14,journals/corr/LebedevGROL14,Kim2016}. For example, \citet{journals/corr/JaderbergVZ14} propose approximating the convolutional filters in a trained network with representations that are low-rank both in the spatial and the channel domains. This approach significantly decreases computational complexity, albeit at the expense of a small amount of accuracy. In this paper we are not approximating an existing model's weights but creating a new network architecture with explicit structural sparsity, which is then trained from scratch.
@@ -113,7 +113,7 @@
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=0.95\textwidth, page=3]{Figs/PDF/sparsification}
-		\caption[Learning a spatial basis for filters]{\textbf{Learning a spatial basis for filters.} Learning a linear combination of mostly small, heterogeneously-sized spatial filters, as proposed in \cref{lowrankfilters}. Note that all filters operate on all $c$ channels of the input feature map\index{feature map}.}
+		\caption[Learning a spatial basis for filters]{\textbf{Learning a spatial basis for filters.} Learning a linear combination of mostly small, heterogeneously-sized spatial filters, as proposed in \cref{lowrankfilters}. Note that all filters operate on all $c$ channels of the input \gls{featuremap}\index{feature map}.}
 		\label{fig:spatialbasis}
 	\end{figure}
 	Our approach is connected with that presented in \cref{lowrankfilters}, where we showed that replacing 3$\times$3$\times$c filters with linear combinations of filters with smaller spatial extent (\eg 1$\times$3$\times c$, 3$\times$1$\times c$ filters, see \cref{fig:spatialbasis}) could reduce the model size and computational complexity of state-of-the-art \glspl{cnn}, while maintaining or even increasing accuracy. However, that work did not address the channel extent of the filters.
@@ -124,7 +124,7 @@
 	\paragraph{Learning a Basis for Filter Dependencies}
 	It is unlikely that every filter (or neuron\index{neuron}) in a deep neural network\index{neural network} needs to depend on the output of all the filters in the previous layer. In fact, reducing filter co-dependence in \glspl{dnn}\index{DNN} has been shown to benefit generalization. For example, \citet{Hinton2012} introduced {\em dropout} for regularization of \glspl{dnn}\index{DNN}. When training a network layer with dropout, a random subset of neurons\index{neuron} is excluded from both the forward and backward pass for each mini-batch.  Furthermore, \citet{Cogswell2016} observe a correlation between the covariance of hidden unit activations and overfitting. To explicitly reduce the covariance of hidden activations, they train networks with a loss function, based on the covariance matrix of the activations in a hidden layer. 
 	
-	Instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use filter groups (see \cref{fig:groupconfig}) to force the network to learn filters with only limited dependence on previous layers. Each of the filters in the filter groups is smaller in the channel extent, since it operates on only a subset of the channels of the input feature map\index{feature map}. 
+	Instead of using a modified loss, regularization penalty, or randomized network connectivity during training to prevent co-adaption of features, we take a much more direct approach. We use filter groups (see \cref{fig:groupconfig}) to force the network to learn filters with only limited dependence on previous layers. Each of the filters in the filter groups is smaller in the channel extent, since it operates on only a subset of the channels of the input \gls{featuremap}\index{feature map}. 
 	
 	\begin{figure}[tbp]
 		\centering
@@ -144,7 +144,7 @@
 			\caption{Root-4 Module: Convolution with $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c/4$.}
 			\label{fig:rootresnet4}
 		\end{subfigure}
-		\caption[Root modules: learning a channel basis for filters]{\textbf{Root Modules.} Root modules (b), (c) compared to a typical set of convolutional layers (a) found in ResNet and other modern architectures. Grey blocks represent the feature maps\index{feature map} over which a layer's filters operate, while colored blocks represent the filters of each layer. 
+		\caption[Root modules: learning a channel basis for filters]{\textbf{Root Modules.} Root modules (b), (c) compared to a typical set of convolutional layers (a) found in ResNet and other modern architectures. Grey blocks represent the \glspl{featuremap}\index{feature map} over which a layer's filters operate, while colored blocks represent the filters of each layer. 
 		}
 		\label{fig:rootmodule}
 	\end{figure}
@@ -438,11 +438,11 @@
 	
 	\subsection{Inter-Layer Covariance}
 	\label{interlayercovar}
-	To show the relationships between filters between adjacent convolutional layers, as illustrated in \cref{fig:normalconv}, we calculate the covariance of the responses from two adjacent featuremaps, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
+	To show the relationships between filters between adjacent convolutional layers, as illustrated in \cref{fig:normalconv}, we calculate the covariance of the responses from two adjacent \glspl{featuremap}, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
 	
-	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional featuremap for layer $i$. We consider each pixel across the two featuremaps to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two featuremaps have different spatial dimensions, due to pooling, we up-sample the smaller featuremap (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each featuremap.
+	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional \gls{featuremap} for layer $i$. We consider each pixel across the two \glspl{featuremap} to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two \glspl{featuremap} have different spatial dimensions, due to pooling, we up-sample the smaller \gls{featuremap} (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each \gls{featuremap}.
 	
-	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent featuremaps, we calculate the inter-layer covariance,
+	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent \glspl{featuremap}, we calculate the inter-layer covariance,
 	
 	\begin{align}
 	cov(X_1, X_2) &= E\left[X_1\,X_2^\textrm{T}\right],\\
@@ -488,7 +488,7 @@
 	\end{equation}
 	where $D^{\circ-\frac{1}{2}}$ is simply $D$ with an element-wise power of $-\frac{1}{2}$.
 	
-	The covariance between the whitened featuremap responses is then,
+	The covariance between the whitened \gls{featuremap} responses is then,
 	\begin{equation}
 	\textrm{cov}(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
 	\end{equation}
@@ -780,7 +780,7 @@
 			\caption{Root-4 Architecture}
 			\label{fig:root4topology}
 		\end{subfigure}
-		\caption[\Gls{nin} standard \vs root architecture]{\textbf{\Gls{nin} Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate feature maps\index{feature map} over which a layer's filters operate, or the final fully-connected layer, out of space considerations (see \cref{fig:networkinnetwork,fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
+		\caption[\Gls{nin} standard \vs root architecture]{\textbf{\Gls{nin} Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate \glspl{featuremap}\index{feature map} over which a layer's filters operate, or the final fully-connected layer, out of space considerations (see \cref{fig:networkinnetwork,fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
 		}\label{fig:networktopology}
 	\end{figure}
 	\end{landscape}
