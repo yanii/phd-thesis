@@ -99,8 +99,6 @@
 %    we can see that the number of training samples required to guarantee this error rate are proportional to the logarithm of the number of inputs and the , 
 	
     \subsection{Model Size}
-    \mynote{TODO: Include references to \citet{baum1989size, rethinking2016}}
-    
 	\begin{figure}[tbp]
 		\centering
 		\begin{subfigure}[t]{0.48\textwidth}
@@ -168,6 +166,10 @@
 	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate (truth statement). The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two or more contiguous strings of ones, some examples of which are shown in \cref{fig:tomclumps}. The predicate is largely based on the more general predicate of \emph{connectedness} explored by \citet{minsky1988perceptrons}, and is shown to be a problem not linearly separable, or more specifically solvable by a locally connected perceptron\index{perceptron}. 
 	
 	The authors illustrate some surprising properties of the generalization of fully-connected neural networks\index{neural network} learned with backpropagation\index{backpropagation}. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that is is not a solution that the network would ever settle upon when trained with backpropagation\index{backpropagation}. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
+
+	One of the more interesting recent papers on generalization in \gls{dnn} highlights that \glspl{dnn} may not always be learning the representations we want them to. \Citet{rethinking2016} looked at the effect of training \glspl{dnn}
+	\mynote{TODO}
+
 	\afterpage{
 	\begin{landscape}
 	\begin{figure}[tbp]
@@ -263,8 +265,6 @@ The evidence itself is given by the marginalization,
 Of particular interest to the question of the effect of structure and regularization on generalization, are \citeauthor{MacKay91}'s empirical results showing that \gls{occam} is very much a principle on which neural network design should be structured. \citet[\textsection{3.4}]{MacKay91}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
 
 In fact \citeauthor{mackay1992practical} the argument that the Bayesian approach naturally encodes the \gls{occam} approach, since given two models that predict the training data, the simpler model with fewer parameters will have less flexibility. This means that the model will explain only a more narrow range of data points (and probably only those, as compared to a more complex model which, with more parameters, will be able to explain a wider range of data. Given that both of these models are assigning probabilities, the simpler model will necessarily assign higher probability to the narrow range in which the data of interest lies\footnote{Figure 1 in \citet{mackay1995} explains this concept particularly well}.
-
-\mynote{TODO}
 
 \subsection{Practical Implementation}
 While presenting a nice theory on model selection, the practical implementation of this work is rather more difficult~\citep{chipman2001}. In particular, like all Bayesian approaches, having the correct prior probabilities for both the models and weights is important, and yet this is practically difficult in large neural networks.
