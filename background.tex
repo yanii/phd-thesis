@@ -439,10 +439,10 @@ The application of the LeNet-style \gls{cnn} architecture to more complex proble
 \begin{figure}[tb]
 	\centering
 	\includegraphics[width=0.66\columnwidth, page=1]{groupfig}
-	\caption[Illustration of convolutional layer]{\textbf{Convolution with $d$ filters of shape $h\times w\times c$.} Convolutional filters (yellow) have the same channel dimension $c$ as the input \glspl{featuremap} (gray) on which they operate. Each filter is convolved across the entire set of input \glspl{featuremap}\index{feature map|textbf} to produce a single output \gls{featuremap}\index{feature map}. In this illustration we assume padding appropriate to preserve the spatial dimensions.}\label{fig:convlayer}
+	\caption[Illustration of convolutional layer]{\textbf{Convolution with $\gls{c}_2$ filters of shape $\gls{filterh}_1\times \gls{filterw}_1\times \gls{c}_1$.} Convolutional filters (yellow) have the same channel dimension $\gls{c}_1$ as the input \glspl{featuremap} (gray) on which they operate, while the \gls{featuremap} spatial dimensions $\gls{H}$ and $\gls{W}$ are typically larger. Each filter is convolved across the entire set of input \glspl{featuremap}\index{feature map} to produce a single output \gls{featuremap}\index{feature map}. With $\gls{c}_2$ filters, this gives an output \gls{featuremap}\index{feature map} with $\gls{c}_2$ channels. In this illustration we assume padding appropriate to preserve the spatial dimensions.}\label{fig:convlayer}
 \end{figure}
 %
-\Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ \gls{featuremap}\index{feature map} for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the \gls{featuremap}\index{feature map} $h^d$ at spatial location $i, j$ is given by,
+\Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ \gls{featuremap}\index{feature map} for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the \gls{featuremap}\index{feature map|textbf} $h^d$ at spatial location $i, j$ is given by,
 
 \begin{equation}
 	h^d_{i,j} = f{\left( {\left(W^d \convolution x \right)}_{i,j} + b_d \right)},

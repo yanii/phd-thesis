@@ -39,7 +39,7 @@
 \newglossaryentry{occam}{name={Occam's razor}, description={A general principle in hypothesis selection; given several hypothesis that match the evidence, the simplest hypothesis, \ie{}the one with the least assumptions, should be selected}}
 \newglossaryentry{finetuned}{name={finetuned}, description={A method of continuing the training of a pre-trained network, with varied definitions. Typically a subset or all of the layers of a pre-trained \gls{dnn} are trained at a greatly reduced learning rate}}
 \newglossaryentry{featuremap}{name={feature map}, description={The input/output of a convolutional layer, a 3D tensor with two spatial dimensions and a third dimension corresponding to the output image from a single convolutional filter}}
-\newglossaryentry{filter}{name={filter}, description={A convolutional filter, or kernel, of spatial dimensions $w$$\times$$h$, and depth $c$, where $c$ is the number of channels in the input \gls{feature map}}}
+\newglossaryentry{filter}{name={filter}, description={A convolutional filter, or kernel, of spatial dimensions $w$$\times$$h$, and depth $c$, where $c$ is the number of channels in the input \gls{featuremap}}}
 \newglossaryentry{regularization}{name={regularization}, description={a broadly-used, but relatively ill-defined term --- often its usage implies a definition of `anything that improves generalization', instead we define regularization as any modification of the training algorithm that modifies, explicitly or implicitly, the error surface such that it is smoother, the prototypical method being weight decay\index{weight decay}~\citep{hinton1987learning}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACRONYMS
@@ -85,7 +85,8 @@
 \glsxtrnewsymbol[description={`local gradient'/`error'/delta, $\delta \equiv \frac{\partial E}{\partial a}$}]{delta}{\ensuremath{\delta}}
 \glsxtrnewsymbol[description={velocity vector, used in momentum}]{velocity}{\ensuremath{\mathbf{v}}}
 \glsxtrnewsymbol[description={training iteration}]{iteration}{\ensuremath{t}}
-\glsxtrnewsymbol[description={height of a convolutional \gls{feature map}}]{H}{\ensuremath{H}}
-\glsxtrnewsymbol[description={width of a convolutional \gls{feature map}}]{W}{\ensuremath{W}}
-\glsxtrnewsymbol[description={height of a convolutional \gls{filter}}]{fheight}{\ensuremath{h}}
-\glsxtrnewsymbol[description={width of a convolutional \gls{filter}}]{fwidth}{\ensuremath{w}}
+\glsxtrnewsymbol[description={height of a convolutional \gls{featuremap}}]{H}{\ensuremath{H}}
+\glsxtrnewsymbol[description={width of a convolutional \gls{featuremap}}]{W}{\ensuremath{W}}
+\glsxtrnewsymbol[description={height of a convolutional \gls{filter}}]{filterh}{\ensuremath{h}}
+\glsxtrnewsymbol[description={width of a convolutional \gls{filter}}]{filterw}{\ensuremath{w}}
+\glsxtrnewsymbol[description={channels of a convolutional \gls{filter}}]{c}{\ensuremath{c}}
