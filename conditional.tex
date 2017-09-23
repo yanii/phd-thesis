@@ -361,7 +361,7 @@
 				legend style={at={(0.9,1.0)},
 				anchor=north,legend columns=1]},
 				area legend,
-				every axis plot/.append style={fill, draw=none},
+				every axis plot/.append style={fill, draw=none, opacity=0.7},
 				\setplotcyclecat{3},
 			]
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatablea};
@@ -400,7 +400,7 @@
 				xticklabels from table={\datatablea}{layer},
 				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
-				every axis plot/.append style={fill, draw=none},
+				every axis plot/.append style={fill, draw=none, opacity=0.7},
 				\setplotcyclecat{3},
 			]
 			\addplot+ table [x expr=\coordindex,y=param]{\datatablea};

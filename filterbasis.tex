@@ -1642,7 +1642,7 @@
 				legend style={at={(0.5,1.2)},
 				draw=none, anchor=north,legend columns=-1},
 				area legend,
-				every axis plot/.append style={fill, draw=none},
+				every axis plot/.append style={fill, draw=none, opacity=0.7},
 				\setplotcyclecat{2},
 			]
 			\addplot+ table [x expr=\coordindex,y=MA]{\datatable};
@@ -1657,31 +1657,31 @@
 			\pgfplotstableread[col sep=comma]{rootdata/resnet50-root64-layerparam.csv}\datatablea
 			\begin{tikzpicture}
 			\begin{axis}[
-			axis x line=bottom,
-			axis y line=left,
-			ybar=0pt,
-			bar width=0.3em,
-			width=0.95\linewidth,
-			height=0.4\textheight,
-			enlarge x limits=0.02,
-			ylabel=Parameters,
-			y label style={at={(axis description cs:-0.04,.5)},anchor=south},
-			y tick label style={
-				/pgf/number format/.cd,
-				fixed,
-				fixed zerofill,
-				precision=1,
-				/tikz/.cd
-			},
-			ymin=0,
-			xticklabels from table={\datatable}{layer},
-			xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
-			xtick=data,
-			every axis plot/.append style={fill, draw=none},
-			\setplotcyclecat{2},
+				axis x line=bottom,
+				axis y line=left,
+				ybar=0pt,
+				bar width=0.3em,
+				width=0.95\linewidth,
+				height=0.4\textheight,
+				enlarge x limits=0.02,
+				ylabel=Parameters,
+				y label style={at={(axis description cs:-0.04,.5)},anchor=south},
+				y tick label style={
+					/pgf/number format/.cd,
+					fixed,
+					fixed zerofill,
+					precision=1,
+					/tikz/.cd
+				},
+				ymin=0,
+				xticklabels from table={\datatable}{layer},
+				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
+				xtick=data,
+				every axis plot/.append style={fill, draw=none, opacity=0.7},
+				\setplotcyclecat{2},
 			]
-			\addplot+ table [x expr=\coordindex,y=param]{\datatable};
-			\addplot+ table [x expr=\coordindex,y=param]{\datatablea};
+			\addplot+ table [x expr=\coordindex,y=param,]{\datatable};
+			\addplot+ table [x expr=\coordindex,y=param,]{\datatablea};
 			\end{axis}
 			\end{tikzpicture}
 			
