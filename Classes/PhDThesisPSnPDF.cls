@@ -1076,14 +1076,14 @@ wish to left align your text}
 % ***************************** Create the index *******************************
 \ifPHD@index
     %\RequirePackage{makeidx}
-    \RequirePackage[toc=true,acronym,symbols,index,numberedsection=nameref]{glossaries}
+    \RequirePackage[toc=true,acronym,symbols,index,numberedsection=nameref]{glossaries-extra}
     \makeindex
     \newcommand{\printthesisindex}{
         \cleardoublepage
         \phantomsection
         \printindex[sort=letter]}
 \else
-    \RequirePackage[toc=true,acronym,symbols,numberedsection=nameref]{glossaries}
+    \RequirePackage[toc=true,acronym,symbols,numberedsection=nameref]{glossaries-extra}
     \newcommand{\printthesisindex}{}
 \fi
 

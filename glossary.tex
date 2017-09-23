@@ -14,7 +14,7 @@
 }
 %https://tex.stackexchange.com/questions/127648/how-can-i-add-every-glossary-entry-to-the-index#127671
 %\defglsdisplayfirst[\acronymtype]{#1#4\index{#1}}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GLOSSARY
 \newdualentry{cnn}{CNN}{Convolutional Neural Network}{A neural network designed for learning representations of image inputs, with shared parameters in the form of a set of convolutional filters}
 \newdualentry{dnn}{DNN}{Deep Neural Network}{A neural network with two or more hidden layers}
 \newdualentry{rnn}{RNN}{Recurrent Neural Network}{A neural network designed for sequences, with shared parameters in the form of a recurrence}
@@ -39,7 +39,10 @@
 \newglossaryentry{occam}{name={Occam's razor}, description={A general principle in hypothesis selection; given several hypothesis that match the evidence, the simplest hypothesis, \ie{}the one with the least assumptions, should be selected}}
 \newglossaryentry{finetuned}{name={finetuned}, description={A method of continuing the training of a pre-trained network, with varied definitions. Typically a subset or all of the layers of a pre-trained \gls{dnn} are trained at a greatly reduced learning rate}}
 \newglossaryentry{featuremap}{name={feature map}, description={The input/output of a convolutional layer, a 3D tensor with two spatial dimensions and a third dimension corresponding to the output image from a single convolutional filter}}
+\newglossaryentry{filter}{name={filter}, description={A convolutional filter, or kernel, of spatial dimensions $w$$\times$$h$, and depth $c$, where $c$ is the number of channels in the input \gls{feature map}}}
 \newglossaryentry{regularization}{name={regularization}, description={a broadly-used, but relatively ill-defined term --- often its usage implies a definition of `anything that improves generalization', instead we define regularization as any modification of the training algorithm that modifies, explicitly or implicitly, the error surface such that it is smoother, the prototypical method being weight decay\index{weight decay}~\citep{hinton1987learning}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACRONYMS
 \newacronym{relu}{ReLU}{Rectified Linear Unit}
 \newacronym{pca}{PCA}{Principled Component Analysis}
 \newacronym{gpu}{GPU}{Graphical Processing Unit}
@@ -63,3 +66,11 @@
 \newacronym{sift}{SIFT}{Scale-Invariant Feature Transform}
 \newacronym{ltu}{LTU}{Linear Threshold Unit}
 \newacronym{obd}{OBD}{Optimal Brain Damage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SYMBOLS
+\glsxtrnewsymbol[description={The height of a convolutional \gls{feature map}}]{H}{\ensuremath{H}}
+\glsxtrnewsymbol[description={The width of a convolutional \gls{feature map}}]{W}{\ensuremath{W}}
+\glsxtrnewsymbol[description={The height of a convolutional \gls{filter}}]{h}{\ensuremath{h}}
+\glsxtrnewsymbol[description={The width of a convolutional \gls{filter}}]{w}{\ensuremath{w}}
+%\newglossaryentry{fheight}{name={h}, type=symbols, symbol={\ensuremath{h}}, description={The height of a convolutional \gls{filter}}}
+%\newglossaryentry{fwidth}{name={w}, type=symbols, symbol={\ensuremath{w}}, description={The width of a convolutional \gls{filter}}}
