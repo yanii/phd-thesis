@@ -110,8 +110,8 @@
 
 % ******************************** Glossary ********************************
 
-\makeglossaries
-\include{glossary}
+\makenoidxglossaries
+\input{glossary}
 % ******************************** Front Matter ********************************
 \begin{document}
 
@@ -134,8 +134,14 @@
 
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
-\printnomenclature
-
+%\printnomenclature
+% ************************************ Glossary ********************************
+%\printsymbols
+%\printacronyms
+%\glossarystyle{altlist}
+%\printglossary
+\printnoidxglossaries
+\cleardoublepage
 % ******************************** Main Matter *********************************
 \mainmatter
 
@@ -204,9 +210,6 @@
 
 \end{appendices}
 
-% ************************************ Glossary ********************************
-\glossarystyle{altlist}
-\printglossaries
 % *************************************** Index ********************************
 \printthesisindex % If index is present
 
