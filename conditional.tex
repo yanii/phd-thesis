@@ -174,7 +174,7 @@
 	We trained our conditional network with the same hyperparameters as in~\citep{Simonyan2014verydeep}, 
 	except for using the initialization strategy suggested of~\citep{He2015b}, and a learning schedule of 
 	$\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ 
-	are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. 
+	are the initial learning rate, learning rate at iteration $t$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}. 
 	When the validation accuracy of the network levelled out, the learning rate was further decreased by a factor of 10, twice. 
 	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
 	training time given its higher efficiency.
@@ -476,7 +476,7 @@
 	
 	All networks were trained with the same hyperparameters as~\citep{Lin2013NiN}, 
 	except for using the initialization strategy of~\citep{He2015b}, 
-	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
+	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
 	We split the original \gls{cifar10} training set into 40,000 training images and 
 	10,000 validation images. 
 	The standard 10,000 held-out images are used for testing.

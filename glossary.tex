@@ -34,11 +34,12 @@
 \newglossaryentry{googlenet}{name=GoogLeNet, description={A neural network architecture proposed by \citet{Szegedy2014going} and since extended in the Inception v1--4 refinements}}
 \newglossaryentry{inception}{name=Inception, description={A building-block of the GoogLeNet neural network architecture designed for efficient state-of-the-art image recognition}}
 \newglossaryentry{resnet}{name=ResNet, description={Residual network, a network architecture proposed by \citet{He2015} that uses residual connections to improve generalization and training of very deep architectures.}}
-\newglossaryentry{structuralprior}{name=Structural Prior, description={The encoding of prior knowledge of the problem into a neural network by architecture design, \ie a \acrshort{cnn}}}
+\newglossaryentry{structuralprior}{name=Structural Prior, description={The encoding of prior knowledge of the problem into a neural network by architecture design, \ie a \acrshort{cnn}, what some might call ``infinitely strong regularization''~\citep{goodfellow2016deep}}}
 \newglossaryentry{cudnn}{name=CuDNN, description={Nvidia's Deep Neural Network acceleration library}}
 \newglossaryentry{occam}{name={Occam's razor}, description={A general principle in hypothesis selection; given several hypothesis that match the evidence, the simplest hypothesis, \ie{}the one with the least assumptions, should be selected}}
 \newglossaryentry{finetuned}{name={finetuned}, description={A method of continuing the training of a pre-trained network, with varied definitions. Typically a subset or all of the layers of a pre-trained \gls{dnn} are trained at a greatly reduced learning rate}}
 \newglossaryentry{featuremap}{name={feature map}, description={The input/output of a convolutional layer, a 3D tensor with two spatial dimensions and a third dimension corresponding to the output image from a single convolutional filter}}
+\newglossaryentry{regularization}{name={regularization}, description={a broadly-used, but relatively ill-defined term --- often its usage implies a definition of `anything that improves generalization', instead we define regularization as any modification of the training algorithm that modifies, explicitly or implicitly, the error surface such that it is smoother, the prototypical method being weight decay\index{weight decay}~\citep{hinton1987learning}}}
 \newacronym{relu}{ReLU}{Rectified Linear Unit}
 \newacronym{pca}{PCA}{Principled Component Analysis}
 \newacronym{gpu}{GPU}{Graphical Processing Unit}
