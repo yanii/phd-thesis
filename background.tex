@@ -30,13 +30,13 @@ We will not cover the long and colourful history of neural networks\index{neural
 A neuron\index{neuron|textbf} is a function of the weighted aggregation of its many inputs: $\left\{\gls{x}_0,\ldots,\gls{x}_N\right\}$,
 %
 \begin{equation}
-	y = \gls{f}\left(\sum_{i}^{N} \gls{w}_i \gls{x}_i + \gls{b}\right),
+	\gls{y} = \gls{f}\left(\sum_{i}^{N} \gls{w}_i \gls{x}_i + \gls{b}\right),
 \end{equation}
 %
 where $\gls{w}_i$ is the weight of the input $\gls{x}_i$, and $\gls{f}$ is an \emph{activation function}, and $\gls{b}$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\gls{vectorx}=(x_0,\ldots,x_N)$, weights $\gls{vectorw}$ and a bias $\gls{b}$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
 %
 \begin{equation}
-    y = f\left(\gls{vectorw}^T\gls{vectorx} + b \right).
+    \gls{y} = \gls{f}\left(\gls{vectorw}^T\gls{vectorx} + \gls{b} \right).
 \end{equation}
 %
 If we assume the function $f$ to be a variant of the Heaviside step function,
@@ -61,7 +61,7 @@ then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptro
 \caption[The interpretation of a perceptron\index{perceptron} as a hyperplane]{\textbf{The interpretation of a perceptron as a oriented hyperplane}, \ie a line, in $\mathbb{R}^2$.}
 \label{fig:hyperplane}
 \end{figure}
-The perceptron\index{perceptron} also has a geometric interpretation~\citep{Bishop1995}, as shown in \cref{fig:hyperplane}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie $N=1$, if we define $a\equiv w_0$, $x \equiv x_0$, $c \equiv b$, and $f(x) = x$,
+The perceptron\index{perceptron} also has a geometric interpretation~\citep{Bishop1995}, as shown in \cref{fig:hyperplane}. In 2D, for example, this is equivalent to the equation of the line. Assuming our perceptron\index{perceptron} only has a single input, \ie $N=1$, if we define $a\equiv \gls{w}_0$, $\gls{x} \equiv \gls{x}_0$, $c \equiv \gls{b}$, and $\gls{f}(\gls{x}) = \gls{x}$,
 %
 \begin{equation}
 y = a x + c.
@@ -85,77 +85,77 @@ At the time, it was not obvious how to train networks with more than one layer o
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single-layer neural network]{\textbf{Detailed illustration of a single-layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{x_{0}, \ldots, x_{N}\}$. The layer has weights $\{w_{j0}, \ldots, w_{jN}\}$, bias $b_j$, net neuron\index{neuron} activity $a_j = \sum_i w_{ji}$ and activation function $f$, output $y_j$, has weights $\{w_{k0}, \ldots, w_{jN}\}$ and bias $b_j$. The error for output $y_j$, $e_j$, is calculated using the target label $t_j$.}
+\caption[Detailed illustration of a single-layer neural network]{\textbf{Detailed illustration of a single-layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{\gls{x}_{0}, \ldots, \gls{x}_{N}\}$. The layer has weights $\{\gls{w}_{j0}, \ldots, \gls{w}_{jN}\}$, bias $\gls{b}_j$, net neuron\index{neuron} activation $\gls{a}_j = \sum_i \gls{w}_{ji}$ and activation function $\gls{f}$, output $\gls{y}_j$, has weights $\{\gls{w}_{k0}, \ldots, \gls{w}_{jN}\}$ and bias $\gls{b}_j$. The error for output $\gls{y}_j$, $\gls{e}_j$, is calculated using the target label $\gls{t}_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
 The delta rule\index{delta rule|textbf} for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
 
-Training is performed on a training dataset $X$, where each training sample $\gls{vectorx}^n\in X$ is a vector $\gls{vectorx}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\gls{vectorx}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $y^n_j$, target (desired) output $t^n_j$, weights $\gls{vectorw}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
+Training is performed on a training dataset $\gls{X}$, where each training sample $\gls{vectorx}^n\in \gls{X}$ is a vector $\gls{vectorx}^n = (\gls{x}^n_0, \ldots, \gls{x}^n_N)$. Assume that for a given training sample $\gls{vectorx}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $\gls{y}^n_j$, target (desired) output $t^n_j$, weights $\gls{vectorw}=(\gls{w}_{j0}, \ldots, \gls{w}_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
 
-We want to know how to change a given weight $w_{ji}$ given the output of node $j$ for a given input data sample $\gls{vectorx}^n$, 
+We want to know how to change a given weight $\gls{w}_{ji}$ given the output of node $j$ for a given input data sample $\gls{vectorx}^n$, 
 \begin{equation}
-	y^n_j = f\left( a^n_j \right),
+	\gls{y}^n_j = \gls{f}\left( \gls{a}^n_j \right),
 	\label{eqn:output}
 \end{equation}
-where the net activation $a^n_j$ is,
+where the net activation $\gls{a}^n_j$ is,
 \begin{equation}
-	a^n_j = \sum_i w_{ji} x^n_{i}.
+	\gls{a}^n_j = \sum_i \gls{w}_{ji} \gls{x}^n_{i}.
 	\label{eqn:weightsum}
 \end{equation}
-To do so, we must use the error of our prediction for each output $y_j$ and training sample $x^n$ as compared to the known label $t_j$,
+To do so, we must use the error of our prediction for each output $\gls{y}_j$ and training sample $\gls{x}^n$ as compared to the known label $\gls{t}_j$,
 \begin{equation}
-    e^n_j = y^n_j - t^n_j.
+    \gls{e}^n_j = \gls{y}^n_j - \gls{t}^n_j.
     \label{eqn:error}
 \end{equation}
 %
 For this derivation, we assume the error for a single sample is calculated by the sum of squared errors of each output. In fact, the derivation holds as long as our error function is in the form of an average~\citep{Bishop1995},
 \begin{equation}
-    E^n = \frac{1}{2} \sum_j {\left(e^n_j\right)}^2.
+    \gls{E}^n = \frac{1}{2} \sum_j {\left(\gls{e}^n_j\right)}^2.
     \label{eqn:errorsum}
 \end{equation}
-Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $w_{ji}$ in the network,
+Chain rule allows us to calculate the \emph{sensitivity} of the error to each weight $\gls{w}_{ji}$ in the network,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j} \frac{\partial a^n_j}{\partial w_{ji}}.
+    \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}} &= \frac{\partial \gls{E}^n}{\partial \gls{e}^n_j}\frac{\partial \gls{e}^n_j}{\partial \gls{y}^n_j} \frac{\partial \gls{y}^n_j}{\partial \gls{a}^n_j} \frac{\partial \gls{a}^n_j}{\partial \gls{w}_{ji}}.
 \end{aligned}
 \end{equation}
 %
-Differentiating \cref{eqn:errorsum} with respect to $e^n_j$,
+Differentiating \cref{eqn:errorsum} with respect to $\gls{e}^n_j$,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial e^n_j} &= e^n_j,
+    \frac{\partial \gls{E}^n}{\partial \gls{e}^n_j} &= \gls{e}^n_j,
 \end{aligned}
 \end{equation}
 %
-\cref{eqn:error} with respect to $y^n_j$,
+\cref{eqn:error} with respect to $\gls{y}^n_j$,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial e^n_j}{\partial y^n_j} &= 1,
+    \frac{\partial \gls{e}^n_j}{\partial \gls{y}^n_j} &= 1,
 \end{aligned}
 \end{equation}
 %
-\cref{eqn:output} with respect to $a^n_j$,
+\cref{eqn:output} with respect to $\gls{a}^n_j$,
 \begin{equation}
 \begin{aligned}
-   \frac{\partial y^n_j}{\partial a^n_j}  &= f'\left( a^n_j \right),
+   \frac{\partial \gls{y}^n_j}{\partial \gls{a}^n_j}  &= \gls{f}'\left( \gls{a}^n_j \right),
 \end{aligned}
 \label{eqn:partialdyda}
 \end{equation}
 %
-and finally \cref{eqn:weightsum} with respect to $w_{ji}$,
+and finally \cref{eqn:weightsum} with respect to $\gls{w}_{ji}$,
 \begin{equation}
 \begin{aligned}
-   \frac{\partial a^n_j}{\partial w_{ji}} &= \frac{\partial}{\partial w_{ji}} \left( \sum_i w_{ji} x_{i} \right)\\
-   &= x_i,
+   \frac{\partial \gls{a}^n_j}{\partial \gls{w}_{ji}} &= \frac{\partial}{\partial \gls{w}_{ji}} \left( \sum_i \gls{w}_{ji} \gls{x}_{i} \right)\\
+   &= \gls{x}_i,
 \end{aligned}
 \label{eqn:sumonetermpartial}
 \end{equation}
-since only one of the terms in the sum is related to the specific weight $w_{ji}$. Thus the sensitivity is,
+since only one of the terms in the sum is related to the specific weight $\gls{w}_{ji}$. Thus the sensitivity is,
 \begin{equation}
 \label{eqn:deltasensitivity}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= e^n_j  f'\left( a^n_j \right) x_i.
+    \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}} &= \gls{e}^n_j  \gls{f}'\left( \gls{a}^n_j \right) \gls{x}_i.
 \end{aligned}
 \end{equation}
 %
@@ -163,8 +163,8 @@ Typically what is variously called the local gradient, error, or simply \emph{de
 \begin{equation}
 \label{eqn:delta}
 \begin{aligned}
-    \delta^n_j &\equiv \frac{\partial E^n}{\partial a^n_j}\\
-    &= \frac{\partial E^n}{\partial e^n_j}\frac{\partial e^n_j}{\partial y^n_j} \frac{\partial y^n_j}{\partial a^n_j}\\
+    \gls{delta}^n_j &\equiv \frac{\partial \gls{E}^n}{\partial \gls{a}^n_j}\\
+    &= \frac{\partial \gls{E}^n}{\partial \gls{e}^n_j}\frac{\partial \gls{e}^n_j}{\partial \gls{y}^n_j} \frac{\partial \gls{y}^n_j}{\partial \gls{a}^n_j}\\
     &= e^n_j  f'\left( a^n_j \right),
 \end{aligned}
 \end{equation}
@@ -172,21 +172,21 @@ Typically what is variously called the local gradient, error, or simply \emph{de
 such that \cref{eqn:deltasensitivity} can be rewritten,
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \delta^n_j x_i.
+    \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}} &= \gls{delta}^n_j \gls{x}_i.
 \end{aligned}
 \end{equation}
 %
-The delta rule\index{delta rule} adjusts each weight $w_{ji}$ proportional to the sensitivity, 
+The delta rule\index{delta rule} adjusts each weight $\gls{w}_{ji}$ proportional to the sensitivity, 
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ji} &= -\gamma \frac{\partial E^n}{\partial w_{ji}},
+    \Delta \gls{w}_{ji} &= -\gamma \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}},
 \end{aligned}
 \end{equation}
 %
-where $\gamma$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \cref{eqn:delta}, this is simply written,
+where $\gls{lr}$ is a constant called the \emph{learning rate} or \emph{step size}. Using the delta defined in \cref{eqn:delta}, this is simply written,
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ji} &= -\gamma \delta^n_j x_i.
+    \Delta \gls{w}_{ji} &= -\gamma \gls{delta}^n_j x_i.
 \end{aligned}
 \end{equation}
 %
@@ -206,11 +206,11 @@ The output weights are relatively easy to find, since they correspond to the sam
 %
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}\\
+    \frac{\partial \gls{E}^n}{\partial \gls{w}_{kj}} &= \frac{\partial E^n}{\partial a^n_k} \frac{\partial a^n_k}{\partial w_{kj}}\\
 %    \frac{\partial E^n}{\partial w_{kj}} &= \frac{\partial E^n}{\partial e^n_k}\frac{\partial e^n_k}{\partial y^n_k} \frac{\partial y^n_k}{\partial a^n_k}\\
 %    &= - e^n_k  f'\left( a^n_k \right) x^n_{kj}\\
-    &= \delta^n_k x^n_{kj}\\
-    &= \delta^n_k y^n_j.
+    &= \gls{delta}^n_k x^n_{kj}\\
+    &= \gls{delta}^n_k y^n_j.
 \end{aligned}
 \label{eqn:outputlayer}
 \end{equation}
@@ -240,7 +240,7 @@ We already know how to calculate the partials for the output layer from the deri
 %
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \delta^n_k y^n_j \frac{\partial a^n_k}{\partial y^n_{j}}\right)
+    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \gls{delta}^n_k y^n_j \frac{\partial a^n_k}{\partial y^n_{j}}\right)
      \frac{\partial y^n_{j}}{\partial a^n_{j}} \frac{\partial a^n_{j}}{\partial w_{ji}}.
      \label{eqn:twolayer2}
 \end{aligned}
@@ -256,7 +256,7 @@ Recall from \cref{eqn:weightsum}, the net activation $a$ is a sum of all previou
 and substituting from \cref{eqn:partialdyda} and \cref{eqn:sumonetermpartial} into \cref{eqn:twolayer2},
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \delta^n_k y^n_j w_{kj}\right)
+    \frac{\partial E^n}{\partial w_{ji}} &= \left( \sum_k \gls{delta}^n_k y^n_j w_{kj}\right)
      f'\left( a^n_j \right) x_i.
      \label{eqn:twolayer3}
 \end{aligned}
@@ -266,16 +266,16 @@ This bears some resemblance to the derived expression for a single-layer, and ju
 \begin{equation}
 \label{eqn:deltahidden}
 \begin{aligned}
-    \delta^n_j &\equiv \frac{\partial E^n}{\partial a^n_k}\\
+    \gls{delta}^n_j &\equiv \frac{\partial E^n}{\partial a^n_k}\\
     &= \left( \sum_k \frac{\partial E^n}{\partial e^n_{k}} \frac{\partial e^n_{k}}{\partial y^n_{k}} \right) \frac{\partial y^n_{k}}{\partial a^n_k}\\
-    &= \left(\sum_k \delta^n_k y^n_j w_{kj} \right) f'\left( a^n_j \right).
+    &= \left(\sum_k \gls{delta}^n_k y^n_j w_{kj} \right) f'\left( a^n_j \right).
 \end{aligned}
 \end{equation}
 %
 This leaves us with the more convenient expression (as we will see in \cref{arbitraryhidden}),
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j x_i.
+    \frac{\partial E^n}{\partial w_{ji}} &=  \gls{delta}^n_j x_i.
      \label{eqn:twolayer4}
 \end{aligned}
 \end{equation}
@@ -286,39 +286,39 @@ The derivation above was based on the specific case of a single hidden layer net
 
 The delta is defined,
 \begin{equation}
-\delta^n_i = \begin{cases}
+\gls{delta}^n_i = \begin{cases}
         f'\left( a^n_j \right) e^n_j \,& \textrm{when neuron\index{neuron} $j$ is output}\\
-        f'\left( a^n_j \right) \left( \sum_j \delta^n_j y^n_i w_{ji} \right)& \textrm{when neuron\index{neuron} $j$ is hidden},
+        f'\left( a^n_j \right) \left( \sum_j \gls{delta}^n_j y^n_i w_{ji} \right)& \textrm{when neuron\index{neuron} $j$ is hidden},
         \end{cases}
 \label{eqn:fulldeltadefinition}
 \end{equation}
 for any adjacent neural network\index{neural network} layers $i, j$, including the output layer where the outputs are considered to have an index $j$. The sensitivity is then, 
 \begin{equation}
 \begin{aligned}
-    \frac{\partial E^n}{\partial w_{ji}} &=  \delta^n_j y_i.
+    \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}} &=  \gls{delta}^n_j y_i.
      \label{eqn:sensitivity}
 \end{aligned}
 \end{equation}
 %
 \subsection{Learning with Backpropagation}
-Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\lambda$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note that, rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
+Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\gls{lr}$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note that, rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
-    \Delta w^n_{ij} &= -\lambda \frac{\partial E^n}{\partial w_{ji}}\\
-    &= -\lambda \, \delta^n_j y_i,
+    \Delta \gls{w}^n_{ij} &= -\gls{lr} \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}}\\
+    &= -\gls{lr} \, \gls{delta}^n_j \gls{y}_i,
      \label{eqn:backproplearningrule}
 \end{aligned}
 \end{equation}
-where $\delta^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron\index{neuron} $i$.
+where $\gls{delta}^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_i$ is the output of neuron\index{neuron} $i$.
 %
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.85\textwidth]{learningratedecrease}
-\caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\lambda_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
+\caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\gls{lr}_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
-Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\lambda_0$, while too large a step size can result in bouncing around the minima ($\lambda_2, \lambda_3$), or missing it altogether. 
+Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\gls{lr}_0$, while too large a step size can result in bouncing around the minima ($\gls{lr}_2, \gls{lr}_3$), or missing it altogether. 
 
-In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\lambda_0$, while if the rate of decrease is too slow it will take a very long time to enter the basin of attraction, such as with $\lambda_3$. 
+In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\gls{lr}_0$, while if the rate of decrease is too slow it will take a very long time to enter the basin of attraction, such as with $\gls{lr}_3$. 
 
 The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training \glspl{dnn}\index{DNN} which comes from experience, but~\citep{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
 
@@ -368,11 +368,11 @@ A common improvement to gradient descent is momentum~\citep{polyak1964some,rumel
 In momentum, the gradients over multiple iterations are accumulated into a velocity gradient, 
 \begin{equation}
 \begin{aligned}
-\mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \lambda\nabla E(\gls{vectorw})\\
+\mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \gls{lr}\nabla E(\gls{vectorw})\\
 \Delta\gls{vectorw} &= \gls{vectorw}_t + \mathbf{v}_{t+1},
 \end{aligned}
 \end{equation}
-where $\lambda$ is the learning rate, $t$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
+where $\gls{lr}$ is the learning rate, $t$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
 Although the backpropagation\index{backpropagation} weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
@@ -381,7 +381,7 @@ Although the backpropagation\index{backpropagation} weight change rule above tel
 At the opposite end of the spectrum there is \emph{batch} training\index{batch training|textbf} where the gradient is computed over all data samples in the training set,
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ij} &= -\lambda\frac{1}{T} \sum^T_{n=0} \frac{\partial E^n}{\partial w_{ji}},
+    \Delta w_{ij} &= -\gls{lr}\frac{1}{T} \sum^T_{n=0} \frac{\partial E^n}{\partial w_{ji}},
      \label{eqn:batchlearningrule}
 \end{aligned}
 \end{equation}
@@ -394,7 +394,7 @@ Instead of computing the gradient on only one training sample, or over the entir
 When using \gls{sgd}, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$, such that
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ij} &= -\lambda \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\gls{vectorx}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
+    \Delta w_{ij} &= -\gls{lr} \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\gls{vectorx}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
      \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
@@ -856,9 +856,9 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \end{figure}
 \citet{He2015} introduced residual networks\index{ResNet|textbf}, which provide an important insight on a problem with the training of very deep networks. While deeper networks have been found to improve generalization, especially with large datasets; at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
-The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having trained a deep network with good generalization (\ie \cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\ie \cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
+The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having trained a deep network with good generalization (\ie \cref{fig:resnet-1}), with $N$ layers, a training loss of $\gls{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\ie \cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\gls{L}_2 > \gls{L}_1$, \ie the training loss has increased.
 
-Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identity transformation $H(\gls{vectorx})=x$. 
+Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\gls{L}_1 = \gls{L}_1$ --- that is the identity transformation $H(\gls{vectorx})=x$. 
 
 \citet{He2015} proposed that in order to aid the optimization, a \emph{residual connection} (as in \cref{fig:resnet-3}) is added to the convolutional layers, allowing the trivial identity solution to be easily learned. This residual connection can be thought of as a shortcut, bypassing the previous layer. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}
