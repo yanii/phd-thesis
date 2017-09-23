@@ -13,8 +13,9 @@ Research in deep learning has taken on a new rapidity since the adoption of pre-
 
 This dissertation represents the ultimate presentation of the research we have undertaken, and just as in a conference, it must also be presented in the context and timeline of the follow-up research and applications that it has already inspired.
 
-In this section, we will briefly outline the significant derivative papers published after the original pre-print publication of the research we have presented here, along with their pre-print dates. For reference, the initial public release of the papers behind the work presented in this dissertation are outlined below:
+In this section, we will briefly outline the significant derivative papers published after the original pre-print publication of the research we have presented here, along with their pre-print dates. We also present new research, published after ours that has extended the field towards learning structural priors automatically. 
 
+For reference, the initial public release of the papers behind the work presented in this dissertation are outlined below:
 \begin{itemize}
     \item Training \glspl{cnn} with Low-Rank Filters for Efficient Image Classification~\citep{Ioannou2016}
     \begin{description}
@@ -33,7 +34,8 @@ In this section, we will briefly outline the significant derivative papers publi
     \end{description}
 \end{itemize}
 
-\section*{Rethinking the Inception Architecture for Computer Vision}
+\section{Recent Research Related to \cref{lowrankfilters}}
+\subsection*{Rethinking the Inception Architecture for Computer Vision}
 \begin{description}
     \item[Pre-print] arxiv:1512.00567 (2 Dec.\ 2015)
     \item[Peer-reviewed publication date] CVPR 2016 (28 June, 2017)
@@ -42,14 +44,13 @@ The Google Brain research team published an update to the \Gls{inception} archit
 
 Nevertheless, the method proposed in this paper (and identical to our proposed method) forms the basis of all current \Gls{inception} architectures, and are now used in all Google deep learning backed products, for example \copyright{}Google Photos.
 
-\section*{Xception: Deep Learning with Depthwise Separable Convolutions}
+\section{Recent Research Related to \cref{deeproots}}
+\subsubsection*{Xception: Deep Learning with Depthwise Separable Convolutions}
 \begin{description}
     \item[Pre-print] arXiv:1610.02357 (7 Oct.\ 2016)
     \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
 \end{description}
-The author proposes the `Xception' module, which is a special case of our proposed root modules~\cite{ioannou2016e}, where, if $c_1$ is the number of input \gls{featuremap} channels, and $g$ is the number of groups (as in \cref{fig:rootmodule}), an `Xception' module is the extreme case where $g \equiv c_1$. This works only because the number of filters is greatly increased, however by using convolutional groups of the same size as input channels, any of the computational advantages of root modules are lost, for all the reasons described in \cref{gpuexplanation}.
-
-In correspondence with the author however, he denies the relationship, and does not cite our work.
+The author proposes the `Xception' module, which is a special case of our proposed root modules~\cite{ioannou2016e}, where, if $c_1$ is the number of input \gls{featuremap} channels, and $g$ is the number of groups (as in \cref{fig:rootmodule}), an `Xception' module is the extreme case where $g \equiv c_1$. This works only because the number of filters is greatly increased, however by using convolutional groups of the same size as input channels, any of the computational advantages of root modules are lost, for all the reasons described in \cref{gpuexplanation}. We should note however, that in personal correspondence with the author he has denied the relationship, and so does not cite our work.
 % \lstset{
 % basicstyle=\small\ttfamily,
 % columns=flexible,
@@ -73,22 +74,28 @@ In correspondence with the author however, he denies the relationship, and does 
 
 % Unfortunately no further correspondence or acknowledgement was received, and the author does not cite our work.
 
-\section*{Aggregated Residual Transformations for Deep Neural Networks}
+\subsubsection*{Aggregated Residual Transformations for Deep Neural Networks}
 \begin{description}
     \item[Pre-print] arXiv:1611.05431 (16 Nov.\ 2016)
     \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
 \end{description}
-The ResNeXt architecture proposed in this paper is technically identical to ours (and cites our work~\citep{ioannou2016e}), they explore a different compute-generalization trade-off. Rather than using the better representation to save parameters and computation as in \citet{ioannou2016e}, the authors propose to maintain the original computational footprint of the model, and increase the number of filters learned.
-\mynote{TODO}
+The aggregated residual units proposed by \citet{saining2017} are technically identical to our root modules as implemented in ResNet (the authors acknowledge this, and the paper cites our work), however they explore a different compute-generalization trade-off with their ResNeXt architecture. 
 
-\section*{ShuffleNet: An Extremely Efficient Convolutional
+Rather than using the more efficient representation learned by the root units to save parameters and computation as in our work, the authors propose to maintain the original computational footprint of the model, and instead increase the number of filters learned. The result is a much improved network, so much so that their model won second place in the 2016 \gls{ilsvrc} competition. 
+
+Interestingly, the authors claim that root units are even more effective on much larger datasets, and more effective than further increasing depth or width of the network. \citet{saining2017} state that ``\ldots increasing cardinality is more effective than going deeper or wider when we increase the capacity.'', where they denote the number of filter groups used as cardinality.
+
+Unfortunately, due to the prominence of Facebook and Google in the research community, the above two papers have received most of the citations and credit for root units in recent work, despite coming six and five months after our pre-print publication, respectively. On the other hand, their work has brought a lot of attention to the method that might not otherwise have been drawn to it.
+
+\subsubsection*{ShuffleNet: An Extremely Efficient Convolutional
 Neural Network for Mobile Devices}
 \begin{description}
     \item[Pre-print] arXiv:1707.01083 (4 Jul.\ 2017)
 \end{description}
+\citet{zhang2017shufflenet}
 \mynote{TODO}
 
-\section*{Interleaved Group Convolutions for Deep Neural Networks}
+\subsubsection*{Interleaved Group Convolutions for Deep Neural Networks}
 \begin{description}
     \item[Pre-print] arXiv:1707.02725 (7 Oct.\ 2016)
     \item[Peer-reviewed publication date] October 22, 2017
@@ -96,11 +103,18 @@ Neural Network for Mobile Devices}
 \citet{zhang2017primal}
 \mynote{TODO}
 
-\section*{The Power of Sparsity in Convolutional Neural Networks}
+\subsubsection*{The Power of Sparsity in Convolutional Neural Networks}
 \begin{description}
     \item[Pre-print] arXiv:1702.06257 (21 Feb.\ 2017)
 \end{description}
 \citet{changpinyo2017power}
 \mynote{TODO}
 
+\section[Automatically Learning Network Architectures]{Automatically Learning Network\\Architectures}
+Since the papers this dissertation is based on were published, the research community has been moving towards learning to create neural network architectures. In particular, the following papers have shown significant progress.
+%\citet{andrychowicz2016learning}
+%\subsection{Neural Architecture Search with Reinforcement Learning}
+%\subsection{Designing Neural Network Architectures using Reinforcement Learning}
+\citet{baker2017, zoph2017} both presented methods of learning neural network architectures using reinforcement learning. 
+\mynote{TODO}
 \end{document}
