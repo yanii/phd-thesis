@@ -184,7 +184,7 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \begin{itemize}
     \item Decision Forests, Convolutional Networks and the Models in-Between.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, D.\ Zikic, P.\ Kontschieder, J.\ Shotton, M.\ Brown, A.\ Criminisi.\\MSR Technical Report 2015} 
-    \item \footnote{To be presented in this talk}Training \glspl{cnn} with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
+    \item \footnote{To be presented in this talk}Training \glspl{cnn}\index{CNN} with Low-Rank Filters for Efficient Image Classification.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, J.\ Shotton, R.\ Cipolla, A.\ Criminisi. \\ICLR 2016}
     \item \footnotemark[1]Deep roots: Improving \gls{cnn} efficiency with hierarchical filter groups.\\{\footnotesize Y.\ Ioannou, D.\ Robertson, R.\ Cipolla, A.\ Criminisi.\\CVPR 2017}
 \end{itemize}
 \end{frame}
@@ -195,7 +195,7 @@
     \item \textbf{Medical Computer Vision}
     \begin{itemize}
         \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi. \textit{MICCAI-BRATS 2014}}
-        \item Using \glspl{cnn} for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+        \item Using \glspl{cnn}\index{CNN} for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
     \end{itemize}
     \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi. \textit{NIPS 2016}}
     \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
@@ -587,7 +587,7 @@ The Atlas Slave\\(Accademia, Florence)
     \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Why are \glspl{cnn} uniformly structured?}
+\begin{frame}{Why are \glspl{cnn}\index{CNN} uniformly structured?}
 \begin{quote}
 ``The marvelous powers of the brain emerge not from any single, uniformly structured
 connectionist network but from highly evolved arrangements of smaller, specialized
@@ -1519,7 +1519,7 @@ Root-4 Module: $d$ filters in $g = 4$ filter groups, of shape $h\times w\times c
 
 \begin{frame}{Imagenet Results}
 
-%We propose a new method for creating computationally efficient and compact convolutional neural networks (\glspl{cnn}) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep \glspl{cnn}, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art \gls{cnn} architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
+%We propose a new method for creating computationally efficient and compact convolutional neural networks (\glspl{cnn}\index{CNN}) using a novel sparse connection structure that resembles a tree root. This allows a significant reduction in computational cost and number of parameters compared to state-of-the-art deep \glspl{cnn}\index{CNN}, without compromising accuracy, by exploiting the sparsity of inter-layer filter dependencies. We validate our approach by using it to train more efficient variants of state-of-the-art \gls{cnn} architectures, evaluated on the CIFAR10 and ILSVRC datasets. Our results show similar or higher accuracy than the baseline architectures with much less computation, as measured by CPU and GPU timings. For example, for ResNet 50, our model has 40% fewer parameters, 45% fewer floating point operations, and is 31% (12%) faster on a CPU (GPU). For the deeper ResNet 200 our model has 25% fewer floating point operations and 44% fewer parameters, while maintaining state-of-the-art accuracy. For GoogLeNet, our model has 7% fewer parameters and is 21% (16%) faster on a CPU (GPU).
 Networks with root modules have similar or higher accuracy than the baseline architectures with much less computation.
 \begin{itemize}
     \item ResNet 50\footnote{Caffe Re-implementation}: \textbf{40\%} smaller, \textbf{45\%} fewer FLOPS%, and is 31\% (12\%) faster on a CPU (GPU).
@@ -1813,7 +1813,7 @@ For a ReLU non-linearity\footcite{He2015}:
     \item However, in practice was not trainable for large networks.
     \item New initialization proposed allows us to train this.
     \note[item]{Get vanishing/exploding gradients if we tried to train these networks.}
-    \note[item]{in most \glspl{cnn}, $d \geq m \gg c$, so still not that cheap.}
+    \note[item]{in most \glspl{cnn}\index{CNN}, $d \geq m \gg c$, so still not that cheap.}
     \note[item]{Second orientation has $64\times$ the param, so much more expensive that you'd think.}
     \note[item]{Still has compute savings.}
 \end{itemize}
@@ -2064,7 +2064,7 @@ For a ReLU non-linearity\footcite{He2015}:
     \item \textbf{Medical Computer Vision}
     \begin{itemize}
         \item Segmentation of brain tumor tissues with convolutional neural networks.\\{\footnotesize D.\ Zikic, Y.\ Ioannou, M.\ Brown, A.\ Criminisi.}\\%\\\textit{MICCAI-BRATS 2014}}
-        \item Using \glspl{cnn} for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
+        \item Using \glspl{cnn}\index{CNN} for Malaria Diagnosis.\\{\footnotesize Intellectual Ventures/Gates Foundation}
     \end{itemize}
     \item \textbf{Adversarial Examples}\\Measuring Neural Net Robustness with Constraints.\\{\footnotesize O.\ Bastani, Y.\ Ioannou, L.\ Lampropoulos, D.\ Vytiniotis, A.\ Nori, A.\ Criminisi.}%\\\textit{NIPS 2016}}
     \item \textbf{Neural Network Design}\\Refining Architectures of Deep Convolutional Neural Networks.\\{\footnotesize 
@@ -2093,7 +2093,7 @@ S.\ Shankar, D.\ Robertson, Y.\ Ioannou, A.\ Criminisi, R.\ Cipolla.}%\\\textit{
 \usebackgroundtemplate{}
 
 \begin{frame}{Collaborative Research @ MSR}
-\textbf{Using \glspl{cnn} for Malaria Diagnosis}\\{\footnotesize Intellectual Ventures/Gates Foundation}
+\textbf{Using \glspl{cnn}\index{CNN} for Malaria Diagnosis}\\{\footnotesize Intellectual Ventures/Gates Foundation}
 \begin{itemize}
     \item Design and train \gls{cnn} for the classification of malaria parasites in blood smears.
 \end{itemize}
