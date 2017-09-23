@@ -24,27 +24,27 @@ We will not cover the long and colourful history of neural networks\index{neural
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
-\caption[An illustration of a typical artificial neural network neuron]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron\index{neuron} is composed of output $y$, a set of inputs, $\{x_0, \ldots, x_N\}$, input weights $\{w_0, \ldots, w_N\}$, bias $b$ and activation function $f$. Here the bias $b$ is considered the weight of a fixed unit input.}
+\caption[An illustration of a typical artificial neural network neuron]{\textbf{An illustration of a typical artificial neural network \emph{neuron}.} The neuron\index{neuron} is composed of output $\gls{y}$, a set of inputs, $\{\gls{x}_0, \ldots, \gls{x}_N\}$, input weights $\{\gls{w}_0, \ldots, \gls{w}_N\}$, bias $\gls{b}$ and activation function $\gls{f}$. Here the bias $\gls{b}$ is considered the weight of a fixed unit input.}
 \label{fig:neuron}
 \end{figure}
-A neuron\index{neuron|textbf} is a function of the weighted aggregation of its many inputs: ${x_0,\ldots,x_N}$,
+A neuron\index{neuron|textbf} is a function of the weighted aggregation of its many inputs: $\left\{\gls{x}_0,\ldots,\gls{x}_N\right\}$,
 %
 \begin{equation}
-	y = f\left(\sum_{i}^{N} w_i x_i + b\right),
+	y = \gls{f}\left(\sum_{i}^{N} \gls{w}_i \gls{x}_i + \gls{b}\right),
 \end{equation}
 %
-where $\gls{w}_i$ is the weight of the input $\gls{x}_i$, and $\gls{f}$ is an \emph{activation function}, and $\gls{b}$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\mathbf{x}=(x_0,\ldots,x_N)$, weights $\mathbf{w}$ and a bias $\gls{b}$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
+where $\gls{w}_i$ is the weight of the input $\gls{x}_i$, and $\gls{f}$ is an \emph{activation function}, and $\gls{b}$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\gls{vectorx}=(x_0,\ldots,x_N)$, weights $\gls{vectorw}$ and a bias $\gls{b}$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
 %
 \begin{equation}
-    y = f\left(\mathbf{w}^T\mathbf{x} + b \right).
+    y = f\left(\gls{vectorw}^T\gls{vectorx} + b \right).
 \end{equation}
 %
 If we assume the function $f$ to be a variant of the Heaviside step function,
 \begin{equation}
-    f(x) = 
+    \gls{f}(\gls{x}) = 
 \begin{cases}
-1 & \text{if } x \geq 0\\
-0 \textrm{ (or $-1$)} & \text{if } x < 0,
+1 & \text{if } \gls{x} \geq 0\\
+0 \textrm{ (or $-1$)} & \text{if } \gls{x} < 0,
 \end{cases}
 \end{equation}
 %
@@ -91,9 +91,9 @@ At the time, it was not obvious how to train networks with more than one layer o
 
 The delta rule\index{delta rule|textbf} for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
 
-Training is performed on a training dataset $X$, where each training sample $\mathbf{x}^n\in X$ is a vector $\mathbf{x}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\mathbf{x}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $y^n_j$, target (desired) output $t^n_j$, weights $\mathbf{w}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
+Training is performed on a training dataset $X$, where each training sample $\gls{vectorx}^n\in X$ is a vector $\gls{vectorx}^n = (x^n_0, \ldots, x^n_i, \ldots, x^n_N)$. Assume that for a given training sample $\gls{vectorx}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $y^n_j$, target (desired) output $t^n_j$, weights $\gls{vectorw}=(w_{j0}, w_{j1}, \ldots, w_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
 
-We want to know how to change a given weight $w_{ji}$ given the output of node $j$ for a given input data sample $\mathbf{x}^n$, 
+We want to know how to change a given weight $w_{ji}$ given the output of node $j$ for a given input data sample $\gls{vectorx}^n$, 
 \begin{equation}
 	y^n_j = f\left( a^n_j \right),
 	\label{eqn:output}
@@ -368,11 +368,11 @@ A common improvement to gradient descent is momentum~\citep{polyak1964some,rumel
 In momentum, the gradients over multiple iterations are accumulated into a velocity gradient, 
 \begin{equation}
 \begin{aligned}
-\mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \lambda\nabla E(\mathbf{w})\\
-\Delta\mathbf{w} &= \mathbf{w}_t + \mathbf{v}_{t+1},
+\mathbf{v}_{t+1} &= \alpha \mathbf{v}_t - \lambda\nabla E(\gls{vectorw})\\
+\Delta\gls{vectorw} &= \gls{vectorw}_t + \mathbf{v}_{t+1},
 \end{aligned}
 \end{equation}
-where $\lambda$ is the learning rate, $t$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\mathbf{w})$ being minimized, and $\mathbf{w}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
+where $\lambda$ is the learning rate, $t$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
 Although the backpropagation\index{backpropagation} weight change rule above tells us how to change the weight given a single training sample $x^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta w^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $x^n$, of the training dataset $X$. 
@@ -394,7 +394,7 @@ Instead of computing the gradient on only one training sample, or over the entir
 When using \gls{sgd}, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset X$, such that
 \begin{equation}
 \begin{aligned}
-    \Delta w_{ij} &= -\lambda \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\mathbf{x}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
+    \Delta w_{ij} &= -\lambda \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\gls{vectorx}^n \in X_{\textrm{mb}}\}} \frac{\partial E^n}{\partial w_{ji}},
      \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
@@ -406,7 +406,7 @@ It has been observed in practice that adding noise to the gradient by using stoc
 As we have seen with the perceptron\index{perceptron}, the activation function for a single-layer network can provide a means of pushing the outputs of each neuron\index{neuron} towards a binary classification. However the activation function has a much more important function in multi-layer neural networks\index{neural network}. Without a non-linear activation function, even a large multi-layer neural network\index{neural network} would only have the representational power of a linear classifier --- the composition of linear functions is a linear function. For this reason, the \emph{activation function} $f$ is a non-linear function applied to the output of a neuron\index{neuron} to allow multi-layer networks to learn complex non-linear functions,
 
 \begin{equation}
-y = f\left(\mathbf{w}^T\mathbf{x} + b\right).
+y = f\left(\gls{vectorw}^T\gls{vectorx} + b\right).
 \end{equation}
 %
 In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $a = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined gradients. Examples of sigmoid functions commonly used include the logistic function, 
@@ -851,14 +851,14 @@ The authors explain this as learning `factorized' filters, however we disagree, 
 \includegraphics[height=0.33\textheight]{resnet-3}
 \caption{}\label{fig:resnet-3}
 \end{subfigure}
-\caption[Residual networks]{\textbf{Residual networks.} \subref{fig:resnet-1} A convolutional network, where the mapping between the final two layers is $F(\mathbf{x})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\mathbf{x})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\mathbf{x})+\mathbf{x}$.}
+\caption[Residual networks]{\textbf{Residual networks.} \subref{fig:resnet-1} A convolutional network, where the mapping between the final two layers is $F(\gls{vectorx})$, \subref{fig:resnet-2} learning an additional layer with the mapping $H(\gls{vectorx})$, and \subref{fig:resnet-3} learning an additional residual layer with the mapping $H(\gls{vectorx})+\gls{vectorx}$.}
 \label{fig:resnet}
 \end{figure}
 \citet{He2015} introduced residual networks\index{ResNet|textbf}, which provide an important insight on a problem with the training of very deep networks. While deeper networks have been found to improve generalization, especially with large datasets; at a sufficiently large depth training becomes difficult, even with batch normalization and the correct initialization, and generalization begins to level off, or even decline.
 
 The important insight of \citet{He2015} into this problem can be summarized in \cref{fig:resnet}. Having trained a deep network with good generalization (\ie \cref{fig:resnet-1}), with $N$ layers, a training loss of $\mathcal{L}_1$ is observed. On adding a single-layer to the otherwise identical deep network architecture (\ie \cref{fig:resnet-2}), and re-training from random initialization, the new training loss of the network with $N+1$ layers is found to be $\mathcal{L}_2 > \mathcal{L}_1$, \ie the training loss has increased.
 
-Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identity transformation $H(\mathbf{x})=x$. 
+Yet from an optimization standpoint it is not clear why this should be so. We can observe that there is a trivial set of parameters defining a transformation that will maintain the training loss of the shallower network, \ie $\mathcal{L}_1 = \mathcal{L}_1$ --- that is the identity transformation $H(\gls{vectorx})=x$. 
 
 \citet{He2015} proposed that in order to aid the optimization, a \emph{residual connection} (as in \cref{fig:resnet-3}) is added to the convolutional layers, allowing the trivial identity solution to be easily learned. This residual connection can be thought of as a shortcut, bypassing the previous layer. Assuming our desired, but difficult to optimize, mapping from one layer to the next is $H(x)$, the residual function learned is simply:
 \begin{equation}

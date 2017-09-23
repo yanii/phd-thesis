@@ -138,9 +138,9 @@
 % ************************************ Glossary ********************************
 %\printsymbols
 %\printacronyms
-%\glossarystyle{altlist}
-%\printglossary
-\printnoidxglossaries
+\printnoidxglossary[type=symbols]
+\printnoidxglossary[type=acronym]
+%\printnoidxglossaries
 \cleardoublepage
 % ******************************** Main Matter *********************************
 \mainmatter
@@ -210,6 +210,8 @@
 
 \end{appendices}
 
+%\glossarystyle{altlist}
+\printnoidxglossary
 % *************************************** Index ********************************
 \printthesisindex % If index is present
 
