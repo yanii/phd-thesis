@@ -38,7 +38,7 @@
 
     The \gls{vc} dimension gives us a measure of the theoretical learning capacity of a classifier, however it can also be somewhat counter-intuitive. While models with large numbers of parameters usually will have a higher \gls{vc} dimension, there are examples of small single parameter models with infinite \gls{vc} dimension for more specific sets of points. For example, if we have a set of evenly spaced points in 2D, a simple sinusoidal curve with the appropriate phase can shatter any labelling of an infinite number of such points. In general, however, such a classifier would be poor at classifying more general sets of points, despite the impressive theoretical \gls{vc} dimension.
     
-    \subsection{VC Dimension of Neural Networks}
+    \subsection{VC Dimension of Neural Networks}\label{vcdim}
     In the case of neural networks\index{neural network}, early work showed that the capacity of neural networks\index{neural network} to be quite large~\citep{hornik89a,baum1989size}. \citet{baum1989size} looked at feed-forward networks of \emph{threshold units}, \ie perceptrons\index{perceptron}. %showing the VC dimension of a single-layer network with k units and w weights (including biases) to be bounded by,
     %\begin{equation}
     %    d_{\textrm{VC}} \leq 2 w \log_2(e\,k),
@@ -98,7 +98,7 @@
 %    \end{align}
 %    we can see that the number of training samples required to guarantee this error rate are proportional to the logarithm of the number of inputs and the , 
 	
-    \subsection{Model Size}
+    \subsection{Model Size}\label{modelsize}
 	\begin{figure}[tbp]
 		\centering
 		\begin{subfigure}[t]{0.48\textwidth}
@@ -135,6 +135,7 @@
 	%% Use example of sin wave? We can fit it with a polynomial, but better to re-parametrize into a basis
 	
 	\subsection{Generalization and Parameters in Neural Networks}
+	There has been a lot of research into the relationship between the number of parameters of a network and its generalization, aside from theoretical work presented in \cref{vcdim}, there were many empirical studies, especially in the earlier years of connectionist research~\citet{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing}.
 	\begin{figure}[tbp]
 		\centering
 		\large
@@ -319,7 +320,7 @@ Constructive approaches to binary classification neural network architectures we
 	Amongst the earliest work\footnote{Rumelhart is noted by \citet{hanson1989comparing} to have worked on a similar, albeit unpublished, method.} on pruning was by \citeauthor{sietsma1988neural}, who investigated the effect of pruning weights in very small perceptron networks. The pruning rules were summarized as ``If the output of a unit does not change for any input pattern that unit is not contributing to the solution. If the outputs of any two units are the same or opposite across all patterns the two units duplicate and one can be removed.''~\citep{sietsma1988neural}. Even in these small networks, the complexity of pruning emerges. The authors propose removing weights close to zero, or weights that similarly do not affect the output of the neuron, and removing complementary but opposite (\ie{}duplicate) weights. %It is claimed that aside from being faster, pruned networks are also less noise-sensitive.
 	
 	There have been many proposals of methods of pruning network connections since~\citep{hanson1989comparing, lecun1989optimal, mozer1989using, mozer1989skeletonization, gorodkin1993quantitative, setiono1997penalty,castellano1997iterative,han2015learning,han2015deep,han2016dsd,ullrich2017soft,} differing mostly on the method of evaluating the saliency of weights, \ie how important each weight is to maintaining generalization.  Here we will cover only a small selection of the most relevant methods.
-	
+
 	As demonstrated even in the early approach of \citeauthor{sietsma1988neural}, a naive saliency measure, such as weight magnitude, is overly simplistic in practice since it does not account for the larger distributed representation learned in a neural networks\index{neural network} and can lead to a large reduction in accuracy if used for pruning.
 
     In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks\index{neural network} where training times can be measured in weeks.
@@ -361,7 +362,7 @@ Constructive approaches to binary classification neural network architectures we
 	\citet{han2015learning} begins by pruning a trained model using a naive weight magnitude saliency, and then re-training the network in a layer-wise manner. Although the novelty of this method is arguable given the past work on pruning, it presents results on contemporary deep networks. Despite using a naive weight magnitude-based saliency the results are reasonable with a 9-fold decrease in parameters, with only a small loss in accuracy. However, the experiments were performed on AlexNet which had a very large fully-connected layer composing most of its parameters.
 
 	\section{Compression \& Quantization}
-	In order to use \gls{dnn}\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}. There have been many papers on the topic, here we will only cover a few of the most relevant papers.
+	In order to use \gls{dnn}\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}. There have been many papers on the topic \citep{han2015deep,han2015learning,han2016dsd,Kim2016,rastegari2016xnor,ullrich2017soft}, here we will only cover a few of the most relevant papers.
 
 	\subsection{Deep Compression}
 	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization\index{quantization} and Huffman coding. The quantization\index{quantization} uses a look-up table to store a limited number of weights (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease of a factor of 40$\times$.
@@ -381,15 +382,14 @@ Constructive approaches to binary classification neural network architectures we
 
 	A further method, XNOR networks\index{XNOR networks}, is proposed where both the filter parameters and \glspl{featuremap} are reduced binary representations. XNOR networks claim 58$\times$ faster and 32$\times$ smaller convolutional layers. The evaluation for \gls{ilsvrc} is based on the AlexNet architecture however, which does not represent a good accuracy/model size tradeoff compared to more recent deep network architectures.
 	
-	\subsection{Soft Weight Sharing}
-	\citet{ullrich2017soft,}
-	\mynote{TODO}
+	% \subsection{Soft Weight Sharing}
+	% \citet{ullrich2017soft,}
+	% \mynote{TODO}
 
 \section{Structural Priors}
-	This section has shown that the concept we have denoted `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts covered by this large body of work in a compact nomenclature. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
-	\mynote{TODO: change this section}
+	\Cref{background,motivation} have shown that the concept we have denoted `structural priors' is not new, and has varied interpretations. Here we will attempt to summarize the concepts related to regularization, network architecture, and generalization covered by this large body of work in a compact nomenclature, much like \citet{rethinking2016} attempted to define types of regularization. While, like with any compact nomenclature, there is a danger of overly simplifying the details, it can also help in seeing the big picture.
     
-	In practice when fitting a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network\index{neural network} we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parametrize our models appropriately~\citep{jain2016structural}). Instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but likely sparse solution. The problem with this approach is that over-parametrization of a model generally leads to poor generalization due to overfitting. To prevent this, there are two general types of methods in which we can relate our prior knowledge that the model is over-parametrized to the optimization:
+	To return to the example of fitting a polynomial curve presented in \cref{modelsize}, in practice when fitting such a curve, we have little idea of what order polynomial would best fit the data. Necessarily, we must use a relatively higher order curve to fit the data. Similarly, with a neural network\index{neural network} we rarely have knowledge of the underlying structure of the solution (but when we do, we should use it to parametrize our models appropriately~\citep{jain2016structural}). Instead we must use networks with more parameters than necessary to ensure that there is enough capacity to learn the underlying, but likely sparse solution. The problem with this approach is that over-parametrization of a model generally leads to poor generalization due to overfitting. To prevent this, there are two general types of methods in which we can relate our prior knowledge that the model is over-parametrized to the optimization:
 	\begin{description}
 	\item[Weak Structural Prior: Regularization]
 	Knowing only that our model is over-parametrized is a relatively weak prior, however we can encode this into the fit by using a regularization penalty. This restricts the model to effectively use only a small number of the parameters by adding a penalty, for example on the L2 norm of the model weights. For polynomial regression, this is called \emph{ridge regression}, while for neural networks it is called \emph{weight decay}~\citep{hinton1987learning}. In neural networks early stopping\index{early stopping} during training is another method for doing this.
@@ -400,27 +400,27 @@ Constructive approaches to binary classification neural network architectures we
 	In neural networks, as we have seen in \cref{cnns}, a similar effect can be achieved by \emph{removing parameters} that we know are not needed (\ie  in \glspl{cnn}, using filters with local connectivity), or \emph{sharing parameters} we know are redundant (\ie in \glspl{cnn}, using the same filters for all pixels)
     \end{description}
     
-	Although neural networks\index{neural network} are usually posed as general learning machines, time and again it has been demonstrated that neural networks\index{neural network} only truly stand out as a learning method when we use strong structural priors, encoding our prior knowledge of the task in the architecture itself. As observed by \citet{denker1987large} this may be considered closer to modifying the problem to be solved itself, rather than changing the learning method. For example, by asking a \gls{cnn} to learn to classify a dataset, we are asking the network to ``classify these images'', whereas by asking a fully-connected network to classify the same dataset, we are asking the network ``classify this data''. The first task is inherently easier.
+	Although neural networks\index{neural network} are usually posed as general learning machines, time and again it has been demonstrated that neural networks\index{neural network} only truly stand out as a learning method when we use strong structural priors, encoding our prior knowledge of the task in the architecture itself. As observed by \citet{denker1987large} this may be considered closer to modifying the problem to be solved itself, rather than changing the learning method. For example, by asking a \gls{cnn} to learn to classify a dataset, we are asking the network to ``classify these images'', whereas by asking a fully-connected network to classify the same dataset, we are asking the network ``classify this data''. The first task is inherently easier because of the assumptions it makes.
 
     Structural priors may be considered one of the greatest contributions to the success of deep learning, but arguably can also be considered the cause of its greatest failure. Structural priors allow deep models to more easily learn specific tasks, \ie image classification or speech recognition. At the same time, by specializing our networks, we are moving further away from the goal of general artificial intelligence\index{general AI}, \ie learning models that can do both tasks.
     
-\section{Other Notable Works}
-\subsection{Pruning}
-\citep{mozer1989using, mozer1989skeletonization, castellano1997iterative,gorodkin1993quantitative,han2016dsd,han2015learning,setiono1997penalty,}
+%\section{Other Notable Works}
+%\subsection{Pruning}
+%\citep{mozer1989using, mozer1989skeletonization, castellano1997iterative,gorodkin1993quantitative,han2016dsd,han2015learning,setiono1997penalty,}
 
-\subsection{Network Size and Generalization}
-\citep{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing,}
+%\subsection{Network Size and Generalization}
+%\citep{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing,}
 
-\subsection{Structural Priors}
-\citep{Fuk80,lecun1989backpropagation,}
+%\subsection{Structural Priors}
+%\citep{Fuk80,lecun1989backpropagation,}
 
-\subsection{Compression}
-\citep{han2015deep,Kim2016,ullrich2017soft,}
+%\subsection{Compression}
+%\citep{han2015deep,Kim2016,ullrich2017soft,}
 
-\subsection{TODO}
-\citep{mackay1992practical,schwartz1990exhaustive,}
+%\subsection{TODO}
+%\citep{schwartz1990exhaustive,}
 
-\mynote{Use these references!}
+%\mynote{Use these references!}
     % \section{Quotes}
     
 	% \begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
