@@ -129,7 +129,7 @@
     
     At the start of training, network weights are initialized at random using samples drawn from a Gaussian distribution with a standard deviation parameter specified separately for each layer. We found that the setting of these parameters was critical to the success of network training and difficult to get right, particularly because published parameter settings used elsewhere were not suitable for our new network architectures. With unsuitable weight initialization, training may fail due to {\em exploding gradients}, where  back-propagated gradients grow so large as to cause numeric overflow, or {\em vanishing gradients} where back-propagated gradients diminish such that their effect is dwarfed by that of weight decay\index{weight decay} such that loss does not decrease during training~\citep{Hochreiter01gradientflow}.
     
-    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a \gls{relu}). Their approach works by ensuring that the magnitudes of back-propagated gradients remain approximately the same throughout the network. Otherwise, if the gradients were inappropriately scaled by some factor (\eg $\beta$) then the final back-propagated signal would be scaled by a potentially much larger factor ($\beta^L$ after $L$ layers).
+    To determine the standard deviations to be used for weight initialization, we use an approach similar to that described by \citet{glorot2010understanding} (with the adaptation described by \citet{He2015b} for layers followed by a \gls{relu}). Their approach works by ensuring that the magnitudes of back-propagated gradients remain approximately the same throughout the network. Otherwise, if the gradients were inappropriately scaled by some factor (\eg $\gls{beta}$) then the final back-propagated signal would be scaled by a potentially much larger factor ($\gls{beta}^L$ after $L$ layers).
     
     \subsection{Derivation of the Initialization for Composite Layers}\label{initializationderivation}
     In what follows, we adopt notation similar to that of \citet{He2015b}, and follow their derivation of the appropriate standard deviation for weight initialization. However, we also generalize their approach to the initialization of `composite' layers comprising several groups of filters of different spatial dimensions (see \cref{fig:compositelayers}). This is one of the main contributions of this work.
@@ -137,17 +137,17 @@
     \paragraph{Forward Propagation}
     The response of the $l^\text{th}$ convolutional layer can be represented as
     \begin{equation}
-    \mathbf{y}_l =\gls{wmatrix}_l \gls{vectorx}_l + \mathbf{b}_l.
+    \gls{vectory}_l =\gls{wmatrix}_l \gls{vectorx}_l + \gls{vectorb}_l.
     \end{equation}
-    Here $\mathbf{y}_l$ is a $\gls{d}$$\times$$1$ vector representing a pixel in the output \gls{featuremap}\index{feature map} and $\gls{vectorx}_l$ is a $ w h c \times 1$ vector that represents a $w$$\times$$h$ sub-region of the $c$-channel input \gls{featuremap}\index{feature map}. $\gls{wmatrix}_l$ is the $d$$\times$$n$ weight matrix, where $\gls{d}$ is the number of filters and $n$ is the size of a filter, \ie $n = w h c$ for a filter with spatial dimensions $w$$\times$$h$ operating on an input \gls{featuremap}\index{feature map} of $c$ channels, and $\mathbf{b}_l$ is the bias. Finally $\gls{vectorx}_l = f(\mathbf{y}_{l-1})$ is the output of the previous layer passed through an activation function $f$ (\eg the application of a \gls{relu} to each element of $\mathbf{y}_{l-1}$).
+    Here $\gls{vectory}_l$ is a $\gls{d}$$\times$$1$ vector representing a pixel in the output \gls{featuremap}\index{feature map} and $\gls{vectorx}_l$ is a $ w h c \times 1$ vector that represents a $w$$\times$$h$ sub-region of the $c$-channel input \gls{featuremap}\index{feature map}. $\gls{wmatrix}_l$ is the $d$$\times$$n$ weight matrix, where $\gls{d}$ is the number of filters and $n$ is the size of a filter, \ie $n = w h c$ for a filter with spatial dimensions $w$$\times$$h$ operating on an input \gls{featuremap}\index{feature map} of $c$ channels, and $\gls{vectorb}_l$ is the bias. Finally $\gls{vectorx}_l = f(\gls{vectory}_{l-1})$ is the output of the previous layer passed through an activation function $f$ (\eg the application of a \gls{relu} to each element of $\gls{vectory}_{l-1}$).
     
     \paragraph{Backward Propagation}
     During backpropagation\index{backpropagation}, the gradient of a convolutional layer is computed as
     \begin{equation}
-    \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l \Delta \mathbf{y}_l,
+    \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l \Delta \gls{vectory}_l,
     \label{eq:back_prop_gradient}
     \end{equation}
-    where $\Delta \gls{vectorx}_l$ and $\Delta \mathbf{y}_l$ denote the derivatives of loss $\gls{L}$ with respect to input and output pixels. $\Delta \gls{vectorx}_l$ is a $c$$\times$$1$ vector of gradients with respect to the channels of a single pixel in the input \gls{featuremap}\index{feature map} and $\Delta \mathbf{y}$ represents $h$$\times$$w$ pixels in d channels of the output \gls{featuremap}\index{feature map}. $\hat{\gls{wmatrix}}_l$ is a $c$$\times$$\hat{n}$ matrix where the filter weights are arranged in the right order for backpropagation\index{backpropagation}, and $\hat{n} = whd$. Note that $\hat{\gls{wmatrix}}_l$ can be simply reshaped from $\gls{wmatrix}_l^\top$. Also note that the elements of $\Delta \mathbf{y}_l$ correspond to pixels in the output image that had a forwards dependency on the input image pixel corresponding to $\Delta \gls{vectorx}$. In back propagation, each element $\Delta y_l$ of $\Delta \mathbf{y}_l$ is related to an element $\Delta x_{l+1}$ of some $\Delta \gls{vectorx}_{l+1}$ (\ie a back-propagated gradient in the next layer) by the derivative of the activation function $f$:
+    where $\Delta \gls{vectorx}_l$ and $\Delta \gls{vectory}_l$ denote the derivatives of loss $\gls{L}$ with respect to input and output pixels. $\Delta \gls{vectorx}_l$ is a $c$$\times$$1$ vector of gradients with respect to the channels of a single pixel in the input \gls{featuremap}\index{feature map} and $\Delta \gls{vectory}$ represents $h$$\times$$w$ pixels in d channels of the output \gls{featuremap}\index{feature map}. $\hat{\gls{wmatrix}}_l$ is a $c$$\times$$\hat{n}$ matrix where the filter weights are arranged in the right order for backpropagation\index{backpropagation}, and $\hat{n} = whd$. Note that $\hat{\gls{wmatrix}}_l$ can be simply reshaped from $\gls{wmatrix}_l^\top$. Also note that the elements of $\Delta \gls{vectory}_l$ correspond to pixels in the output image that had a forwards dependency on the input image pixel corresponding to $\Delta \gls{vectorx}$. In back propagation, each element $\Delta y_l$ of $\Delta \gls{vectory}_l$ is related to an element $\Delta x_{l+1}$ of some $\Delta \gls{vectorx}_{l+1}$ (\ie a back-propagated gradient in the next layer) by the derivative of the activation function $f$:
     \begin{equation}
     \Delta y_l = f^\prime (y_l) \Delta x_{l+1},
     \end{equation}
@@ -158,13 +158,13 @@
     \newcommand{\Var}{\gls{var}}
     
     \paragraph{Weight Initialization}
-    Now let $\Delta y_l$, $\Delta x_l$ and $w_l$ be scalar random variables that describe the distribution of elements in $\Delta \mathbf{y}_l$, $\Delta \gls{vectorx}_{l}$ and $\hat{\gls{wmatrix}}_l$ respectively. Then, assuming $f^\prime (y_l)$ and $\Delta x_{l+1}$ are independent,
+    Now let $\Delta y_l$, $\Delta x_l$ and $w_l$ be scalar random variables that describe the distribution of elements in $\Delta \gls{vectory}_l$, $\Delta \gls{vectorx}_{l}$ and $\hat{\gls{wmatrix}}_l$ respectively. Then, assuming $f^\prime (y_l)$ and $\Delta x_{l+1}$ are independent,
     \begin{equation}
     \Expect{}[\Delta y_l] = \Expect{}[f^\prime (y_l)] \Expect{}[ \Delta x_{l+1}].
     \end{equation}
     
     For the \gls{relu} case, $f'(y_l)$ is zero or one with equal probability. 
-    Like \citet{glorot2010understanding}, we assume that $w_l$ and $\Delta y_l$ are independent. Thus, \cref{eq:back_prop_gradient} implies that $\Delta x_l$ has zero mean for all $l$, when $w_l$ is initialized by a distribution that is symmetric around zero. Thus we have $\Expect{}[\Delta y_l] = \frac{1}{2}\Expect{}[\Delta x_{l+1}]= 0$ and also $\Expect{}[(\Delta y_l)^2] = \Var{}[\Delta y_l] = \frac{1}{2} \Var{}[\Delta x_{l+1}]$. Now, since each element of $\Delta \gls{vectorx}_l$ is a summation of $\hat n$ products of elements of $\hat{\gls{wmatrix}}_l$ and elements of $\Delta \mathbf{y}_l$, we can compute the variance of the gradients in \cref{eq:back_prop_gradient}:
+    Like \citet{glorot2010understanding}, we assume that $w_l$ and $\Delta y_l$ are independent. Thus, \cref{eq:back_prop_gradient} implies that $\Delta x_l$ has zero mean for all $l$, when $w_l$ is initialized by a distribution that is symmetric around zero. Thus we have $\Expect{}[\Delta y_l] = \frac{1}{2}\Expect{}[\Delta x_{l+1}]= 0$ and also $\Expect{}[(\Delta y_l)^2] = \Var{}[\Delta y_l] = \frac{1}{2} \Var{}[\Delta x_{l+1}]$. Now, since each element of $\Delta \gls{vectorx}_l$ is a summation of $\hat n$ products of elements of $\hat{\gls{wmatrix}}_l$ and elements of $\Delta \gls{vectory}_l$, we can compute the variance of the gradients in \cref{eq:back_prop_gradient}:
     
     \begin{equation}
     \begin{aligned}
@@ -193,18 +193,18 @@
     
     The initialization scheme described above assumes that the layer comprises filters of spatial dimension $w$$\times$$h$. Now we extend this scheme to composite convolutional layers containing $N$ groups of filters of different spatial dimensions $w^{[i]} \times h^{[i]}$ (where superscript $[i]$ denotes the group index and with $i\in \{1,\dots,N\}$). Now the layer response is the concatenation of the responses of each group of filters:
     \begin{equation}
-    \mathbf{y}_l =\begin{bmatrix}\gls{wmatrix}_l^{[1]} \gls{vectorx}_l^{[1]} \\ \gls{wmatrix}_l^{[2]} \gls{vectorx}_l^{[2]} \\ \dots \\ \gls{wmatrix}_l^{[N]} \gls{vectorx}_l^{[N]} \end{bmatrix} + \mathbf{b}_l.
+    \gls{vectory}_l =\begin{bmatrix}\gls{wmatrix}_l^{[1]} \gls{vectorx}_l^{[1]} \\ \gls{wmatrix}_l^{[2]} \gls{vectorx}_l^{[2]} \\ \dots \\ \gls{wmatrix}_l^{[N]} \gls{vectorx}_l^{[N]} \end{bmatrix} + \gls{vectorb}_l.
     \end{equation}
-    As before $\mathbf{y}_l$ is a $d$$\times$$1$ vector representing the response at one pixel of the output \gls{featuremap}\index{feature map}. Now each ${\bf x}^{[i]}$ is a $w^{[i]} h^{[i]} c \times 1$ vector that represents a different shaped $w^{[i]} \times h^{[i]}$ sub-region of the input \gls{featuremap}\index{feature map}. Each $\gls{wmatrix}_l^{[i]}$ is the $c_l^{[i]}\times \hat{n}^{[i]}$ weight matrix, where $d$ is the number of filters and $\hat{n}^{[i]}$ is the size of a filter, \ie $\hat{n}^{[i]} = w^{[i]} h^{[i]} c^{[i]}$ for a filter of spatial dimension $w^{[i]} \times h^{[i]}$ operating on an input \gls{featuremap}\index{feature map} of $c_l = d_{l-1}$ channels.
+    As before $\gls{vectory}_l$ is a $d$$\times$$1$ vector representing the response at one pixel of the output \gls{featuremap}\index{feature map}. Now each ${\bf x}^{[i]}$ is a $w^{[i]} h^{[i]} c \times 1$ vector that represents a different shaped $w^{[i]} \times h^{[i]}$ sub-region of the input \gls{featuremap}\index{feature map}. Each $\gls{wmatrix}_l^{[i]}$ is the $c_l^{[i]}\times \hat{n}^{[i]}$ weight matrix, where $d$ is the number of filters and $\hat{n}^{[i]}$ is the size of a filter, \ie $\hat{n}^{[i]} = w^{[i]} h^{[i]} c^{[i]}$ for a filter of spatial dimension $w^{[i]} \times h^{[i]}$ operating on an input \gls{featuremap}\index{feature map} of $c_l = d_{l-1}$ channels.
     
     During back propagation, the gradient of the composite convolutional layer is computed as a summation of the contributions from each group of filters:
     \begin{equation}
-    \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l^{[1]} \Delta \mathbf{y}_l^{[1]} +  \hat{\gls{wmatrix}}_l^{[2]} \Delta \mathbf{y}_l^{[2]} + \cdots+  \hat{\gls{wmatrix}}_l^{[N]} \Delta \mathbf{y}_l^{[N]},
+    \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l^{[1]} \Delta \gls{vectory}_l^{[1]} +  \hat{\gls{wmatrix}}_l^{[2]} \Delta \gls{vectory}_l^{[2]} + \cdots+  \hat{\gls{wmatrix}}_l^{[N]} \Delta \gls{vectory}_l^{[N]},
     \label{eq:back_prop_gradient_composite}
     \end{equation}
-    where now $\Delta \mathbf{y}^{[i]}$ represents $w^{[i]} \times h^{[i]}$ pixels in $d^{[i]}$ channels of the output \gls{featuremap}\index{feature map}. Each $\hat{\gls{wmatrix}}_l^{[i]}$ is a $c_l \times \hat{n}^{[i]}$ matrix of weights arranged appropriately for back propagation. Again, note that each $\hat{\gls{wmatrix}}_l^{[i]}$ can be simply reshaped from $\gls{wmatrix}_l^{[i]}$.
+    where now $\Delta \gls{vectory}^{[i]}$ represents $w^{[i]} \times h^{[i]}$ pixels in $d^{[i]}$ channels of the output \gls{featuremap}\index{feature map}. Each $\hat{\gls{wmatrix}}_l^{[i]}$ is a $c_l \times \hat{n}^{[i]}$ matrix of weights arranged appropriately for back propagation. Again, note that each $\hat{\gls{wmatrix}}_l^{[i]}$ can be simply reshaped from $\gls{wmatrix}_l^{[i]}$.
     
-    As before, each element of $\Delta \mathbf{y}_l$ is a sum over $\hat n$ products between elements of $\hat{\gls{wmatrix}}^{[i]}_l$ and elements of $\Delta \mathbf{y}^{[i]}_l$ and here $\hat{n}$ is given by:
+    As before, each element of $\Delta \gls{vectory}_l$ is a sum over $\hat n$ products between elements of $\hat{\gls{wmatrix}}^{[i]}_l$ and elements of $\Delta \gls{vectory}^{[i]}_l$ and here $\hat{n}$ is given by:
     \begin{equation}
     \hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}.
     \end{equation}
