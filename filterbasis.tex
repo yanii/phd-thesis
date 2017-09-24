@@ -445,7 +445,7 @@
 	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent \glspl{featuremap}, we calculate the inter-layer covariance,
 	
 	\begin{align}
-	cov(X_1, X_2) &= E\left[X_1\,X_2^\textrm{T}\right],\\
+	\gls{covar}(X_1, X_2) &= E\left[X_1\,X_2^\textrm{T}\right],\\
 	&= \frac{1}{N-1} X_1\,X_2^\textrm{T}.
 	\end{align}
 	
@@ -471,7 +471,7 @@
 	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using \gls{zca}~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
 	
 	\begin{equation}
-	\textrm{cov}(X, X) = \frac{1}{N-1} XX^\textrm{T},
+	\gls{covar}(X, X) = \frac{1}{N-1} XX^\textrm{T},
 	\end{equation}
 	The \gls{zca} whitening transformation is given by,
 	\begin{equation}
@@ -479,7 +479,7 @@
 	\end{equation}
 	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie \gls{pca}),
 	\begin{align}
-	\textrm{cov}(X, X) &= \frac{1}{N-1} PDP^\textrm{T},\\
+	\gls{covar}(X, X) &= \frac{1}{N-1} PDP^\textrm{T},\\
 	\end{align}
 	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in \citet[Appendix A]{CIFAR10}),
 	
@@ -490,7 +490,7 @@
 	
 	The covariance between the whitened \gls{featuremap} responses is then,
 	\begin{equation}
-	\textrm{cov}(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
+	\gls{covar}(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
 	\end{equation}
 	\afterpage{%
 	    \begin{landscape}
