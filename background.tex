@@ -637,9 +637,9 @@ A major issue with sigmoidal activation functions however, is that gradients out
 \subsection{Methods of Network Initialization}\label{ssec:init}
 Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks\index{neural network}~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very \glspl{dnn}\index{DNN}. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
 
-For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\beta$ for each layer.
+For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\gls{beta}$ for each layer.
 
-After propagating through $L$ layers, this becomes a scaling of $\beta^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\beta$:
+After propagating through $L$ layers, this becomes a scaling of $\gls{beta}^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\gls{beta}$:
 
 \begin{figure}[tbp]
     \centering
@@ -666,7 +666,7 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 \end{figure}
 \begin{equation}
 \begin{aligned}
-	f_L(x) & = (f_1 \circ f_2 \ldots \circ f_L) (x)\\
+	f_L(x) & = (f_1 \gls{composition} f_2 \ldots \gls{composition} f_L) (x)\\
 	& = x \, \prod^{L}_{l} \beta = x\, \beta^L
 \end{aligned}
 \end{equation}
@@ -679,17 +679,20 @@ After propagating through $L$ layers, this becomes a scaling of $\beta^L$, great
 \end{cases}
 \]
 %
-where $(f \circ g)(x)$ is the composition $f(g(x))$.
+where $(f \gls{composition} g)(x)$ is the composition $f(g(x))$.
 
-Thus we want a random initialization of layers such that $\beta\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussian initialization, and given the number of outgoing/incoming connections to each neuron\index{neuron}, we can carefully choose the standard deviation $\sigma$ such that $\mathbf{E}(\beta) = 1$. 
+Thus we want a random initialization of layers such that $\gls{beta}\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussian initialization, and given the number of outgoing/incoming connections to each neuron\index{neuron}, we can carefully choose the standard deviation $\gls{stddev}$ such that the expected value,
 
+\begin{equation}
+	\gls{expected}(\gls{beta}) = 1.
+\end{equation}
 In practice however, most networks have layers of different numbers of neurons\index{neuron}. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron\index{neuron}, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, \citet{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron\index{neuron}:
 %
 \begin{equation}
 \begin{aligned}
-	\sigma_{\textrm{forwards}} &= \frac{1}{\sqrt{n_{\text{out}}}}\\
-	\sigma_{\textrm{backwards}} &= \frac{1}{\sqrt{n_{\text{in}}}}\\
-	\sigma_{\textrm{average}} &= \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+	\gls{stddev}_{\textrm{forwards}} &= \frac{1}{\sqrt{n_{\text{out}}}}\\
+	\gls{stddev}_{\textrm{backwards}} &= \frac{1}{\sqrt{n_{\text{in}}}}\\
+	\gls{stddev}_{\textrm{average}} &= \frac{1}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
 \end{aligned}
 \end{equation}
 %
@@ -697,9 +700,9 @@ For the more typically used rectified linear unit, a variation of this initializ
 %
 \begin{equation}
 \begin{aligned}
-	\sigma_{\textrm{forwards}} &= \frac{2}{\sqrt{n_{\text{out}}}}\\
-	\sigma_{\textrm{backwards}} &= \frac{2}{\sqrt{n_{\text{in}}}}\\
-	\sigma_{\textrm{average}} &= \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
+	\gls{stddev}_{\textrm{forwards}} &= \frac{2}{\sqrt{n_{\text{out}}}}\\
+	\gls{stddev}_{\textrm{backwards}} &= \frac{2}{\sqrt{n_{\text{in}}}}\\
+	\gls{stddev}_{\textrm{average}} &= \frac{2}{\sqrt{(n_{\text{out}} + n_{\text{in}})/2}}.
 \end{aligned}
 \end{equation}
 %
@@ -713,11 +716,11 @@ The batch statistics calculated by batch normalization are,
 \begin{equation}
 \begin{aligned}
     \mu_b &= \frac{1}{M} \sum^M_{i=0} x_i\\
-    \sigma^2_b &= \frac{1}{M} \sum^M_{i=0}\\
-    \hat{x}_i &= \frac{x_i - \mu_b}{\sqrt{\sigma^2_b + \epsilon}},
+    \gls{stddev}^2_b &= \frac{1}{M} \sum^M_{i=0}\\
+    \hat{x}_i &= \frac{x_i - \mu_b}{\sqrt{\gls{stddev}^2_b + \epsilon}},
 \end{aligned}
 \end{equation}
-where for mini-batch $b$, $\mu_b$ is the mean, $\sigma^2_b$ is the variance, $\epsilon$ is for numerical stability, $\left\{x_0, \ldots, x_i, \ldots x_M\right\}$ are the mini-batch responses for a particular parameter of the layer, and $\hat{x_i}$ is the normalized response for that parameter. 
+where for mini-batch $b$, $\mu_b$ is the mean, $\gls{stddev}^2_b$ is the variance, $\epsilon$ is for numerical stability, $\left\{x_0, \ldots, x_i, \ldots x_M\right\}$ are the mini-batch responses for a particular parameter of the layer, and $\hat{x_i}$ is the normalized response for that parameter. 
 
 Batch normalization then uses these statistics, along with two parameters learned across mini-batches, $\gamma$ and $\beta$, to scale and shift the responses,
 \begin{equation}    
