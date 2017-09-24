@@ -172,9 +172,11 @@
 	
 	\subsubsection{Training}
 	We trained our conditional network with the same hyperparameters as in~\citep{Simonyan2014verydeep}, 
-	except for using the initialization strategy suggested of~\citep{He2015b}, and a learning schedule of 
-	$\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ 
-	are the initial learning rate, learning rate at iteration $t$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}. 
+	except for using the initialization strategy suggested of~\citep{He2015b}, and a learning schedule,
+    \begin{equation}
+        \gls{lr}_t = \gls{lr}_0(1+\gls{lr}_0\gls{weightdecay} \gls{t})^{-1},
+    \end{equation}
+	where $\gls{lr}_0,\gls{lr}_t$ and $\gls{weightdecay}$ are the initial learning rate, learning rate at iteration $\gls{t}$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}.
 	When the validation accuracy of the network levelled out, the learning rate was further decreased by a factor of 10, twice. 
 	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
 	training time given its higher efficiency.
@@ -461,8 +463,8 @@
 	
 	\subsubsection{Learning the Optimal Network Architecture}
 	In this experiment we have optimized the network structure {\em automatically}, 
-	by using Bayesian optimization~\citep{Snoek2012}, as available in WhetLab.\footnote{https://www.whetlab.com} 
-	This has allowed us to search the large joint space of parameters and structures in a principled way, 
+	by using Bayesian optimization~\citep{Snoek2012}, as available in WhetLab.\footnote{Formerly at \href{https://www.whetlab.com}{https://www.whetlab.com}, defunct since its \href{https://techcrunch.com/2015/06/17/twitter-acquires-machine-learning-startup-whetlab/}{acquisition by Twitter in June 2015}.} 
+	This has allowed us to search the large joint space of parameters and structures in a principled manner, 
 	and come up with multiple reasonable networks to be tested. 
 	%\acnote{we have not done this in Imagenet because too big.}
 	
@@ -475,8 +477,11 @@
 	For comparison, we also reduce the complexity of the unrouted NiN-64 network by learning a reduction in the number of per-layer filters, \ie we maximize $\alpha$ over $F_l = F_\textrm{orig}/2^i, \left\{i\in \mathbb{N} : 0 \le i \le 4\right\}$, where $F_\textrm{orig}$ is the number of filters in layer $l$ in NiN-64. 
 	
 	All networks were trained with the same hyperparameters as~\citep{Lin2013NiN}, 
-	except for using the initialization strategy of~\citep{He2015b}, 
-	and a learning schedule of $\gamma_t = \gamma_0(1+\gamma_0\lambda t)^{-1}$, where $\gamma_0,\gamma_t$ and $\lambda$ are the initial learning rate, learning rate at iteration $t$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
+	except for using the initialization strategy of~\citep{He2015b}, and a learning schedule,
+    \begin{equation}
+        \gls{lr}_t = \gls{lr}_0(1+\gls{lr}_0\gls{weightdecay} \gls{t})^{-1},
+    \end{equation}
+    where $\gls{lr}_0,\gls{lr}_t$ and $\gls{weightdecay}$ are the initial learning rate, learning rate at iteration $\gls{t}$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}. Training was run for a maximum of 400 epochs, or until the maximum validation accuracy had not changed in 10,000 iterations. 
 	We split the original \gls{cifar10} training set into 40,000 training images and 
 	10,000 validation images. 
 	The standard 10,000 held-out images are used for testing.

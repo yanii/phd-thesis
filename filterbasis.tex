@@ -438,15 +438,15 @@
 	
 	\subsection{Inter-Layer Covariance}
 	\label{interlayercovar}
-	To show the relationships between filters between adjacent convolutional layers, as illustrated in \cref{fig:normalconv}, we calculate the covariance of the responses from two adjacent \glspl{featuremap}, the outputs of convolutional layers with $c_1$ and $c_2$ filters.
+	To show the relationships between filters between adjacent convolutional layers, as illustrated in \cref{fig:normalconv}, we calculate the covariance of the responses from two adjacent \glspl{featuremap}, the outputs of convolutional layers with $\gls{c}_1$ and $\gls{c}_2$ filters.
 	
-	Let $X_i = [\mathbf{x}_{i,1}; \mathbf{x}_{i,2}; \ldots ; \mathbf{x}_{i,N}]$ be the matrix of $N$ samples $\mathbf{x}_{i,n}$ from the $c_i$ dimensional \gls{featuremap} for layer $i$. We consider each pixel across the two \glspl{featuremap} to be a sample, and thus each vector $\mathbf{x}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two \glspl{featuremap} have different spatial dimensions, due to pooling, we up-sample the smaller \gls{featuremap} (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each \gls{featuremap}.
+	Let $\gls{X}_i = [\gls{vectorx}_{i,1}; \gls{vectorx}_{i,2}; \ldots ; \gls{vectorx}_{i,N}]$ be the matrix of $N$ samples $\gls{vectorx}_{i,n}$ from the $c_i$ dimensional \gls{featuremap} for layer $i$. We consider each pixel across the two \glspl{featuremap} to be a sample, and thus each vector $\gls{vectorx}_{i,n}$ is a single pixel filter response of dimension $c_i$. If two \glspl{featuremap} have different spatial dimensions, due to pooling, we up-sample the smaller \gls{featuremap} (with nearest neighbor interpolation) such that there are the same number of pixels (and thus samples) in each \gls{featuremap}.
 	
-	Given two samples $X_1, X_2$ with zero mean (\ie mean subtracted) for two adjacent \glspl{featuremap}, we calculate the inter-layer covariance,
+	Given two samples $\gls{X}_1, \gls{X}_2$ with zero mean (\ie mean subtracted) for two adjacent \glspl{featuremap}, we calculate the inter-layer covariance,
 	
 	\begin{align}
-	\gls{covar}(X_1, X_2) &= E\left[X_1\,X_2^\textrm{T}\right],\\
-	&= \frac{1}{N-1} X_1\,X_2^\textrm{T}.
+	\gls{covar}(\gls{X}_1, \gls{X}_2) &= \gls{expected}\left[\gls{X}_1\,\gls{X}_2^\textrm{T}\right],\\
+	&= \frac{1}{N-1} \gls{X}_1\,\gls{X}_2^\textrm{T}.
 	\end{align}
 	
 	\begin{figure}[tbp]
@@ -468,18 +468,18 @@
 		\label{fig:whitevsnot}
 	\end{figure}
 	
-	While this shows the covariance between layers, it is conflated with the inherent covariances within $X_1$ and $X_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using \gls{zca}~\citep{CIFAR10}) the samples in $X_1$ and $X_2$. For a covariance matrix,
+	While this shows the covariance between layers, it is conflated with the inherent covariances within $\gls{X}_1$ and $\gls{X}_2$ from the data (as shown in \cref{fig:notwhitened}). We can more clearly show the covariance between layers by first whitening (using \gls{zca}~\citep{CIFAR10}) the samples in $\gls{X}_1$ and $\gls{X}_2$. For a covariance matrix,
 	
 	\begin{equation}
-	\gls{covar}(X, X) = \frac{1}{N-1} XX^\textrm{T},
+	\gls{covar}(\gls{X}, \gls{X}) = \frac{1}{N-1} \gls{X}\gls{X}^\textrm{T},
 	\end{equation}
 	The \gls{zca} whitening transformation is given by,
 	\begin{equation}
-	W = \sqrt{N-1}\left(XX^\textrm{T}\right)^{-\frac{1}{2}}.
+	W = \sqrt{N-1}\left(\gls{X}\gls{X}^\textrm{T}\right)^{-\frac{1}{2}}.
 	\end{equation}
 	Since the covariance matrix is symmetric, it is easily diagonalizable (\ie \gls{pca}),
 	\begin{align}
-	\gls{covar}(X, X) &= \frac{1}{N-1} PDP^\textrm{T},\\
+	\gls{covar}(\gls{X}, \gls{X}) &= \frac{1}{N-1} PDP^\textrm{T},\\
 	\end{align}
 	where $P$ is a orthogonal matrix and $D$ a diagonal matrix. This diagonalization allows a simplified calculation of the whitening transformation (see the derivation in \citet[Appendix A]{CIFAR10}),
 	
@@ -490,7 +490,7 @@
 	
 	The covariance between the whitened \gls{featuremap} responses is then,
 	\begin{equation}
-	\gls{covar}(W_1 X_1, W_2 X_2) = E\left[(W_1X_1)\,(W_2X_2)^\textrm{T}\right].
+	\gls{covar}(W_1 \gls{X}_1, W_2 \gls{X}_2) = E\left[(W_1\gls{X}_1)\,(W_2\gls{X}_2)^\textrm{T}\right].
 	\end{equation}
 	\afterpage{%
 	    \begin{landscape}
