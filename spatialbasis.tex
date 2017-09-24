@@ -239,17 +239,15 @@
     
 %    \input{lrdata/vggmodeltable}
     \subsubsection{VGG-derived Model Table}
-\label{vggmodeltable}
 \Cref{table:vggarch} shows the architectural details of the VGG-11-derived models used in \cref{vggresults}.
 \afterpage{
 \begin{landscape}
-{
 \renewcommand{\arraystretch}{1.2}
 %\setlength{\tabcolsep}{0.1em}
 \begin{table*}[p]
 \tiny
 \centering
-\caption[VGG model low-rank architectures]{{\bf VGG Model Architectures}. Here ``3$\times$3, 32'' denotes 32 3$\times$3 filters, ``/2'' denotes stride 2, ``fc'' denotes fully-connected, and ``$\|$'' denotes a concatenation within a composite layer.}
+\caption[VGG model low-rank architectures]{{\bf VGG Model Architectures}. Here ``3$\times$3, 32'' denotes 32 3$\times$3 filters, ``/2'' denotes stride 2, ``fc'' denotes fully-connected, and ``$\|$'' denotes a concatenation within a composite layer.}\label{vggmodeltable}
 %\resizebox{0.97\textwidth}{!}{
 \begin{tabular}{@{}|c||c|c|c|c|c|c|c|c|@{}}
 	\hline
@@ -336,7 +334,6 @@
 %}
 \label{table:vggarch}
 \end{table*}
-}
 \end{landscape}
 }
 
