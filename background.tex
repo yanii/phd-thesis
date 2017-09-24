@@ -372,7 +372,7 @@ In momentum, the gradients over multiple iterations are accumulated into a veloc
 \Delta\gls{vectorw} &= \gls{vectorw}_t + \gls{velocity}_{\gls{iteration}+1},
 \end{aligned}
 \end{equation}
-where $\gls{lr}$ is the learning rate, $\gls{iteration}$ is the iteration, and $\nabla E$ is the gradient of the error surface $E(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
+where $\gls{lr}$ is the learning rate, $\gls{iteration}$ is the iteration, and $\nabla \gls{E}$ is the gradient of the error surface $\gls{E}(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
 Although the backpropagation\index{backpropagation} weight change rule above tells us how to change the weight given a single training sample $\gls{x}^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta \gls{w}^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $\gls{x}^n$, of the training dataset $\gls{X}$. 
@@ -394,7 +394,7 @@ Instead of computing the gradient on only one training sample, or over the entir
 When using \gls{sgd}, we randomly sample (without replacement) a subset of the training set $X_{\textrm{mb}} \subset \gls{X}$, such that
 \begin{equation}
 \begin{aligned}
-    \Delta \gls{w}_{ij} &= -\gls{lr} \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\gls{vectorx}^n \in \gls{X}_{\textrm{mb}}\}} \frac{\partial E^n}{\partial \gls{w}_{ji}},
+    \Delta \gls{w}_{ij} &= -\gls{lr} \frac{1}{|X_{\textrm{mb}}|} \sum_{\{n|\,\gls{vectorx}^n \in \gls{X}_{\textrm{mb}}\}} \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}},
      \label{eqn:sgdrule}
 \end{aligned}
 \end{equation}
@@ -684,7 +684,7 @@ where $(f \gls{composition} g)(x)$ is the composition $f(g(x))$.
 Thus we want a random initialization of layers such that $\gls{beta}\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussian initialization, and given the number of outgoing/incoming connections to each neuron\index{neuron}, we can carefully choose the standard deviation $\gls{stddev}$ such that the expected value,
 
 \begin{equation}
-	\gls{expected}(\gls{beta}) = 1.
+	\gls{expected}\left[\gls{beta}\right] = 1.
 \end{equation}
 In practice however, most networks have layers of different numbers of neurons\index{neuron}. In this case, since there are different numbers of incoming connections and outgoing connections for each neuron\index{neuron}, there are two possible initializations, one for the expected forward pass (response) scaling, and one for the backwards pass (gradient). As a compromise, \citet{glorot2010understanding} proposed to use the average number of outgoing and incoming connections to the neuron\index{neuron}:
 %
@@ -717,14 +717,14 @@ The batch statistics calculated by batch normalization are,
 \begin{aligned}
     \mu_b &= \frac{1}{M} \sum^M_{i=0} x_i\\
     \gls{stddev}^2_b &= \frac{1}{M} \sum^M_{i=0}\\
-    \hat{x}_i &= \frac{x_i - \mu_b}{\sqrt{\gls{stddev}^2_b + \epsilon}},
+    \gls{normx}_i &= \frac{x_i - \gls{mean}_b}{\sqrt{\gls{stddev}^2_b + \epsilon}},
 \end{aligned}
 \end{equation}
-where for mini-batch $b$, $\mu_b$ is the mean, $\gls{stddev}^2_b$ is the variance, $\epsilon$ is for numerical stability, $\left\{x_0, \ldots, x_i, \ldots x_M\right\}$ are the mini-batch responses for a particular parameter of the layer, and $\hat{x_i}$ is the normalized response for that parameter. 
+where for mini-batch $b$, $\gls{mean}_b$ is the mean, $\gls{stddev}^2_b$ is the variance, $\epsilon$ is for numerical stability, $\left\{x_0, \ldots, x_i, \ldots x_M\right\}$ are the mini-batch responses for a particular parameter of the layer, and $\gls{normx}_i$ is the normalized response for that parameter. 
 
 Batch normalization then uses these statistics, along with two parameters learned across mini-batches, $\gamma$ and $\beta$, to scale and shift the responses,
 \begin{equation}    
-    y_i = \gamma \hat{x_i} + \beta.
+    \gls{y}_i = \gamma \gls{normx}_i + \beta.
 \end{equation}
 %
 Most state-of-the-art supervised \glspl{dnn}\index{DNN} now use batch normalization along with the initialization presented above to train.
