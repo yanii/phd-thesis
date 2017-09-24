@@ -338,12 +338,14 @@ The plots show the maximum increase in loss or decrease in accuracy. Both are me
 \centering
 \begin{tikzpicture}
 \begin{axis}[
+    ybar,
+    bar width=0.1,
     axis x line=bottom,
     axis y line=left,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.16\textheight,
+    height=0.3\textheight,
     xlabel={Hidden Units},
     ylabel={\% of pairwise units where $\Delta L < 0$},
     yticklabel=\pgfmathprintnumber{\tick}\,\%,
@@ -369,12 +371,14 @@ The plots show the maximum increase in loss or decrease in accuracy. Both are me
 \centering
 \begin{tikzpicture}
 \begin{axis}[
+    ybar,
+    bar width=0.1,
     axis x line=bottom,
     axis y line=left,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.16\textheight,
+    height=0.3\textheight,
     xlabel={Hidden Units},
     ylabel={\% of pairwise units where $\Delta L = 0$},
     yticklabel=\pgfmathprintnumber{\tick}\,\%,
@@ -393,34 +397,36 @@ The plots show the maximum increase in loss or decrease in accuracy. Both are me
 \caption{Training Loss: Percentage of pairs of hidden units that are independent.}
 \label{fig:mnist_ablation_stats_train_loss_eq}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    axis x line=bottom,
-    axis y line=left,
-    \setplotcyclecat{5},
-    scale only axis,
-    width=0.8\linewidth,
-    height=0.16\textheight,
-    xlabel={Hidden Units},
-    ylabel={\% of pairwise units where $\Delta L > 0$},
-    yticklabel=\pgfmathprintnumber{\tick}\,\%,
-    xmin = 10,
-    xmax = 100,
-%    ymode=log,
-%    xmode=log,
-]
-\addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
-\end{axis}
-\end{tikzpicture}
-\caption{Training Loss: Percentage of pairs of hidden units that are codependent.}
-\label{fig:mnist_ablation_stats_train_loss_gt}
-\end{subfigure}
+% \begin{subfigure}[b]{\linewidth}
+% \centering
+% \begin{tikzpicture}
+% \begin{axis}[
+%     ybar,
+%     bar width=0.1,
+%     axis x line=bottom,
+%     axis y line=left,
+%     \setplotcyclecat{5},
+%     scale only axis,
+%     width=0.8\linewidth,
+%     height=0.16\textheight,
+%     xlabel={Hidden Units},
+%     ylabel={\% of pairwise units where $\Delta L > 0$},
+%     yticklabel=\pgfmathprintnumber{\tick}\,\%,
+%     xmin = 10,
+%     xmax = 100,
+% %    ymode=log,
+% %    xmode=log,
+% ]
+% \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{6} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
+% \end{axis}
+% \end{tikzpicture}
+% \caption{Training Loss: Percentage of pairs of hidden units that are codependent.}
+% \label{fig:mnist_ablation_stats_train_loss_gt}
+% \end{subfigure}
 \caption[Pairwise filter ablation counts for MNIST]{Number of pairs of hidden units in a single-layer hidden MNIST classification network which under ablation, are adversely dependent ($\Delta L < 0$), independent ($\Delta L = 0$) or dependent ($\Delta L > 0$) for the training set.}
 \label{fig:mnist_ablation_stats}
 \end{figure}
