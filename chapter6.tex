@@ -151,8 +151,9 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 % \legend{\gls{sgd}, momentum, width Decay, dropout, HF}
 % \end{axis}
 \begin{axis}[
-    axis x line=none,
     axis y line=left,
+    axis x line=bottom,
+    % axis x line=none,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
@@ -162,13 +163,16 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     xmin = 10,
     xmax = 300,
     ymode=log,
-%    xmode=log,
+%    xmode=log,,
+     legend columns=-1,
+     legend style={at={(0.5,1.1)},anchor=south,text depth=.5ex},
 ]
 \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
+\legend{\gls{sgd}, momentum, width Decay, dropout, HF}
 \end{axis}
 \end{tikzpicture}
 \caption{Training loss change: maximum increase}
@@ -200,7 +204,8 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 % \end{axis}
 \begin{axis}[
     axis y line=left,
-    axis x line=none,
+    axis x line=bottom,
+    % axis x line=none,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
@@ -248,7 +253,8 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 % \end{axis}
 \begin{axis}[
     axis y line=left,
-    axis x line=none,
+    axis x line=bottom,
+    % axis x line=none,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
@@ -296,7 +302,8 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 % \end{axis}
 \begin{axis}[
     axis y line=left,
-    axis x line=none,
+    axis x line=bottom,
+    % axis x line=none,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
@@ -319,7 +326,10 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 %Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
 \label{fig:mnist_ablation_test_acc}
 \end{subfigure}
-\caption[Pairwise filter ablation for MNIST]{Maximum increase and decrease in training/test loss/accuracy for a single-layer hidden MNIST classification network under pairwise ablation of the hidden units. Solid lines show the maximum decrease in loss or increase in accuracy for all pairs of neurons. Dotted lines show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}\label{fig:mnist_ablation}
+\caption[Pairwise filter ablation for MNIST]{Maximum increase and decrease in training/test loss/accuracy for a single-layer hidden MNIST classification network under pairwise ablation of the hidden units. 
+%Solid lines show the maximum decrease in loss or increase in accuracy for all pairs of neurons. 
+%Dotted lines
+The plots show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}\label{fig:mnist_ablation}
 \end{figure}
 \begin{figure}[tbp]
 \begin{subfigure}[b]{\linewidth}
