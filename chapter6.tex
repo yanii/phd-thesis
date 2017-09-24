@@ -2,7 +2,9 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-    \chapter{Co-adaption in Deep Neural Networks}\label{pairablation}
+\chapter{Co-adaption in Deep Neural Networks}\label{pairablation}
+As discussed in \cref{optimizationlink}, there is a link between structural priors and a failure in our current optimization methods. Dropout\index{dropout} in particular seems like it may have a link to structural priors given that it is claimed to be randomly sampling `thinner' network architectures composed of subsets of the neurons from the model. It can also be argued, as we will demonstrate, that dropout is an optimization trick rather than a form of regularization. Here we will present work that, while not being substantial enough for publication, may provide an interesting insight into the problem of `co-adaption' as discussed by \citet{Hinton2012} and the mechanism of dropout.
+
 \section{The Limitations of First Order Optimization}
 With the increasing number of practical applications of deep learning, the optimization of deep neural networks is of critical importance, with generalization, accuracy and training time all direct consequences. Due to practical considerations of training large state-of-the-art models with limited computational resources, network optimization is restricted to first order methods in practice -- typically stochastic gradient descent with momentum. With breakthroughs in initialization~\citep{glorot2010understanding,He2015b} and maintenance of numerical precision during training~\citep{Ioffe2015} alleviating the `vanishing gradient' problem, such methods have surpassed human accuracy on large scale image recognition datasets, amongst other breakthrough results. This success has overshadowed any weakness of the current methods of training deep networks.
 
@@ -111,7 +113,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \end{subfigure}
 \begin{subfigure}[c]{0.47\textwidth}
 \centering
-\includegraphics[height=0.23\textheight]{resnet50histtest}
+\includegraphics[height=0.24\textheight]{resnet50histtest}
 \caption{Histogram of change in top-5 val.~acc.}
 \label{fig:resnet50ablation_conv1_top5_test}
 \end{subfigure}
@@ -563,12 +565,11 @@ Both methods have close to identical effect on training loss/error, and are dras
 
 \paragraph{Dropout and Batch Normalization}
 It has been observed empirically by \citet{Ioffe2015} and others that when used with batch normalization, dropout is not as effective. In light of our understanding of dropout as being an optimization method for error surfaces with highly complex curvature, we can explain this. As explained by~\citep{martens2010deep}, an important property of second order optimization methods is `scale invariance' --- robustness to any linear rescaling of the model parameters. For example, if we are in an elliptically shaped local minima of the error surface, ideally we would want different a higher learning rate for parameters in the direction of the major axis, as compared to those in the direction of the minor axis, as RMSprop attempts. When using batch normalization, the layer-wise error surface is whitened, reducing the importance of scale-invariance in optimization.
-
-\mynote{Questions to answer:
-\begin{itemize}
-\item Do residual connections alleviate neural co-adaption?
-\item Learning identity mapping is difficult due to bad curvature, exact situation cited as example by \citet{martens2010deep}.
-\item Is learning deep networks easier than learning wide networks because of neural co-adaption?
-\end{itemize}}
+% \mynote{Questions to answer:
+% \begin{itemize}
+% \item Do residual connections alleviate neural co-adaption?
+% \item Learning identity mapping is difficult due to bad curvature, exact situation cited as example by \citet{martens2010deep}.
+% \item Is learning deep networks easier than learning wide networks because of neural co-adaption?
+% \end{itemize}}
 
 \end{document}
