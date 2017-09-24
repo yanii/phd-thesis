@@ -139,7 +139,7 @@
     \begin{equation}
     \gls{vectory}_l =\gls{wmatrix}_l \gls{vectorx}_l + \gls{vectorb}_l.
     \end{equation}
-    Here $\gls{vectory}_l$ is a $\gls{d}$$\times$$1$ vector representing a pixel in the output \gls{featuremap}\index{feature map} and $\gls{vectorx}_l$ is a $ w h c \times 1$ vector that represents a $w$$\times$$h$ sub-region of the $c$-channel input \gls{featuremap}\index{feature map}. $\gls{wmatrix}_l$ is the $d$$\times$$n$ weight matrix, where $\gls{d}$ is the number of filters and $n$ is the size of a filter, \ie $n = w h c$ for a filter with spatial dimensions $w$$\times$$h$ operating on an input \gls{featuremap}\index{feature map} of $c$ channels, and $\gls{vectorb}_l$ is the bias. Finally $\gls{vectorx}_l = f(\gls{vectory}_{l-1})$ is the output of the previous layer passed through an activation function $f$ (\eg the application of a \gls{relu} to each element of $\gls{vectory}_{l-1}$).
+    Here $\gls{vectory}_l$ is a $\gls{d}$$\times$$1$ vector representing a pixel in the output \gls{featuremap}\index{feature map} and $\gls{vectorx}_l$ is a $\gls{filterw} \gls{filterh} \gls{c} \times 1$ vector that represents a $\gls{filterw}$$\times$$\gls{filterh}$ sub-region of the $\gls{c}$-channel input \gls{featuremap}\index{feature map}. $\gls{wmatrix}_l$ is the $\gls{d}$$\times$$n$ weight matrix, where $\gls{d}$ is the number of filters and $n$ is the size of a filter, \ie $n = \gls{filterw} \gls{filterh} \gls{c}$ for a filter with spatial dimensions $\gls{filterw}$$\times$$\gls{filterh}$ operating on an input \gls{featuremap}\index{feature map} of $\gls{c}$ channels, and $\gls{vectorb}_l$ is the bias. Finally $\gls{vectorx}_l = f(\gls{vectory}_{l-1})$ is the output of the previous layer passed through an activation function $\gls{f}$ (\eg the application of a \gls{relu} to each element of $\gls{vectory}_{l-1}$).
     
     \paragraph{Backward Propagation}
     During backpropagation\index{backpropagation}, the gradient of a convolutional layer is computed as
@@ -147,36 +147,36 @@
     \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l \Delta \gls{vectory}_l,
     \label{eq:back_prop_gradient}
     \end{equation}
-    where $\Delta \gls{vectorx}_l$ and $\Delta \gls{vectory}_l$ denote the derivatives of loss $\gls{L}$ with respect to input and output pixels. $\Delta \gls{vectorx}_l$ is a $c$$\times$$1$ vector of gradients with respect to the channels of a single pixel in the input \gls{featuremap}\index{feature map} and $\Delta \gls{vectory}$ represents $h$$\times$$w$ pixels in d channels of the output \gls{featuremap}\index{feature map}. $\hat{\gls{wmatrix}}_l$ is a $c$$\times$$\hat{n}$ matrix where the filter weights are arranged in the right order for backpropagation\index{backpropagation}, and $\hat{n} = whd$. Note that $\hat{\gls{wmatrix}}_l$ can be simply reshaped from $\gls{wmatrix}_l^\top$. Also note that the elements of $\Delta \gls{vectory}_l$ correspond to pixels in the output image that had a forwards dependency on the input image pixel corresponding to $\Delta \gls{vectorx}$. In back propagation, each element $\Delta y_l$ of $\Delta \gls{vectory}_l$ is related to an element $\Delta x_{l+1}$ of some $\Delta \gls{vectorx}_{l+1}$ (\ie a back-propagated gradient in the next layer) by the derivative of the activation function $f$:
+    where $\Delta \gls{vectorx}_l$ and $\Delta \gls{vectory}_l$ denote the derivatives of loss $\gls{L}$ with respect to input and output pixels. $\Delta \gls{vectorx}_l$ is a $\gls{c}$$\times$$1$ vector of gradients with respect to the channels of a single pixel in the input \gls{featuremap}\index{feature map} and $\Delta \gls{vectory}$ represents $\gls{filterh}$$\times$$\gls{w}$ pixels in d channels of the output \gls{featuremap}\index{feature map}. $\hat{\gls{wmatrix}}_l$ is a $\gls{c}$$\times$$\hat{n}$ matrix where the filter weights are arranged in the right order for backpropagation\index{backpropagation}, and $\hat{n} = \gls{filterw}\gls{filterh}\gls{d}$. Note that $\hat{\gls{wmatrix}}_l$ can be simply reshaped from $\gls{wmatrix}_l^\top$. Also note that the elements of $\Delta \gls{vectory}_l$ correspond to pixels in the output image that had a forwards dependency on the input image pixel corresponding to $\Delta \gls{vectorx}$. In back propagation, each element $\Delta \gls{y}_l$ of $\Delta \gls{vectory}_l$ is related to an element $\Delta \gls{x}_{l+1}$ of some $\Delta \gls{vectorx}_{l+1}$ (\ie a back-propagated gradient in the next layer) by the derivative of the activation function $\gls{f}$:
     \begin{equation}
-    \Delta y_l = f^\prime (y_l) \Delta x_{l+1},
+    \Delta \gls{y}_l = \gls{f}^\prime (\gls{y}_l) \Delta \gls{x}_{l+1},
     \end{equation}
-    where $f^\prime$ is the derivative of the activation function. 
+    where $\gls{f}^\prime$ is the derivative of the activation function. 
     
     
     \newcommand{\Expect}{\gls{expected}}
     \newcommand{\Var}{\gls{var}}
     
     \paragraph{Weight Initialization}
-    Now let $\Delta y_l$, $\Delta x_l$ and $w_l$ be scalar random variables that describe the distribution of elements in $\Delta \gls{vectory}_l$, $\Delta \gls{vectorx}_{l}$ and $\hat{\gls{wmatrix}}_l$ respectively. Then, assuming $f^\prime (y_l)$ and $\Delta x_{l+1}$ are independent,
+    Now let $\Delta \gls{y}_l$, $\Delta \gls{x}_l$ and $\gls{w}_l$ be scalar random variables that describe the distribution of elements in $\Delta \gls{vectory}_l$, $\Delta \gls{vectorx}_{l}$ and $\hat{\gls{wmatrix}}_l$ respectively. Then, assuming $f^\prime (\gls{y}_l)$ and $\Delta \gls{x}_{l+1}$ are independent,
     \begin{equation}
-    \Expect{}[\Delta y_l] = \Expect{}[f^\prime (y_l)] \Expect{}[ \Delta x_{l+1}].
+    \Expect{}[\Delta \gls{y}_l] = \Expect{}[\gls{f}^\prime (\gls{y}_l)] \, \Expect{}[ \Delta \gls{x}_{l+1}].
     \end{equation}
     
-    For the \gls{relu} case, $f'(y_l)$ is zero or one with equal probability. 
-    Like \citet{glorot2010understanding}, we assume that $w_l$ and $\Delta y_l$ are independent. Thus, \cref{eq:back_prop_gradient} implies that $\Delta x_l$ has zero mean for all $l$, when $w_l$ is initialized by a distribution that is symmetric around zero. Thus we have $\Expect{}[\Delta y_l] = \frac{1}{2}\Expect{}[\Delta x_{l+1}]= 0$ and also $\Expect{}[(\Delta y_l)^2] = \Var{}[\Delta y_l] = \frac{1}{2} \Var{}[\Delta x_{l+1}]$. Now, since each element of $\Delta \gls{vectorx}_l$ is a summation of $\hat n$ products of elements of $\hat{\gls{wmatrix}}_l$ and elements of $\Delta \gls{vectory}_l$, we can compute the variance of the gradients in \cref{eq:back_prop_gradient}:
+    For the \gls{relu} case, $\gls{f}'(\gls{y}_l)$ is zero or one with equal probability. 
+    Like \citet{glorot2010understanding}, we assume that $\gls{w}_l$ and $\Delta \gls{y}_l$ are independent. Thus, \cref{eq:back_prop_gradient} implies that $\Delta \gls{x}_l$ has zero mean for all $l$, when $\gls{w}_l$ is initialized by a distribution that is symmetric around zero. Thus we have $\Expect{}[\Delta \gls{y}_l] = \frac{1}{2}\Expect{}[\Delta \gls{x}_{l+1}]= 0$ and also $\Expect{}[(\Delta \gls{y}_l)^2] = \Var{}[\Delta \gls{y}_l] = \frac{1}{2} \Var{}[\Delta \gls{x}_{l+1}]$. Now, since each element of $\Delta \gls{vectorx}_l$ is a summation of $\hat n$ products of elements of $\hat{\gls{wmatrix}}_l$ and elements of $\Delta \gls{vectory}_l$, we can compute the variance of the gradients in \cref{eq:back_prop_gradient}:
     
     \begin{equation}
     \begin{aligned}
-    \Var{}[\Delta x_l] &=  \hat{n} \Var{}[w_l] \Var{}[\Delta y_l]\\
-    &= \frac{1}{2}   \hat{n} \Var{}[w_l] \Var{} [\Delta x_{l+1}].
+    \Var{}[\Delta \gls{x}_l] &=  \hat{n} \Var{}[\gls{w}_l] \Var{}[\Delta \gls{y}_l]\\
+    &= \frac{1}{2}   \hat{n} \Var{}[\gls{w}_l] \Var{} [\Delta \gls{x}_{l+1}].
     \end{aligned}
     \end{equation}
     
     
     To avoid scaling the gradients in the convolutional layers (to avoid exploding or vanishing gradients), we set the ratio between these variances to 1:
     \begin{equation}
-    \frac{1}{2} \hat{n} \Var{}[w_l] = 1.
+    \frac{1}{2} \hat{n} \Var{}[\gls{w}_l] = 1.
     \end{equation}
     
     This leads to the result of \citet{He2015b}, in that a layer with $\hat{n}_l$ connections followed by a \gls{relu} activation function should be initialized with a zero-mean Gaussian distribution with standard deviation $\sqrt{2/ \hat{n}_l}$.
@@ -186,36 +186,36 @@
     \begin{figure}[tbp]
         \centering
         \includegraphics[width=0.95\textwidth]{composite}
-        \caption[A composite convolutional layer]{{\bf A composite convolutional layer}. Composite layers convolve an input \gls{featuremap}\index{feature map} with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $d^{[i]}$ filters with spatial dimension $w^{[i]} \times h^{[i]}$. The outputs are concatenated to create a $d$ channel output \gls{featuremap}\index{feature map}. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
+        \caption[A composite convolutional layer]{{\bf A composite convolutional layer}. Composite layers convolve an input \gls{featuremap}\index{feature map} with $N$ groups of convolutional filters of several different spatial dimensions. Here the $i^\text{th}$ group has $\gls{d}^{[i]}$ filters with spatial dimension $\gls{w}^{[i]} \times \gls{filterh}^{[i]}$. The outputs are concatenated to create a $\gls{d}$ channel output \gls{featuremap}\index{feature map}. Composite layers require careful weight initialization to avoid vanishing/exploding gradients during training.}
         \label{fig:compositelayers}
     \end{figure}
     %%%
     
-    The initialization scheme described above assumes that the layer comprises filters of spatial dimension $w$$\times$$h$. Now we extend this scheme to composite convolutional layers containing $N$ groups of filters of different spatial dimensions $w^{[i]} \times h^{[i]}$ (where superscript $[i]$ denotes the group index and with $i\in \{1,\dots,N\}$). Now the layer response is the concatenation of the responses of each group of filters:
+    The initialization scheme described above assumes that the layer comprises filters of spatial dimension $\gls{w}$$\times$$\gls{filterh}$. Now we extend this scheme to composite convolutional layers containing $N$ groups of filters of different spatial dimensions $\gls{w}^{[i]} \times \gls{filterh}^{[i]}$ (where superscript $[i]$ denotes the group index and with $i\in \{1,\dots,N\}$). Now the layer response is the concatenation of the responses of each group of filters:
     \begin{equation}
     \gls{vectory}_l =\begin{bmatrix}\gls{wmatrix}_l^{[1]} \gls{vectorx}_l^{[1]} \\ \gls{wmatrix}_l^{[2]} \gls{vectorx}_l^{[2]} \\ \dots \\ \gls{wmatrix}_l^{[N]} \gls{vectorx}_l^{[N]} \end{bmatrix} + \gls{vectorb}_l.
     \end{equation}
-    As before $\gls{vectory}_l$ is a $d$$\times$$1$ vector representing the response at one pixel of the output \gls{featuremap}\index{feature map}. Now each ${\bf x}^{[i]}$ is a $w^{[i]} h^{[i]} c \times 1$ vector that represents a different shaped $w^{[i]} \times h^{[i]}$ sub-region of the input \gls{featuremap}\index{feature map}. Each $\gls{wmatrix}_l^{[i]}$ is the $c_l^{[i]}\times \hat{n}^{[i]}$ weight matrix, where $d$ is the number of filters and $\hat{n}^{[i]}$ is the size of a filter, \ie $\hat{n}^{[i]} = w^{[i]} h^{[i]} c^{[i]}$ for a filter of spatial dimension $w^{[i]} \times h^{[i]}$ operating on an input \gls{featuremap}\index{feature map} of $c_l = d_{l-1}$ channels.
+    As before $\gls{vectory}_l$ is a $\gls{d}$$\times$$1$ vector representing the response at one pixel of the output \gls{featuremap}\index{feature map}. Now each ${\gls{vectorx}}^{[i]}$ is a $\gls{w}^{[i]} \gls{filterh}^{[i]} \gls{c} \times 1$ vector that represents a different shaped $\gls{w}^{[i]} \times \gls{filterh}^{[i]}$ sub-region of the input \gls{featuremap}\index{feature map}. Each $\gls{wmatrix}_l^{[i]}$ is the $\gls{c}_l^{[i]}\times \hat{n}^{[i]}$ weight matrix, where $\gls{d}$ is the number of filters and $\hat{n}^{[i]}$ is the size of a filter, \ie $\hat{n}^{[i]} = \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{c}^{[i]}$ for a filter of spatial dimension $\gls{w}^{[i]} \times \gls{filterh}^{[i]}$ operating on an input \gls{featuremap}\index{feature map} of $\gls{c}_l = \gls{d}_{l-1}$ channels.
     
     During back propagation, the gradient of the composite convolutional layer is computed as a summation of the contributions from each group of filters:
     \begin{equation}
     \Delta \gls{vectorx}_l = \hat{\gls{wmatrix}}_l^{[1]} \Delta \gls{vectory}_l^{[1]} +  \hat{\gls{wmatrix}}_l^{[2]} \Delta \gls{vectory}_l^{[2]} + \cdots+  \hat{\gls{wmatrix}}_l^{[N]} \Delta \gls{vectory}_l^{[N]},
     \label{eq:back_prop_gradient_composite}
     \end{equation}
-    where now $\Delta \gls{vectory}^{[i]}$ represents $w^{[i]} \times h^{[i]}$ pixels in $d^{[i]}$ channels of the output \gls{featuremap}\index{feature map}. Each $\hat{\gls{wmatrix}}_l^{[i]}$ is a $c_l \times \hat{n}^{[i]}$ matrix of weights arranged appropriately for back propagation. Again, note that each $\hat{\gls{wmatrix}}_l^{[i]}$ can be simply reshaped from $\gls{wmatrix}_l^{[i]}$.
+    where now $\Delta \gls{vectory}^{[i]}$ represents $\gls{w}^{[i]} \times \gls{filterh}^{[i]}$ pixels in $\gls{d}^{[i]}$ channels of the output \gls{featuremap}\index{feature map}. Each $\hat{\gls{wmatrix}}_l^{[i]}$ is a $\gls{c}_l \times \hat{n}^{[i]}$ matrix of weights arranged appropriately for back propagation. Again, note that each $\hat{\gls{wmatrix}}_l^{[i]}$ can be simply reshaped from $\gls{wmatrix}_l^{[i]}$.
     
     As before, each element of $\Delta \gls{vectory}_l$ is a sum over $\hat n$ products between elements of $\hat{\gls{wmatrix}}^{[i]}_l$ and elements of $\Delta \gls{vectory}^{[i]}_l$ and here $\hat{n}$ is given by:
     \begin{equation}
-    \hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}.
+    \hat{n} = \sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}.
     \end{equation}
     
     In the case of a \gls{relu} non-linearity, this leads to a zero-mean Gaussian distribution with standard deviation:
     
     \begin{equation}
-    \sigma = \sqrt{\frac{2}{\sum{ w^{[i]} h^{[i]} d^{[i]}}}}.\label{eqn:reluinit}
+    \gls{stddev} = \sqrt{\frac{2}{\sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}}}.\label{eqn:reluinit}
     \end{equation}
     
-    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $w^{[i]} h^{[i]} d^{[i]}$ outgoing connections should be initialized as if it is a single-layer with  $\hat{n} = \sum{ w^{[i]} h^{[i]} d^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation given in \cref{eqn:reluinit}.
+    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $\gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}$ outgoing connections should be initialized as if it is a single-layer with  $\hat{n} = \sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation given in \cref{eqn:reluinit}.
     
     \section{Results}
     To validate our approach, we show that we can replace the filters used in existing state-of-the-art network architectures with low-rank representations as described above to reduce computational complexity without reducing accuracy. Here we characterize the computational complexity of a \gls{cnn} using the number of multiply-accumulate operations required for a forward pass (which depends on the size of the filters in each convolutional layer as well as the input image size and stride).
@@ -645,7 +645,7 @@
         \label{fig:cifarresultsch4}
     \end{figure}
     
-    This architecture uses $5\times5$ filters in some layers. We found that we could replace all of these with $3$$\times$$3$ filters, with comparable accuracy. As suggested by \citet{Simonyan2014verydeep}, stacked  $3$$\times$$3$ filters have the effective receptive field of larger filters with less computational complexity. In this \textbf{nin-c3} network, we replaced the first convolutional layer with one $3$$\times$$3$ layer, and the second convolutional layer with two $3$$\times$$3$ layers. This network is 26\% faster than the standard NiN model, with only 54\% of the model parameters. Using our low-rank filters in this network, we trained the \textbf{nin-c3-lr} network, which is of similar accuracy (91.8\% \vs 91.9\%) but is approximately 54\% of the original network's computational complexity, with only 45\% of the model parameters.
+    This architecture uses $5$$\times$$5$ filters in some layers. We found that we could replace all of these with $3$$\times$$3$ filters, with comparable accuracy. As suggested by \citet{Simonyan2014verydeep}, stacked  $3$$\times$$3$ filters have the effective receptive field of larger filters with less computational complexity. In this \textbf{nin-c3} network, we replaced the first convolutional layer with one $3$$\times$$3$ layer, and the second convolutional layer with two $3$$\times$$3$ layers. This network is 26\% faster than the standard NiN model, with only 54\% of the model parameters. Using our low-rank filters in this network, we trained the \textbf{nin-c3-lr} network, which is of similar accuracy (91.8\% \vs 91.9\%) but is approximately 54\% of the original network's computational complexity, with only 45\% of the model parameters.
     
     \subsection{Comparing with ILSVRC State-of-the-Art Networks}
     \Cref{fig:bigpicturema,fig:bigpictureparam} compare published top-5 \gls{ilsvrc} validation error \vs multiply-accumulate operations and number of model parameters (respectively) for several state-of-the-art networks~\citep{Simonyan2014verydeep,Szegedy2014going,He2015b}. The error rates for these networks are only reported as obtained with different combinations of computationally expensive training and test-time augmentation methods, including scale, photometric, ensembles (multi-model), and multi-view/dense oversampling. This can makes it difficult to compare model architectures, especially with respect to computational requirements.
