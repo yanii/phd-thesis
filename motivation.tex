@@ -340,10 +340,10 @@ Constructive approaches to binary classification neural network architectures we
 	%
     where $E$ is the objective function, $w_i$ is the $i$th weight. We can write this more compactly in matrix notation,
     \begin{align}
-       \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \mathbf{H}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+       \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \gls{hessian}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
     \end{align}
 	where $\mathbf{w}$ is the vector of network weights, and %$h_{ij}=\partial^2 E / \partial w_i \partial w_j$
-	$\mathbf{H}$ is the Hessian\index{Hessian} matrix of second order derivatives. 
+	$\gls{hessian}$ is the Hessian\index{Hessian} matrix of second order derivatives. 
 
     This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
 
