@@ -2,7 +2,7 @@
 \documentclass[thesis]{subfiles}
 
 \begin{document}
-\chapter{Co-adaption in Deep Neural Networks}\label{pairablation}
+\chapter[Co-adaption in Deep Neural Networks]{Co-adaption in\\Deep Neural Networks}\label{pairablation}
 As discussed in \cref{optimizationlink}, there is a link between structural priors and a failure in our current optimization methods. Dropout\index{dropout} in particular seems like it may have a link to structural priors given that it is claimed to be randomly sampling `thinner' network architectures composed of subsets of the neurons from the model. It can also be argued, as we will demonstrate, that dropout is an optimization trick rather than a form of regularization. Here we will present work that, while not being substantial enough for publication, may provide an interesting insight into the problem of `co-adaption' as discussed by \citet{Hinton2012} and the mechanism of dropout.
 
 \section{The Limitations of First Order Optimization}
@@ -32,7 +32,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    height=0.3\textheight,
+    height=0.27\textheight,
     axis equal image,
 %    axis lines=none,
     enlargelimits=false,
@@ -71,7 +71,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    height=0.3\textheight,
+    height=0.27\textheight,
     axis equal image,
 %    axis lines=none,
     enlargelimits=false,
@@ -111,6 +111,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \caption{Histogram of change in top-5 train.~acc.}
 \label{fig:resnet50ablation_conv1_top5_train}
 \end{subfigure}
+\hfill
 \begin{subfigure}[c]{0.47\textwidth}
 \centering
 \includegraphics[height=0.24\textheight]{resnet50histtest}
