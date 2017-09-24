@@ -31,7 +31,7 @@
     The information theoretic notion of capacity, that is the expressive power of a classification algorithm, gives important insights to the learning ability of a classification algorithm. Analysis is typically based on the Vapnik–Chervonenkis (\gls{vc}) dimension~\citep{vapnik2015uniform} of the class of functions used as discriminators, \eg hyperplanes in the case of neural networks\index{neural network}. Intuitively, for a discriminative classifier, the \gls{vc} dimension measures the largest number of points that can be classified without error. In such a case, the set of points is said to be \emph{shattered} by the classifier. A good overview of \gls{vc} dimension is given by \citet{burges1998tutorial}.
     
     \subsection{Vapnik-Chervonenkis Dimension}
-    More formally, a classification model $f(\theta)$, parametrized by $\theta$ is said to \emph{shatter} a set of data points $(x_0, x_1, \ldots, x_h)$ if for for all possible labellings of the points, the classification model can perfectly learn the points. The \gls{vc} dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of \gls{vc} dimension $h$, it is sufficient that there exists a \emph{single} set of $h$ points which can be shattered. It is important to note that in general a classifier with a \gls{vc} dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
+    More formally, a classification model $f(\theta)$, parametrized by $\theta$ is said to \emph{shatter} a set of data points $(\gls{x}_0, \gls{x}_1, \ldots, \gls{x}_h)$ if for for all possible labellings of the points, the classification model can perfectly learn the points. The \gls{vc} dimension is the largest number of (any) points that can be shattered by such a classifier. For a classifier of \gls{vc} dimension $h$, it is sufficient that there exists a \emph{single} set of $h$ points which can be shattered. It is important to note that in general a classifier with a \gls{vc} dimension of $h$ will not necessarily shatter every possible set of $h$ points. 
     %Note that, if the \gls{vc} dimension is h, then there exists at least one set of h points that can be shattered, but it in general it will not be true that every set of h points can be shattered
     
     For example, in \cref{fig:vcdim_r2line}, the function class of oriented hyperplanes, \ie lines in 2D, can separate all possible labellings of 3 points in $\mathbb{R}^2$ --- oriented hyperplanes in $\mathbb{R}^2$ shatter 3 points. However, for 4 points, this is no longer true. It can be proven (see \citet{burges1998tutorial}) that in general for $\mathbb{R}^n$, the set of oriented hyperplanes shatters any set of $n+1$ points.
@@ -72,11 +72,11 @@
     
     and $c$ is a constant factor, and the $\ell_1$ norm of each unit's weight vector $w$ is bounded by $A$, 
     \begin{equation}
-    \|\mathbf{w}\|_1 = \sum_i | w_i | \leq A.
+    \|\gls{vectorw}\|_1 = \sum_i | \gls{w}_i | \leq A.
     \end{equation}
     Surprisingly there is no term for the number of units for any layer in this equation, but rather it is the bounds on the weights themselves that determine ability of the network to generalize. In general, for a network where the inputs $\mathbf{x}$ are also bounded,
     \begin{equation}
-        \|\mathbf{x}\|_\infty = \max(|x_0|, |x_1|, \ldots, |x_n|) \leq B,
+        \|\mathbf{x}\|_\infty = \max(|\gls{x}_0|, |\gls{x}_1|, \ldots, |\gls{x}_n|) \leq B,
     \end{equation}
     \citet{bartlett1997} show that for a given error $\epsilon$, the number of training samples $m$ required grows roughly as,
     \begin{align}
@@ -239,30 +239,30 @@ The NFL theorem highlights the need to focus on designing learning algorithms th
 
 \section{Bayesian Model Selection}
 Model selection is the problem of choosing, with generalization in mind, between several model architectures with different numbers of layers, neurons, etc. 
-\citet{mackay1992practical} proposed a Bayesian approach to model selection\index{Bayesian model selection|textbf}. \citeauthor{mackay1992practical} points to the relationship of \gls{occam} to Bayesian approaches and, rather than performing model selection by using cross-validation, \citeauthor{mackay1992practical} proposes to predict the likelihood of models given onlt the training data. Assume we have several trained models $\mathcal{M}_i$, and a training dataset $D$. In the problem of model selection we are interested in solving:
+\citet{mackay1992practical} proposed a Bayesian approach to model selection\index{Bayesian model selection|textbf}. \citeauthor{mackay1992practical} points to the relationship of \gls{occam} to Bayesian approaches and, rather than performing model selection by using cross-validation, \citeauthor{mackay1992practical} proposes to predict the likelihood of models given onlt the training data. Assume we have several trained models $\mathcal{M}_i$, and a training dataset $\gls{X}$. In the problem of model selection we are interested in solving:
 \begin{equation}
-	\argmax_i p(\mathcal{M}_i|D),
+	\argmax_i p(\mathcal{M}_i|\gls{X}),
 \end{equation}
-where $p(\mathcal{M}_i|D)$ is the probability of the model conditioned on the training data.
+where $p(\mathcal{M}_i|\gls{X})$ is the probability of the model conditioned on the training data.
 
 The basic principle behind Bayesian model selection\index{Bayesian model selection} is explained by Bayes rule. For a neural network model $\mathcal{M}_i$ with parameters $\mathbf{\theta}$,
 \begin{equation}
-	p(\mathbf{\theta}|\mathcal{M}_i,D) = \frac{p(D|\mathbf{\theta},\mathcal{M}_i)\,p(\mathbf{\theta}|\mathcal{M}_i)}{p(D|\mathcal{M}_i)},
+	p(\mathbf{\theta}|\mathcal{M}_i,\gls{X}) = \frac{p(\gls{X}|\mathbf{\theta},\mathcal{M}_i)\,p(\mathbf{\theta}|\mathcal{M}_i)}{p(\gls{X}|\mathcal{M}_i)},
 \end{equation}
-where $p(\mathbf{\theta}|\mathcal{M}_i,D)$, or the \emph{posterior}\index{posterior}, is what we commonly attempt to solve for using gradient descent when training a neural network.
-The \emph{prior}\index{prior}, $p(\mathbf{\theta}|\mathcal{M}_i)$, are the probabilities on what values we expect the weights of the model to be. The normalization term, $p(D|\mathcal{M}_i)$, is the probability of the data given the model --- what \citeauthor{mackay1992practical} calls the `evidence' for the model~\citep{mackay1995}.
+where $p(\mathbf{\theta}|\mathcal{M}_i,\gls{X})$, or the \emph{posterior}\index{posterior}, is what we commonly attempt to solve for using gradient descent when training a neural network.
+The \emph{prior}\index{prior}, $p(\mathbf{\theta}|\mathcal{M}_i)$, are the probabilities on what values we expect the weights of the model to be. The normalization term, $p(\gls{X}|\mathcal{M}_i)$, is the probability of the data given the model --- what \citeauthor{mackay1992practical} calls the `evidence' for the model~\citep{mackay1995}.
 
 In the case of model selection, we are interested in,
 \begin{equation}
-	p(\mathcal{M}_i|D) = \frac{p(D|\mathcal{M}_i)\,p(\mathcal{M}_i)}{p(D)},
+	p(\mathcal{M}_i|\gls{X}) = \frac{p(\gls{X}|\mathcal{M}_i)\,p(\mathcal{M}_i)}{p(\gls{X})},
 \end{equation}
 where $p(\mathcal{M}_i)$ is the prior (subjective) probability we assign to model $\mathcal{M}_i$. If all models are considered to be of equal probability, then inference is based wholly on the evidence.
 
 The evidence itself is given by the marginalization,
 \begin{equation}
-	p(D|\mathcal{M}_i) = \int p(D|\mathbf{\theta},\mathcal{M}_i)\,p(\mathbf{\theta}|\mathcal{M}_i)\,d\mathbf{\theta}.
+	p(\gls{X}|\mathcal{M}_i) = \int p(\gls{X}|\mathbf{\theta},\mathcal{M}_i)\,p(\mathbf{\theta}|\mathcal{M}_i)\,d\mathbf{\theta}.
 \end{equation}
-\Citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie{}$p(\mathbf{\theta}|D,\mathcal{M}_i$
+\Citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie $p(\mathbf{\theta}|\gls{X},\mathcal{M}_i$, however as explained in \cref{pathological}, the computation or storage of the Hessian\index{Hessian} for contemporary deep networks is infeasible.
 
 \subsection{Occam's Razor}
 Of particular interest to the question of the effect of structure and regularization on generalization, are \citeauthor{MacKay91}'s empirical results showing that \gls{occam} is very much a principle on which neural network design should be structured. \citet[\textsection{3.4}]{MacKay91}, shows that regularization is not enough to make an over-parameterized network generalize as well as a network with a more appropriate parameterization.
@@ -272,7 +272,7 @@ In fact \citeauthor{mackay1992practical} the argument that the Bayesian approach
 \subsection{Practical Implementation}
 While presenting a nice theory on model selection, the practical implementation of this work is rather more difficult~\citep{chipman2001}. In particular, like all Bayesian approaches, having the correct prior probabilities for both the models and weights is important, and yet this is practically difficult in large neural networks.
 
-Besides the difficulty of assigning correct priors, \citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie{}$p(\mathbf{\theta}|D,\mathcal{M}_i$. As explained in \cref{pathological}, the Hessian is difficult to represent for even reasonably sized contemporary deep neural networks.
+Besides the difficulty of assigning correct priors, \citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie{}$p(\mathbf{\theta}|\gls{X},\mathcal{M}_i$. As explained in \cref{pathological}, the Hessian is difficult to represent for even reasonably sized contemporary deep neural networks.
 
 \section{Constructive Neural Network Algorithms}
 	%http://blog.otoro.net/2016/09/28/hyper-networks/
@@ -335,23 +335,23 @@ Constructive approaches to binary classification neural network architectures we
     % http://cslt.riit.tsinghua.edu.cn/mediawiki/images/9/9e/131125-OBD-LC-01.pdf
     % http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
     \begin{align}
-       \delta E &= \sum_i \frac{\partial E}{\partial w_i} \delta w_i + \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 E}{\partial w_i \partial w_j} \delta w_i \delta w_j +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+       d \gls{E} &= \sum_i \frac{\partial \gls{E}}{\partial \gls{w}_i} d \gls{w}_i + \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} d \gls{w}_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 \gls{E}}{\partial \gls{w}_i \partial \gls{w}_j} d \gls{w}_i d \gls{w}_j +\mathcal{O}(\|d \gls{vectorw}\|^3),
     \end{align}
 	%
-    where $E$ is the objective function, $w_i$ is the $i$th weight. We can write this more compactly in matrix notation,
+    where $\gls{E}$ is the objective function, $\gls{w}_i$ is the $i$th weight. We can write this more compactly in matrix notation,
     \begin{align}
-       \delta E &= \left( \frac{\partial E}{\partial \mathbf{w}} \right)^T \delta \mathbf{w} +\frac{1}{2}\delta \mathbf{w}^T \gls{hessian}\, \delta \mathbf{w} +\mathcal{O}(\|\delta \mathbf{w}\|^3),
+       d \gls{E} &= \left( \frac{\partial \gls{E}}{\partial \gls{vectorw}} \right)^T d \gls{vectorw} +\frac{1}{2}d \gls{vectorw}^T \gls{hessian}\, d \gls{vectorw} +\mathcal{O}(\|d \gls{vectorw}\|^3),
     \end{align}
-	where $\mathbf{w}$ is the vector of network weights, and %$h_{ij}=\partial^2 E / \partial w_i \partial w_j$
+	where $\gls{vectorw}$ is the vector of network weights, and %$h_{ij}=\partial^2 \gls{E} / \partial \gls{w}_i \partial \gls{w}_j$
 	$\gls{hessian}$ is the Hessian\index{Hessian} matrix of second order derivatives. 
 
-    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 E / \partial w_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|\delta \mathbf{w}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
+    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 \gls{E} / \partial \gls{w}_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\mathcal{O}(\|d \gls{vectorw}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
 
     \begin{align}
-       \delta E &\approx \frac{1}{2} \sum_i \frac{\partial^2 E}{\partial w_i^2} \delta w_i^2.
+       d \gls{E} &\approx \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} d \gls{w}_i^2.
     \end{align}
 	%
-    To calculate the second derivative, chain rule is used, and the second derivatives are back-propagated through the network. This approximation is used directly as the saliency measure for each network weight $w_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
+    To calculate the second derivative, chain rule is used, and the second derivatives are back-propagated through the network. This approximation is used directly as the saliency measure for each network weight $\gls{w}_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
 	
 	%\subsection{Gating}
     %\citet{hanson1989comparing} proposed using a per-neuron\index{neuron} gating mechanism to measure saliency
