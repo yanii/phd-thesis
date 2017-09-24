@@ -412,12 +412,12 @@ As we have seen with the perceptron\index{perceptron}, the activation function f
 In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $\gls{a} = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
-	\gls{f}(\gls{x}) = \frac{1}{1+e^{-\gls{x}}},
+	\gls{f}(\gls{a}) = \frac{1}{1+e^{-\gls{a}}},
 \end{equation}
 %
 and they hyperbolic tangent,
 \begin{equation}
-	\gls{f}(\gls{x}) = \tanh(\gls{x}).
+	\gls{f}(\gls{a}) = \tanh(\gls{a}).
 \end{equation}
 %
 An issue with sigmoidal activation functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks\index{neural network} tend to use the \gls{relu} activation function, as described in \cref{section:relu}.
@@ -498,7 +498,7 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x,{tanh(x)});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Hyperbolic Tangent $y = \tanh(x)$}\label{fig:tanh}
+		\caption{Hyperbolic Tangent $\gls{y} = \tanh\left(\gls{a}\right)$}\label{fig:tanh}
 	\end{subfigure}
 	~
 	\begin{subfigure}[t]{0.48\textwidth}
@@ -529,7 +529,7 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x,{max(x,0)});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{ReLU activation function $y = \max(0,x)$}\label{fig:relu}
+		\caption{ReLU activation function $\gls{y} = \max\left(0,\gls{a}\right)$}\label{fig:relu}
 	\end{subfigure}\\
 	\begin{subfigure}[t]{0.48\textwidth}
 		\begin{tikzpicture}
@@ -559,7 +559,7 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x,{1-tanh(x)*tanh(x)});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Derivative $\frac{d\tanh(x)}{dx}$}\label{fig:tanhgradients}
+		\caption{Derivative $\frac{d}{d\gls{a}} \left(\tanh\left(\gls{a}\right)\right)$}\label{fig:tanhgradients}
 	\end{subfigure}
 	~
 	\begin{subfigure}[t]{0.48\textwidth}
@@ -619,18 +619,18 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x, {0});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Derivative $\frac{d \max(0,x)}{dx}$}\label{fig:relugradient}
+		\caption{Derivative $\frac{d}{d\gls{a}} \left(\max(0,\gls{a})\right)$}\label{fig:relugradient}
 	\end{subfigure}
 	\caption[Activation functions]{\textbf{Common activation functions used in neural networks.}}\label{fig:afunctions}
 \end{figure}
 
 An integral part of any useful neuron\index{neuron} in a neural network\index{neural network} is a non-linear activation function. With a linear activation function, even the deepest network would only be able to represent a linear function. Historically, neural networks\index{neural network} have used sigmoidal activation functions, as explained in \cref{activationfunctions}.
 
-A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $x=0$) are very small. When training with backpropagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
+A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $\gls{a}=0$) are very small. When training with backpropagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
 \Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation\index{backpropagation}. These neurons\index{neuron} have a piecewise activation function plotted in \cref{fig:relu}, 
 \begin{equation}
-f(x) = \max(0,x).
+\gls{f}(\gls{a}) = \max(0,\gls{a}).
 \end{equation} 
 \glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
