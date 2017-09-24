@@ -335,20 +335,20 @@ Constructive approaches to binary classification neural network architectures we
     % http://cslt.riit.tsinghua.edu.cn/mediawiki/images/9/9e/131125-OBD-LC-01.pdf
     % http://web.engr.oregonstate.edu/~tgd/classes/534/slides/part10.pdf
     \begin{align}
-       d \gls{E} &= \sum_i \frac{\partial \gls{E}}{\partial \gls{w}_i} d \gls{w}_i + \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} d \gls{w}_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 \gls{E}}{\partial \gls{w}_i \partial \gls{w}_j} d \gls{w}_i d \gls{w}_j +\gls{bigoh}(\|d \gls{vectorw}\|^3),
+       \delta \gls{E} &= \sum_i \frac{\partial \gls{E}}{\partial \gls{w}_i} \delta \gls{w}_i + \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} \delta \gls{w}_i^2 + \frac{1}{2} \sum_{i\neq j} \frac{\partial^2 \gls{E}}{\partial \gls{w}_i \partial \gls{w}_j} \delta \gls{w}_i \delta \gls{w}_j +\gls{bigoh}(\|\delta \gls{vectorw}\|^3),
     \end{align}
 	%
-    where $\gls{E}$ is the objective function, $\gls{w}_i$ is the $i$th weight. We can write this more compactly in matrix notation,
+    where $\gls{E}$ is the objective function, $\gls{w}_i$ is the $i$th weight, and here $\delta$ represents a finite difference rather the `delta' defined in \cref{deltarule}. We can write this more compactly in matrix notation,
     \begin{align}
-       d \gls{E} &= \left( \frac{\partial \gls{E}}{\partial \gls{vectorw}} \right)^T d \gls{vectorw} +\frac{1}{2}d \gls{vectorw}^T \gls{hessian}\, d \gls{vectorw} +\gls{bigoh}(\|d \gls{vectorw}\|^3),
+       \delta \gls{E} &= \left( \frac{\partial \gls{E}}{\partial \gls{vectorw}} \right)^T \delta \gls{vectorw} +\frac{1}{2}\delta \gls{vectorw}^T \gls{hessian}\, \delta \gls{vectorw} +\gls{bigoh}(\|\delta \gls{vectorw}\|^3),
     \end{align}
 	where $\gls{vectorw}$ is the vector of network weights, and %$h_{ij}=\partial^2 \gls{E} / \partial \gls{w}_i \partial \gls{w}_j$
 	$\gls{hessian}$ is the Hessian\index{Hessian} matrix of second order derivatives. 
 
-    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 \gls{E} / \partial \gls{w}_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\gls{bigoh}(\|d \gls{vectorw}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
+    This approximation is infeasible to calculate in practice, mostly due to the size of the Hessian\index{Hessian} matrix which is square in the number of weights. The authors use several assumptions to approximate this in a more computationally efficient manner. Most importantly they use the ``diagonal approximation'' of the Hessian\index{Hessian}, using only the diagonal terms, $h_{ii}=\partial^2 \gls{E} / \partial \gls{w}_i^2$. Further, the ``extremal approximation'' assumes that pruning is only done once the training has converged, and so it can be assumed that the first term is zero. Finally they assume that the function is approximately quadratic, and thus higher order terms (\ie $\gls{bigoh}(\|\delta \gls{vectorw}\|^3)$) can be ignored. In all, the final approximation of the objective function's change is simply:
 
     \begin{align}
-       d \gls{E} &\approx \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} d \gls{w}_i^2.
+       \delta \gls{E} &\approx \frac{1}{2} \sum_i \frac{\partial^2 \gls{E}}{\partial \gls{w}_i^2} \delta \gls{w}_i^2.
     \end{align}
 	%
     To calculate the second derivative, chain rule is used, and the second derivatives are back-propagated through the network. This approximation is used directly as the saliency measure for each network weight $\gls{w}_i$, and after having trained the network, the weights are sorted by saliency, and the lowest saliency parameters are deleted.
