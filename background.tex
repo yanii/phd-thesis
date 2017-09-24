@@ -434,7 +434,17 @@ The earliest work on what are now termed \glspl{cnn}\index{CNN|textbf} was by \c
 Despite the pioneering novelty of the work on Neocognitron, it was only following the simplification and improvement of \citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state-of-the-art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
 
 The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible~\citep{goodfellow2016deep}. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks\index{neural network} fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features, such as \gls{sift}~\citep{Lowe2004} for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
-
+\subsubsection{Convolution}
+The discrete convolution $(f \convolution g)$ is defined~\citep{damelin2011} for two 1D sequences $f, g$ as,
+\begin{equation}
+	(f \convolution g)[n] = \sum_{i=-\infty}^\infty f[i]\, g[n - i],
+\end{equation}
+where $\convolution$ is the convolution operator. This can be extended to 2D sequences,
+\begin{equation}
+(f \convolution g)[m,\,n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i,\,j]\, g[m - i][n - j].
+\end{equation}
+%
+Of course when using convolution in practice, this mathematical definition isn't quite what is implemented, next we will present something closer to what is used in practicse.
 \subsubsection{Convolution Layers}
 \begin{figure}[tb]
 	\centering
@@ -458,10 +468,33 @@ This can be extended to 2D sequences,
 (f \gls{convolution} g)[m,\,n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i,\,j]\, g[m - i][n - j].
 \end{equation}
 %
-\subsubsection{Pooling Layers}
-Another key aspect of convolutional architectures is pooling, a form of non-linear spatial sub-sampling of the \glspl{featuremap}\index{feature map} of a given layer. Pooling layers were designed to add translation invariance to \glspl{cnn}\index{CNN} by making the network less sensitive to small local changes in the spatial location of input pixels/convolutional responses, and also to reduce \gls{featuremap}\index{feature map} spatial sizes with network depth. Reducing the \gls{featuremap}\index{feature map} spatial size serves both to save computation, and to increase the size of the receptive field of successive convolutional layers. This allows successive convolutional layers to operate on progressively larger scales.
+\subsubsection{Convolution in Practice}
+While we have described the mathematical convolution operator, when performing convolution on \glspl{featuremap}/images in neural networks, we do not exactly adhere to this definition. In practice the input images or \glspl{featuremap} are multi-dimensional finite arrays, \ie tensors; 4D for 3D \gls{rgb} colour images inputs (2 spatial + 1 colour dimension). \Gls{cnn} layers perform a 2D convolution with a 3D filter\footnote{this is called a 2D convolution rather than 3D, since there is no `sliding' of the filter in the channel dimension.} over each channel of the input image, and stack the response images into an output tensor, where the number of output channels is the same as the number of convolutional filters in the layer. Each of the channels of the input and output tensors we will call an \emph{image}.
 
-Pooling layers divide the image into non-overlapping pooling regions, in which the spatial extents of the input image/\gls{featuremap}\index{feature map} are aggregated into a single scalar. LeNet used the average to aggregate the pooling regions, \ie average pooling~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the \gls{featuremap}\index{feature map} sizes~\citep{He2015}.
+We will here adopt a similair notation to \citet[chapter 9]{goodfellow2016deep}\footnote{note we use zero-based indices, unlike \citeauthor{goodfellow2016deep}.}, and denote the incoming \gls{featuremap} $\gls{fmX}$, outgoing \gls{featuremap} $\gls{fmY}$, and convolutional filter, or kernel $\gls{fmK}$. The scalar elements of each \gls{featuremap} are $\gls{fmX}_{i,j,k}$, $\gls{fmY}_{i,j,k}$, where $i=\{0,\ldots,\gls{c}\}$ is the \glspl{featuremap} channel (\ie colour for an input image), and $j=\{0,\ldots,\gls{filterh}\}$, $k=\{0,\ldots,\gls{filterw}\}$ are the spatial coordinates, rows and columns respectively, of the channel $i$ image. The filter's scalar elements are $\gls{fmK}_{i,j,k,l}$, where i is the filter's index in the convolutional layer's filter bank (\ie channel of the output tensor), $j$ is the input channel in $\gls{fmX}$ over which the filter's spatial elements are convolved, $i$ is the output channel in $\gls{fmY}$ to which the filter's result is written, and $(k, j)$ are the row and column offset between the output and input images.
+
+A convolutional layer then convolves across the layer such that,
+\begin{equation}
+	\begin{aligned}
+		\gls{fmY}_{i,j,k} &= \sum_{l,m,n} \gls{fmX}_{l,j+m,k+n}\; \gls{fmK}_{i,l,m,n},
+	\end{aligned}
+\end{equation}
+for all valid indices $l,m,n$, depending on the \gls{padding}\index{padding} of the input image. We only use zero padding as detailed in our experiments, please see \citet[\textsection{}3.2]{szeliski2010} for a more in-depth discussion on alternative forms of padding.
+%This can be represented efficiently as a matrix multiplication, and thus make use of accelerated \gls{blas} implementations on most hardware. 
+
+\subsubsection{Pooling Layers}\label{pooling}
+Another key aspect of convolutional architectures is pooling\index{pooling|textbf}, a form of non-linear spatial sub-sampling of the \glspl{featuremap}\index{feature map} of a given layer. Pooling layers were designed to add translation invariance to \glspl{cnn}\index{CNN} by making the network less sensitive to small local changes in the spatial location of input pixels/convolutional responses, and also to reduce \gls{featuremap}\index{feature map} spatial sizes with network depth. Reducing the \gls{featuremap}\index{feature map} spatial size serves both to save computation, and to increase the size of the receptive field of successive convolutional layers. This allows successive convolutional layers to operate on progressively larger scales.
+
+Pooling\index{pooling} layers divide the image into non-overlapping pooling\index{pooling} regions, in which the spatial extents of the input image/\gls{featuremap}\index{feature map} are aggregated into a single scalar. LeNet used the average to aggregate the pooling\index{pooling} regions, \ie average pooling\index{pooling}~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the \gls{featuremap}\index{feature map} sizes~\citep{He2015}.
+
+
+\subsubsection{Strided Convolution}
+Convolutional layers are memory intensive since they must store the output \glspl{featuremap} and, during training, the backpropagated gradients. The largest featuremap is typically that of the first convolutional layer, since the input image has relatively large spatial dimensions, and pooling\index{pooling} reduces the spatial size of \glspl{featuremap} exponentially with depth. Due to the memory limitations of current \glspl{gpu}, this means that many contemporary network architectures cannot be trained on even modestly sized input images without using \glslink{stride}{strided convolution}\index{stride|textbf}. When using strided convolution, a given number of input \gls{featuremap}/image pixels are skipped in both the row and column directions, producing a smaller output \gls{featuremap} and reducing computation, at the sacrifice of a coarser output \gls{featuremap}, and scale. For a \gls{stride} of $s$ pixels in both the row and column directions, the \glslink{stride}{strided convolution}\index{stride} operation can be defined,
+\begin{equation}
+	\begin{aligned}
+		\gls{fmY}_{i,j,k} &= \sum_{l,m,n} \gls{fmX}_{l,sj+m,sk+n}\: \gls{fmK}_{i,l,m,n}.
+	\end{aligned}
+\end{equation}
 
 \section[Contemporary Methods of Training Neural Networks]{Contemporary Methods of Training\\Neural Networks}
 \label{section:contemporary}
