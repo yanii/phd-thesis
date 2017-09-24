@@ -375,7 +375,7 @@ Constructive approaches to binary classification neural network architectures we
 		\item[Dense] finally the pruned connections are re-introduced and initialzed to zero\footnote{This is considered to be a bad initializationwhen training neural networks from scratch due to the requirement to break symmetry, yet the authors do not explain the use here. Presumably, because there are already non-zero weights in the network however, symmetry is not as big of an issue.}, and the network is \gls{finetuned}\index{finetuning} at $1/10$ the original learning rate.
 	\end{description}
 
-	The results of this training method are that, even in an efficient large-scale deep network trained on \gls{ilsvrc}\index{ILSVRC} such as \gls{googlenet}\index{googlenet}, the top-5 error is decreased by almost 1\%, which is significant.
+	The results of this training method are that, even in an efficient large-scale deep network trained on \gls{ilsvrc}\index{ILSVRC} such as \gls{googlenet}\index{GoogLeNet}, the top-5 error is decreased by almost 1\%, which is significant.
 	
 	\subsection{XOR-Net: Binary Convolutional Neural Networks}
 	\citet{rastegari2016xnor} proposed two methods, one in which filter parameters were quantized to binary values, from the typical 16-bit floating point representation. Surprisingly even when the method was applied to models trained on \gls{ilsvrc}, such as \gls{alexnet}, the accuracy was little effected.

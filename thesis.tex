@@ -108,7 +108,12 @@
 % \includeonly{chapter3}
 %\fi
 
-% ******************************** Glossary ********************************
+% *************************** THESIS ORDER *************************************
+% order by guidelines here: 
+% https://en.wikipedia.org/wiki/Book_design
+% http://gradschool.unc.edu/academics/thesis-diss/guide/ordercomponents.html
+
+% ********************************** Glossary **********************************
 
 \makenoidxglossaries
 \input{glossary}
@@ -135,7 +140,8 @@
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
 %\printnomenclature
-% ************************************ Glossary ********************************
+% ****************************** Acronyms/Symbols ******************************
+%\glossarystyle{altlist}
 %\printsymbols
 %\printacronyms
 \printnoidxglossary[type=symbols]
@@ -172,12 +178,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Future Work/Propsal
 \subfile{futurework}
 
+% ********************************** Appendices ********************************
+\begin{appendices} % Using appendices environment for more functunality
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Epilogue
+    \subfile{epilogue}
+    \subfile{trainedmodels}
+    \subfile{posters}
+
+\end{appendices}
+\cleardoublepage
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References
-%\backmatter
-
+\backmatter
+% ************************************ Glossary ********************************
+%\glossarystyle{altlist}
+\printnoidxglossary
 % ********************************** Bibliography ******************************
-\begin{spacing}{0.9}
+%\begin{spacing}{0.9}
 
 % To use the conventional natbib style referencing
 % Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
@@ -187,7 +205,6 @@
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 %\bibliographystyle{abbrvnat} % use this to have URLs listed in References
-\cleardoublepage
 %\bibliography{references} % Path to your References.bib file
 
 
@@ -195,23 +212,10 @@
 % an option in the document class. The location of 'reference.bib' should be
 % specified in the preamble.tex file in the custombib section.
 % Comment out the lines related to natbib above and uncomment the following line.
-
 \printbibliography[heading=bibintoc, title={References}]
 
-\end{spacing}
+%\end{spacing}
 
-% ********************************** Appendices ********************************
-\begin{appendices} % Using appendices environment for more functunality
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Epilogue
-\subfile{epilogue}
-\subfile{trainedmodels}
-\subfile{posters}
-
-\end{appendices}
-
-%\glossarystyle{altlist}
-\printnoidxglossary
 % *************************************** Index ********************************
 \printthesisindex % If index is present
 
