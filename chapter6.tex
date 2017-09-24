@@ -6,7 +6,7 @@
 \section{The Limitations of First Order Optimization}
 With the increasing number of practical applications of deep learning, the optimization of deep neural networks is of critical importance, with generalization, accuracy and training time all direct consequences. Due to practical considerations of training large state-of-the-art models with limited computational resources, network optimization is restricted to first order methods in practice -- typically stochastic gradient descent with momentum. With breakthroughs in initialization~\citep{glorot2010understanding,He2015b} and maintenance of numerical precision during training~\citep{Ioffe2015} alleviating the `vanishing gradient' problem, such methods have surpassed human accuracy on large scale image recognition datasets, amongst other breakthrough results. This success has overshadowed any weakness of the current methods of training deep networks.
 
-There has been much evidence to suggest that the optimization of deep networks remains a concern however. \citet{Ba2013dothey} showed that shallow networks could be regressed from deep networks, and claim that the success of deep networks could be explained by our inability to properly train shallow networks from scratch. More recently, \citet{He2015,He2016} in particular have shown that the optimization of very deep networks can expose fundamental optimization issues where training loss \emph{increases} for deeper networks, whereas even the trivial solution to maintain training loss --- the identity mapping --- is not discovered by the optimization. They suggest a work-around for this problem is to utilize residual layers, incorporating the identity explicitly. Why the optimization fails so spectacularly without identity connections remains unexplained however.
+There has been much evidence to suggest that the optimization of deep networks remains a concern however. \citet{NIPS2014_5484} showed that shallow networks could be regressed from deep networks, and claim that the success of deep networks could be explained by our inability to properly train shallow networks from scratch. More recently, \citet{He2015,He2016} in particular have shown that the optimization of very deep networks can expose fundamental optimization issues where training loss \emph{increases} for deeper networks, whereas even the trivial solution to maintain training loss --- the identity mapping --- is not discovered by the optimization. They suggest a work-around for this problem is to utilize residual layers, incorporating the identity explicitly. Why the optimization fails so spectacularly without identity connections remains unexplained however.
 
 \citet{martens2010deep} suggests that `pathological curvature (see \cref{pathological}) is a possible explanation for the difficulty of training deep networks. For some networks, the error surface can have a complex curvature  and the solution is to use a second order optimization, proposing a more efficient method, `Hessian-free' optimization.
 
@@ -128,35 +128,35 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \begin{subfigure}[b]{\linewidth}
 \centering
 \begin{tikzpicture}
+% \begin{axis}[
+%     axis x line=bottom,
+%     axis y line=left,
+%     \setplotcyclecat{5},
+%     scale only axis,
+%     width=0.8\linewidth,
+%     height=0.16\textheight,
+%     ylabel={$\max\left(-\Delta L\right)$},
+%     xmin = 10,
+%     xmax = 300,
+%     ymode=log,
+% %    xmode=log,
+%     legend columns=-1,
+%     legend style={at={(0.5,1.1)},anchor=south,text depth=.5ex},
+% ]
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
+% \legend{\gls{sgd}, momentum, width Decay, dropout, HF}
+% \end{axis}
 \begin{axis}[
-    axis x line=bottom,
+    axis x line=none,
     axis y line=left,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.2\textheight,
-    ylabel={$\max\left(-\Delta L\right)$},
-    xmin = 10,
-    xmax = 300,
-    ymode=log,
-%    xmode=log,
-    legend columns=-1,
-    legend style={at={(0.5,1.1)},anchor=south,text depth=.5ex},
-]
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
-\legend{\gls{sgd}, momentum, weight Decay, dropout, HF}
-\end{axis}
-\begin{axis}[
-    axis x line=none,
-    axis y line=right,
-    \setplotcyclecat{5},
-    scale only axis,
-    width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.14\textheight,
     xlabel={Hidden Units},
     ylabel={$\max\left(\Delta L\right)$},
     xmin = 10,
@@ -164,46 +164,47 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     ymode=log,
 %    xmode=log,
 ]
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
 \end{axis}
 \end{tikzpicture}
-\caption{Training Loss Change: Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
+\caption{Training loss change: maximum increase}
+%Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
 \label{fig:mnist_ablation_train_loss}
 \end{subfigure}
 \begin{subfigure}[b]{\linewidth}
 \centering
 \begin{tikzpicture}
+% \begin{axis}[
+%     axis y line=left,
+%     axis x line=bottom,
+%     \setplotcyclecat{5},
+%     scale only axis,
+%     width=0.8\linewidth,
+%     height=0.16\textheight,
+%     xlabel={Hidden Units},
+%     ylabel={$\max\left(\Delta \textrm{Acc.}\right)$},
+%     xmin = 10,
+%     xmax = 300,
+%     ymode=log,
+% %    xmode=log,
+% ]
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_acc.log};
+% \end{axis}
 \begin{axis}[
     axis y line=left,
-    axis x line=bottom,
-    \setplotcyclecat{5},
-    scale only axis,
-    width=0.8\linewidth,
-    height=0.2\textheight,
-    xlabel={Hidden Units},
-    ylabel={$\max\left(\Delta \textrm{Acc.}\right)$},
-    xmin = 10,
-    xmax = 300,
-    ymode=log,
-%    xmode=log,
-]
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_acc.log};
-\end{axis}
-\begin{axis}[
-    axis y line=right,
     axis x line=none,
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.14\textheight,
     xlabel={Hidden Units},
     ylabel={$\max\left(-\Delta \textrm{Acc.}\right)$},
     xmin = 10,
@@ -211,46 +212,47 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     ymode=log,
 %    xmode=log,
 ]
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_train_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_train_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_acc.log};
 \end{axis}
 \end{tikzpicture}
-\caption{Training Accuracy: Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
+\caption{Training accuracy: maximum decrease}
+%Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
 \label{fig:mnist_ablation_train_acc}
 \end{subfigure}
 \begin{subfigure}[b]{\linewidth}
 \centering
 \begin{tikzpicture}
+% \begin{axis}[
+%     axis y line=left,
+%     axis x line=bottom,
+%     \setplotcyclecat{5},
+%     scale only axis,
+%     width=0.8\linewidth,
+%     height=0.16\textheight,
+%     xlabel={Hidden Units},
+%     ylabel={$\max\left(-\Delta L\right)$},
+%     xmin = 10,
+%     xmax = 300,
+%     ymode=log,
+% %    xmode=log,
+% ]
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_loss.log};
+% \addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_loss.log};
+% \end{axis}
 \begin{axis}[
     axis y line=left,
-    axis x line=bottom,
-    cycle multi list={Set1-5},
-    scale only axis,
-    width=0.8\linewidth,
-    height=0.2\textheight,
-    xlabel={Hidden Units},
-    ylabel={$\max\left(-\Delta L\right)$},
-    xmin = 10,
-    xmax = 300,
-    ymode=log,
-%    xmode=log,
-]
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_loss.log};
-\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_loss.log};
-\end{axis}
-\begin{axis}[
-    axis y line=right,
     axis x line=none,
-    cycle multi list={Set1-5},
+    \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.14\textheight,
     xlabel={Hidden Units},
     ylabel={$\max\left(\Delta L\right)$},
     xmin = 10,
@@ -258,46 +260,47 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     ymode=log,
 %    xmode=log,
 ]
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_loss.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_loss.log};
+\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_loss.log};
 \end{axis}
 \end{tikzpicture}
-\caption{Test Loss: Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
+\caption{Test loss: maximum increase}
+%Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
 \label{fig:mnist_ablation_test_loss}
 \end{subfigure}
 \begin{subfigure}[b]{\linewidth}
 \centering
 \begin{tikzpicture}
+% \begin{axis}[
+%     axis x line=bottom,
+%     axis y line=left,
+%     \setplotcyclecat{5},
+%     scale only axis,
+%     width=0.8\linewidth,
+%     height=0.16\textheight,
+%     xlabel={Hidden Units},
+%     ylabel={$\max\left(\Delta \textrm{Acc.}\right)$},
+%     xmin = 10,
+%     xmax = 300,
+%     ymode=log,
+% %    xmode=log,
+% ]
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_acc.log};
+% \addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_acc.log};
+% \end{axis}
 \begin{axis}[
-    axis x line=bottom,
     axis y line=left,
-    cycle multi list={Set1-5},
-    scale only axis,
-    width=0.8\linewidth,
-    height=0.2\textheight,
-    xlabel={Hidden Units},
-    ylabel={$\max\left(\Delta \textrm{Acc.}\right)$},
-    xmin = 10,
-    xmax = 300,
-    ymode=log,
-%    xmode=log,
-]
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_acc.log};
-\addplot +[mark=none] table [x index=0, y expr=\thisrowno{2}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_acc.log};
-\end{axis}
-\begin{axis}[
-    axis y line=right,
     axis x line=none,
-    cycle multi list={Set1-5},
+    \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.14\textheight,
     xlabel={Hidden Units},
     ylabel={$\max\left(-\Delta \textrm{Acc.}\right)$},
     xmin = 10,
@@ -305,14 +308,15 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     ymode=log,
 %    xmode=log,
 ]
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_acc.log};
-\addplot +[mark=none, dotted] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-stats_test_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-momentum-stats_test_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_test_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_test_acc.log};
+\addplot +[mark=none] table [x index=0, y expr=-\thisrowno{1}, col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_test_acc.log};
 \end{axis}
 \end{tikzpicture}
-\caption{Test Accuracy: Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
+\caption{Test accuracy: maximum decrease}
+%Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
 \label{fig:mnist_ablation_test_acc}
 \end{subfigure}
 \caption[Pairwise filter ablation for MNIST]{Maximum increase and decrease in training/test loss/accuracy for a single-layer hidden MNIST classification network under pairwise ablation of the hidden units. Solid lines show the maximum decrease in loss or increase in accuracy for all pairs of neurons. Dotted lines show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}\label{fig:mnist_ablation}
@@ -327,7 +331,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    width=0.2\textwidth,
+    height=0.16\textheight,
     xlabel={Hidden Units},
     ylabel={\% of pairwise units where $\Delta L < 0$},
     yticklabel=\pgfmathprintnumber{\tick}\,\%,
@@ -343,7 +347,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{5} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-wd-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{5} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/chainer-mnist-ablate-dropout-stats_train_loss.log};
 \addplot +[mark=none] table [x index=0, y expr=100*\thisrowno{5} / (\thisrowno{0}*\thisrowno{0}), col sep=comma]{ablationdata/mnist/hessianfree-ablate-mnist-stats_train_loss.log};
-\legend{\gls{sgd}, momentum, weight decay, dropout, HF}
+\legend{\gls{sgd}, momentum, width decay, dropout, HF}
 \end{axis}
 \end{tikzpicture}
 \caption{Training Loss: Percentage of pairs of hidden units that exhibit adverse co-adaption.}
@@ -358,7 +362,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    width=0.2\textwidth,
+    height=0.16\textheight,
     xlabel={Hidden Units},
     ylabel={\% of pairwise units where $\Delta L = 0$},
     yticklabel=\pgfmathprintnumber{\tick}\,\%,
@@ -386,7 +390,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
     \setplotcyclecat{5},
     scale only axis,
     width=0.8\linewidth,
-    width=0.2\textwidth,
+    height=0.16\textheight,
     xlabel={Hidden Units},
     ylabel={\% of pairwise units where $\Delta L > 0$},
     yticklabel=\pgfmathprintnumber{\tick}\,\%,
@@ -408,13 +412,13 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 \caption[Pairwise filter ablation counts for MNIST]{Number of pairs of hidden units in a single-layer hidden MNIST classification network which under ablation, are adversely dependent ($\Delta L < 0$), independent ($\Delta L = 0$) or dependent ($\Delta L > 0$) for the training set.}
 \label{fig:mnist_ablation_stats}
 \end{figure}
-\cref{fig:mnist_ablation} shows the minimum and maximum increase in training loss/accuracy and test loss/accuracy for the MNIST network with different numbers of hidden units, when pairwise filters are ablated, as evaluated on the entire MNIST training/test sets. The effect of training with weight decay\index{weight decay} dropout and momentum are also compared with vanilla \gls{sgd}. Weight decay\index{weight decay} and dropout are considered to be regularization methods, while momentum is an optimization trick that is intended to help avoid some issues of using a first order optimization -- it can help speed up learning in the presence of some types of pathological curvature that would otherwise lead to slow optimization or a poor local minima with vanilla \gls{sgd}.
+\cref{fig:mnist_ablation} shows the minimum and maximum increase in training loss/accuracy and test loss/accuracy for the MNIST network with different numbers of hidden units, when pairwise filters are ablated, as evaluated on the entire MNIST training/test sets. The effect of training with width decay\index{width decay} dropout and momentum are also compared with vanilla \gls{sgd}. Weight decay\index{width decay} and dropout are considered to be regularization methods, while momentum is an optimization trick that is intended to help avoid some issues of using a first order optimization -- it can help speed up learning in the presence of some types of pathological curvature that would otherwise lead to slow optimization or a poor local minima with vanilla \gls{sgd}.
 
-Momentum clearly helps avoid co-adaption the most, with there being no increase in accuracy/decrease in loss at training time, as compared to vanilla \gls{sgd} where co-adaption is significant. Taken by itself, this observation would indicate that co-adaption is a symptom of an optimization problem. Weight decay\index{weight decay} does not seem to have a helpful effect on co-adaption, if anything it may exacerbate the phenomenon. As a form of regularization, this might be expected, as it should help generalization, not training fit. On the other hand dropout seems to reduce the number of co-adapted units significantly, and is even effective at reducing co-adaption at \emph{training time}. If dropout is a regularization method, then this seems to conflict with our findings from weight decay\index{weight decay} and momentum.
+Momentum clearly helps avoid co-adaption the most, with there being no increase in accuracy/decrease in loss at training time, as compared to vanilla \gls{sgd} where co-adaption is significant. Taken by itself, this observation would indicate that co-adaption is a symptom of an optimization problem. Weight decay\index{width decay} does not seem to have a helpful effect on co-adaption, if anything it may exacerbate the phenomenon. As a form of regularization, this might be expected, as it should help generalization, not training fit. On the other hand dropout seems to reduce the number of co-adapted units significantly, and is even effective at reducing co-adaption at \emph{training time}. If dropout is a regularization method, then this seems to conflict with our findings from width decay\index{width decay} and momentum.
 
-\subsection{Dropout as an Optimization Trick}\label{dropoutasopttrick}
+\section{Dropout as an Optimization Trick}\label{dropoutasopttrick}
 Dropout can also be thought of as a orthogonal projection of the error surface onto a random lower-dimensional subspace, in which the curvature of the error surface may no longer exhibit pathological issues, and optimization may be easier. For example, if in a subset of the dimensions, a deep valley exists, and these dimensions are dropped-out. Random projection is a well established method for dimensionality reduction of high dimensional spaces~\citep{kaski1998dimensionality,fodor2002survey}.
-If a layer has $N$ nodes, and a weight matrix $W$, and input vector $x$, then dropout on the layer of $K/N$ nodes may be defined as the transformation:
+If a layer has $N$ nodes, and a width matrix $W$, and input vector $x$, then dropout on the layer of $K/N$ nodes may be defined as the transformation:
 \begin{equation}
     \textrm{dropout}(\mathbf{W}) = \mathbf{D}_{i} \mathbf{W},
 \end{equation}
@@ -438,7 +442,7 @@ for a random rotation matrix $\mathbf{R}\in \textrm{SO}_N$. ``dropproject'' avoi
     axis y line=left,
     %axis line style={thick},
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.16\textheight,
     xlabel={Epochs},
     ylabel={Log Loss},
     ymode=log,
@@ -471,7 +475,7 @@ DP-Random}
     axis y line=left,
     %axis line style={thick},
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.16\textheight,
     xlabel={Epochs},
     ylabel={Log Loss},
     ymode=log,
@@ -498,7 +502,7 @@ DP-Random}
     axis y line=left,
     %axis line style={thick},
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.16\textheight,
     xlabel={Epochs},
     ylabel={Training Error},
 %    ymax=1,
@@ -524,7 +528,7 @@ DP-Random}
     axis y line=left,
     %axis line style={thick},
     width=0.8\linewidth,
-    height=0.2\textheight,
+    height=0.16\textheight,
     xlabel={Epochs},
     ylabel={Test Error},
 %    ymin = 0,
