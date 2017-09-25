@@ -534,7 +534,7 @@ DP-Random}
 \addplot +[mark=none] table [x=epoch, y expr=1-\thisrow{main/accuracy}, col sep=comma]{ablationdata/dropproject/train_dropprojectrandom.csv};
 \end{axis}
 \end{tikzpicture}
-\caption{CIFAR Training Error}
+\caption{\Glsfmtshort{cifar10} Training Error}
 \label{fig:cifar_dropproject_train_acc}
 \end{subfigure}
 \begin{subfigure}[b]{\linewidth}
@@ -559,10 +559,10 @@ DP-Random}
 \addplot +[mark=none] table [x=epoch, y expr=1-\thisrow{validation/main/accuracy}, col sep=comma]{ablationdata/dropproject/train_dropprojectrandom.csv};
 \end{axis}
 \end{tikzpicture}
-\caption{CIFAR Test Error}
+\caption{\Glsfmtshort{cifar10} Test Error}
 \label{fig:cifar_dropproject_test_acc}
 \end{subfigure}
-\caption[Dropout \vs dropproject for VGG/\Glsfmtshort{cifar10}]{Training and test curves for a VGG network on CIFAR comparing dropout to dropproject.}
+\caption[Dropout \vs dropproject for VGG/\Glsfmtshort{cifar10}]{Training and test curves for a VGG network on \Glsfmtshort{cifar10} comparing dropout to dropproject.}
 \label{fig:cifar_dropproject}
 \end{figure}
 
