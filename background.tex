@@ -496,7 +496,7 @@ Convolutional layers are memory intensive since they must store the output \glsp
 	\end{aligned}
 \end{equation}
 
-\section[Contemporary Methods of Training Neural Networks]{Contemporary Methods of Training\\Neural Networks}
+\section[Contemporary Methods of Training Neural Networks]{Contemporary Methods of Training\texorpdfstring{\\}{ }Neural Networks}
 \label{section:contemporary}
 Here we will outline the most relevant differences in training contemporary \gls{dnn} as compared to before the work of \citet{Krizhevsky2012}, less than 10 years ago.
 \subsection{Rectified Linear Activation Function}
@@ -779,7 +779,8 @@ AlexNet notably used training-time and test-time augmentation to achieve its sta
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation and model parameters across two \gls{gpu}s, the motivation being that at the time \gls{gpu}s did not have enough memory to fit such a large model. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enough that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 
-\subsection{\Glsfmtlong{nin}}
+%\subsection{\Glsfmtlong{nin}}
+\subsection{Network in Network}
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
@@ -843,7 +844,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 \end{landscape}
 }
 
-\citet{Lin2013NiN} introduced \emph{\gls{nin}} (NiN), in which the main contribution was the use of so-called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input \gls{featuremap}\index{feature map} into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional \gls{featuremap}\index{feature map} onto a lower-dimensional \gls{featuremap}\index{feature map}. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
+\citet{Lin2013NiN} introduced \glsfmtfull{nin}, in which the main contribution was the use of so-called `micro networks', consisting of increased non-linearity between convolutions using 1$\times$1 convolutions. The authors claimed extra the non-linearities introduced allow the network to capture more complex functions. These 1$\times $1 convolutions, illustrated in \cref{fig:lowdimembedding}, have since been referred to as \emph{low dimensional embeddings}. If the number of 1$\times$1 filters is lower than the number of normal convolutional filters, then the 1$\times$1 layer learns a non-linear transformation of the input \gls{featuremap}\index{feature map} into a smaller space, \ie a reduction in the number of filters by a mapping of a high-dimensional \gls{featuremap}\index{feature map} onto a lower-dimensional \gls{featuremap}\index{feature map}. This can be used to reduce the computation and parameters of convolutional layers significantly, while potentially learning a more compact and efficient representation. The full NiN architecture is shown in \cref{fig:networkinnetwork}.
 
 \citet{Lin2013NiN} also introduced \emph{\gls{gap}\index{GAP|textbf}}, in which the spatial extents at the end of the convolutional layers (\ie pool5 for NiN/AlexNet) are aggregated such that there is only a single scalar output response for each filter in the pooled layer. After \gls{gap}\index{GAP} a layer with $f$ filters/\glspl{featuremap}\index{feature map}, the input to the classification layer is simply a vector of $f$ responses, as illustrated in \cref{fig:networkinnetwork}. This reduces the parameters network dramatically since the majority of the parameters in the network are typically between the last convolutional layer and the fully-connected classification layer. Lin \etal showed that on \gls{cifar10} \gls{gap}\index{GAP} by itself achieved a lower error than having a fully-connected layer with dropout.
 
