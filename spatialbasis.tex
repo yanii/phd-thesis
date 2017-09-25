@@ -215,7 +215,7 @@
     \gls{stddev} = \sqrt{\frac{2}{\sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}}}.\label{eqn:reluinit}
     \end{equation}
     
-    In conclusion, a composite layer of heterogeneously-shaped filter groups, where each filter group $i$ has $\gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}$ outgoing connections should be initialized as if it is a single-layer with  $\hat{n} = \sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation given in \cref{eqn:reluinit}.
+    In conclusion, a composite layer of heterogeneously-shaped filter groups\index{filter groups}, where each filter group\index{filter groups} $i$ has $\gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}$ outgoing connections should be initialized as if it is a single-layer with  $\hat{n} = \sum{ \gls{w}^{[i]} \gls{filterh}^{[i]} \gls{d}^{[i]}}$. Thus in the case of a \gls{relu} non-linearity, we find that such a composite layer should be initialized with a zero-mean Gaussian distribution with standard deviation given in \cref{eqn:reluinit}.
     
     \section{Results}
     To validate our approach, we show that we can replace the filters used in existing state-of-the-art network architectures with low-rank representations as described above to reduce computational complexity without reducing accuracy. Here we characterize the computational complexity of a \gls{cnn} using the number of multiply-accumulate operations required for a forward pass (which depends on the size of the filters in each convolutional layer as well as the input image size and stride).
