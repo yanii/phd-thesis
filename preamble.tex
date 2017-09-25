@@ -27,6 +27,9 @@
 % for convolution symbol, instead of above
 \usepackage{mathabx}
 
+% for differential operator \dif
+\usepackage{commath}
+
 % *****************************************************************************
 % ******************* Fonts (like different typewriter fonts etc.)*************
 
@@ -159,7 +162,19 @@
 \fi
 % changes the default name `Bibliography` -> `References'
 \renewcommand{\bibname}{References}
-
+% changes et al. to be italic like the other latin we use
+% https://tex.stackexchange.com/questions/40798/how-do-i-get-et-al-to-appear-in-italics-when-using-textcite-or-citeauthor-w#40816
+\renewbibmacro*{name:andothers}{% Based on name:andothers from biblatex.def
+\ifboolexpr{
+  test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+  and
+  test \ifmorenames
+}
+  {\ifnumgreater{\value{liststop}}{1}
+     {\finalandcomma}
+     {}%
+   \andothersdelim\bibstring[\textit]{andothers}}
+  {}}
 
 % ******************************************************************************
 % ************************* User Defined Commands ******************************
