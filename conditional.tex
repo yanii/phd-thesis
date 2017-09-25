@@ -4,7 +4,7 @@
 \begin{document}
 	\chapter{Conditional Connectivity}\label{conditionalnetworks}
 	%\chapter{Conditional Computation in Deep Neural Networks}
-	\begin{chapquote}{David Rumelhart, \textit{in personal communication with \citet{hanson1989comparing}, 1987}}
+	\begin{chapquote}{David Rumelhart, \textit{in personal communication with \citeauthor{hanson1989comparing}, 1987}}
 		``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
 	\end{chapquote}
 	
@@ -13,11 +13,11 @@
 	In this chapter we intend to explore the continuum of discriminative models that exist between decision forests and neural networks\index{neural network}, to try to find such a balance. We will explore the theory and applications behind such models, with a focus on contemporary problems such as object class recognition, \ie the ImageNet \gls{ilsvrc} challenge which has been the focus of much of the recent work on deep learning.
 	
 	\section{On Methods of Discriminative Classification}
-	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks\index{neural network} have even replaced the research in local features (\eg \gls{sift}), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn}\index{CNN} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. In the early 1990s Sethi et al.~\citep{Sethi1990} showed that any decision tree can be represented as a neural network\index{neural network} with one hidden layer, however the converse does not necessarily hold true.
+	Two methods of discriminative classification, \emph{Neural Networks} and \emph{Decision Forests}, have recently dominated the field of Computer Vision. Deep neural networks\index{neural network} have even replaced the research in local features (\eg \gls{sift}), providing end-to-end learning from pixels to output~\citep{yi2016lift}. Much work has been done on improving both methods and exploring their applications --- with academic and even commercial success. For example, decision forests are used to find the body pose of a person with the Kinect~\citep{conf/cvpr/ShottonFCSFMKB11} used in game consoles. Deep \glspl{cnn}\index{CNN} on the other hand have recently surpassed human accuracy on what was considered one of the most challenging outstanding problems in computer vision, object class recognition~\citep{He2015b}, and are already finding their ways into applications such as Google Photos\footnote{\href{http://photos.google.com}{http://photos.google.com}}. However, the important fact that these two methods are related often seems to be all but forgotten. \citet{Sethi1990} showed that any decision tree can be represented as a neural network\index{neural network} with one hidden layer, however the converse does not necessarily hold true.
 	
 	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, computation the response at every node, even if many of these responses are approximately zero or not useful to the final output.
 	
-	\section{Generalizing \gls{dnn} and Decision Trees}
+	\section{Generalizing \Glsfmtshort{dnn} and Decision Trees}
 	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
 	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures are used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
@@ -121,16 +121,14 @@
 	\end{figure}
 	
 	\subsection{Implicit Routing}
-	It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{implicit routing} \vs \emph{explicit routing}, where a router is used. 
+	It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{\gls{implicitrouting}\index{implicit routing|textbf}} \vs \emph{\gls{explicitrouting}\index{explicit routing|textbf}}, where a router is used. 
 	
 	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in \cref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
-	
 	\begin{equation}
 	y_1 = \left\{y_1^j\right\} \forall j\circleplus \vec r = \sum_j r_j \sigma\left(P^j \vec v_1^j \right).
 	\end{equation}
 	
 	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and \gls{relu}, \ie for \cref{fig:implicitRouter}, the output of $\vec v_2$, is simply,
-	
 	\begin{equation}
 	y_1 = \max \left(0, ~\sum_j v_1^j \sigma(P^j \vec v_0) \right).
 	\end{equation}
@@ -248,7 +246,7 @@
 			\legend{\texttt{conv1}/1, \texttt{conv1}/2, \texttt{conv1}/4}
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{\gls{flops} (Multiply-Add) \vs Error.}}
+			%\caption{\textbf{\glsfmtshort{flops} (Multiply-Add) \vs Error.}}
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		\vfill
@@ -308,7 +306,7 @@
 			%\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \gls{ilsvrc}]{\textbf{Efficiency of conditional networks on \gls{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \Glsfmtshort{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmtshort{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
 	\end{figure}
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. 
@@ -357,7 +355,7 @@
 				ymin=0,
 				%ymode=log,
 				xticklabels from table={\datatablea}{layer},
-				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
+				xticklabel/.append style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				%xmajorticks=false,
 				legend style={at={(0.9,1.0)},
@@ -372,7 +370,7 @@
 			\legend{VGG-11, VGG-11 GMP, Cond.\ Network,};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\# \Gls{flops} for each layer} 
+			\caption{\# \Glsfmtshort{flops} for each layer} 
 		\end{subfigure}
 		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
@@ -400,7 +398,7 @@
 				ymin=0,
 				%ymode=log,
 				xticklabels from table={\datatablea}{layer},
-				xticklabel style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
+				xticklabel/.append style = {rotate = 90, xshift = -0.8ex, anchor = mid east, font=\footnotesize},
 				xtick=data,
 				every axis plot/.append style={fill, draw=none, opacity=0.7},
 				\setplotcyclecat{3},
@@ -432,7 +430,7 @@
 	%\item They have such a complex and long structure that they need to train using intermediate losses with manually set weights.
 	%\end{itemize}
 	
-	\subsection{\gls{cifar10}}
+	\subsection{\Glsfmtshort{cifar10}}
 	Here we validate conditional networks for the classification of images in the \gls{cifar10} dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state-of-the-art \gls{nin} (NiN) model 
@@ -445,7 +443,7 @@
 		\centerline{
 			\includegraphics[width=0.98\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically-learned conditional architecture for \gls{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \gls{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
+		\caption[Automatically-learned conditional architecture for \Glsfmtshort{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \Glsfmtshort{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
@@ -500,7 +498,7 @@
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on \gls{cifar10}]{\textbf{Comparing network architectures on \gls{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
+		\caption[Comparing network architectures on \Glsfmtshort{cifar10}]{\textbf{Comparing network architectures on \glsfmtshort{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
 	\end{figure}
 	%
 	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.

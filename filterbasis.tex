@@ -24,7 +24,7 @@
 	%\begin{figure}[t]
 	%\centering
 	%\includegraphics[width=0.25\columnwidth, page=1]{figs/tree_root.jpg}
-	%\caption{This work introduces the idea of using hierarchical filter grouping to create \gls{cnn} connection structures that resemble tree roots. Applying the technique to existing state-of-the-art networks allows improved efficiency without compromising accuracy.}
+	%\caption{This work introduces the idea of using hierarchical filter grouping to create \glsfmtshort{cnn} connection structures that resemble tree roots. Applying the technique to existing state-of-the-art networks allows improved efficiency without compromising accuracy.}
 	%\label{fig:tree}
 	%\end{figure}
 	
@@ -156,11 +156,11 @@
 	\section{Results}
 	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \cref{method}) .
 	
-	\subsection{Improving \Gls{nin} on \Gls{cifar10}}
+	\subsection{Improving \Glsfmtshort{nin} on \Glsfmtshort{cifar10}}
 	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as used by \citet{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, \gls{zca} whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
 	
 	\begin{table}[tbp]
-		\caption[\Gls{nin} root architectures]{\textbf{\Gls{nin} Root Architectures}. Filter groups in each convolutional layer.}
+		\caption[\Glsfmtshort{nin} root architectures]{\textbf{\Glsfmtshort{nin} Root Architectures}. Filter groups in each convolutional layer.}
 		\label{table:ninconfig}
 		\centering
 		%\resizebox{\textwidth}{!}{
@@ -180,7 +180,7 @@
 		%}
 	\end{table}
 	\begin{table}[tp]
-		\caption[\Gls{nin} \gls{cifar10} results]{\textbf{\Gls{nin} \gls{cifar10} Results}}
+		\caption[\Glsfmtshort{nin} \gls{cifar10} results]{\textbf{\Glsfmtshort{nin} \glsfmtshort{cifar10} Results}}
 		\label{table:nincifarresults}
 		\centering
 		\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\data
@@ -357,11 +357,11 @@
 			] table[meta=name,x=ma,y expr={1 - \thisrow{accuracy} },]{\cdatatable};
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{\gls{flops} (Multiply-Add) \vs Error.}}
+			%\caption{\textbf{\glsfmtshort{flops} (Multiply-Add) \vs Error.}}
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		
-		\caption[\Gls{nin} \gls{cifar10} results]{\textbf{\Gls{nin} \gls{cifar10} Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
+		\caption[\Glsfmtshort{nin} \glsfmtshort{cifar10} results]{\textbf{\Glsfmtshort{nin} \glsfmtshort{cifar10} Results.} Spatial filters (3$\times$3, 5$\times$5) are grouped hierarchically. The best models are closest to the origin. For the standard network, the mean and standard deviation (error bars) are shown over 5 different random initializations.
 			%(left) Parameters \vs Error, (right) \gls{flops} \vs Error.
 		}\label{fig:nincifarplotsconvonly}
 	\end{figure}
@@ -464,7 +464,7 @@
 			\caption{Whitened responses}
 			\label{fig:whitened}
 		\end{subfigure}
-		\caption[Inter-layer covariance with/without whitened responses]{Covariance for between two layers in the root-32 \gls{nin} model with and without whitened responses.}
+		\caption[Inter-layer covariance with/without whitened responses]{Covariance for between two layers in the root-32 \glsfmtshort{nin} model with and without whitened responses.}
 		\label{fig:whitevsnot}
 	\end{figure}
 	
@@ -513,7 +513,7 @@
 					\covarlabels{conv3a}{192}{conv3a}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/nin/corrcoef_conv8}}
 					~
 					\covarlabels{conv3b}{192}{conv3b}{192}{\includegraphics[width=0.11\linewidth]{Figs/PDF/nin/corrcoef_conv9}}
-					\caption{\Gls{nin}}\label{fig:corrroot1}
+					\caption{\Glsfmtshort{nin}}\label{fig:corrroot1}
     				\vspace{0.6em}
 				\end{subfigure}\\
 				\begin{subfigure}[c]{0.75\paperheight}
@@ -583,7 +583,7 @@
     				\centering
 	    			\includegraphics[width=0.4\linewidth]{Figs/PDF/colorbar}
 				\end{subfigure}
-				\caption[Intra-layer filter correlation]{\textbf{\Gls{nin} Intra-Layer Correlation.} Absolute correlation of filters within each layer of a NiN model variant.}
+				\caption[Intra-layer filter correlation]{\textbf{\Glsfmtshort{nin} Intra-Layer Correlation.} Absolute correlation of filters within each layer of a NiN model variant.}
 				\label{fig:nincorr}
 			\end{figure}
 		\end{landscape}
@@ -606,7 +606,7 @@
 					\covarlabels{conv3a}{192}{conv3b}{192}{\includegraphics[width=0.12\linewidth]{Figs/PDF/nin/layercovarwhite_conv9}}
 					~
 					\covarlabels{}{192}{}{10}{\includegraphics[width=0.00624996\linewidth]{Figs/PDF/nin/layercovarwhite_conv10}}
-					\caption{\Gls{nin}}
+					\caption{\Glsfmtshort{nin}}
 					\vspace*{0.6em}
 					\label{fig:covaroot1}
 				\end{subfigure}
@@ -673,7 +673,7 @@
 					\caption{Root-32}
 					\label{fig:covarroot32}
 				\end{subfigure}
-				\caption[Inter-layer covariance (all layers)]{\textbf{\Gls{nin} Inter-layer Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
+				\caption[Inter-layer covariance (all layers)]{\textbf{\Glsfmtshort{nin} Inter-layer Covariance.} The inter-layer covariance for all layers in variants of the NiN network.}
 				\label{fig:suppcovariances}
 			\end{figure}
 		\end{landscape}
@@ -780,7 +780,7 @@
 			\caption{Root-4 Architecture}
 			\label{fig:root4topology}
 		\end{subfigure}
-		\caption[\Gls{nin} standard \vs root architecture]{\textbf{\Gls{nin} Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate \glspl{featuremap}\index{feature map} over which a layer's filters operate, or the final fully-connected layer, out of space considerations (see \cref{fig:networkinnetwork,fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
+		\caption[\Glsfmtshort{nin} standard \vs root architecture]{\textbf{\Glsfmtshort{nin} Root Architecture.} The Root-4 architecture as compared to the original architecture for all the convolutional layers. Colored blocks represent the filters of each layer. Here we don't show the intermediate \glspl{featuremap}\index{feature map} over which a layer's filters operate, or the final fully-connected layer, out of space considerations (see \cref{fig:networkinnetwork,fig:rootmodule}). The decreasing degree of grouping in successive root modules means that our network architectures somewhat resemble plant roots, hence the name root.
 		}\label{fig:networktopology}
 	\end{figure}
 	\end{landscape}
@@ -789,7 +789,7 @@
 	
 	To determine which approach is best, we created variants of the NiN architecture with different degrees of grouping per layer. Results are shown in \cref{fig:nincifarplotsconvonly}. The results show that the so-called root topology (illustrated in \cref{fig:networktopology}) gives the best performance, providing the smallest reduction in accuracy for a given reduction in model size and computational complexity. Similar experiments with deeper network architectures have delivered similar results and so we have reported results for root topologies. This aligns with the intuition of \glspl{dnn}\index{DNN} for image recognition subsuming the deformable parts model. If we assume that filter responses identify parts (or more elemental features), then there should be more filter dependence with depth, as more parts (filter responses) are assembled into complex concepts.
 	
-	\subsection{Improving Residual Networks on \gls{ilsvrc}}
+	\subsection{Improving Residual Networks on \Glsfmtshort{ilsvrc}}
 	Residual networks (\gls{resnet}\index{ResNet}s)~\citep{He2015} are the state-of-the art network for \gls{ilsvrc}\@. \Glspl{resnet}\index{ResNet} are more computationally efficient than the VGG architecture~\citep{Simonyan2014verydeep} on which they are based, due to the use of low-dimensional embeddings~\citep{Lin2013NiN}. ResNets are also more accurate and quicker to converge due to the use of identity mappings.
 	
 	\subsubsection{ResNet 50}
@@ -817,7 +817,7 @@
 	\end{table}
 	To assess the efficacy of our method, we replaced the spatial convolutional layers of the original network with root modules (as described in \cref{method}). We preserved the original number of filters per layer but subdivided them into groups as shown in \cref{table:resnet50config}. We considered the first of the existing 1$\times$1 layers subsequent to each spatial convolution to be part of our root modules. 
 	\begin{table}[tp]
-		\caption[ResNet 50 \gls{ilsvrc} Results]{\textbf{ResNet 50 Results.}}
+		\caption[ResNet 50 \Glsfmtshort{ilsvrc} Results]{\textbf{ResNet 50 Results.}}
 		\label{table:resnet50imagenetresults}
 		%\resizebox{\textwidth}{!}{
 		\centering
@@ -978,7 +978,7 @@
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\gls{flops} (Multiply-Add) \vs Top-5 Error}
+			\caption{\Glsfmtshort{flops} (Multiply-Add) \vs Top-5 Error}
 			\label{fig:resnet50ma}
 		\end{subfigure}
 		~
@@ -1035,7 +1035,7 @@
 			%\legend{ResNet 50, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\gls{gpu} Forward Time \vs Top-5 Error}
+			\caption{\Glsfmtshort{gpu} Forward Time \vs Top-5 Error}
 			\label{fig:resnet50gpuforward}
 		\end{subfigure}
 		~
@@ -1095,14 +1095,14 @@
 			\caption{CPU Forward Time \vs Top-5 Error}
 			\label{fig:resnet50cpuforward}
 		\end{subfigure}
-		\caption[ResNet-50 \gls{ilsvrc} results]{\textbf{ResNet-50 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\caption[ResNet-50 \Glsfmtshort{ilsvrc} results]{\textbf{ResNet-50 \glsfmtshort{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet50plots}
 	\end{figure}
 	Results are shown in \cref{table:resnet50imagenetresults} and \cref{fig:resnet50plots} for various network architectures. Compared to the baseline architecture, the root variants achieve a significant reduction in computation and model size without a significant reduction in accuracy. For example, the best result (root-16) exceeds the baseline accuracy by 0.2\% while reducing the model size by 27\% and floating-point operations (multiply-add) by 37\%. \gls{cpu} timings were 23\% faster, while \gls{gpu} timings were 13\% faster. With a drop in accuracy of only 0.1\% however, the root-64 model reduces the model size by 40\%, and reduces the floating point operations by 45\%. \gls{cpu} timings were 31\% faster, while \gls{gpu} timings were 12\% faster. 
 	
 	\subsubsection{ResNet 200}\label{resnet200results}
 	\begin{table}[tp]
-		\caption[ResNet 200 \gls{ilsvrc} results]{\textbf{ResNet-200 \gls{ilsvrc} Results}}
+		\caption[ResNet 200 \Glsfmtshort{ilsvrc} results]{\textbf{ResNet-200 \glsfmtshort{ilsvrc} Results}}
 		\label{table:resnet200imagenetresults}
 		%\resizebox{\columnwidth}{!}{
 		\centering
@@ -1251,18 +1251,18 @@
 			] table[meta=name,x=ma,y expr={\thisrow{top5}*100},]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\gls{flops} (Multiply-Add) \vs Top-5 Error.}
+			\caption{\Glsfmtshort{flops} (Multiply-Add) \vs Top-5 Error.}
 			\label{fig:resnet200ma}
 		\end{subfigure}
-		\caption[ResNet-200 \gls{ilsvrc} results]{\textbf{ResNet-200 \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\caption[ResNet-200 \Glsfmtshort{ilsvrc} results]{\textbf{ResNet-200 \glsfmtshort{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:resnet200plots}
 	\end{figure}
 	To show that the method applies to deeper architectures, we also applied our method to \gls{resnet}\index{ResNet} 200, the deepest network for ILSVRC 2012. To provide a baseline we used code implementing full training augmentation to achieve state-of-the-art results\footnote{\url{https://github.com/facebook/fb.resnet.torch}}. \cref{table:resnet200imagenetresults} and \cref{fig:resnet200plots} show the results, top-1 and top-5 error are for center cropped images. The models trained with roots have comparable or lower error, with fewer parameters and less computation. The root-64 model has 27\% fewer FLOPS and 48\% fewer parameters than \gls{resnet}\index{ResNet} 200.
 
-	\subsection{Improving GoogLeNet on \gls{ilsvrc}}
+	\subsection{Improving GoogLeNet on \Glsfmtshort{ilsvrc}}
 	\label{googlenet50results}
 	\begin{table}[tp]
-		\caption[GoogLeNet \gls{ilsvrc} results]{\textbf{GoogLeNet \gls{ilsvrc} Results.}}
+		\caption[GoogLeNet \Glsfmtshort{ilsvrc} results]{\textbf{GoogLeNet \glsfmtshort{ilsvrc} Results.}}
 		\label{table:googlenetimagenetresults}
 		%\resizebox{\columnwidth}{!}{
 		\centering
@@ -1436,7 +1436,7 @@
 			] table[meta=Network,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} },]{\codatatable};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{\gls{flops} (Multiply-Add) \vs Top-5 Error.}}
+			\caption{\textbf{\Glsfmtshort{flops} (Multiply-Add) \vs Top-5 Error.}}
 			\label{fig:googlenet50ma}
 		\end{subfigure}
 		~
@@ -1490,7 +1490,7 @@
 			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{\gls{gpu} Forward Time \vs Top-5 Error.}}
+			\caption{\textbf{\Glsfmtshort{gpu} Forward Time \vs Top-5 Error.}}
 			\label{fig:googlenet50gpuforward}
 		\end{subfigure}
 		~
@@ -1544,11 +1544,11 @@
 			%\legend{GoogLeNet, All Filters, Spatial Filters}
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\textbf{\gls{cpu} Forward Time \vs Top-5 Error.}}
+			\caption{\textbf{\Glsfmtshort{cpu} Forward Time \vs Top-5 Error.}}
 			\label{fig:googlenet50cpuforward}
 		\end{subfigure}
 		
-		\caption[GoogLeNet \gls{ilsvrc} results]{\textbf{GoogLeNet \gls{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
+		\caption[GoogLeNet \Glsfmtshort{ilsvrc} results]{\textbf{GoogLeNet \glsfmtshort{ilsvrc} Results.} Models with filter groups have fewer parameters, and less floating point operations, while maintaining error comparable to the baseline.}
 		\label{fig:googlenet50plots}
 	\end{figure}
 	
@@ -1686,7 +1686,7 @@
 			\end{tikzpicture}
 			
 		\end{subfigure}
-		\caption[ResNet 50 layer-wise FLOPS/parameters]{\textbf{ResNet 50 Layer-wise \gls{flops}/Parameters.} 
+		\caption[ResNet 50 layer-wise \glsfmtshort{flops}/parameters]{\textbf{ResNet 50 Layer-wise \glsfmtshort{flops}/Parameters.} 
 		}
 		
 		\label{fig:resnet50layerwisema}

@@ -76,7 +76,7 @@
             \includegraphics[height=0.23\textheight, page=4]{sparsification}
             \caption{Our method, a learned basis space of vertical/horizontal rectangular filters and square filters. Filters of other shapes are also possible.}\label{fig:ourmethodfullrank}
         \end{subfigure}
-        \caption[Overview of methods of using low-rank filters]{\textbf{Methods of using low-rank filters in \glspl{cnn}\index{CNN}}. Methods from literature and our proposed methods for learning low rank filters. The activation function is not shown, coming after the last layer in each configuration.}\label{fig:separablemethods}
+        \caption[Overview of methods of using low-rank filters]{\textbf{Methods of using low-rank filters in \glsfmtshortpl{cnn}\index{CNN}}. Methods from literature and our proposed methods for learning low rank filters. The activation function is not shown, coming after the last layer in each configuration.}\label{fig:separablemethods}
     \end{figure}
     %%%
     
@@ -237,10 +237,10 @@
     
     VGG-11 (`VGG-A') is an 11-layer convolutional network introduced by \citet{Simonyan2014verydeep}. It is in the same family of network architectures used by \citet{Simonyan2014verydeep,He2015b} to obtain the state-of-the-art accuracy for \gls{ilsvrc}, but uses fewer convolutional layers and therefore fits on a single \gls{gpu} during training. During training of our VGG-11 based models, we used the standard hyperparameters detailed by \citet{Simonyan2014verydeep} and the initialization of \citet{He2015b}.
     
-    \subsubsection{VGG-derived Model Table}
+    \subsubsection{\Glsfmtshort{vgg}-derived Model Table}
 \begin{table}[tbp]
     \centering
-    \caption[Low-rank VGG \gls{ilsvrc} results]{{\bf VGG \gls{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this chapter.}\label{table:vggimagenetresults}
+    \caption[Low-rank \Glsfmtshort{vgg} \Glsfmtshort{ilsvrc} results]{\textbf{\Glsfmtshort{vgg} \glsfmtshort{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline VGG-11 network (both with and without global max pooling) and more efficient versions created by the methods described in this chapter.}\label{table:vggimagenetresults}
     \pgfplotstableread[col sep=comma]{lrdata/vggma.csv}\data
     
     %        \scalebox{0.9}{
@@ -317,7 +317,7 @@
     \legend{Baseline Networks, Our Results}
     \end{axis}
     \end{tikzpicture}
-    \caption[Low-rank VGG \gls{ilsvrc} results]{\textbf{VGG \gls{ilsvrc} Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on \gls{ilsvrc} object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}\label{fig:vggplots}
+    \caption[Low-rank \Glsfmtshort{vgg} \Glsfmtshort{ilsvrc} results]{\textbf{\Glsfmtshort{vgg} \glsfmtshort{ilsvrc} Results.} Multiply-accumulate operations \vs top-5 error for VGG-derived models on \gls{ilsvrc} object classification dataset, the most efficient networks are closer to the origin. Our models are significantly faster than the baseline network, in the case of `gmp-lr-2x' by a factor of almost 60\%, while slightly lowering error. Note that the `gmp-lr' and `gmp-lr-join' networks have the same accuracy, showing that an explicit linear combination layer may be unnecessary.}\label{fig:vggplots}
 \end{figure}
 \begin{table}[tbp]
     \centering
@@ -468,7 +468,7 @@
     \end{landscape}}
     We attempted to reduce the computational complexity of our `gmp-lr' network further in the \textbf{vgg-gmp-lr-lde} network by using a stride of 2 in the first convolutional layer, and adding low-dimensional embeddings, as in \citet{Lin2013NiN,Szegedy2014going}. We reduced the number of output channels by half after each convolutional layer using $1$$\times$$1$ convolutional layers, as detailed in \cref{vggmodeltable,table:vggarch}. While this reduces computation significantly, by approx.~86\% compared to our baseline, we saw a decrease in top-5 accuracy on \gls{ilsvrc} of 1.2 percentage points. We do note however, that this network remains 2.5 percentage points more accurate than the original VGG-11 network, but is 87\% faster.
     
-    \subsection{GoogLeNet for \gls{ilsvrc} Object Classification}
+    \subsection{GoogLeNet for \Glsfmtshort{ilsvrc} Object Classification}
     GoogLeNet, introduced by \citet{Szegedy2014going}, is the most efficient network for \gls{ilsvrc}, getting close to state-of-the-art results with a fraction of the computation and model size of even VGG-11. The GoogLeNet \gls{inception}\index{inception} module is a composite layer of 5 homogeneously-shaped filters, $1$$\times$$1$, $3$$\times$$3$, $5$$\times$$5$, and the output of a 3$\times$3 average pooling operations. All of these are concatenated and used as input for successive layers. 
     
     For the \textbf{googlenet-lr} network, within only the \gls{inception}\index{inception} modules we replaced each the $3$$\times$$3$ filters with low-rank $3$$\times$$1$ and $1$$\times$$3$ filters, and replaced the layer of $5$$\times$$5$ filters with a set of low-rank $5$$\times$$1$ and $1$$\times$$5$ filters. For the \textbf{googlenet-lr-conv1} network, we similarly replaced the first and second layer convolutional layers with $7$$\times$$1$~/~$1$$\times$$7$ and $3$$\times$$1$~/~$1$$\times$$3$ layers respectively.
@@ -477,7 +477,7 @@
     
     \begin{table}[tbp]
         \centering
-        \caption[Low-rank GoogLeNet \gls{ilsvrc} results]{{\bf GoogLeNet \gls{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this chapter.
+        \caption[Low-rank \Glsfmtshort{googlenet} \Glsfmtshort{ilsvrc} results]{\textbf{\Glsfmtshort{googlenet} \glsfmtshort{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline GoogLeNet network and more efficient versions created by the methods described in this chapter.
         }
 %        \resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/googlenetma.csv}\data
@@ -553,16 +553,16 @@
         \end{axis}
         \end{tikzpicture}
         
-        \caption[Low-Rank GoogLeNet \gls{ilsvrc} results]{\textbf{GoogLeNet \gls{ilsvrc} Results.} Multiply-accumulate operations \vs top-5 error for GoogLeNet-derived models on \gls{ilsvrc} object classification dataset.}
+        \caption[Low-Rank \Glsfmtshort{googlenet} \glsfmtshort{ilsvrc} results]{\textbf{\Glsfmtshort{googlenet} \glsfmtshort{ilsvrc} Results.} Multiply-accumulate operations \vs top-5 error for GoogLeNet-derived models on \gls{ilsvrc} object classification dataset.}
         \label{fig:googlenetimagenetresultsch4}
     \end{figure}
     
-    \subsection{\gls{nin} for \gls{cifar10} Object Classification}
+    \subsection{\Glsfmtshort{nin} for \Glsfmtshort{cifar10} Object Classification}
     The \gls{cifar10} dataset consists of 60,000 $32\times 32$ images in 10 classes, with 6000 images per class. This is split into standard sets of 50,000 training images, and 10,000 test images~\citep{CIFAR10}. As a baseline for the \gls{cifar10} dataset, we used the \gls{nin} architecture~\citep{Lin2013NiN}, which has a published test-set error of 8.81\%. We also used random crops during training, with which the network has an error of 8.1\%. Like most state-of-the-art CIFAR results, this was with ZCA pre-processed training and test data~\citep{goodfellow2013maxout}, training time mirror augmentation and random sub-crops. The results of our CIFAR experiments are listed in \cref{table:cifarresultsch4} and plotted in \cref{fig:cifarresultsch4}.
     
     \begin{table}[tbp]
         \centering
-        \caption[Low-rank \gls{cifar10} results]{{\bf \gls{nin} \gls{cifar10} Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline \gls{nin} model and more efficient versions created by the methods described in this chapter.}
+        \caption[Low-rank \Glsfmtshort{cifar10} results]{\textbf{\Glsfmtshort{nin} \glsfmtshort{cifar10} Results.} Accuracy, multiply-accumulate operations, and number of parameters for the baseline \gls{nin} model and more efficient versions created by the methods described in this chapter.}
         %\resizebox{\textwidth}{!}{
         \pgfplotstableread[col sep=comma]{lrdata/cifarma.csv}\data
         \pgfplotstabletypeset[
@@ -641,7 +641,7 @@
         \legend{Baseline Networks, Our Results}
         \end{axis}
         \end{tikzpicture}
-        \caption[Low-rank \gls{cifar10} results]{\textbf{\gls{nin} \gls{cifar10} Results.} Multiply-accumulate operations \vs error for \gls{nin} derived models on \gls{cifar10} object classification dataset.}
+        \caption[Low-rank \Glsfmtshort{cifar10} results]{\textbf{\Glsfmtshort{nin} \glsfmtshort{cifar10} Results.} Multiply-accumulate operations \vs error for \gls{nin} derived models on \gls{cifar10} object classification dataset.}
         \label{fig:cifarresultsch4}
     \end{figure}
     
@@ -702,7 +702,7 @@
     	\end{axis}
         \end{tikzpicture}
         %TODO why does \gls{ilsvrc} not work here properly?
-    	\caption[Computational complexity of state-of-the-Art ILSVRC models]{\textbf{Computational complexity of state-of-the-art \Gls{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state-of-the-art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
+    	\caption[Computational complexity of state-of-the-Art \Glsfmtshort{ilsvrc} models]{\textbf{Computational complexity of state-of-the-art \Glsfmtshort{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state-of-the-art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
     	\label{fig:bigpicturema}
     \end{figure}
     \end{landscape}
@@ -762,7 +762,7 @@
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
     	\end{tikzpicture}
-    	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art \Gls{ilsvrc} Models.} Test-time parameters \vs top-5 error for state-of-the-art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
+    	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art \Glsfmtshort{ilsvrc} Models.} Test-time parameters \vs top-5 error for state-of-the-art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
     	\label{fig:bigpictureparam}
     \end{figure}
     \end{landscape}

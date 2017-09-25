@@ -449,7 +449,7 @@ Of course when using convolution in practice, this mathematical definition isn't
 \begin{figure}[tb]
 	\centering
 	\includegraphics[width=0.66\columnwidth, page=1]{groupfig}
-	\caption[Illustration of convolutional layer]{\textbf{Convolution with $\gls{c}_2$ filters of shape $\gls{filterh}_1\times \gls{filterw}_1\times \gls{c}_1$.} Convolutional filters (yellow) have the same channel dimension $\gls{c}_1$ as the input \glspl{featuremap} (gray) on which they operate, while the \gls{featuremap} spatial dimensions $\gls{H}$ and $\gls{W}$ are typically larger. Each filter is convolved across the entire set of input \glspl{featuremap}\index{feature map} to produce a single output \gls{featuremap}\index{feature map}. With $\gls{c}_2$ filters, this gives an output \gls{featuremap}\index{feature map} with $\gls{c}_2$ channels. In this illustration we assume padding appropriate to preserve the spatial dimensions.}\label{fig:convlayer}
+	\caption[Illustration of convolutional layer]{\textbf{Convolution with $\glsfmtshort{c}_2$ filters of shape $\glsfmtshort{filterh}_1\times \glsfmtshort{filterw}_1\times \glsfmtshort{c}_1$.} Convolutional filters (yellow) have the same channel dimension $\gls{c}_1$ as the input \glspl{featuremap} (gray) on which they operate, while the \gls{featuremap} spatial dimensions $\gls{H}$ and $\gls{W}$ are typically larger. Each filter is convolved across the entire set of input \glspl{featuremap}\index{feature map} to produce a single output \gls{featuremap}\index{feature map}. With $\gls{c}_2$ filters, this gives an output \gls{featuremap}\index{feature map} with $\gls{c}_2$ channels. In this illustration we assume padding appropriate to preserve the spatial dimensions.}\label{fig:convlayer}
 \end{figure}
 %
 \Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ \gls{featuremap}\index{feature map} for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the \gls{featuremap}\index{feature map|textbf} $h^d$ at spatial location $i, j$ is given by,
@@ -531,7 +531,7 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x,{tanh(x)});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Hyperbolic Tangent $\gls{y} = \tanh\left(\gls{a}\right)$}\label{fig:tanh}
+		\caption{Hyperbolic Tangent $\glsfmtshort{y} = \tanh\left(\glsfmtshort{a}\right)$}\label{fig:tanh}
 	\end{subfigure}
 	~
 	\begin{subfigure}[t]{0.48\textwidth}
@@ -562,7 +562,7 @@ Here we will outline the most relevant differences in training contemporary \gls
 		(x,{max(x,0)});
 		\end{axis}
 		\end{tikzpicture}
-		\caption{ReLU activation function $\gls{y} = \max\left(0,\gls{a}\right)$}\label{fig:relu}
+		\caption{ReLU activation function $\glsfmtshort{y} = \max\left(0,\glsfmtshort{a}\right)$}\label{fig:relu}
 	\end{subfigure}\\
 	\begin{subfigure}[t]{0.48\textwidth}
 		\begin{tikzpicture}
@@ -779,11 +779,11 @@ AlexNet notably used training-time and test-time augmentation to achieve its sta
 
 AlexNet uses two filter groups throughout most of the layers of the model in order to split computation and model parameters across two \gls{gpu}s, the motivation being that at the time \gls{gpu}s did not have enough memory to fit such a large model. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enough that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 
-\subsection{\gls{nin}}
+\subsection{\Glsfmtlong{nin}}
 \begin{figure}[tbp]
     \centering
     \includegraphics[width=0.95\textwidth, page=4]{groupfig}
-    \caption[Low-dimensional embedding]{\textbf{\acrlong{lde}.} Introduced in the \gls{nin} architecture, a \gls{lde} consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie \gls{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
+    \caption[Low-dimensional embedding]{\textbf{\Glsfmtlong{lde}.} Introduced in the \glsfmtshort{nin} architecture, a \glsfmtshort{lde} consists of learning a 1$\times$1 convolutional layer after a normal convolutional layer. The pairing of 1$\times$1 filters and a non-linearity (\ie \glsfmtshort{relu}) can effectively learn a non-linear transformation into a different space. If $c_3 < c_2$, then a transformation into a lower-dimensional space is learned, and a potentially a more compact embedding of the learned representation.}\label{fig:lowdimembedding}
 \end{figure}
 \afterpage{
 \begin{landscape}
@@ -836,7 +836,7 @@ AlexNet uses two filter groups throughout most of the layers of the model in ord
 };
 \end{scope}
 \end{tikzpicture}
-\caption[\gls{nin} architecture]{\textbf{\gls{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate \glspl{featuremap}\index{feature map} over which a layer's filters operate. \Gls{gap} is used at the end of the network.
+\caption[\Glsfmtshort{nin} architecture]{\textbf{\Glsfmtshort{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate \glsfmtshortpl{featuremap}\index{feature map} over which a layer's filters operate. \Glsfmtshort{gap} is used at the end of the network.
 }
 \label{fig:networkinnetwork}
 \end{figure}
@@ -860,7 +860,7 @@ VGG is an evolution of the AlexNet models, with the same number of max-pooling l
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\textwidth, page=7]{sparsification}
-	\caption[Illustration of the inception unit]{\textbf{\Gls{inception}\index{inception} unit.} The building block of the \gls{inception}/GoogLeNet architecture. Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1), followed by a \gls{lde} (1$\times$1) layer.}\label{fig:inceptionunit}
+	\caption[Illustration of the inception unit]{\textbf{\Glsfmtshort{inception}\index{inception} unit.} The building block of the \glsfmtshort{inception}/\glsfmtshort{googlenet} architecture. Learns a limited number of large filters (7$\times$7, 5$\times$5), and a great number of small filters (3$\times$3, 1$\times$1), followed by a \gls{lde} (1$\times$1) layer.}\label{fig:inceptionunit}
 \end{figure}
 The winner of the \gls{ilsvrc}2014 challenge, as measured by classification accuracy alone, was the \emph{\gls{inception}\index{inception|textbf} architecture}, or \gls{googlenet}~\citep{Szegedy2014going}. The \gls{inception}\index{inception} architecture is particularly interesting, in that it was created explicitly to minimize computation and learn a more efficient representation. Although it uses the \gls{lde} of \gls{nin}, this is combined with a novel combination of filters of different spatial size, within what is called an \emph{\gls{inception}\index{inception} unit}, illustrated in \cref{fig:inceptionunit}.
 
