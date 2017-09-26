@@ -10,7 +10,7 @@
     description={#6},#1
   }
   \makenoidxglossaries
-  \newacronym[see={[Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
+  \newacronym[see={gls-#3},#2]{#3}{#4}{#5\glsadd{gls-#3}}
 }
 %https://tex.stackexchange.com/questions/127648/how-can-i-add-every-glossary-entry-to-the-index#127671
 %\defglsdisplayfirst[\acronymtype]{#1#4\index{#1}}
@@ -26,7 +26,7 @@
 \newdualentry{blas}{BLAS}{Basic Linear Algebra Subprograms}{A common \acrshort{api} for accelerating linear algebra operations, notably matrix multiplication, on hardware. Typically a heavily optimized version is provided by the hardware company.}
 \newdualentry{cublas}{CuBLAS}{CUDA BLAS}{Nvidia's implementation of \acrshort{blas} for the \acrshort{cuda}}
 \newdualentry{cuda}{CUDA}{Compute Unified Device Architecture}{Nvidia's \acrshort{gpu} programming \acrshort{api}}
-\newdualentry{mkl}{MKL}{Intel's Matrix Kernel Library}{\Gls{blas} implementation for Intel \glspl{cpu}}
+\newdualentry[see={blas,cpu}]{mkl}{MKL}{Intel's Matrix Kernel Library}{\Glsfmtshort{blas} implementation for Intel \glsfmtshort{cpu}}
 
 \newglossaryentry{cifar10}{name=CIFAR-10, description={An image recognition dataset funded by \acrshort{cifar} and created by \citet{CIFAR10} consisting of 60,000 32$\times$32 colour images of 10 classes of objects}}
 %\newglossaryentry{cifar100}{name=CIFAR-100, description={An image recognition dataset created by \citet{CIFAR10} consisting of 60,000 32$\times$32 colour images of 100 classes of objects}}
