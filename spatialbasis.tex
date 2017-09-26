@@ -702,7 +702,7 @@
     	\end{axis}
         \end{tikzpicture}
         %TODO why does \gls{ilsvrc} not work here properly?
-    	\caption[Computational complexity of state-of-the-Art \Glsfmttext{ilsvrc} models]{\textbf{Computational complexity of state-of-the-art \Glsfmttext{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state-of-the-art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
+    	\caption[Computational complexity of state-of-the-art \glsfmttext{ilsvrc} models]{\textbf{Computational complexity of state-of-the-art \Glsfmttext{ilsvrc} models.} Test-time multiply-accumulate operations \vs top-5 error on state-of-the-art networks using a \emph{single} model. Note the difference in accuracy and computational complexity for VGG-11 model with/without extra augmentation. Our `vgg-gmp-lr-join-wfull' model \emph{without} extra augmentation is more accurate than VGG-11 \emph{with} extra augmentation, and is much less computationally complex.}
     	\label{fig:bigpicturema}
     \end{figure}
     \end{landscape}
@@ -762,7 +762,7 @@
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
     	\end{tikzpicture}
-    	\caption[The number of parameters of state-of-the-Art ILSVRC models]{\textbf{Number of Parameters of State-of-the-Art \Glsfmttext{ilsvrc} Models.} Test-time parameters \vs top-5 error for state-of-the-art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
+    	\caption[The number of parameters of state-of-the-art \glsfmttext{ilsvrc} models]{\textbf{Number of Parameters of State-of-the-Art \Glsfmttext{ilsvrc} Models.} Test-time parameters \vs top-5 error for state-of-the-art models. The main factor in reduced model size is the use of global pooling or lack of fully-connected layers. Note that our `googlenet-lr' model is almost an order of magnitude smaller than any other network of comparable accuracy.}
     	\label{fig:bigpictureparam}
     \end{figure}
     \end{landscape}
@@ -771,7 +771,7 @@
     
     \begin{table}[tbp]
     	\centering
-    	\caption[State-of-the-art single models with extra augmentation]{{\bf State-of-the-Art Single Models with Extra Augmentation.} Top-5 \gls{ilsvrc} validation accuracy, single view and augmented test-time \gls{flops} (multiply-accumulate) count, and number of parameters for various state-of-the-art models \emph{with} various training and test-time augmentation methods. A multi-model ensemble of MSRA-C is the current state-of-the-art network.}
+    	\caption[State-of-the-art single models with extra augmentation]{\textbf{State-of-the-Art Single Models with Extra Augmentation.} Top-5 \glsfmttext{ilsvrc} validation accuracy, single view and augmented test-time \glsfmttext{flops} (multiply-accumulate) count, and number of parameters for various state-of-the-art models \emph{with} various training and test-time augmentation methods. A multi-model ensemble of MSRA-C is the current state-of-the-art network.}
     	%\resizebox{\columnwidth}{!}{
     	\pgfplotstableread[col sep=comma]{lrdata/bigpicture_aug.csv}\data
     	\pgfplotstabletypeset[

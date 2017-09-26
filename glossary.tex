@@ -71,44 +71,46 @@
 \newacronym{obd}{OBD}{Optimal Brain Damage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SYMBOLS
-\glsxtrnewsymbol[description={input of a neuron}]{x}{\ensuremath{x}}
-\glsxtrnewsymbol[description={output of a neuron}]{y}{\ensuremath{y}}
-\glsxtrnewsymbol[description={bias of a neuron}]{b}{\ensuremath{b}}
-\glsxtrnewsymbol[description={weight of a neuron}]{w}{\ensuremath{w}}
-\glsxtrnewsymbol[description={net activation of a neuron (see \cref{eqn:weightsum})}]{a}{\ensuremath{a}}
-\glsxtrnewsymbol[description={error for an output neuron with a given sample}]{e}{\ensuremath{e}}
-\glsxtrnewsymbol[description={target label for an output neuron with a given sample}]{t}{\ensuremath{t}}
-\glsxtrnewsymbol[description={error function}]{E}{\ensuremath{E}}
-\glsxtrnewsymbol[description={surogate loss function}]{L}{\ensuremath{\mathcal{L}}}
-\glsxtrnewsymbol[description={learning rate hyper-parameter}]{lr}{\ensuremath{\gamma}}
-\glsxtrnewsymbol[description={weight decay hyper-parameter}]{weightdecay}{\ensuremath{\lambda}}
-\glsxtrnewsymbol[description={training set}]{X}{\ensuremath{X}}
-\glsxtrnewsymbol[description={activation function of a neuron}]{f}{\ensuremath{f}}
-\glsxtrnewsymbol[description={vector of inputs to a neuron, \ensuremath{\mathbf{x} = \left\{x_0, x_1, \ldots\right\}}}]{vectorx}{\ensuremath{\mathbf{x}}}
-\glsxtrnewsymbol[description={vector of weights for a neuron, \ensuremath{\mathbf{w} = \left\{w_0, w_1, \ldots\right\}}}]{vectorw}{\ensuremath{\mathbf{w}}}
-\glsxtrnewsymbol[description={vector of outputs for a single pixel in an output featuremap}]{vectory}{\ensuremath{\mathbf{y}}}
-\glsxtrnewsymbol[description={vector of biases for a convolutional layer}]{vectorb}{\ensuremath{\mathbf{b}}}
-\glsxtrnewsymbol[description={`local gradient'/`error'/delta}]{delta}{\ensuremath{\delta}}
-\glsxtrnewsymbol[description={velocity vector, used in momentum}]{velocity}{\ensuremath{\mathbf{v}}}
-\glsxtrnewsymbol[description={training iteration}]{iteration}{\ensuremath{t}}
-\glsxtrnewsymbol[description={height of a convolutional \glsfmttext{featuremap}}]{H}{\ensuremath{H}}
-\glsxtrnewsymbol[description={width of a convolutional \glsfmttext{featuremap}}]{W}{\ensuremath{W}}
-\glsxtrnewsymbol[description={height of a convolutional \glsfmttext{filter}}]{filterh}{\ensuremath{h}}
-\glsxtrnewsymbol[description={width of a convolutional \glsfmttext{filter}}]{filterw}{\ensuremath{w}}
-\glsxtrnewsymbol[description={\# channels (input when used with \glsfmttext{d}) of a convolutional \glsfmttext{filter}/\glsfmttext{featuremap}}]{c}{\ensuremath{c}}
-\glsxtrnewsymbol[description={\# output channels of a convolutional \glsfmttext{filter}/\glsfmttext{featuremap}}]{d}{\ensuremath{d}}
-\glsxtrnewsymbol[description={covariance}]{covar}{\ensuremath{\operatorname{covar}}}
-\glsxtrnewsymbol[description={convolution operator}]{convolution}{\ensuremath{\mathop{\convolution}}}
-\glsxtrnewsymbol[description={function composition operator}]{composition}{\ensuremath{\mathop{\circ}}}
-\glsxtrnewsymbol[description={response/gradient per-layer scaling factor}]{beta}{\ensuremath{\beta}}
-\glsxtrnewsymbol[description={expected value}]{expected}{\ensuremath{\mathrm{E}}}
-\glsxtrnewsymbol[description={variance}]{var}{\ensuremath{\mathrm{Var}}}
-\glsxtrnewsymbol[description={standard deviation}]{stddev}{\ensuremath{\sigma}}
-\glsxtrnewsymbol[description={mean}]{mean}{\ensuremath{\mu}}
-\glsxtrnewsymbol[description={normalized response}]{normx}{\ensuremath{\hat{x}}}
-\glsxtrnewsymbol[description={Hessian matrix of second-order derivatives}]{hessian}{\ensuremath{\mathbf{H}}}
-\glsxtrnewsymbol[description={convolutional layer weight matrix}]{wmatrix}{\ensuremath{\mathbf{W}}}
-\glsxtrnewsymbol[description={worst case computational complexity}]{bigoh}{\ensuremath{O}}
-\glsxtrnewsymbol[description={incoming convolutional featuremap tensor}]{fmX}{\ensuremath{\mathbf{X}}}
-\glsxtrnewsymbol[description={outgoing convolutional featuremap tensor}]{fmY}{\ensuremath{\mathbf{Y}}}
-\glsxtrnewsymbol[description={convolutional filter/kernel tensor}]{fmK}{\ensuremath{\mathbf{F}}}
+\glsxtrnewsymbol[description={input of a neuron}, sort={x}]{x}{\ensuremath{x}}
+\glsxtrnewsymbol[description={output of a neuron}, sort={y}]{y}{\ensuremath{y}}
+\glsxtrnewsymbol[description={bias of a neuron}, sort={b}]{b}{\ensuremath{b}}
+\glsxtrnewsymbol[description={weight of a neuron}, sort={w}]{w}{\ensuremath{w}}
+\glsxtrnewsymbol[description={net activation of a neuron}, sort={a}]{a}{\ensuremath{a}}
+\glsxtrnewsymbol[description={error for an output neuron with a given sample}, sort={e}]{e}{\ensuremath{e}}
+\glsxtrnewsymbol[description={target label for an output neuron with a given sample}, sort={t}]{t}{\ensuremath{t}}
+\glsxtrnewsymbol[description={error function}, sort={E}]{E}{\ensuremath{E}}
+\glsxtrnewsymbol[description={surogate loss function}, sort={L}]{L}{\ensuremath{\mathcal{L}}}
+\glsxtrnewsymbol[description={learning rate hyper-parameter}, sort={gamma}]{lr}{\ensuremath{\gamma}}
+\glsxtrnewsymbol[description={weight decay hyper-parameter}, sort={lambda}]{weightdecay}{\ensuremath{\lambda}}
+\glsxtrnewsymbol[description={training set}, sort={X}]{X}{\ensuremath{X}}
+\glsxtrnewsymbol[description={activation function of a neuron}, sort={f}]{f}{\ensuremath{f}}
+\glsxtrnewsymbol[description={vector of inputs to a neuron, \ensuremath{\mathbf{x} = \left\{x_0, x_1, \ldots\right\}}}, sort={x}]{vectorx}{\ensuremath{\mathbf{x}}}
+\glsxtrnewsymbol[description={vector of weights for a neuron, \ensuremath{\mathbf{w} = \left\{w_0, w_1, \ldots\right\}}}, sort={w}]{vectorw}{\ensuremath{\mathbf{w}}}
+\glsxtrnewsymbol[description={vector of outputs for a single pixel in an output featuremap}, sort={y}]{vectory}{\ensuremath{\mathbf{y}}}
+\glsxtrnewsymbol[description={vector of biases for a convolutional layer}, sort={b}]{vectorb}{\ensuremath{\mathbf{b}}}
+\glsxtrnewsymbol[description={`local gradient'/`error'/delta}, sort={delta}]{delta}{\ensuremath{\delta}}
+\glsxtrnewsymbol[description={velocity vector, used in momentum}, sort={v}]{velocity}{\ensuremath{\mathbf{v}}}
+\glsxtrnewsymbol[description={training iteration}, sort={t}]{iteration}{\ensuremath{t}}
+\glsxtrnewsymbol[description={height of a convolutional \glsfmttext{featuremap}}, sort={H}]{H}{\ensuremath{H}}
+\glsxtrnewsymbol[description={width of a convolutional \glsfmttext{featuremap}}, sort={W}]{W}{\ensuremath{W}}
+\glsxtrnewsymbol[description={height of a convolutional \glsfmttext{filter}}, sort={h}]{filterh}{\ensuremath{h}}
+\glsxtrnewsymbol[description={width of a convolutional \glsfmttext{filter}}, sort={w}]{filterw}{\ensuremath{w}}
+\glsxtrnewsymbol[description={\# (input) channels of a convolutional \glsfmttext{filter}/\glsfmttext{featuremap}}, sort={c}]{c}{\ensuremath{c}}
+\glsxtrnewsymbol[description={\# output channels of a convolutional \glsfmttext{filter}/\glsfmttext{featuremap}}, sort={d}]{d}{\ensuremath{d}}
+\glsxtrnewsymbol[description={response/gradient per-layer scaling factor}, sort={beta}]{beta}{\ensuremath{\beta}}
+\glsxtrnewsymbol[description={expected value}, sort={E}]{expected}{\ensuremath{\mathrm{E}}}
+\glsxtrnewsymbol[description={standard deviation}, sort={stddev}]{stddev}{\ensuremath{\sigma}}
+\glsxtrnewsymbol[description={mean}, sort={mu}]{mean}{\ensuremath{\mu}}
+\glsxtrnewsymbol[description={normalized response}, sort={xhat}]{normx}{\ensuremath{\hat{x}}}
+\glsxtrnewsymbol[description={Hessian matrix of second-order derivatives}, sort={Hessian}]{hessian}{\ensuremath{\mathbf{H}}}
+\glsxtrnewsymbol[description={convolutional layer weight matrix}, sort={W}]{wmatrix}{\ensuremath{\mathbf{W}}}
+\glsxtrnewsymbol[description={worst case computational complexity}, sort={O}]{bigoh}{\ensuremath{O}}
+\glsxtrnewsymbol[description={incoming convolutional featuremap tensor}, sort={Xfm}]{fmX}{\ensuremath{\mathbf{X}}}
+\glsxtrnewsymbol[description={outgoing convolutional featuremap tensor}, sort={Xfm}]{fmY}{\ensuremath{\mathbf{Y}}}
+\glsxtrnewsymbol[description={convolutional filter/kernel tensor}, sort={F}]{fmK}{\ensuremath{\mathbf{F}}}
+
+
+\glsxtrnewsymbol[description={covariance}, sort={c}, category={functions}]{covar}{\ensuremath{\operatorname{covar}}}
+\glsxtrnewsymbol[description={convolution operator}, sort={convolution}, category={functions}]{convolution}{\ensuremath{\mathop{\convolution}}}
+\glsxtrnewsymbol[description={function composition operator}, sort={composition}, category={functions}]{composition}{\ensuremath{\mathop{\circ}}}
+\glsxtrnewsymbol[description={variance}, sort={Var}, category={functions}]{var}{\ensuremath{\mathrm{Var}}}
