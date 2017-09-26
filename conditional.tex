@@ -17,7 +17,7 @@
 	
 	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, computation the response at every node, even if many of these responses are approximately zero or not useful to the final output.
 	
-	\section{Generalizing \Glsfmtshort{dnn} and Decision Trees}
+	\section{Generalizing \Glsfmttext{dnn} and Decision Trees}
 	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
 	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures are used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
@@ -246,7 +246,7 @@
 			\legend{\texttt{conv1}/1, \texttt{conv1}/2, \texttt{conv1}/4}
 			\end{axis}
 			\end{tikzpicture}
-			%\caption{\textbf{\glsfmtshort{flops} (Multiply-Add) \vs Error.}}
+			%\caption{\textbf{\glsfmttext{flops} (Multiply-Add) \vs Error.}}
 			%\label{fig:nincifarmaconvonly}
 		\end{subfigure}
 		\vfill
@@ -306,7 +306,7 @@
 			%\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \Glsfmtshort{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmtshort{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \Glsfmttext{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmttext{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
 	\end{figure}
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. 
@@ -370,7 +370,7 @@
 			\legend{VGG-11, VGG-11 GMP, Cond.\ Network,};
 			\end{axis}
 			\end{tikzpicture}
-			\caption{\# \Glsfmtshort{flops} for each layer} 
+			\caption{\# \Glsfmttext{flops} for each layer} 
 		\end{subfigure}
 		\vfill
 		\begin{subfigure}[b]{0.98\linewidth}
@@ -430,7 +430,7 @@
 	%\item They have such a complex and long structure that they need to train using intermediate losses with manually set weights.
 	%\end{itemize}
 	
-	\subsection{\Glsfmtshort{cifar10}}
+	\subsection{\Glsfmttext{cifar10}}
 	Here we validate conditional networks for the classification of images in the \gls{cifar10} dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
 	We take the state-of-the-art \gls{nin} (NiN) model 
@@ -443,7 +443,7 @@
 		\centerline{
 			\includegraphics[width=0.98\linewidth]{resultsCifar_conditionalNetwork}
 		}
-		\caption[Automatically-learned conditional architecture for \Glsfmtshort{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \Glsfmtshort{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
+		\caption[Automatically-learned conditional architecture for \Glsfmttext{cifar10}]{\textbf{Automatically learned conditional architecture for image classification in \Glsfmttext{cifar10}.} Both structure and parameters of this conditional network have been learned automatically via Bayesian optimization. \copyright Antonio Criminisi, used with permission.}
 		\label{fig:Cifar_CondNet}
 	\end{figure}
 	
@@ -498,7 +498,7 @@
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on \Glsfmtshort{cifar10}]{\textbf{Comparing network architectures on \glsfmtshort{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
+		\caption[Comparing network architectures on \Glsfmttext{cifar10}]{\textbf{Comparing network architectures on \glsfmttext{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
 	\end{figure}
 	%
 	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.

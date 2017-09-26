@@ -120,7 +120,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \end{subfigure}
 
 %\input{resnet50fig.tex}
-\caption[Pairwise filter ablations in ResNet 50]{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the \glsfmtshort{ilsvrc} training/validation set in \texttt{conv1} of \glsfmtshort{resnet}\index{ResNet}-50.}
+\caption[Pairwise filter ablations in ResNet 50]{Histogram of the change in top-5 accuracy for all pairwise filter ablations of a 2500 randomly sampled images from the \glsfmttext{ilsvrc} training/validation set in \texttt{conv1} of \glsfmttext{resnet}\index{ResNet}-50.}
 \label{fig:resnet50ablation_conv1_top5}
 \end{figure}
 
@@ -536,7 +536,7 @@ DP-Random}
 \addplot +[mark=none] table [x=epoch, y expr=1-\thisrow{main/accuracy}, col sep=comma]{ablationdata/dropproject/train_dropprojectrandom.csv};
 \end{axis}
 \end{tikzpicture}
-\caption{\Glsfmtshort{cifar10} Training Error}
+\caption{\Glsfmttext{cifar10} Training Error}
 \label{fig:cifar_dropproject_train_acc}
 \end{subfigure}
 \begin{subfigure}[b]{\linewidth}
@@ -561,10 +561,10 @@ DP-Random}
 \addplot +[mark=none] table [x=epoch, y expr=1-\thisrow{validation/main/accuracy}, col sep=comma]{ablationdata/dropproject/train_dropprojectrandom.csv};
 \end{axis}
 \end{tikzpicture}
-\caption{\Glsfmtshort{cifar10} Test Error}
+\caption{\Glsfmttext{cifar10} Test Error}
 \label{fig:cifar_dropproject_test_acc}
 \end{subfigure}
-\caption[Dropout \vs dropproject for VGG/\Glsfmtshort{cifar10}]{Training and test curves for a VGG network on \Glsfmtshort{cifar10} comparing dropout to dropproject.}
+\caption[Dropout \vs dropproject for VGG/\Glsfmttext{cifar10}]{Training and test curves for a VGG network on \Glsfmttext{cifar10} comparing dropout to dropproject.}
 \label{fig:cifar_dropproject}
 \end{figure}
 
