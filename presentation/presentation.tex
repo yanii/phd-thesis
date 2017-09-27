@@ -416,7 +416,7 @@ $\approx$ 96\% in fully connected layers
 \begin{frame}{The Problem}
 % http://sms.cam.ac.uk/media/2017973?format=mpeg4&quality=720p
 \begin{itemize}
-%    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent over-fitting.
+%    \item Create a massively over-parameterized network, and ``regularize like hell'' to prevent overfitting.
 %    \item This seems to work well in practice for increasing generalization in networks such as VGG, and MSRA
     \item Creating a massively over-parameterized network, has consequences
     \item Training time: Translates into 2-3 weeks of training on 8 GPUs! (ResNet 200)
@@ -1577,7 +1577,7 @@ But when you also \textbf{increase the number of filters}\ldots
         \item They significantly help generalization with \textbf{larger datasets}
 	\end{itemize}
 	\item Are amenable to \textbf{model parallelization} (as with original AlexNet), for better parallelism across gpus/nodes
-	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent over-fitting.
+	%\item The restriction on what filter responses may be combined is an effective form of regularization, and helps prevent overfitting.
   \end{itemize}
 \end{frame}
 

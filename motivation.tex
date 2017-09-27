@@ -89,7 +89,7 @@
         m \approx 400\,B^2\,A^6.
     \end{align}
     %
-    This result, while surprising given the analysis based on the \gls{vc}\index{VC dimension} dimension of neural networks\index{neural network}, supports empirical results in using contemporary training methods such as weight decay~\citep{hinton1987learning}\index{weight decay|textbf}, early stopping~\citep{Bishop1995}\index{early stopping|textbf}, and even more recently batch normalization~\citep{Ioffe2015}\index{batch normalization}, all of which can keep weight magnitudes low.
+    This result, while surprising given the analysis based on the \gls{vc}\index{VC dimension} dimension of neural networks\index{neural network}, supports empirical results in using contemporary training methods such as weight decay~\citep{hinton1987learning}\index{weight decay|textbf}, early stopping~\citep{Bishop1995}\index{early stopping|textbf}, and even more recently batch normalization\index{batch normalization}~\citep{Ioffe2015}\index{batch normalization}, all of which can keep weight magnitudes low.
 %    For a single hidden layer network, \ie $\ell=2$, and an error rate of $\epsilon=0.05$, 
     
 %    \begin{align}
@@ -127,7 +127,7 @@
 		\label{fig:polyfits}
 	\end{figure}
 
-	\citet{denker1987large} explored the relationship of network architecture to generalization in a more empirical manner. The work was particularly motivating in the later design of \glspl{cnn}\index{CNN}~\citep{lecun1989generalization, lecun1989backpropagation}. The authors make the intuitive analogy between the affect of the size of a neural network\index{neural network} on its generalization, and a simple least-squares polynomial fit. \Cref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (\cref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (\cref{fig:polyfit20th}). While the number of samples can help the fit of the higher-order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (\cref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (\cref{fig:polyfit3rdlots}). Similarly, a neural network\index{neural network} with a large number of parameters may not generalize as well as a neural network\index{neural network} with fewer, more salient, parameters.
+	\citet{denker1987large} explored the relationship of network architecture to generalization in a more empirical manner. The work was particularly motivating in the later design of \glspl{cnn}\index{CNN}~\citep{lecun1989generalization, lecun1989backpropagation}. The authors make the intuitive analogy between the effect of the size of a neural network\index{neural network} on its generalization, and a simple least-squares polynomial fit. \Cref{fig:polyfits} shows various polynomial fits to samples from a \engordnumber{3}-order polynomial function. When using a \engordnumber{3}-order polynomial to fit even a small number of samples (\cref{fig:polyfit3rd}), the fit extrapolates, \ie is closer to the desired function outside the range of training samples, better than when we use a \engordnumber{20}-order polynomial to fit the same data (\cref{fig:polyfit20th}). While the number of samples can help the fit of the higher-order function, even with a large number of samples the \engordnumber{20}-order polynomial fit  (\cref{fig:polyfit20thlots}) will not extrapolate as well as the polynomial with a more appropriate lower number of parameters (\cref{fig:polyfit3rdlots}). Similarly, a neural network\index{neural network} with a large number of parameters may not generalize as well as a neural network\index{neural network} with fewer, more salient, parameters.
     
     More recently \citet{caruana2001overfitting} further explored the analogy by training neural networks\index{neural network} to fit polynomials, showing that overfitting in neural networks\index{neural network} does not seem to be as serious a problem as in polynomials. The greatly over-parametrized neural networks\index{neural network} still found relatively good fits. The authors suggest that neural networks\index{neural network} trained with backpropagation\index{backpropagation} may be biased towards ``smoother approximations''.
 	
@@ -135,8 +135,7 @@
 	%% Use example of sin wave? We can fit it with a polynomial, but better to re-parametrize into a basis
 	
 	\subsection{Generalization and Parameters in Neural Networks}
-	There has been a lot of research into the relationship between the number of parameters of a network and its generalization, aside from theoretical work presented in \cref{vcdim}, there were many empirical studies, especially in the earlier years of connectionist research~\citet{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing}.
-	\begin{figure}[tbp]
+	\begin{figure}[tb]
 		\centering
 		\large
         \renewcommand{\ttdefault}{pcr}
@@ -160,9 +159,14 @@
 			\label{fig:twoclumps}
 		\end{subfigure}
 		
-		\caption[Two-or-more clumps predicate]{\textbf{Two-or-more clumps predicate.} The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two-or-more contiguous strings of ones.}
-		\label{fig:tomclumps}
+		\caption[Two-or-more clumps predicate]{\textbf{Two-or-more clumps predicate.} The two-or-more clumps predicate asks for the network to classify (padded) binary input sequences as having one or two-or-more contiguous strings of ones.}\label{fig:tomclumps}
 	\end{figure}
+	There has been a lot of research into the relationship between the number of parameters of a network and its generalization, aside from theoretical work presented in \cref{vcdim}, there were many empirical studies, especially in the earlier years of connectionist research~\citep{denker1987large, giles1987learning, hinton1987learning, lecun1989generalization, ahmad1989scaling,hanson1989comparing}.
+
+	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate (truth statement). The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two-or-more contiguous strings of ones, some examples of which are shown in \cref{fig:tomclumps}. The predicate is largely based on the more general predicate of \emph{connectedness} explored by \citet{minsky1988perceptrons}, and is shown to be a problem not linearly separable, or more specifically, solvable by a locally connected perceptron\index{perceptron}. 
+	
+	The authors illustrate some surprising properties of the generalization of fully-connected neural networks\index{neural network} learned with backpropagation\index{backpropagation}. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that it is not a solution that the network would ever settle upon when trained with backpropagation\index{backpropagation}. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable.
+
 	\afterpage{
 		\begin{landscape}
 		\begin{figure}[tbp]
@@ -189,21 +193,16 @@
 				\caption{Validation Accuracy}
 				\label{fig:tomplotmaxvalacc}
 			\end{subfigure}
-			\caption[Two-or-more clumps problem and structural priors]{\textbf{Two-or-more clumps problem and structural priors.} Our results for of the learning curves for the experiment of \citet{denker1987large}. A small \gls{cnn} converges quicker than a much larger, fully-connected network that contains the super-set of weights not present in the sparser \gls{cnn}. The class-imbalance due to the numbers of samples for the two classes in a fixed-length binary string seems to cause instability in the convergence of both networks.}
+			\caption[Two-or-more clumps problem and structural priors]{\textbf{Two-or-more clumps problem and structural priors.} Our results for of the learning curves for the experiment of \citet{denker1987large}. A small \gls{cnn} converges quicker than a much larger, fully-connected network that contains the superset of weights not present in the sparser \gls{cnn}. The class imbalance due to the numbers of samples for the two classes in a fixed-length binary string seems to cause instability in the convergence of both networks.}
 			\label{fig:tomplot}
 		\end{figure}
-	\end{landscape}
-	}
-	\citet{denker1987large,giles1987learning} explore the relationship between network architecture and generalization by evaluating networks for solving the \emph{two-or-more clumps} predicate (truth statement). The two-or-more clumps predicate asks for the network to classify binary input sequences as having one or two-or-more contiguous strings of ones, some examples of which are shown in \cref{fig:tomclumps}. The predicate is largely based on the more general predicate of \emph{connectedness} explored by \citet{minsky1988perceptrons}, and is shown to be a problem not linearly separable, or more specifically solvable by a locally connected perceptron\index{perceptron}. 
-	
-	The authors illustrate some surprising properties of the generalization of fully-connected neural networks\index{neural network} learned with backpropagation\index{backpropagation}. First, a human-preferred `geometric' solution is manually hard-coded into the weights of a fully-connected network. While this weight configuration is a valid solution, and is intuitive to humans, the authors show that it is not a solution that the network would ever settle upon when trained with backpropagation\index{backpropagation}. By using the geometric solution as an initialization, and training the network further, the authors show that the error-surface around the region is not stable,
-
-	In \cref{fig:tomplot} we show the learning curves for this problem, using contemporary training methods. The small \gls{cnn} converges quicker than a much larger, fully-connected network that contains the super-set of weights not present in the sparser \gls{cnn} due to weight sharing and missing weights. Something not observed in the original paper however is that the class-imbalance due to the numbers of samples for the two classes in a fixed-length binary string seems to cause instability in the convergence of both networks.
+	\end{landscape}}
+	In \cref{fig:tomplot} we show the learning curves for this problem, using contemporary training methods. The small \gls{cnn} converges quicker than a much larger, fully-connected network that contains the super-set of weights not present in the sparser \gls{cnn} due to weight sharing and missing weights. Something not observed in the original paper however is that the class imbalance due to the numbers of samples for the two classes in a fixed-length binary string seems to cause instability in the convergence of both networks.
 
 	Work on trying to understand generalization of neural networks is not the domain of the past, and is still an active area of research. One of the more interesting recent papers on generalization in \gls{dnn} highlights that \glspl{dnn} may not always be learning the type of representations we assume. \Citet{rethinking2016} looked at the effect of training \glspl{dnn} where they replaced the labels of the \gls{ilsvrc} dataset with random labels. Surprisingly, \glspl{dnn} can learn the randomly labelled datasets perfectly (\ie zero training error), despite the intrinsic relationship between the labels and images being destroyed. This flies in the face of the commonly accepted explanation that the network is learning to represent the natural data in a low-dimensional manifold in a higher dimension, random labels are unlikely to be learned this way. Instead it seems that \glspl{dnn} are doing a lot more memorization of training data than previously thought. The authors also show that many forms of regularization currently used, including weight decay\index{weight decay} and dropout, are less effective than expected.
 
 	On the subject of the importance of structure for learning 
-	glspl{dnn}, these results show that structural priors may be more important than previously thought for generalization than even strong forms of regularization.
+	\glspl{dnn}, these results show that structural priors may be more important than previously thought for generalization than even strong forms of regularization.
 
 \subsection{No Free Lunch Theorem}
 \label{nofreelunch}
@@ -230,7 +229,7 @@ Let $P$ be a uniform probability distribution on $\mathcal{M}$. For any algorith
     E\left[ L_A\left(P, X_m\right) \right] = | Y - 1 |/|Y|,
 \end{align}
 \end{theorem}
-
+%
 \ie no algorithm can do better than random on all possible problems, given only the training data with no other biases.
 
 The NFL theorem leads many to claim that there is no such thing as a universal learner, however it is important to note that in practice the data distributions that we are interested in represent a small number of all possible data distributions, so it's not inconceivable that a learning algorithm with assumptions may be able to do well on many different real world datasets. Formalizing this argument, \citet{lattimore2013no} claim that without contradicting NFL, biased learning algorithms may exist that do well on universal problems. Their main insight is that the assumption of a uniform probability function $P$ on data distributions may be unrealistic, and under other distributions, a biased learner may do well even averaged over all distributions.
@@ -276,9 +275,9 @@ The practical implementation of this method is rather more difficult~\citep{chip
 Besides the difficulty of assigning correct priors, \citet{mackay1992practical} proposes to use the Hessian\index{Hessian} to evaluate the curvature of the error surface around the point on the error surface represented by the parameters learned in the model, in order to gain knowledge of the uncertainty of the parameters, \ie $p(\mathbf{\theta}|\gls{X},\mathcal{M}_i$. As explained in \cref{pathological}, the Hessian is difficult to represent for even reasonably-sized contemporary \glspl{dnn}.
 
 \section{Constructive Neural Network Algorithms}
-	%http://blog.otoro.net/2016/09/28/hyper-networks/
-	Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research was prominent in the late 80's and early 90's, but has started to regain focus. 	
-	\subsection{Perfect Binary Training Classification}
+%http://blog.otoro.net/2016/09/28/hyper-networks/
+Given the effect of structure and network design on generalization, what if instead of designing a neural network\index{neural network} before training, we could build networks from the ground up based on data? This appealing direction of research was prominent in the late 80's and early 90's.	
+
 Constructive approaches to binary classification neural network architectures were the approach taken by \citet{mezard1989learning,Fahlman1989,frean1990upstart} among others. A survey of such methods is presented by \citet{parekh2000constructive}. These methods share one issue however, they  present algorithms to build neural networks that can classify a binary training set \emph{perfectly}, as pointed out by~\citet{Bishop1995}. Rather, our interest is usually in a classifier that generalizes well --- neural networks that classify the training set perfectly are likely instead to have overfit the training set.
 	
 	\subsubsection{Tiling Algorithm}\label{tilingalgo}
@@ -326,10 +325,10 @@ Constructive approaches to binary classification neural network architectures we
 
     In a typical pruning algorithm, after having trained the network, a saliency measure for each network weight is calculated. The weights are then sorted by saliency, and the lowest saliency parameters are deleted. After this pruning step, the network must again be re-trained from scratch. This iterative re-training means that such pruning methods do not scale well to contemporary neural networks\index{neural network} where training times can be measured in weeks.
 
-	The simplest saliency measure would be to simply measure the effect of removing a weight on the training error of the network. For each weight in the network, the training error can be evaluated, and the difference in error used as the saliency measure for that weight. In practice this straight-forward method is infeasible however, since we must evaluate over the training set for each weight of the network. For a network with $n$ weights, and $p$ training samples, calculating the saliencies for the whole network in this manner is $\gls{bigoh}(np)$~\citep{hanson1989comparing}.
+	The simplest saliency measure would be to directly measure the effect of removing a weight on the training error of the network. For each weight in the network, the training error can be evaluated, and the difference in error used as the saliency measure for that weight. In practice this straight-forward method is infeasible however, since we must evaluate over the training set for each weight of the network. For a network with $n$ weights, and $p$ training samples, calculating the saliencies for the whole network in this manner is $\gls{bigoh}(np)$~\citep{hanson1989comparing}.
 	
 	\subsection{Optimal Brain Damage}
-	\citet{lecun1989optimal} proposed \gls{obd} to iteratively remove neurons\index{neuron} after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay, instead the authors propose a more theoretically justified saliency measure --- they propose measuring the change in the objective function caused by deleting a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of an objective function with respect to the weights using the \engordnumber{2}-order Taylor series expansion, $f(a) = \sum_{n=0}^{2} \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
+	\citet{lecun1989optimal} proposed \gls{obd} to iteratively remove neurons\index{neuron} after training based on a saliency measure that judges the parameters that have the least effect on training error. The authors point out that simply using the magnitude of the weights themselves is equivalent in the limit to having trained with a form of non-proportional weight decay. Instead the authors propose a more theoretically justified saliency measure --- they propose measuring the change in the objective function caused by removing a parameter. Rather than performing the computationally intensive task of re-evaluating the objective for every possible parameter deletion, the second derivative of the objective with respect to the weights is instead used. The authors approximate the derivative of an objective function with respect to the weights using the \engordnumber{2}-order Taylor series expansion, $f(a) = \sum_{n=0}^{2} \frac{f^{(n)}(a)}{n!} (x - a)^n$, of the error:
     % From optimal brain surgeon paper
     % https://papers.nips.cc/paper/647-second-order-derivatives-for-network-pruning-optimal-brain-surgeon.pdf
     % also look at:
@@ -366,7 +365,7 @@ Constructive approaches to binary classification neural network architectures we
 	In order to use \gls{dnn}\index{neural network} on embedded devices, and in many applications, first a more compact representation and perhaps even faster inference is often required. Although mostly a matter of engineering, compression of neural networks\index{neural network} also tells us something about the information-theoretic capacity of the models we train, and therefore gives us hints about the internal representation learned in \glspl{dnn}\index{DNN}. There have been many papers on the topic \citep{han2015deep,han2015learning,han2016dsd,Kim2016,rastegari2016xnor,ullrich2017soft}, here we will only cover a few of the most relevant papers.
 
 	\subsection{Deep Compression}
-	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization\index{quantization} and Huffman coding. The quantization\index{quantization} uses a look-up table to store a limited number of weights (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease by a factor of 40.
+	\citet{han2015deep} extends the method of \citet{han2015learning} with both quantization\index{quantization} and Huffman coding. The quantization\index{quantization} uses a look-up table to store a limited number of weight values (within each layer) which are indexed by multiple weights --- in effect a form of weight sharing. Interestingly the model is further trained after the quantization, using backpropagation with the quantized weights. Finally, the resulting quantized model is compressed losslessly using a Huffman encoding. The results are impressive, a large VGG-16 model of 552MB parameters is reduced in size to 11.3MB, a decrease by a factor of 40.
 
 	\subsection{Deep-Sparse-Dense Training}
 	One of the most interesting recent papers on pruning is that of \citet{han2016dsd} who do something quite different. The authors propose to train a model in distinct initial, sparse and dense steps:

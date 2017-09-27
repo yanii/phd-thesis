@@ -17,8 +17,8 @@
 	
 	Despite this fundamental relationship, decision forests and neural networks\index{neural network} have such distinct and mutually exclusive strengths and weaknesses that it is not surprising that they are themselves usually considered to be distinct. Decision forests require vast amounts of labelled data, proportional to the number of classes and tree depth, since samples are ``diluted'' down the tree, while, with appropriate regularization, neural networks\index{neural network} can be trained with far more parameters than actual samples. At test time, neural networks\index{neural network} are opaque giving little understanding, while decision forests are more intuitive --- each node having an explicit decision on the input data and even describe per-class statistics. The routing of decision forests makes it easy to distribute computation, while the high connectivity of neural networks\index{neural network} makes model parallelism difficult and inefficient. Decision forests are extremely fast at test time due to sample routing, only a small part of a tree need be computed, \ie conditional computation. Neural networks\index{neural network} must, on the other hand, computation the response at every node, even if many of these responses are approximately zero or not useful to the final output.
 	
-	\section{Generalizing \Glsfmttext{dnn} and Decision Trees}
-	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \gls{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
+	\section{Generalizing \Glsfmtplural{dnn} and Decision Trees}
+	Here we explore the continuum of models between decision forests, with the objective of reducing the connectivity of deep neural networks\index{neural network} trained with backpropagation\index{backpropagation}, specifically \glspl{cnn}, while retaining some of the efficiency and understanding which arise from the conditional computation in decision forests.
 	
 	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures are used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
 	
@@ -101,7 +101,7 @@
 	
 	We are still missing the method of conditional computation found in decision trees in our graphical language however, \ie how the decision is made to route each sample at a node. We must generalize two forms of routing found in decision trees, \emph{hard routing} where samples are only routed to one node in the next layer, and \emph{soft routing} where a weighted sample is potentially sent to every node of the next layer.
 	
-	We achieve this with the minor addition of a new set of nodes we call a \emph{router}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in \cref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's\index{neuron} activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network\index{neural network} layers, \ie as $\mat P_{ij} \wr$. \Cref{fig:newtreenotation} shows the same tree as shown in \cref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
+	We achieve this with the minor addition of a new set of nodes we call \emph{routers}. A router consists of $K$ weights for a $K$-ary node or tree, as shown in \cref{fig:treeNotation}. These router weights themselves are determined in a way more reminiscent of a neuron's\index{neuron} activation function, typically a non-linear transformation of the sample. Thus this is represented in the same graphical notation as the mapping between neural network\index{neural network} layers, \ie as $\mat P_{ij} \wr$. \Cref{fig:newtreenotation} shows the same tree as shown in \cref{fig:oldtreenotation}, notably with the routers highlighted in red. Typically a router will have a number of non-zero weights and perform soft routing, however if only one of the router weights is non-zero, the router effects hard routing.
 	
 	
 	\begin{figure}[tbp] 
@@ -142,31 +142,31 @@
 	
 	As discussed in \cref{alexnetfiltergroups}, AlexNet uses two filter groups\index{filter groups} throughout most of the layers of the model in order to split computation across two \gls{gpu}s. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
 	
-	We based our experiments on the VGG network~\citep{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\citep{He2015b}. Specifically, we focus on the VGG11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe~\citep{Jia2014} on a single Nvidia K40 \gls{gpu}). It notably does not have any filter group\index{filter groups}ing, as found in AlexNet, or low-dimensional embeddings, as found in \gls{nin}. It therefore suffers from and explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
+	We based our experiments on the VGG network~\citep{Simonyan2014verydeep} on which the current state-of-the-art models are also based~\citep{He2015b}. Specifically, we focus on the \gls{vgg}-11 model as it is deep (11 layers) and relatively memory efficient (trains with Caffe~\citep{Jia2014} on a single Nvidia K40 \gls{gpu}). It notably does not have any filter group\index{filter groups}ing, as found in AlexNet, or low-dimensional embeddings, as found in \gls{nin}. It therefore suffers from an explosion in the number of filters required at each layer, and represents the ideal network on which to demonstrate the efficiency savings brought about by these simple modifications.
 	
 	\subsubsection{Global Max-Pooling to Reduce Model Size}
 	We found that \gls{gmp}, like \gls{gap} (as used by \citet{Lin2013NiN,Szegedy2014going}), after the last convolutional layer is effective in reducing model parameters while maintaining, if not improving, accuracy. This suggests that preserving spatial information after the convolutional layers may not be as important as previously thought. 
-	We trained a new network (`VGG11-GMP') with such pooling, and achieved lower top-5 error than the baseline VGG11 
+	We trained a new network (`\gls{vgg}-11-GMP') with such pooling, and achieved lower top-5 error than the baseline \gls{vgg}-11 
 	network (13.3\% \vs 13.8\%), with a decrease in the number of parameters of over 72\% (see \cref{fig:VggPerLayerCost}).
 	
 	\subsubsection{Designing an Efficient Conditional Architecture}
-	Starting from the already improved, non-routed VGG11-GMP architecture, we designed the conditional network in \cref{fig:Imagenet_CondNet}.
+	Starting from the already improved, non-routed \gls{vgg}-11-GMP architecture, we designed the conditional network in \cref{fig:Imagenet_CondNet}.
 	% figure 
 	\begin{figure}[tbp]
 		\centering
 		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
-		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glspl{dnn}\index{DNN}.}\label{fig:Imagenet_CondNet}
+		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glsfmtplural{dnn}\index{DNN}.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
-	Since most of the computational cost in VGG11-GMP is in the convolutional layers, our conditional variant 
+	Since most of the computational cost in \gls{vgg}-11-GMP is in the convolutional layers, our conditional variant 
 	introduces a DAG-like routed structure to split the filters in the convolutional section.
 	The assumption here is that each filter should only need to be applied to a small number of channels in the input \gls{featuremap}\index{featuremap}.
 	
 	Data routing is implemented via `filter groups\index{filter groups}', as originally used in~\citep{Krizhevsky2012}. 
-	Thus, at each level $\textrm{conv}\_n\_\{1,2\}, n=3\ldots 5$, the convolutional filters of VGG11-GMP are 
+	Thus, at each level $\textrm{conv}\_n\_\{1,2\}, n=3\ldots 5$, the convolutional filters of \gls{vgg}-11-GMP are 
 	divided into $2^{(n-2)}$ groups. Each group depends only on the results of exactly 128 previous filters. 
 	The \glspl{featuremap}\index{feature map} of the last convolutional layer are concatenated together, and globally max-pooled
-	before the fully-connected layers, which remain the same as those in VGG11-GMP.
+	before the fully-connected layers, which remain the same as those in \gls{vgg}-11-GMP.
 	
 	\subsubsection{Training}
 	We trained our conditional network with the same hyperparameters as in~\citep{Simonyan2014verydeep}, 
@@ -176,14 +176,14 @@
     \end{equation}
 	where $\gls{lr}_0,\gls{lr}_t$ and $\gls{weightdecay}$ are the initial learning rate, learning rate at iteration $\gls{t}$, and weight decay\index{weight decay} respectively~\citep{Bottou2012sgdtricks}.
 	When the validation accuracy of the network levelled out, the learning rate was further decreased by a factor of 10, twice. 
-	The conditional network took twice as many epochs to train than VGG11, however this equates to a comparable
+	The conditional network took twice as many epochs to train than \gls{vgg}-11, however this equates to a comparable
 	training time given its higher efficiency.
 
 	\subsubsection{Accuracy \vs Efficiency}
 	In order to compare different network architectures as fairly as possible, here we did not use any training
 	augmentation aside from that supported by Caffe~\citep{Jia2014} (mirroring/random crops). Similarly we report test-time 
 	accuracy based only on centre-cropped images, without potentially expensive data oversampling. 
-	This reduces the overall accuracy (w.r.t.\ to state-of-the-art), but constitutes a fairer test bed for teasing out the effects of different network architectures. This is because each architecture uses a different method of augmentation and has a different affect on the increase in inference time.
+	This reduces the overall accuracy (w.r.t.\ to state of the art), but constitutes a fairer test bed for teasing out the effects of different network architectures. This is because each architecture uses a different method of augmentation and has a different affect on the increase in inference time.
 	Applying the same oversampling to all networks produced a nearly identical accuracy improvement in 
 	all models, without changing their ranking.
 
@@ -306,19 +306,19 @@
 			%\caption{\textbf{Model Parameters \vs Error.}}
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
-		\caption[Efficiency of conditional networks on \Glsfmttext{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmttext{ilsvrc} relative to state-of-the-art.} Our VGG11-GMP (GMP) reduces model size significantly, and is the baseline network. VGG-11 conditional networks (Cond.\ Network)yield points closer to the origin for networks with the same \texttt{conv1} stride (\texttt{conv1}/stride).}\label{fig:Imagenet_results}
+		\caption[Efficiency of conditional networks on \Glsfmttext{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmttext{ilsvrc} relative to state-of-the-art models.} Our \glsfmttext{vgg}-11-GMP (GMP) reduces model size significantly, and is the baseline network. \glsfmttext{vgg}-11 conditional networks (Cond.\ Network) yield points closer to the origin for networks with the same \texttt{conv1} stride, noted as (\texttt{conv1}/stride) in the legend.}\label{fig:Imagenet_results}
 	\end{figure}
 	\Cref{fig:Imagenet_results} summarizes the results.
 	It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. 
 	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
 	
-	GoogLeNet and Alexnet~\citep{Krizhevsky2012} (in light blue) are in fact instances of conditional networks 
-	(though they were not presented that way). In both networks much of the computational saving is obtained by routing	subsets of features to different branches of the network.In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
+	GoogLeNet and Alexnet~\citep{Krizhevsky2012} are in fact instances of conditional networks 
+	(though they were not presented that way). In both networks much of the computational saving is obtained by routing	subsets of features to different branches of the network. In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
 	
 	The conditional network of \cref{fig:Imagenet_CondNet} 
 	corresponds to the green circle in \cref{fig:Imagenet_results}.
 	It achieves a top-5, centre-crop error of
-	13.9\% compared to 13.8\% for the VGG11 network, while requiring less than half of the computation (45\%),
+	13.9\% compared to 13.8\% for the \gls{vgg}-11 network, while requiring less than half of the computation (45\%),
 	and almost one-fifth (21\%) of the parameters.
 	Although it is the second closest to the origin (after GoogLeNet), we believe that better results can be achieved 
 	by using routes of different (learned) cardinality, as well as incorporating low-dimensional embedding and multiple-loss training. This is left for future work. 
@@ -410,14 +410,14 @@
 			\end{tikzpicture}
 			\caption[\# Parameters for each layer]{\# Parameters for each layer} 
 		\end{subfigure}
-		\caption[VGG-11 layer-wise FLOPS/parameters]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of VGG11, VGG11-GMP, and our conditional network. Our two networks reduce both the memory use and the computational cost.}\label{fig:VggPerLayerCost}
+		\caption[VGG-11 layer-wise FLOPS/parameters]{\textbf{Computational cost of VGG-11 based networks per layer.} Number of parameters and number of multiply-accumulate operations for all (convolutional and fully-connected) layers of \glsfmttext{vgg}-11, \glsfmttext{vgg}-11-GMP, and our conditional network. Our two networks reduce both the memory use and the computational cost.}\label{fig:VggPerLayerCost}
 	\end{figure}
 	% Removed to save space
 	GoogLeNet divides filters within each \gls{inception}\index{inception} module into 4 groups of various filter sizes, giving the overall network a DAG-like structure. GoogLeNet's usage of low-dimensional embeddings within these routes reduces computatation and parameters of the network even further.
 	
 	The most efficient of the state-of-the-art networks used for Imagenet classification, by a wide margin, is GoogLeNet (see \cref{fig:Imagenet_results}). \gls{nin} and GoogLeNet pioneered the use of semi-dense weight matrices in the form of learning dimensionality reductions, reducing the explosion of filters usually found in deep network architectures.
 	
-	Another unique feature of these two networks is \gls{gap}, where the spatial dimensions of the last convolutional \gls{featuremap}\index{feature map} are reduced to a single compact feature vector of length $f$, where $f$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
+	Another unique feature of these two networks is \gls{gap}, where the spatial dimensions of the last convolutional \gls{featuremap}\index{feature map} are reduced to a single compact feature vector of length $\gls{c}$, where $\gls{c}$ is the number of filters in the layer. This greatly reduces the parameters of the network by reducing the weights in the first fully-connected layer, which contains the majority of weights in the network (see \cref{fig:VggPerLayerCost}), and is the single largest factor in the space efficiency of \gls{nin} and GoogLeNet.
 	
 	%\begin{itemize}
 	%\item Our convtree has much more potential for distributed computation.
@@ -433,7 +433,7 @@
 	\subsection{\Glsfmttext{cifar10}}
 	Here we validate conditional networks for the classification of images in the \gls{cifar10} dataset~\citep{CIFAR10}. 
 	The dataset contains 60,000 images of 10 classes, typically divided into 50,000 training images and 10,000 test images. 
-	We take the state-of-the-art \gls{nin} (NiN) model 
+	We take the state-of-the-art \gls{nin} model 
 	as a reference~\citep{Lin2013NiN}, and we build a conditional version of it to produce the architecture in \cref{fig:Cifar_CondNet}. 
 	Then we go on to show its increased efficiency compared to the original NiN model.
 	%\acnote{there is another net which is 0.1\% better.}
@@ -450,13 +450,12 @@
 	\subsubsection{Designing a Family of Conditional Networks}
 	The NiN model has a large number (192) of initial image-level filters in the first convolutional layer (`conv1'), 
 	representing a sizable amount of the overall computation.\footnote{Most Imagenet networks typically use $64-96$ conv1 filters.}
-	
 	We build a variant (`NiN-64') that prepends a layer of 64 filters to the NiN model.
 	While this variant is more complex than NiN, when routed (as described later) it allows us 
 	to split the larger layers into many routes and increase the efficiency.
 	In fact, for a convolutional layer with $N$ groups of filters, each filter operates on $1/N$ channels of the input \gls{featuremap}\index{feature map}, thus yielding reduced test-time computation and learning filters with fewer channels. 
 	Additionally, training routed convolutional layers means that filters are exposed only to the training subset of data that flows through that route, thus allowing for a potentially higher degree of specialization.
-	By changing the number of routes at each level of the NiN-64 model (from conv2) we can 
+	By changing the number of routes at each level of the NiN-64 model (from \texttt{conv2}) we can 
 	generate a whole family of possible conditional architectures. 
 	
 	\subsubsection{Learning the Optimal Network Architecture}
@@ -467,7 +466,7 @@
 	%\acnote{we have not done this in Imagenet because too big.}
 	
 	In the optimization we maximized the {\em size-normalized} accuracy $\alpha =\frac{\textrm{validation accuracy}}{\textrm{model size}}$ with respect to the parameters $R_l = 2^i, \left\{i\in \mathbb{N} : 0 \le i \le 5\right\}$, where $R_l$ is the number of nodes at layer $l$ in the conditional network. 
-	\cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in \gls{cifar10}. 
+	\Cref{fig:Cifar_CondNet} shows the architecture which maximizes $\alpha$ in \gls{cifar10}. 
 	It is a DAG-structured conditional network with 10 layers.
 	To our knowledge this is the first attempt at learning automatically the architecture of a deep \gls{cnn} for image classification.
 	
@@ -484,7 +483,6 @@
 	10,000 validation images. 
 	The standard 10,000 held-out images are used for testing.
 	
-	
 	\begin{figure}[tbp] 
 		\centering
 		\begin{subfigure}[b]{0.9\linewidth}
@@ -498,10 +496,10 @@
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}
 		\end{subfigure}
-		\caption[Comparing network architectures on \Glsfmttext{cifar10}]{\textbf{Comparing network architectures on \glsfmttext{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle. See text.}\label{fig:Cifar_results}
+		\caption[Comparing network architectures on \Glsfmttext{cifar10}]{\textbf{Comparing network architectures on \glsfmttext{cifar10}.} Conditional networks (denoted with circles) yield the points closest to the origin, corresponding to the best accuracy-efficiency trade-off. Our best conditional network is denoted with a green circle.}\label{fig:Cifar_results}
 	\end{figure}
 	%
-	\cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
+	\Cref{fig:Cifar_results} shows test errors with respect to test-time cost and model size for multiple networks.
 	Diamonds denote unrouted networks and circles denote conditional networks. 
 	The original NiN is shown in red, and our NiN-64 variant is shown as a grey diamond.
 	A sample of 300 models explored during the Bayesian optimization are shown as grey circles.
@@ -515,7 +513,7 @@
 
 %\vspace{-0.5\baselineskip}
 
-This chapter has investigated similarities and differences between decision trees/forests and convolutional networks. This has led us to introduce a hybrid model (namely conditional network) which can be thought both as: 
+This chapter has investigated the similarities and differences between decision trees/forests and \gls{dnn}. This has led us to introduce a hybrid model (namely conditional networks) which can be thought both as: 
 \begin{enumerate*}[label= (\textbf{\roman*})]
 \item trees which have been augmented with representation learning capabilities, and
 \item \glspl{cnn}\index{CNN} which have been augmented with explicit data routers and a rich, branched architecture.
