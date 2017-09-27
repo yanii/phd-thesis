@@ -157,7 +157,7 @@
 	Here we present image classification results obtained by replacing spatial convolutional layers within existing state-of-the-art network architectures with root modules (described in \cref{method}) .
 	
 	\subsection{Improving \Glsfmttext{nin} on \Glsfmttext{cifar10}}
-	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as used by \citet{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization~\citep{Ioffe2015}. With this configuration, \gls{zca} whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization, as suggested by \citet{Ioffe2015}.
+	\Gls{nin}~\citep{Lin2013NiN} is a near state-of-the-art network for \gls{cifar10}~\citep{CIFAR10}. It is composed of 3 spatial (5$\times$5, 3$\times$3) convolutional layers with a large number of filters (192), interspersed with pairs of low-dimensional embedding (1$\times$1) layers. As a baseline, we replicated the standard NiN network architecture as described by \citet{Lin2013NiN} but used state-of-the-art training methods. We trained using random 32$\times$32 cropped and mirrored images from 4-pixel zero-padded  mean-subtracted images, as used by \citet{goodfellow2013maxout, He2015}. We also used the initialization of \citet{He2015b} and batch normalization\index{batch normalization}~\citep{Ioffe2015}. With this configuration, \gls{zca} whitening was not required to reproduce validation accuracies obtained in~\citep{Lin2013NiN}. We also did not use dropout, having found it to have little effect, presumably due to our use of batch normalization\index{batch normalization}, as suggested by \citet{Ioffe2015}.
 	
 	\begin{table}[tbp]
 		\caption[\Glsfmttext{nin} root architectures]{\textbf{\Glsfmttext{nin} Root Architectures}. Filter groups\index{filter groups} in each convolutional layer.}
@@ -795,7 +795,7 @@
 	\subsubsection{ResNet 50}
 	\label{resnet50results}
 	As a baseline, we used the \gls{resnet}\index{ResNet} 50 model~\citep{He2015} (the largest residual network model to fit onto 8 \gls{gpu}s with Caffe). \gls{resnet}\index{ResNet} 50 has 50 convolutional layers, of which one-third are spatial convolutions (non-1$\times$1). We did not use any training augmentation aside from random cropping and mirroring. 
-	For training, we used the initialization scheme described by~\citep{He2015b} modified for compound layers, as presented in \cref{initialization}, and batch normalization~\citep{Ioffe2015}.
+	For training, we used the initialization scheme described by~\citep{He2015b} modified for compound layers, as presented in \cref{initialization}, and batch normalization\index{batch normalization}~\citep{Ioffe2015}.
 	\begin{table}[tp]
 		\caption[ResNet 50 root architectures]{\textbf{ResNet 50.} Filter groups\index{filter groups} in each conv.\ layer.}
 		\label{table:resnet50config}
@@ -1336,7 +1336,7 @@
 		\end{tabular}
 	\end{table}
 	
-	We replicated the network as described by \citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring, as supported by Caffe~\citep{Jia2014}). To train we used the initialization of~\citep{He2015b} modified for compound layers, as described in \cref{initialization} and batch normalization without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
+	We replicated the network as described by \citet{Szegedy2014going}, with the exception of not using any training augmentation aside from random crops and mirroring, as supported by Caffe~\citep{Jia2014}). To train we used the initialization of~\citep{He2015b} modified for compound layers, as described in \cref{initialization} and batch normalization\index{batch normalization} without the scale and bias~\citep{Ioffe2015}. At test time we only evaluate the center crop image.
 	
 	While preserving the original number of filters per layer, we trained networks with various degrees of filter group\index{filter groups}ing, as described in \cref{table:googlenetconfig}.  While the \gls{inception}\index{inception} architecture is relatively complex, for simplicity, we always use the same number of groups within each of the groups of different filter sizes, despite them having different cardinality. For all of the networks, we only grouped filters within each of the `spatial' convolutions (3$\times$3, 5$\times$5).
 	\begin{figure}[p]
