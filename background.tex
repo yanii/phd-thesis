@@ -460,7 +460,7 @@ This can be extended to 2D sequences,
 \subsubsection{Convolution in Practice}
 While we have described the mathematical convolution operator, when performing convolution on \glspl{featuremap}/images in neural networks, we do not exactly adhere to this definition. In practice the input images or \glspl{featuremap} are multi-dimensional finite arrays, \ie tensors; 3D for \gls{rgb} colour images inputs (2 spatial + 1 colour dimension). \Gls{cnn} layers perform a 2D convolution\footnote{this is typically called a 2D convolution rather than 3D, since there is no `sliding' of the filter in the channel dimension.} with a 3D filter over each channel of the input image, and stack the response images into an output tensor, where the number of output channels is the same as the number of convolutional filters in the layer. Each of the channels of the input and output tensors we will call an \emph{image}.
 
-We will here adopt a similair notation to \citet[chapter 9]{goodfellow2016deep}\footnote{note we use zero-based indices, unlike \citeauthor{goodfellow2016deep}.}, and denote the incoming \gls{featuremap} $\gls{fmX}$, outgoing \gls{featuremap} $\gls{fmY}$, and convolutional filter, or kernel $\gls{fmK}$. The scalar elements of each \gls{featuremap} are $\gls{fmX}_{i,j,k}$, $\gls{fmY}_{i,j,k}$, where $i=\{0,\ldots,\gls{c}\}$ is the \glspl{featuremap} channel (\ie colour for an input image), and $j=\{0,\ldots,\gls{filterh}\}$, $k=\{0,\ldots,\gls{filterw}\}$ are the spatial coordinates, rows and columns respectively, of the channel $i$ image. The filter's scalar elements are $\gls{fmK}_{i,j,k,l}$, where i is the filter's index in the convolutional layer's filter bank (\ie channel of the output tensor), $j$ is the input channel in $\gls{fmX}$ over which the filter's spatial elements are convolved, $i$ is the output channel in $\gls{fmY}$ to which the filter's result is written, and $(k, j)$ are the row and column offset between the output and input images.
+We will here adopt a similar notation to \citet[chapter 9]{goodfellow2016deep}\footnote{note we use zero-based indices, unlike \citeauthor{goodfellow2016deep}.}, and denote the incoming \gls{featuremap} $\gls{fmX}$, outgoing \gls{featuremap} $\gls{fmY}$, and convolutional filter, or kernel $\gls{fmK}$. The scalar elements of each \gls{featuremap} are $\gls{fmX}_{i,j,k}$, $\gls{fmY}_{i,j,k}$, where $i=\{0,\ldots,\gls{c}\}$ is the \glspl{featuremap} channel (\ie colour for an input image), and $j=\{0,\ldots,\gls{filterh}\}$, $k=\{0,\ldots,\gls{filterw}\}$ are the spatial coordinates, rows and columns respectively, of the channel $i$ image. The filter's scalar elements are $\gls{fmK}_{i,j,k,l}$, where $i$ is the filter's index in the convolutional layer's filter bank and the output channel in $\gls{fmY}$ to which the filter's result is written, $j$ is the input channel in $\gls{fmX}$ over which the filter's spatial elements are convolved, and $(k, l)$ are the row and column offset between the output and input images.
 
 A convolutional layer then convolves across the layer such that,
 \begin{equation}
@@ -474,11 +474,11 @@ for all valid indices $l,m,n$, depending on the \gls{padding}\index{padding} of 
 \subsubsection{Pooling Layers}\label{pooling}
 Another key aspect of convolutional architectures is pooling\index{pooling|textbf}, a form of non-linear spatial sub-sampling of the \glspl{featuremap}\index{feature map} of a given layer. Pooling layers were designed to add translation invariance to \glspl{cnn}\index{CNN} by making the network less sensitive to small local changes in the spatial location of input pixels/convolutional responses, and also to reduce \gls{featuremap}\index{feature map} spatial sizes with network depth. Reducing the \gls{featuremap}\index{feature map} spatial size serves both to save computation, and to increase the size of the receptive field of successive convolutional layers. This allows successive convolutional layers to operate on progressively larger scales.
 
-Pooling\index{pooling} layers divide the image into non-overlapping pooling\index{pooling} regions, in which the spatial extents of the input image/\gls{featuremap}\index{feature map} are aggregated into a single scalar. LeNet used the average to aggregate the pooling\index{pooling} regions, \ie average pooling\index{pooling}~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution to reduce the \gls{featuremap}\index{feature map} sizes~\citep{He2015}.
+Pooling\index{pooling} layers divide the image into non-overlapping pooling\index{pooling} regions, in which the spatial extents of the input image/\gls{featuremap}\index{feature map} are aggregated into a single scalar. LeNet used the average to aggregate the pooling\index{pooling} regions, \ie average pooling\index{pooling}~\citep{Lecun1998}. More modern networks have typically used max to aggregate pooling regions, \ie max-pooling, which empirically has been found to work better. Some even more recent networks do not use pooling at all, but simply use a strided convolution\index{strided convolition} to reduce the \gls{featuremap}\index{feature map} sizes~\citep{He2015}.
 
 
 \subsubsection{Strided Convolution}
-Convolutional layers are memory intensive since they must store the output \glspl{featuremap} and, during training, the backpropagated gradients. The largest featuremap is typically that of the first convolutional layer, since the input image has relatively large spatial dimensions, and pooling\index{pooling} reduces the spatial size of \glspl{featuremap} exponentially with depth. Due to the memory limitations of current \glspl{gpu}, this means that many contemporary network architectures cannot be trained on even modestly sized input images without using \glslink{stride}{strided convolution}\index{stride|textbf}. When using strided convolution, a given number of input \gls{featuremap}/image pixels are skipped in both the row and column directions, producing a smaller output \gls{featuremap} and reducing computation, at the sacrifice of a coarser output \gls{featuremap}, and scale. For a \gls{stride} of $s$ pixels in both the row and column directions, the \glslink{stride}{strided convolution}\index{stride} operation can be defined,
+Convolutional layers are memory intensive since they must store the output \glspl{featuremap} and, during training, the backpropagated gradients. The largest \gls{featuremap} is typically that of the first convolutional layer, since the input image has relatively large spatial dimensions, and pooling\index{pooling} reduces the spatial size of \glspl{featuremap} exponentially with depth. Due to the memory limitations of current \glspl{gpu}, this means that many contemporary network architectures cannot be trained on even modestly sized input images without using \glslink{stride}{strided convolution}\index{stride|textbf}. When using strided convolution\index{strided convolution|textbf}, a given number of input \gls{featuremap}/image pixels are skipped in both the row and column directions, producing a smaller output \gls{featuremap} and reducing computation, at the sacrifice of a coarser output \gls{featuremap}, and scale. For a \gls{stride} of $s$ pixels in both the row and column directions, the \glslink{stride}{strided convolution}\index{stride} operation can be defined,
 \begin{equation}
 	\begin{aligned}
 		\gls{fmY}_{i,j,k} &= \sum_{l,m,n} \gls{fmX}_{l,sj+m,sk+n}\: \gls{fmK}_{i,l,m,n}.
@@ -487,7 +487,7 @@ Convolutional layers are memory intensive since they must store the output \glsp
 
 \section[Contemporary Methods of Training Neural Networks]{Contemporary Methods of Training\texorpdfstring{\\}{ }Neural Networks}
 \label{section:contemporary}
-Here we will outline the most relevant differences in training contemporary \gls{dnn} as compared to before the work of \citet{Krizhevsky2012}, less than 10 years ago.
+Here we will outline the most relevant differences in training contemporary \glspl{dnn} as compared to before the work of \citet{Krizhevsky2012}, less than 10 years ago.
 \subsection{Rectified Linear Activation Function}
 \label{section:relu}
 \begin{figure}[tbp]
@@ -650,19 +650,13 @@ An integral part of any useful neuron\index{neuron} in a neural network\index{ne
 
 A major issue with sigmoidal activation functions however, is that gradients outside of a relatively narrow region of the function domain (close to $\gls{a}=0$) are very small. When training with backpropagation, this means that most gradients are of very small magnitude, and training can take a very long time, or even stall altogether --- a situation that is often called the \emph{vanishing gradient} problem, first identified by \citet{hochreiter1991untersuchungen}. This term has also been conflated with numerical precision issues caused by incorrect initialization, as identified by \citet{glorot2010understanding}.
 
-\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation\index{backpropagation}. These neurons\index{neuron} have a piecewise activation function plotted in \cref{fig:relu}, 
+\Glspl{relu} were proposed as a solution, first for restricted Boltzmann machines~\citep{conf/icml/NairH10}, and later for neural networks\index{neural network}~\citep{glorot2010understanding}, where empirically they were shown to allow easier training with backpropagation\index{backpropagation}. These neurons\index{neuron} have a piece-wise activation function, plotted in \cref{fig:relu}, 
 \begin{equation}
 \gls{f}(\gls{a}) = \max(0,\gls{a}).
 \end{equation} 
-\glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
+\glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not otherwise trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
-Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks\index{neural network}~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very \glspl{dnn}\index{DNN}. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
-
-For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\gls{beta}$ for each layer.
-
-After propagating through $L$ layers, this becomes a scaling of $\gls{beta}^L$, greatly magnifying the effect of the discrepancy. For example, the output of a trivial deep network  where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer initialized such that the output response is scaled by $\gls{beta}$:
-
 \begin{figure}[tbp]
     \centering
     \newcommand{\layer}{\includegraphics[width=0.29\textwidth, page=1, viewport = 0 0 440 300, clip=true]{layer}}
@@ -686,23 +680,29 @@ After propagating through $L$ layers, this becomes a scaling of $\gls{beta}^L$, 
 	\end{tikzpicture}
 	\caption[Vanishing gradients]{\textbf{Vanishing gradients.} For networks with many layers, even small deviations from a unit gradient are quickly geometrically magnified by propagation through all layers.}\label{fig:manylayers}
 \end{figure}
+Until relatively recently, pre-training was considered necessary for the feasibility of training deep neural networks\index{neural network}~\citep{hinton2006reducing}. The vanishing gradient problem was first addressed through better methods of random initialization which considered the geometric effect of propagating gradients through very \glspl{dnn}\index{DNN}. Without careful initialization, gradients can either surpass numerical representation (exploding gradients) or be reduced to close to zero (vanishing gradients). This effect is further exacerbated by the use of the softmax function at the end of the network, containing the exponential function.
+
+For example, consider a deep network consisting of $L$ identical layers as shown in \cref{fig:manylayers}, and assume that our initialization results in the first pass through the network scaling the signal (i.e~gradients) by a factor of $\gls{beta}$ for each layer.
+
+After propagating through $L$ layers, this becomes a scaling of $\gls{beta}^L$, exponentially magnifying the effect of the discrepancy. For example, the output of a trivial deep network, where each layer $l$ only maps the identity function, $f_{l}(x) = x$, with $L$ layers, and each layer is initialized such that the output response is scaled by $\gls{beta}$, will be:
+%
 \begin{equation}
 \begin{aligned}
 	f_L(x) & = (f_1 \gls{composition} f_2 \ldots \gls{composition} f_L) (x)\\
-	& = x \, \prod^{L}_{l} \beta = x\, \beta^L
+	& = x \, \prod^{L}_{l} \beta = x\, \beta^L,
 \end{aligned}
 \end{equation}
+where $(f \gls{composition} g)(x)$ is the composition $f(g(x))$.
 %
+This problem has two distinct outcomes determined by the effective scaling of each layer's initialization $\gls{beta}$:
 \[
 \lim_{L\to\infty} f_L(x) = 
 \begin{cases}
 \infty & \text{if } \beta > 1, \text{ training loss \emph{diverges}}\\
-0 & \text{if } \beta < 1, \text{ training loss \emph{stalls}},
+0 & \text{if } \beta < 1, \text{ training loss \emph{stalls}}.
 \end{cases}
 \]
 %
-where $(f \gls{composition} g)(x)$ is the composition $f(g(x))$.
-
 Thus we want a random initialization of layers such that $\gls{beta}\approx 1$ to minimize the `vanishing gradient' effect. For sigmoidal activation functions, such an initialization was proposed by \citet{glorot2010understanding}. For random Gaussian initialization, and given the number of outgoing/incoming connections to each neuron\index{neuron}, we can carefully choose the standard deviation $\gls{stddev}$ such that the expected value,
 
 \begin{equation}
