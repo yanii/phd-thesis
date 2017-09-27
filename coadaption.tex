@@ -124,7 +124,7 @@ We will focus on layer-wise filter co-dependence, and thus only needed to evalua
 \label{fig:resnet50ablation_conv1_top5}
 \end{figure}
 
-While, as expected, most pairwise ablations result in a decrease in accuracy, a small but significant number of pairwise ablations result in an \emph{increase} in accuracy (and decrease in loss). For the validation set this seems to provide clear evidence of hidden units co-adapting, and hence over-fitting to the training data. Surprisingly however, this effect is also evident when evaluating on the training set, and by definition cannot be explained by over-fitting. We observed similar effects on all other layers of the network.
+While, as expected, most pairwise ablations result in a decrease in accuracy, a small but significant number of pairwise ablations result in an \emph{increase} in accuracy (and decrease in loss). For the validation set this seems to provide clear evidence of hidden units co-adapting, and hence overfitting to the training data. Surprisingly however, this effect is also evident when evaluating on the training set, and by definition cannot be explained by overfitting. We observed similar effects on all other layers of the network.
 
 \paragraph{\Gls{mnist}} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer \gls{mnist} network. With a fully-connected network with one hidden layer, \gls{relu} activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
 \begin{figure}[tbp]
