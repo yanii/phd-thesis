@@ -20,7 +20,6 @@ Neural networks\index{neural network|textbf} are a broad range of statistical mo
 We will not cover the long and colourful history of neural networks\index{neural network} (for this we recommend reading the introduction of \citet{goodfellow2016deep}), but attempt to instead provide the foundations, and thereafter an overview of contemporary models and methods directly relevant to this work. For a comprehensive overview of the basics of neural networks\index{neural network} we refer the reader to the excellent reference of \citet{Bishop1995}, and for a more recent  in-depth overview of the field of \emph{deep learning}, we refer the reader to \citet{goodfellow2016deep}. 
 
 \subsection{The Neuron}
-
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neuron}
@@ -33,7 +32,7 @@ A neuron\index{neuron|textbf} is a function of the weighted aggregation of its m
 	\gls{y} = \gls{f}\left(\sum_{i}^{N} \gls{w}_i \gls{x}_i + \gls{b}\right),
 \end{equation}
 %
-where $\gls{w}_i$ is the weight of the input $\gls{x}_i$, and $\gls{f}$ is an \emph{activation function}, and $\gls{b}$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\gls{vectorx}=(x_0,\ldots,x_N)$, weights $\gls{vectorw}$ and a bias $\gls{b}$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
+where $\gls{w}_i$ is the weight of the input $\gls{x}_i$, $\gls{f}$ is an \emph{activation function}, and $\gls{b}$ is the \emph{bias}. This is usually expressed more simply in matrix notation, where each neuron\index{neuron} consists of an input vector $\gls{vectorx}=(x_0,\ldots,x_N)$, weights $\gls{vectorw}=(w_0,\ldots,w_N)$ and a bias $\gls{b}$, the output of which is, %The bias term can also be considered as the weight of an input with a fixed value of $1$, as illustrated in \cref{fig:neuron}.
 %
 \begin{equation}
     \gls{y} = \gls{f}\left(\gls{vectorw}^T\gls{vectorx} + \gls{b} \right).
@@ -54,7 +53,7 @@ If we assume the function $f$ to be a variant of the Heaviside step function,
 \caption[A single-layer neural network]{\textbf{An illustration of a simple single-layer neural network, such as a perceptron network.}}
 \label{fig:singlelayer}
 \end{figure}
-then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \gls{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
+then the neuron\index{neuron} is also called a \emph{perceptron}\index{perceptron|textbf}, a simple binary classifier, and one of the earliest connectionist learning methods, invented by \citet{rosenblatt1958perceptron} in 1957. A perceptron\index{perceptron} network is a single-layer neural network\index{neural network} (\ie a linear classifier), such as that illustrated in \cref{fig:singlelayer}, and should not to be confused with a \glsfmtfull{mlp} --- an unfortunate, but common, misnomer of any multi-layer neural network\index{neural network}.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{perceptronline}
@@ -85,13 +84,13 @@ At the time, it was not obvious how to train networks with more than one layer o
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.5\textwidth]{neurononelayer}
-\caption[Detailed illustration of a single-layer neural network]{\textbf{Detailed illustration of a single-layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{\gls{x}_{0}, \ldots, \gls{x}_{N}\}$. The layer has weights $\{\gls{w}_{j0}, \ldots, \gls{w}_{jN}\}$, bias $\gls{b}_j$, net neuron\index{neuron} activation $\gls{a}_j = \sum_i \gls{w}_{ji}$ and activation function $\gls{f}$, output $\gls{y}_j$, has weights $\{\gls{w}_{k0}, \ldots, \gls{w}_{jN}\}$ and bias $\gls{b}_j$. The error for output $\gls{y}_j$, $\gls{e}_j$, is calculated using the target label $\gls{t}_j$.}
+\caption[Detailed illustration of a single-layer neural network]{\textbf{Detailed illustration of a single-layer neural network trainable with the delta rule\index{delta rule}.} The input layer consists of a set of inputs, $\{\gls{x}_{0}, \ldots, \gls{x}_{N}\}$. The layer has weights $\{\gls{w}_{j0}, \ldots, \gls{w}_{jN}\}$, bias $\gls{b}_j$, net neuron\index{neuron} activation $\gls{a}_j = \sum_i \gls{w}_{ji}$, activation function $\gls{f}$, and output $\gls{y}_j$. The error for output $\gls{y}_j$, $\gls{e}_j$, is calculated using the target label $\gls{t}_j$.}
 \label{fig:neurononelayer}
 \end{figure}
 
 The delta rule\index{delta rule|textbf} for single-layered neural networks\index{neural network} is a gradient descent method, using the derivative of the network's weights with respect to the output error to adjust the weights to better classify training examples.
 
-Training is performed on a training dataset $\gls{X}$, where each training sample $\gls{vectorx}^n\in \gls{X}$ is a vector $\gls{vectorx}^n = (\gls{x}^n_0, \ldots, \gls{x}^n_N)$. Assume that for a given training sample $\gls{vectorx}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $\gls{y}^n_j$, target (desired) output $t^n_j$, weights $\gls{vectorw}=(\gls{w}_{j0}, \ldots, \gls{w}_{jM})$, as shown in \cref{fig:singlelayer}. As shown in the figure, we can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
+Training is performed on a training dataset $\gls{X}$, where each training sample $\gls{vectorx}^n\in \gls{X}$ is a vector $\gls{vectorx}^n = (\gls{x}^n_0, \ldots, \gls{x}^n_N)$. Assume that for a given training sample $\gls{vectorx}^n$, the $i$th neuron\index{neuron} in our single-layer neural network\index{neural network} has output $\gls{y}^n_j$, target (desired) output $t^n_j$, and weights $\gls{vectorw}=(\gls{w}_{j0}, \ldots, \gls{w}_{jM})$, as shown in \cref{fig:neurononelayer}. We can consider the bias to be an extra weight with a unit input, and thus we can omit the explicit bias from the derivation. 
 
 We want to know how to change a given weight $\gls{w}_{ji}$ given the output of node $j$ for a given input data sample $\gls{vectorx}^n$, 
 \begin{equation}
@@ -301,7 +300,7 @@ for any adjacent neural network\index{neural network} layers $i, j$, including t
 \end{equation}
 %
 \subsection{Learning with Backpropagation}
-Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\gls{lr}$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note that, rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \ie negative log-likelihood for classification.}. Formally, the weight change rule is given by,
+Learning with backpropagation\index{backpropagation} is much like the delta rule\index{delta rule}; sensitivities are used to correct weights proportional to a constant \emph{learning rate} or \emph{step size} parameter $\gls{lr}$. Although the correction is proportional to the sensitivity, we wish to \emph{reduce} the error $E^n$, and so we move the weight in the opposite direction of the gradient~\footnote{Note that, rather than optimizing the error function directly, usually a surrogate loss that is easier to optimize is used, \eg negative log-likelihood for classification.}. Formally, the weight change rule is given by,
 \begin{equation}
 \begin{aligned}
     \Delta \gls{w}^n_{ij} &= -\gls{lr} \frac{\partial \gls{E}^n}{\partial \gls{w}_{ji}}\\
@@ -316,25 +315,25 @@ where $\gls{delta}^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_
 \includegraphics[width=0.85\textwidth]{learningratedecrease}
 \caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\gls{lr}_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
-Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule (\cref{eqn:backproplearningrule}) specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\gls{lr}_0$, while too large a step size can result in bouncing around the minima ($\gls{lr}_2, \gls{lr}_3$), or missing it altogether. 
+Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule, \cref{eqn:backproplearningrule}, specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\gls{lr}_0$, while too large a step size can result in bouncing around the minima ($\gls{lr}_2, \gls{lr}_3$), or missing it altogether. 
 
 In order to settle into a local minima, the learning rate must also be decreased as training progresses. However, too fast a rate of decrease and it may never reach the basin of attraction of the local minima, as with $\gls{lr}_0$, while if the rate of decrease is too slow it will take a very long time to enter the basin of attraction, such as with $\gls{lr}_3$. 
 
-The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training \glspl{dnn}\index{DNN} which comes from experience, but~\citep{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
+The balance of trying to find an appropriate learning rate and learning policy is unfortunately part of the `black magic' behind training \glspl{dnn}\index{DNN} which comes from experience, but \citet{Bottou2012sgdtricks, goodfellow2016deep} are excellent references on some of the common approaches taken to make this task simpler.
 
-\subsection{The Problem with First-order Optimization}\label{pathological}
+\subsection{The Problem with First-Order Optimization}\label{pathological}
 The underlying reason learning rate and learning policy has such a large effect is that gradient descent is a \emph{first-order} optimization method, and only considers the first-order partial derivatives, \ie for a 2D error surface $\gls{E}(x, y)$, gradient descent moves in the opposite direction of the gradient,
 \begin{equation}
     \nabla \gls{E}(x, y) = {\left(\frac{\partial \gls{E}}{\partial \gls{x}}, \frac{\partial \gls{E}}{\partial \gls{y}}\right)}.
 \end{equation}
 This gradient tells us the direction of maximum increase at a given point on the error surface, but it does not tell us any information about the \emph{curvature} of the surface at that point. The curvature of the surface is described by higher-order derivatives such as the second-order partial derivatives, \eg
-\begin{equation}
-    \frac{\partial^2 \gls{E}}{\partial x^2},
-\end{equation}
+%\begin{equation}
+	$\pd[2]{E}{x}$,
+%\end{equation}
 and mixed partial derivatives, \eg
-\begin{equation}
-    \frac{\partial^2 \gls{E}}{\partial x\,\partial y}.
-\end{equation}
+%\begin{equation}
+	$\md{E}{2}{x}{2}{y}{2}$.
+%\end{equation}
 %
 \begin{figure}[tbp]
 \centering
@@ -360,7 +359,7 @@ basins of attraction around a minima are roughly circular, and thus avoid this p
 
 There are second-order optimization methods based on Newton's method, however the issue is that they do not scale to the size of any practical \glspl{dnn}\index{DNN}. The matrix of second-order partial derivatives for a scalar-values function, the Hessian\index{Hessian} $\gls{hessian}$, is required for any full second-order optimization method, however the Hessian\index{Hessian} is square in the number of parameters in the network. For networks of millions of parameters this means storing the Hessian\index{Hessian} is infeasible.
 
-There are a whole slew of optimization tricks for gradient descent, often attempting to to compensate for the shortcomings of first-order optimization without using the Hessian\index{Hessian}, or using some approximation to it. We will not cover those here, since none of these were used in our experiments. A full background of the issues of optimization in \glspl{dnn}\index{DNN} is outside the scope of this dissertation, however interested readers should refer to \citet{goodfellow2016deep} to learn more about these methods, and \citet{martens2010deep} for an excellent introduction to the problems of first and second-order optimization in \glspl{dnn}\index{DNN}.
+There are a whole slew of optimization tricks for gradient descent, often attempting to compensate for the shortcomings of first-order optimization without using the Hessian\index{Hessian}, or using some approximation to it. We will not cover those here, since none of these were used in our experiments. A full background of the issues of optimization in \glspl{dnn}\index{DNN} is outside the scope of this dissertation, however interested readers should refer to \citet{goodfellow2016deep} to learn more about these methods, and \citet{martens2010deep} for an excellent introduction to the problems of first and second-order optimization in \glspl{dnn}\index{DNN}.
 
 \subsection{Momentum}
 A common improvement to gradient descent is momentum~\citep{polyak1964some,rumelhartbackprop}, a trick for minimizing the effect of pathological curvature on gradient descent, which also helps with variance in gradients. The name comes from the analogy of the update to physical momentum $\rho$ for a moving particle, $\mathbf{p}=m\gls{velocity}$, where we assume unit mass, $m=1$.
@@ -372,10 +371,10 @@ In momentum, the gradients over multiple iterations are accumulated into a veloc
 \Delta\gls{vectorw} &= \gls{vectorw}_t + \gls{velocity}_{\gls{iteration}+1},
 \end{aligned}
 \end{equation}
-where $\gls{lr}$ is the learning rate, $\gls{iteration}$ is the iteration, and $\nabla \gls{E}$ is the gradient of the error surface $\gls{E}(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
+where $\gls{lr}$ is the learning rate, $\gls{iteration}$ is the iteration,  $\nabla \gls{E}$ is the gradient of the error surface $\gls{E}(\gls{vectorw})$ being minimized, and $\gls{vectorw}$ is the weight vector optimized. Momentum in effect stores some information on the gradients found in past iterations, and uses this to damp the effect of a new gradient on the search direction, as illustrated in \cref{fig:narrowvalleymomentum}. For error surfaces with pathological curvatures, this can dramatically speed up learning.
 
 \subsection{Online, Batch and Stochastic Gradient Descent}
-Although the backpropagation\index{backpropagation} weight change rule above tells us how to change the weight given a single training sample $\gls{x}^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general: $\Delta \gls{w}^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $\gls{x}^n$, of the training dataset $\gls{X}$. 
+Although the backpropagation\index{backpropagation} weight change rule, \cref{eqn:backproplearningrule}, tells us how to change the weights given a single training sample $\gls{x}^n$, in practice this method is rarely used. The reason is simply that the gradients from a single sample are too biased, or noisy, and they are not representative of the dataset in general; $\Delta \gls{w}^n_{ij}$ is only an approximation to the true gradient we want --- it is only from one sample, $\gls{x}^n$, of the training dataset $\gls{X}$. 
 
 \subsubsection{Batch Gradient Descent}
 At the opposite end of the spectrum there is \emph{batch} training\index{batch training|textbf} where the gradient is computed over all data samples in the training set,
@@ -409,7 +408,7 @@ As we have seen with the perceptron\index{perceptron}, the activation function f
 \gls{y} = \gls{f}\left(\gls{vectorw}^T\gls{vectorx} + \gls{b}\right).
 \end{equation}
 %
-In the field of neural networks\index{neural network}, activation functions have classically chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $\gls{a} = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined gradients. Examples of sigmoid functions commonly used include the logistic function, 
+In the field of neural networks\index{neural network}, activation functions have classically been chosen to be a \emph{sigmoid} function, \ie a function mapping negative inputs to negative outputs and positive inputs to positive outputs with a smooth transition around $\gls{a} = 0$. This is a nice property to have, since the function is still pushing the outputs of the network towards a binary classification, the function is non-linear (so composition of functions are non-trivial), and the function has well-defined gradients. Examples of sigmoid functions commonly used include the logistic function, 
 
 \begin{equation}
 	\gls{f}(\gls{a}) = \frac{1}{1+e^{-\gls{a}}},
@@ -431,31 +430,21 @@ In practice however we do not find that a network with only a single hidden laye
 \subsection{Convolutional Neural Networks}\label{cnns}
 The earliest work on what are now termed \glspl{cnn}\index{CNN|textbf} was by \citeauthor{Fuk80}, on the \emph{Neocognitron}~\citep{Fuk80,fukushima2013artificial}. The Neocognitron was a biologically motivated architecture, motivated by what are typically called simple and complex cells in the primary visual cortex (V1). To model simple cells; cells whose response correlated with simple oriented edges in a translation invariant manner, the Neocognitron used shared weights which were connected to local image patches of the input image (and were not simply described as convolution of a filter). Complex cells were modelled by a ``blurring'' operation, what we now term more generally as \emph{pooling}. The Neocognitron network consisted of alternating layers of simple and complex cells, \ie alternating convolution and pooling layers, much as seen in state-of-the-art convolutional networks. In an era in which fully-connected networks were used to learn any input type \citeauthor{Fuk80} showed that for structured inputs a drastically different architecture could make a big difference in generalization. 
 
-Despite the pioneering novelty of the work on Neocognitron, it was only following the simplification and improvement of \citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaces with max-pooling. The application to handwritten digit recognition gave state-of-the-art results, and would result in the \emph{LeNet5} network, still used today in commercial applications.
+Despite the pioneering novelty of the work on Neocognitron, it was only following the simplification and improvement of \citet{Lecun1998} in both the description of the network and its operation that it gained wider acknowledgement as a breakthrough for image recognition. In their work the local shared weights of the Neocognitron are put in the context of convolution, and the averaging operation replaced with max-pooling. The application to handwritten digit recognition gave state-of-the-art results, and would result in the \emph{LeNet5} network, still used today in some commercial applications.
 
-The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible~\citep{goodfellow2016deep}. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks\index{neural network} fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features, such as \gls{sift}~\citep{Lowe2004} for many tasks, and in particular the problem of object instance recognition was well addressed by such solutions. Meanwhile object class recognition remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
-\subsubsection{Convolution}
-The discrete convolution $(f \convolution g)$ is defined~\citep{damelin2011} for two 1D sequences $f, g$ as,
-\begin{equation}
-	(f \convolution g)[n] = \sum_{i=-\infty}^\infty f[i]\, g[n - i],
-\end{equation}
-where $\convolution$ is the convolution operator. This can be extended to 2D sequences,
-\begin{equation}
-(f \convolution g)[m,\,n] = \sum_{i=-\infty}^\infty \sum_{j=-\infty}^\infty f[i,\,j]\, g[m - i][n - j].
-\end{equation}
-%
-Of course when using convolution in practice, this mathematical definition isn't quite what is implemented, next we will present something closer to what is used in practicse.
-\subsubsection{Convolution Layers}
+The application of the LeNet-style \gls{cnn} architecture to more complex problems, however, proved infeasible~\citep{goodfellow2016deep}. These problems required a deeper hierarchy of representation, which implied a large number of layers. Networks with a large number of layers proved to be un-trainable due to numerous issues with the model itself, notably vanishing gradients~\citep{hochreiter1991untersuchungen}, and the lack of large datasets and computational power at the time. Convolutional neural networks\index{neural network} fell out of favour, and were passed over in favour of the more successful paradigm of using hand-crafted local features, such as \gls{sift}~\citep{Lowe2004} for many tasks, and in particular the problem of \gls{objectinstancerecognition} was well addressed by such solutions. Meanwhile \gls{objectclassrecognition} remained a difficult problem, for which the best solutions were deformable parts models, also based on local features.
+
+\subsubsection{Convolutional Layers}
 \begin{figure}[tb]
 	\centering
 	\includegraphics[width=0.66\columnwidth, page=1]{groupfig}
 	\caption[Illustration of convolutional layer]{\textbf{Convolution with $\glsfmttext{c}_2$ filters of shape $\glsfmttext{filterh}_1\times \glsfmttext{filterw}_1\times \glsfmttext{c}_1$.} Convolutional filters (yellow) have the same channel dimension $\gls{c}_1$ as the input \glspl{featuremap} (gray) on which they operate, while the \gls{featuremap} spatial dimensions $\gls{H}$ and $\gls{W}$ are typically larger. Each filter is convolved across the entire set of input \glspl{featuremap}\index{feature map} to produce a single output \gls{featuremap}\index{feature map}. With $\gls{c}_2$ filters, this gives an output \gls{featuremap}\index{feature map} with $\gls{c}_2$ channels. In this illustration we assume padding appropriate to preserve the spatial dimensions.}\label{fig:convlayer}
 \end{figure}
 %
-\Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ \gls{featuremap}\index{feature map} for the given layer as $h^d$, where the associated filter has weights $W^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the \gls{featuremap}\index{feature map|textbf} $h^d$ at spatial location $i, j$ is given by,
+\Cref{fig:convlayer} illustrates a typical convolutional layer. If we denote the $d^{\text{th}}$ \gls{featuremap}\index{feature map} for the given layer as $h^d$, where the associated filter has weights $\gls{fmK}^d$, bias $b_d$, and activation function $f$, then the single \emph{pixel} of the \gls{featuremap}\index{feature map|textbf} $h^d$ at spatial location $i, j$ is given by,
 
 \begin{equation}
-	h^d_{i,j} = f{\left( {\left(W^d \gls{convolution} x \right)}_{i,j} + b_d \right)},
+	h^d_{i,j} = f{\left( {\left(\gls{fmK}^d \gls{convolution} x \right)}_{i,j} + b_d \right)},
 \end{equation}
 %
 where $\gls{convolution}$ is the convolution operator. The discrete convolution operator $(f \gls{convolution} g)$ is defined~\citep{damelin2011} for two 1D sequences $f, g$ as,
@@ -469,7 +458,7 @@ This can be extended to 2D sequences,
 \end{equation}
 %
 \subsubsection{Convolution in Practice}
-While we have described the mathematical convolution operator, when performing convolution on \glspl{featuremap}/images in neural networks, we do not exactly adhere to this definition. In practice the input images or \glspl{featuremap} are multi-dimensional finite arrays, \ie tensors; 4D for 3D \gls{rgb} colour images inputs (2 spatial + 1 colour dimension). \Gls{cnn} layers perform a 2D convolution with a 3D filter\footnote{this is called a 2D convolution rather than 3D, since there is no `sliding' of the filter in the channel dimension.} over each channel of the input image, and stack the response images into an output tensor, where the number of output channels is the same as the number of convolutional filters in the layer. Each of the channels of the input and output tensors we will call an \emph{image}.
+While we have described the mathematical convolution operator, when performing convolution on \glspl{featuremap}/images in neural networks, we do not exactly adhere to this definition. In practice the input images or \glspl{featuremap} are multi-dimensional finite arrays, \ie tensors; 3D for \gls{rgb} colour images inputs (2 spatial + 1 colour dimension). \Gls{cnn} layers perform a 2D convolution\footnote{this is typically called a 2D convolution rather than 3D, since there is no `sliding' of the filter in the channel dimension.} with a 3D filter over each channel of the input image, and stack the response images into an output tensor, where the number of output channels is the same as the number of convolutional filters in the layer. Each of the channels of the input and output tensors we will call an \emph{image}.
 
 We will here adopt a similair notation to \citet[chapter 9]{goodfellow2016deep}\footnote{note we use zero-based indices, unlike \citeauthor{goodfellow2016deep}.}, and denote the incoming \gls{featuremap} $\gls{fmX}$, outgoing \gls{featuremap} $\gls{fmY}$, and convolutional filter, or kernel $\gls{fmK}$. The scalar elements of each \gls{featuremap} are $\gls{fmX}_{i,j,k}$, $\gls{fmY}_{i,j,k}$, where $i=\{0,\ldots,\gls{c}\}$ is the \glspl{featuremap} channel (\ie colour for an input image), and $j=\{0,\ldots,\gls{filterh}\}$, $k=\{0,\ldots,\gls{filterw}\}$ are the spatial coordinates, rows and columns respectively, of the channel $i$ image. The filter's scalar elements are $\gls{fmK}_{i,j,k,l}$, where i is the filter's index in the convolutional layer's filter bank (\ie channel of the output tensor), $j$ is the input channel in $\gls{fmX}$ over which the filter's spatial elements are convolved, $i$ is the output channel in $\gls{fmY}$ to which the filter's result is written, and $(k, j)$ are the row and column offset between the output and input images.
 
