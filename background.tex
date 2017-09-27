@@ -654,7 +654,7 @@ A major issue with sigmoidal activation functions however, is that gradients out
 \begin{equation}
 \gls{f}(\gls{a}) = \max(0,\gls{a}).
 \end{equation} 
-\glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with back propagation, or even allow training networks that are not otherwise trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
+\glspl{relu} do not exhibit the `saturation' of sigmoidal functions, always giving a gradient of either 0 or 1. In practice this can greatly speed up training with backpropagation, or even allow training networks that are not otherwise trainable in practice with sigmoidal activation functions, such as the deep network of \citet{Krizhevsky2012}.
 
 \subsection{Methods of Network Initialization}\label{ssec:init}
 \begin{figure}[tbp]
@@ -846,7 +846,7 @@ Since AlexNet, there have been many improvements to the state of the art on the 
 
 VGG is an evolution of the AlexNet models, with the same number of max-pooling layers, however using very small convolutional filters ($3$$\times$$3$) in the convolutional layers, and many more of these convolutional layers between pooling, instead of the relatively large single-layers of convolutional filters in AlexNet ($7$$\times$$7$). In addition VGG uses small non-overlapping max-pooling ($2$$\times$$2$), and the \emph{fully convolutional trick} introduced by \citet{Sermanet2013overfeat} to do test-time oversampling more efficiently. VGG uses extensive training augmentation, extending the augmentation used in AlexNet~\citep{Krizhevsky2012} by adding scale augmentation, where crops are taken from images of different rescaled sizes. 
 
-\subsection{Inception}
+\subsection{Inception}\label{backgroundinception}
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\textwidth, page=7]{sparsification}
