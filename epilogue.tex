@@ -11,7 +11,7 @@
 %********************************** %First Section  **************************************
 Research in deep learning has taken on a new rapidity since the adoption of pre-prints, and the explosion of interest in the field. Rather than being bound to the annual conference schedule, new research is released on a weekly basis. Presenting a paper at a contemporary conference, one is now in the odd situation of having to relate the `new' research being presented to the 6--12 months of follow-up research in the field. Compare this to even a few years ago, when publication of new research was withheld until a conference paper acceptance, perhaps a couple of months before the conference.
 
-This dissertation represents the ultimate presentation of the research we have undertaken, and just as in a conference, it must also be presented in the context and timeline of the follow-up research and applications that it has already inspired.
+This dissertation represents the ultimate presentation of the research we have undertaken and, just as in a conference, it must also be presented in the context and timeline of the follow-up research and applications that it has already inspired.
 
 In this section, we will briefly outline the significant derivative papers published after the original pre-print publication of the research we have presented here, along with their pre-print dates. We also present new research, published after ours that has extended the field towards learning structural priors automatically. 
 
@@ -46,7 +46,7 @@ Unfortunately even citing authors assume the paper present a low-rank approximat
 \end{description}
 The Google Brain research team published an update to the \Gls{inception} architecture around 3 weeks after our pre-print publication, making it likely that their work was independent. Nevertheless, the method they present is identical to our proposal~\citep{Ioannou2016} --- the training of the \Gls{inception} architecture with low-rank (\ie 1$\times$3 and 3$\times$1) filters to reduce computation and improve generalization. They call these `factorized filters' which we disagree with, since being simply concatenated they are not a factorization (\ie separation of a multiplication), rather we argue they are linearly combined, and so represent a basis.
 
-Nevertheless, the method proposed in this paper (and identical to our proposed method) forms the basis of all current \Gls{inception} architectures, and are now used in all Google deep learning backed products, for example \copyright{}Google Photos.
+The method proposed in this paper (and identical to our proposed method) forms the basis of all current \Gls{inception} architectures, and are now used in all Google deep learning backed products, for example Google Photos\texttrademark.
 
 \section{Recent Research Related to \Cref{deeproots}}
 Unfortunately, likely due to the prominence of Google and Facebook in the research community, the Xception and ResNeXt papers below have received most of the citations and credit for root units in recent work, despite the pre-prints coming five and six months after our pre-print publication, respectively. On the other hand, this exposure has brought a lot of attention to the method, making the use of filter groups, and root modules specifically, for efficiency and generalization increasingly common. 
@@ -56,7 +56,7 @@ Unfortunately, likely due to the prominence of Google and Facebook in the resear
     \item[Pre-print] arXiv:1610.02357 (7 Oct.\ 2016)
     \item[Peer-reviewed publication date] CVPR 2017 (21 July, 2017)
 \end{description}
-The author proposes the `Xception' module, which is a special case of our proposed root modules~\cite{ioannou2016e}, where, if $c_1$ is the number of input \gls{featuremap} channels, and $g$ is the number of groups (as in \cref{fig:rootmodule}), an `Xception' module is the extreme case where $g \equiv c_1$. In our experiments, this level of sparsity is clearly adverse. In the `Xception' experiments the number of filters is greatly increased as compared to the original architecture compensating for this. However, by using convolutional groups of the same size as input channels, any of the computational advantages of root modules are lost, for all the reasons described in \cref{gpuexplanation}. We should note that in personal correspondence with the author he has denied any relationship between this work and ours, and so does not cite our work.
+The author proposes the `Xception' module, which is a special case of our proposed root modules~\citep{ioannou2016e}, where, if $c_1$ is the number of input \gls{featuremap} channels, and $g$ is the number of groups (as in \cref{fig:rootmodule}), an `Xception' module is the extreme case where $g \equiv c_1$. In our experiments, this level of sparsity is clearly adverse. In the `Xception' experiments the number of filters is greatly increased as compared to the original architecture compensating for this. However, by using convolutional groups of the same size as input channels, any of the computational advantages of root modules are lost, for all the reasons described in \cref{gpuexplanation}. We should note that in personal correspondence with the author he has denied any relationship between this work and ours, and so does not cite our work.
 % \lstset{
 % basicstyle=\small\ttfamily,
 % columns=flexible,
