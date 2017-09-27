@@ -137,7 +137,7 @@
 	The generalization, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
 	
 	\section[Results]{Results\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
-	\subsection{\acrshort{ilsvrc}}
+	\subsection{\Glsfmttext{ilsvrc}}
 	We first validate the use of conditional networks for image classification on the \gls{ilsvrc} dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images.
 	
 	As discussed in \cref{alexnetfiltergroups}, AlexNet uses two filter groups\index{filter groups} throughout most of the layers of the model in order to split computation across two \gls{gpu}s. The authors observed that the filters on each \gls{gpu} appeared to specialize to learn fundamentally different features regardless of initialization~\citep{Krizhevsky2012}. This interesting observation has mostly been ignored in subsequent networks where \gls{gpu} memory has increased enought that such a split of the network is not required, but the original observation is a fundamental motivation of our work.
