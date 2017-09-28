@@ -7,7 +7,7 @@
 % }
 \usepackage{xparse}
 \DeclareDocumentCommand{\newdualentry}{ O{} O{} m m m m } {
-  \newglossaryentry{gls-#3}{name={#4},text={#5},
+  \newglossaryentry{gls-#3}{name={#4},text={#4},
     description={\Glsfmtfirst{gls-#3}, {#6}},#1
   }
   \makenoidxglossaries
