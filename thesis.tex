@@ -96,6 +96,7 @@
 \ifdefineAbstract
  \pagestyle{empty}
  \includeonly{declaration, abstract}
+ \renewcommand{\subfile}[1]{}
 \fi
 
 % ***************************** Chapter Mode ***********************************
@@ -124,10 +125,10 @@
 
 \maketitle
 
-\subfile{dedication}
-\subfile{declaration}
-\subfile{acknowledgement}
-\subfile{abstract}
+\include{dedication}
+\include{declaration}
+\include{acknowledgement}
+\include{abstract}
 
 % *********************** Adding TOC and List of Figures ***********************
 

@@ -1119,6 +1119,8 @@ wish to left align your text}
     \renewcommand{\listoftables}{}
     \renewcommand{\printnomencl}{}
     \renewcommand{\printnomencl}[1][2]{}
+    \renewcommand{\printnoidxglossaries}[1][]{}
+    \renewcommand{\printnoidxglossary}[1][]{}
     \renewcommand{\printthesisindex}{}
     \renewcommand{\bibname}{}
     \renewcommand{\bibliography}[1]{\thispagestyle{empty}}
