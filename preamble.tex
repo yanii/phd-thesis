@@ -285,12 +285,27 @@
 \definecolor{Set3-K}{RGB}{204,235,197}
 \definecolor{Set3-L}{RGB}{255,237,111}
 
-% COMMENT OUT NEXT TWO LINES TO USE SANS-SERIF WITH TIKZ/PGFPLOTS
-\usepackage[eulergreek]{sansmath}
-\tikzstyle{every picture}+=[font=\sffamily\sansmath]
-
 \usepackage{pgfplots, pgfplotstable}
 \usepgfplotslibrary{statistics, colorbrewer}
+
+% COMMENT OUT NEXT FEW LINES TO USE SANS-SERIF WITH TIKZ/PGFPLOTS
+\usepackage[eulergreek]{sansmath}
+%\tikzstyle{every picture}+=[font=\sffamily\sansmath]
+\pgfplotsset{%
+,tick label style = {font=\sffamily\sansmath} % see http://tex.stackexchange.com/a/33329 if also needed for numbers.
+,every axis label = {font=\sffamily\sansmath}
+,legend style = {font=\tiny\sffamily\sansmath}
+,label style = {font=\sffamily\sansmath}
+,node near coord style = {font=\sffamily\sansmath}
+}
+
+% \tikzset{%
+% ,font append/.style={font/.expand once=\tikz@textfont #1}
+% ,font append/.value required
+% }
+% \makeatother
+% \tikzset{every node/.append style={font append=\sffamily\sansmath}}
+
 \pgfplotsset{
   compat=newest,
   cycle list/Set1-3,

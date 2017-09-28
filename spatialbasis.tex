@@ -684,17 +684,17 @@
             \addplot+[mark=*,
                 nodes near coords,only marks,
                 point meta=explicit symbolic,
-                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
             ] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
             \addplot+[mark=*,
                 nodes near coords,only marks,
                 point meta=explicit symbolic,
-                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
             ] table[meta=Real Name,x=Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
             \addplot+[mark=square*,
                 nodes near coords,only marks,
                 point meta=explicit symbolic,
-                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+                every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
             ] table[meta=Real Name,x=Test Multiply-Acc.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
             \legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
@@ -741,20 +741,19 @@
             nodes near coords,
             only marks,
             point meta=explicit symbolic,
-            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableours};
     	\addplot+[mark=*,
             nodes near coords,
             only marks,
             point meta=explicit symbolic,
-            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatable};
     	\addplot+[mark=square*,
             nodes near coords,
             only marks,
             point meta=explicit symbolic,
-            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize},
-            every node near coord/.append style={font=\tiny},
+            every node near coord/.append style={xshift=0.01em, anchor=west, font=\scriptsize\sffamily\sansmath},
     	] table[meta=Real Name,x=Param.,y expr={1 - \thisrow{Top-5 Acc.} }]{\datatableaug};
     	\legend{Our Results, Crop \& Mirror Aug., Extra Augmentation}
     	\end{axis}
