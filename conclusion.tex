@@ -6,7 +6,7 @@
 %*********************************** Conclusion *****************************
 %*******************************************************************************
 
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
 \label{conclusion}
 %********************************** %First Section  **************************************
 In this dissertation, we have proposed that carefully designing networks in consideration of our prior knowledge of the task can improve the memory and computational efficiency of state-of-the art networks, and even increase accuracy through structurally induced regularization. While this philosophy defines our approach, deep neural networks\index{neural network} have a large number of degrees of freedom, and there are many facets of deep neural networks\index{neural network} that warrant such analysis. We have attempted to present each of these in isolation:
@@ -21,4 +21,45 @@ Unlike in \cref{lowrankfilters}, the size of these channel-wise basis filters in
 \Cref{conditionalnetworks} presented work towards conditional computation in deep neural networks\index{neural network}. We proposed a new discriminative learning model, \emph{conditional networks}, 
 that jointly exploits the accurate \emph{representation learning} capabilities of deep neural networks\index{neural network} with the efficient \emph{conditional computation} of decision trees and directed acyclic graphs (DAGs). In addition to allowing for faster inference, conditional networks yield smaller models, and offer test-time flexibility in the trade-off of computation \vs accuracy.
 
+%*******************************************************************************
+%*********************************** Future Work *****************************
+%*******************************************************************************
+
+\section{Future Work}  %Title of the First Chapter
+\label{futurework}
+
+%********************************** %First Section  **************************************
+
+Research outcomes are often better evaluated by the questions borne rather than the questions answered. In this section we'll address the main research questions that this dissertation has highlighted, and propose future directions for research which we believe would have the most impact on the field.
+
+\subsection{Learning Structural Priors}
+The move towards ``end-to-end'' learning has made great strides in making learning more automatic, notably in learning complex representations rather than experts designing inferior representations themselves. There still exists however, a significant amount of hand design and manual tuning that is key to the success of any deep learning approach. We hope our work will motivate the field towards a research direction that aims to minimize this further, by working on methods of automatically structuring neural networks\index{neural network}, in a move towards a truly ``end-to-end'' learning of \gls{dnn} structure itself.
+
+The lack of understanding or concrete rules for structuring \glspl{dnn}\index{DNN} means that in practical applications deep learning is often restricted to experts in the field, who have an intuition in network design formed from years of experience, and know which structural priors to use. The effect on deep learning research is no less profound, with a lack of understanding of the basic interplay between structure and learning in \glspl{dnn}\index{DNN}, we have little chance of understanding the limitations of deep learning or the representations learned by the networks. 
+
+The benefits of automatically structuring \glspl{dnn}\index{DNN} go further than these considerations even, as the research presented in this dissertation has shown, better structured \glspl{dnn}\index{DNN} are more computationally efficient (use fewer parameters and are faster to compute), and generalize better. Currently, training state-of-the-art \glspl{dnn}\index{DNN} for image classification requires a prohibitive amount of time and computational resources --- 3 weeks of training on 8 high-end and expensive \glspl{gpu} --- and yet we know that trained \glspl{dnn}\index{DNN} are very sparse representations and have been shown to be highly compressible. It is because we cannot appropriately understand this sparse structure well enough to fully exploit it that our current \glspl{dnn}\index{DNN} are so inefficient.
+
+With automatic methods of learning the structure, \glspl{dnn}\index{DNN} will become markedly more efficient to train, leading to faster experimental results for research, and also allow easier deployment to embedded devices, such as mobile phones, drones and robots. It would also allow for research strides in learning networks for multiple modalities, for example a self-driving car needs to process input data from normal camera sensors, along with depth maps or point clouds, and even radar. One of the stumbling blocks in doing this is understanding how to best structure a network to deal with multiple inputs which require different structural priors.
+
+Research on finding automatic methods of structuring neural networks\index{neural network} is not a completely new avenue of research, with a substantial effort put towards it 30 years ago when neural networks\index{neural network}, and datasets, were much smaller. This is covered in \cref{motivation}, but suffice to state that there were two main approaches:
+\begin{enumerate*}[label= (\textbf{\roman*})]
+	\item greedily building networks from scratch, and 
+	\item pruning (removing parameters) large networks
+\end{enumerate*}. The proposals made for both building networks from scratch , such as that of \citet{Fahlman1989}, and pruning full networks, such as that of \citet{lecun1989optimal}, suffer drawbacks which make them unsuitable in the modern deep network of hundreds of millions of parameters. Even in neural networks\index{neural network} of contemporary size, the greedy approach of \citet{Fahlman1989} meant that learned networks were suboptimal. This proposal should also not be confused with `universal learning', or violating the no free lunch theorem (\cref{nofreelunch}), since we are interested in learning methods for the specific set of problems we as humans are interested in solving, rather than all possible input patterns.
+
+At least three factors prevented this line of research from being successful historically, that we believe have now been overcome. Recent breakthroughs in training \glspl{dnn}\index{DNN} have given us a better understanding of how to train very large, arbitrarily structured networks, notably avoiding the so-called `vanishing gradient'~\citep{Ioffe2015,He2016}, and a better understanding of initialization~\citep{He2015b}. Extremely large and diverse datasets are now prevalent, such as ImageNet~\citep{ILSVRC2015}, whereas historically datasets were prohibitively small to be useful for automatically structuring \glspl{dnn}\index{DNN}. And finally computational resources have increased dramatically. In fact these are most of the reasons the field of deep learning itself has been more successful now than neural networks\index{neural network} were 30 years ago.
+
+\subsection[Jointly Learning a Basis for Spatial and Channel Extents of Filters]{Jointly Learning a Basis for Spatial and\texorpdfstring{\\}{ }Channel Extents of Filters}
+\label{journalplan}
+In the shorter term, there is an obvious question arising from the work presented in \cref{lowrankfilters,deeproots} that explore learning more efficiently by reducing the learned parameters in the spatial and channel extents of convolutional filters respectively. These naturally lend themselves to being merged into a single effective method for training with low-rank basis filters. We plan to submit a journal article in which both methods are merged and explored in new results on state-of-the-art \glspl{dnn}\index{DNN}.
+
+\section{Optimization and Structural Priors}\label{optimizationlink}
+It is notable that many structural priors can be viewed as enforcing sparsity on fully-connected networks. For example, in the case of a \gls{cnn}, any learned \gls{cnn} is representable in a fully-connected network, since a \gls{cnn} can be viewed as a fully-connected network with a specific arrangement of zeroed connect weights, and some duplicated weights (shared weights) as illustrated in \cref{fig:sparseconn}. 
+
+The question arises then, why can we not learn these in fully-connected networks? Structural priors give lower training loss, and yet when we optimize fully-connected networks with an appropriate structure and capacity to learn the sparse structural priors, they do not. Another, more recent example, is that of \glspl{resnet}, as explained in \cref{residualnetworks}, these are motivated by the observation that in very deep networks the optimization fails to learn even the identity function, when it can be shown to give a lower loss.
+
+In many ways the need for structural priors can be seen as the result of a problem with the current methods of optimization of \glspl{dnn}. As discussed in \cref{pathological}, higher order optimization might help solve this, but is not practical given the size of contemporary \glspl{dnn}. 
+
+\subsection{Parting Note}
+In my PhD, I have focused on experiments which I believed would shed light on the representations being learned in \glspl{dnn}\index{DNN}. Although the overt motivation of much of the work in its publication has been efficiency, my personal motivation has always been to show that state-of-the-art \glspl{dnn}\index{DNN} for image classification are over-parameterized and suffer, not only in efficiency, but also in \emph{effectiveness} due to this. Structural priors, such as those demonstrated in this dissertation do not only improve the effectiveness of a deep network, but are \emph{required} for good generalization.
 \end{document}
