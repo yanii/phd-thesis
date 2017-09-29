@@ -1081,7 +1081,7 @@ wish to left align your text}
     \newcommand{\printthesisindex}{
         \cleardoublepage
         \phantomsection
-        \printindex[sort=letter]}
+        \printindex}
 \else
     \RequirePackage[toc=true,acronym,symbols,numberedsection=nameref]{glossaries-extra}
     \newcommand{\printthesisindex}{}

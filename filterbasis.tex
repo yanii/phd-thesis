@@ -107,7 +107,7 @@
 	There are two distinct forms of convolutional layers in the \gls{inception}\index{inception} module, low-dimensional embeddings (1$\times$1) and spatial (3$\times$3, 5$\times $5). GoogLeNet keeps large, expensive spatial convolutions (\ie 5$\times$5) to a minimum by using few of these filters, using more 3$\times$3 convolutions, and even more 1$\times$1 filters. The motivation is that most of the convolutional filters respond to localized patterns in a small receptive field, with few requiring a larger receptive field. The number of filters in each successive \gls{inception}\index{inception} module increases slowly with decreasing \gls{featuremap}\index{feature map} size, in order to maintain computational performance. GoogLeNet is by far the most efficient state-of-the-art network for \gls{ilsvrc}, achieving near state-of-the-art accuracy with the lowest computation/model size. However, we will show that even such an efficient and optimized network architecture benefits from our method.
 	
 	\paragraph{Low-Rank Approximations}
-	Various authors have suggested approximating learned convolutional filters using tensor decomposition~\citep{journals/corr/JaderbergVZ14,journals/corr/LebedevGROL14,Kim2016}. For example, \citet{journals/corr/JaderbergVZ14} propose approximating the convolutional filters in a trained network with representations that are low-rank both in the spatial and the channel domains. This approach significantly decreases computational complexity, albeit at the expense of a small amount of accuracy. In this paper we are not approximating an existing model's weights but creating a new network architecture with explicit structural sparsity, which is then trained from scratch.
+	Various authors have suggested approximating learned convolutional filters using tensor decomposition \citep{journals/corr/JaderbergVZ14,journals/corr/LebedevGROL14,Kim2016}. For example, \citet{journals/corr/JaderbergVZ14} propose approximating the convolutional filters in a trained network with representations that are low-rank both in the spatial and the channel domains. This approach significantly decreases computational complexity, albeit at the expense of a small amount of accuracy. In this paper we are not approximating an existing model's weights but creating a new network architecture with explicit structural sparsity, which is then trained from scratch.
 	
 	\paragraph{Learning a Basis for Filters}
 	\begin{figure}[tbp]
@@ -589,7 +589,7 @@
 		\end{landscape}
 		\begin{landscape}
 			\begin{figure}[p]
-				\begin{subfigure}[c]{0.88\paperheight}
+				\begin{subfigure}[c]{0.75\paperheight}
 					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/PDF/nin/layercovarwhite_conv1}}
 					~
@@ -611,7 +611,7 @@
 					\label{fig:covaroot1}
 				\end{subfigure}
 				~
-				\begin{subfigure}[c]{0.88\paperheight}
+				\begin{subfigure}[c]{0.75\paperheight}
 					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/PDF/ninroot4/layercovarwhite_conv1}}
 					~
@@ -632,7 +632,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot4}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.88\paperheight}
+				\begin{subfigure}[c]{0.75\paperheight}
 					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/PDF/ninroot8/layercovarwhite_conv1}}
 					~
@@ -653,7 +653,7 @@
 					\vspace*{0.6em}
 					\label{fig:covarroot8}
 				\end{subfigure}
-				\begin{subfigure}[c]{0.88\paperheight}
+				\begin{subfigure}[c]{0.75\paperheight}
 					%\centering
 					\covarlabels{conv1a}{192}{conv1b}{160}{\includegraphics[width=0.1\linewidth]{Figs/PDF/ninroot32/layercovarwhite_conv1}}
 					~
@@ -787,7 +787,8 @@
 	}
 	An interesting question concerns how the degree of grouping in our root modules should be varied as a function of depth in the network. For the \gls{nin}-like architectures described earlier, we might consider having the degree of grouping:
 	\begin{enumerate*}[label= (\textbf{\roman*})]
-		\item decrease with depth after the first convolutional layer, \eg 1--8--4 (`root');\item remain constant with depth after the first convolutional layer, \eg 1--4--4 (`column'); or
+		\item decrease with depth after the first convolutional layer, \eg 1--8--4 (`root');
+		\item remain constant with depth after the first convolutional layer, \eg 1--4--4 (`column'); or
 		\item increase with depth, \eg 1--4--8 (`tree').
 	\end{enumerate*}
 	
