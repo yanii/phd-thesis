@@ -422,7 +422,7 @@ and they hyperbolic tangent,
 An issue with sigmoidal activation functions however, is that the gradients are very small in a large part of the domain of the function. For this reason, and improved empirical results, modern neural networks\index{neural network} tend to use the \gls{relu} activation function, as described in \cref{section:relu}.
 
 
-\subsection{Deep \Vs Shallow Neural Networks}
+\subsection{Deep \texorpdfstring{\Vs}{Vs.} Shallow Neural Networks}
 Neural networks with at least one (infinitely wide) \emph{hidden} layer have been proven to be a universal approximator --- \ie such a neural network\index{neural network} can theoretically represent any function~\citep{journals/mcss/Cybenko92,hornik89a}. This is in stark contrast to the limitations of neural networks\index{neural network} without hidden layers, as explained in \cref{singlelayernetworks}.
 
 In practice however we do not find that a network with only a single hidden layer, of even a very large width, can learn to represent complex functions as well as networks with many hidden layers. Indeed the observation that networks with many hidden layers, or \emph{deep} networks, empirically achieve better accuracy than networks with few hidden layers, or \emph{shallow} networks, represents some of the progress made in learning with neural networks\index{neural network} in recent years. Unfortunately the reasons why this mismatch between theory and practice occurs is still poorly understood, and an active area of research.
