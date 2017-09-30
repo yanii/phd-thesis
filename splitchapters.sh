@@ -1,6 +1,4 @@
 #!/bin/bash
-#!/bin/bash
-
 infile=$1 # input pdf
 outputprefix=$2
 
@@ -11,7 +9,7 @@ pagenumbers=( $(pdftk "$infile" dump_data | \
               end )
 
 chapternames=( $(pdftk "$infile" dump_data | \
-		grep -B1 '^BookmarkLevel: 1' | grep '^BookmarkTitle: ' | cut -f2,3 -d' ' | tr ' ' '-'| uniq)
+		grep -B1 '^BookmarkLevel: 1' | grep '^BookmarkTitle: ' | cut -f2- -d' ' | tr ' ' '-'| uniq)
               end )
 for ((i=0; i < ${#pagenumbers[@]} - 1; ++i)); do
   a=${pagenumbers[i]} # start page number
