@@ -99,16 +99,6 @@
  \renewcommand{\subfile}[1]{}
 \fi
 
-% ***************************** Chapter Mode ***********************************
-% The chapter mode allows user to only print particular chapters with references
-% Title, Contents, Frontmatter are disabled by default
-% Useful option to review a particular chapter or to send it to supervisior.
-% To use choose `chapter' option in the document class
-
-%\ifdefineChapter
-% \includeonly{chapter3}
-%\fi
-
 % *************************** THESIS ORDER *************************************
 % order by guidelines here: 
 % https://en.wikipedia.org/wiki/Book_design
@@ -125,18 +115,24 @@
 
 \maketitle
 
+\ifdefineChapter
+\else
 \include{dedication}
 \include{declaration}
 \include{acknowledgement}
 \include{abstract}
+\fi
 
 % *********************** Adding TOC and List of Figures ***********************
 
+\ifdefineChapter
+\else
 \tableofcontents
 
 \listoffigures
 
 \listoftables
+\fi
 
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
@@ -151,6 +147,17 @@
 \cleardoublepage
 % ******************************** Main Matter *********************************
 \mainmatter
+
+% ***************************** Chapter Mode ***********************************
+% The chapter mode allows user to only print particular chapters with references
+% Title, Contents, Frontmatter are disabled by default
+% Useful option to review a particular chapter or to send it to supervisior.
+% To use choose `chapter' option in the document class
+
+\ifdefineChapter
+ \subfile{background}
+ \renewcommand{\subfile}[1]{}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION
 \subfile{introduction}
@@ -195,7 +202,11 @@
 \backmatter
 % ************************************ Glossary ********************************
 %\glossarystyle{altlist}
+
+\ifdefineChapter
+\else
 \printnoidxglossary
+\fi
 % ********************************** Bibliography ******************************
 %\begin{spacing}{0.9}
 
@@ -219,5 +230,9 @@
 %\end{spacing}
 
 % *************************************** Index ********************************
+
+\ifdefineChapter
+\else
 \printthesisindex % If index is present
+\fi
 \end{document}
