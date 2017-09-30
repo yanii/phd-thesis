@@ -1,6 +1,6 @@
 #!/bin/bash
 infile=$1 # input pdf
-outputprefix=$2
+outputprefix=thesis/
 
 [ -e "$infile" -a -n "$outputprefix" ] || exit 1 # Invalid args
 
@@ -15,5 +15,5 @@ for ((i=0; i < ${#pagenumbers[@]} - 1; ++i)); do
   a=${pagenumbers[i]} # start page number
   b=${pagenumbers[i+1]} # end page number
   [ "$b" = "end" ] || b=$[b-1]
-  pdftk "$infile" cat $a-$b output "${outputprefix}"_${chapternames[i]}.pdf
+  pdftk "$infile" cat $a-$b output "${outputprefix}"${chapternames[i]}.pdf
 done
