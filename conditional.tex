@@ -187,6 +187,54 @@
 	Applying the same oversampling to all networks produced a nearly identical accuracy improvement in 
 	all models, without changing their ranking.
 
+    \begin{table}[tbp]
+        \centering
+        \caption[Conditional Network \Glsfmttext{ilsvrc} results]{\textbf{Conditional network \glsfmttext{ilsvrc} Results.} Accuracy, multiply-accumulate count, and number of parameters for the baseline networks and more efficient versions created by the methods described in this chapter.
+        }
+%        \resizebox{\textwidth}{!}{
+		\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride1.csv}\datatablea
+		\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride2.csv}\datatableb
+		\pgfplotstableread[col sep=comma,]{condnetdata/condnetdata-stride4.csv}\datatablec
+		\pgfplotstablevertcat{\data}{\datatablea}
+		\pgfplotstablevertcat{\data}{\datatableb}
+		\pgfplotstablevertcat{\data}{\datatablec}
+        \pgfplotstabletypeset[
+        every head row/.style={
+            before row=\toprule,after row=\midrule},
+        every last row/.style={
+            after row=\bottomrule},
+        every first row/.style={
+            after row=\bottomrule}, 
+        fixed zerofill,     % Fill numbers with zeros
+        columns={Network Name, Stride, Top-1 Error (centre crop), Top-5 Error (centre crop), Multiply-Acc Ops, Num Parameters},
+        columns/Multiply-Acc Ops/.style={
+            column name=FLOPS {\small $\times 10^{9}$},
+            preproc/expr={{##1/1e9}}
+        },
+        columns/Num Parameters/.style={
+            column name=Param. {\small $\times 10^{7}$},
+            preproc/expr={{##1/1e7}}
+        },
+        column type/.add={lrp{3.5em}p{3.5em}p{3em}p{3em}}{},
+		columns/Network Name/.style={string type},
+        columns/Stride/.style={string type},
+        columns/Top-1 Error (centre crop)/.style={
+			column name=Top-1 Err.,
+			precision=3
+		},
+        columns/Top-5 Error (centre crop)/.style={
+			column name=Top-1 Err.,
+			precision=3
+		},
+        highlight col max ={\data}{Top-1 Error (centre crop)},
+        highlight col max ={\data}{Top-5 Error (centre crop)}, 
+        highlight col min ={\data}{Multiply-Acc Ops}, 
+        highlight col min ={\data}{Num Parameters}, 
+        col sep=comma]{\data}
+%        }
+        \label{table:Imagenet_results}
+	\end{table}
+	
 	%%% Figure ---------------
 	\begin{figure}[tbp]
 		\centering
@@ -308,12 +356,7 @@
 		\end{subfigure}
 		\caption[Efficiency of conditional networks on \Glsfmttext{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmttext{ilsvrc} relative to state-of-the-art models.} Our \glsfmttext{vgg}-11-GMP (GMP) reduces model size significantly, and is the baseline network. \glsfmttext{vgg}-11 conditional networks (Cond.\ Network) yield points closer to the origin for networks with the same \texttt{conv1} stride, noted as (\texttt{conv1}/stride) in the legend.}\label{fig:Imagenet_results}
 	\end{figure}
-	\Cref{fig:Imagenet_results} summarizes the results.
-	It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. 
-	The best network (closest to the origin) is GoogLeNet~\citep{Szegedy2014going} (in purple), it is very accurate and efficient. 
-	
-	GoogLeNet and Alexnet~\citep{Krizhevsky2012} are in fact instances of conditional networks 
-	(though they were not presented that way). In both networks much of the computational saving is obtained by routing	subsets of features to different branches of the network. In addition, GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
+	\Cref{fig:Imagenet_results,table:Imagenet_results} summarize the results. It shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. The best network by these measures (\ie closest to the origin) is GoogLeNet~\citep{Szegedy2014going}. In both networks much of the computational saving is obtained by routingsubsets of features to different branches of the network. GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
 	
 	The conditional network of \cref{fig:Imagenet_CondNet} 
 	corresponds to the green circle in \cref{fig:Imagenet_results}.
