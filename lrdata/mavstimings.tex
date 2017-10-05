@@ -55,7 +55,7 @@
   color=\colorb,
   %color of colormap={500},
 ]
-\addplot+[style={fill=\colorb,opacity=0.7,mark=none},area legend] table[x expr=3*\coordindex+1,y=CPU Timing]{\datatable};\label{cpuaxis}
+\addplot[style={fill=\colorb,opacity=0.7,mark=none},area legend] table[x expr=3*\coordindex+1,y=CPU Timing]{\datatable};\label{cpuaxis}
 \end{axis}
 
 \begin{axis}[
