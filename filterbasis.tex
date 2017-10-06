@@ -430,11 +430,11 @@
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
 				\caption{Root-32 (16 groups)}\label{fig:root32corrfull}
 			\end{subfigure}
-			\caption[Inter-layer filter covariance conv2c--conv3a]{\textbf{Inter-layer filter covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network as observed on the training data.}\label{fig:covar}
+			\caption[Inter-layer filter covariance conv2c--conv3a]{\textbf{Inter-layer filter covariance conv2c--conv3a.} The block-diagonal sparsity learned by a root-unit is visible in the correlation of filters on layers \texttt{conv3a} and \texttt{conv2c} in the NiN network as observed on the \glsfmttext{cifar10} training data.}\label{fig:covar}
 		\end{figure}
 	%\end{landscape}}
 	
-	\Cref{fig:covar} shows the inter-layer correlation between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR test set. The block-diagonalization enforced by the filter group\index{filter groups} structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups\index{filter groups}. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \cref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
+	\Cref{fig:covar} shows the inter-layer covariance between the adjacent filter layers \texttt{conv2c} and \texttt{conv3a} in the network architectures outlined in \cref{table:ninconfig} as evaluated on the CIFAR training set. The block-diagonalization enforced by the filter group\index{filter groups} structure (as illustrated in \cref{fig:groupconfig}) is visible, more so with larger number of filter groups\index{filter groups}. This shows that the network learns an organization of filters such that the sparsely distributed strong filter relations, visible in \cref{fig:normalcovartestfull} as brighter pixels, are grouped into a denser block-diagonal structure, leaving a visibly darker, low-correlated background.
 	
 	\subsection{Inter-Layer Covariance}
 	\label{interlayercovar}
