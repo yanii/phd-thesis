@@ -779,53 +779,54 @@ AlexNet uses two filter groups\index{filter groups} throughout most of the layer
 \begin{landscape}
 \begin{figure}[tbp]
 \centering
-\begin{tikzpicture}[ampersand replacement=\&]
-\begin{scope}[]
-\matrix[column sep=0em]{
-	\node (1a) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=15]{groupfig}}
-	};\&
-	\node (1b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=21]{groupfig}}
-	};\&
-	\node (1c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
-	};
-	\\
-	\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
-	\draw node{\footnotesize \textit{conv1b}};\&
-	\draw node{\footnotesize \textit{conv1c}};\\
-	\node (2a) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
-	};\&
-	\node (2b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
-	};\&
-	\node (2c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
-	};\\
-	\draw node{\footnotesize \textit{conv2a}};\&
-	\draw node{\footnotesize \textit{conv2b}};\&
-	\draw node{\footnotesize \textit{conv2c}};\\
-	\node (3a) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
-	};\&
-	\node (3b) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
-	};\&
-	\node (3c) {
-		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
-	};\\
-	\draw node{\footnotesize \textit{conv3a}};\&
-	\draw node{\footnotesize \textit{conv3b}};\&
-	\draw node{\footnotesize \textit{conv3c}};\\
-	\&\node (3c) {
-		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=20]{groupfig}}
-	};\\
-	\&\draw node{\footnotesize \textit{\gls{gap}/output}};\\
-};
-\end{scope}
-\end{tikzpicture}
+\includegraphics[width=0.95\linewidth]{ninarchitecture}
+% \begin{tikzpicture}[ampersand replacement=\&]
+% \begin{scope}[]
+% \matrix[column sep=0em]{
+% 	\node (1a) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.08\linewidth, page=15]{groupfig}}
+% 	};\&
+% 	\node (1b) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=21]{groupfig}}
+% 	};\&
+% 	\node (1c) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+% 	};
+% 	\\
+% 	\draw node{{\footnotesize \textit{image}}/{\footnotesize \textit{conv1a}}};\&
+% 	\draw node{\footnotesize \textit{conv1b}};\&
+% 	\draw node{\footnotesize \textit{conv1c}};\\
+% 	\node (2a) {
+% 		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
+% 	};\&
+% 	\node (2b) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
+% 	};\&
+% 	\node (2c) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+% 	};\\
+% 	\draw node{\footnotesize \textit{conv2a}};\&
+% 	\draw node{\footnotesize \textit{conv2b}};\&
+% 	\draw node{\footnotesize \textit{conv2c}};\\
+% 	\node (3a) {
+% 		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=16]{groupfig}}
+% 	};\&
+% 	\node (3b) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=8]{groupfig}}
+% 	};\&
+% 	\node (3c) {
+% 		\raisebox{-0.5\height}{\includegraphics[height=0.11\linewidth, page=22]{groupfig}}\hspace{1em}\raisebox{-0.5\height}{$\cdots$}
+% 	};\\
+% 	\draw node{\footnotesize \textit{conv3a}};\&
+% 	\draw node{\footnotesize \textit{conv3b}};\&
+% 	\draw node{\footnotesize \textit{conv3c}};\\
+% 	\&\node (3c) {
+% 		\raisebox{-0.5\height}{$\cdots$}\hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=0.09\linewidth, page=20]{groupfig}}
+% 	};\\
+% 	\&\draw node{\footnotesize \textit{\gls{gap}/output}};\\
+% };
+% \end{scope}
+% \end{tikzpicture}
 \caption[\Glsfmttext{nin} architecture]{\textbf{\Glsfmttext{nin} Architecture.}  Coloured blocks represent the filters of each layer, grey blocks the intermediate \glsfmtplural{featuremap}\index{feature map} over which a layer's filters operate. \Glsfmttext{gap} is used at the end of the network.
 }
 \label{fig:networkinnetwork}
