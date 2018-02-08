@@ -10,7 +10,7 @@
     \end{chapquote}
     
     \glspl{cnn}\index{CNN} (see \cref{cnns}) are a highly specialized form of neural network\index{neural network} for learning image representations. Their use of \emph{convolutional filters} allows \glspl{cnn}\index{CNN} to learn much more efficient representations, from a memory and computational efficiency standpoint, than a full connected network. Such filters usually have limited spatial extents (\ie width and height, as opposed to channels) and their learned weights are shared across the image's spatial domain to provide translation invariance~\citep{Fuk80,Lecun1998}.
-    Thus, as illustrated in \cref{fig:sparseconn}, in comparison with fully-connected network layers (\cref{fig:sparseconn}(a), convolutional layers have a much sparser connection structure and use fewer parameters (\cref{fig:sparseconn}(b).
+    Thus, as illustrated in \cref{fig:sparseconn}, in comparison with fully-connected network layers (\cref{fig:sparseconn}(a)), convolutional layers have a much sparser connection structure and use fewer parameters (\cref{fig:sparseconn}(b)).
     This leads to faster training and inference, better generalization, and higher accuracy.
     
     This chapter focuses on reducing the computational complexity of the convolutional layers of \glspl{cnn}\index{CNN} by further sparsifying their spatial connection structures.  Specifically, we show that by representing convolutional filters using a basis space comprising groups of filters of different spatial dimensions (examples shown in \cref{fig:sparseconn}(c, d)), we can significantly reduce the computational complexity of existing state-of-the-art \glspl{cnn}\index{CNN} without compromising classification accuracy.
@@ -22,7 +22,7 @@
         \centering
         \includegraphics[height=0.8\textheight]{sparseconn3}
         \caption[Image access map visualizing sparsity of convolutional filters]{
-            {\bf Network connection structure for convolutional layers.} An input image is transformed in one layer of an neural network\index{neural network} into an output image of same size. Connection weight maps show pairwise dependencies between input and output pixels. In (a), each node is connected to all input pixels. For (b,c,d), output pixels depend only on a subset of input pixels (shared weights are represented by unique colours). Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
+            {\bf Network connection structure for convolutional layers.} For a single-layer neural network, the sparsity of a convolutional filter as compared to a fully connected network is illustrated. Connection weight maps (centre) show the pairwise dependencies between input and output pixels. In a fully-connected network (a), each output node is connected to all input pixels. For a \gls{cnn} (b,c,d), the output pixels depend only on a sparse subset of input pixels, where shared weights are represented by repeated unique colours, and white pixels represent pixels with no connection. Note that sparsity increases from (a) to (d), opening up potentially more efficient implementation.
         }
         \label{fig:sparseconn}
     \end{figure}
@@ -49,7 +49,7 @@
     
     \paragraph{Learning Separable (Factorized) Filters}
     \label{factorized}
-    \citet{mamalet2012simplifying} propose training networks with separable filters on the task of digit recognition with the \gls{mnist} dataset. They train networks with \emph{sequential} convolutional layers of horizontal and vertical 1D filters, achieving a speed-up factor of 1.6$\times$, but with a relative increase in test error of 13\% (1.45\% \vs 1.28\%). Our is different than  this, allowing both horizontal and vertical 1D filters (and other shapes too) on the same layer and avoiding issues with ordering.  We also demonstrate a decrease in error, and validate on more challenging datasets.
+    \citet{mamalet2012simplifying} propose training networks with separable filters on the task of digit recognition with the \gls{mnist} dataset. They train networks with \emph{sequential} convolutional layers of horizontal and vertical 1D filters, achieving a speed-up factor of 1.6$\times$, but with a relative increase in test error of 13\% (1.45\% \vs 1.28\%). Our approach is different than  this, allowing both horizontal and vertical 1D filters (and other shapes too) on the same layer and avoiding issues with ordering.  We also demonstrate a decrease in error, and validate on more challenging datasets.
     
     \section{Using Low-Rank Filters in CNNs}
     %%% Figure
