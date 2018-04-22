@@ -85,6 +85,6 @@
 \end{tikzpicture}
 }
 %TODO why does \gls{ilsvrc} not work here properly?
-\caption[Multiply-accumulate FLOPS \vs{} CPU/GPU timings]{\textbf{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.} For the forward pass of each convolutional layer in the `vgg-gmp-lr' network. Caffe CPU and GPU timings were well correlated with multiply-accumulate operations for most layers.}
+\caption[Multiply-accumulate FLOPS \vs{} CPU/GPU timings]{\textbf{Multiply-Accumulate Operations and Caffe CPU/GPU Timings.} For the forward pass of each convolutional layer in the `vgg-gmp-lr' network. Caffe CPU timings were well correlated with multiply-accumulate operations for most layers. GPU timings in some cases are relatively slower however. Please see \cref{gpuexplanation} for an explanation of this discrepancy.}
 \label{fig:mavstimings}
 \end{figure}
