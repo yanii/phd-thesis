@@ -8,7 +8,7 @@
 		``\ldots the simplest most robust network which accounts for a data set will, on average, lead to the best generalization to the population from which the training set has been drawn''
 	\end{chapquote}
 	
-	The ideal discriminative model desired for most tasks would have all the advantages of both neural networks and decision forests, and none of the weaknesses. It would have good generalization with computational efficiency, lend itself to semantic understanding and yet have sufficient functional complexity to solve complex problems. 
+	The ideal discriminative model desired for most tasks would have all the advantages of both neural networks and decision forests, and none of the weaknesses. It would have good generalization with computational efficiency, lend itself to semantic understanding and yet have sufficient functional complexity to solve complex problems. Different tasks require different assumptions however, and hence different model types, but it is rare that either one of these models in itself exhibits a clear and distinct advangtage in all aspects over the other for a particular task --- yet we are limited to choosing one or the other in practice.
 	
 	In this chapter we intend to explore the continuum of discriminative models that exist between decision forests and neural networks\index{neural network}, to try to find such a balance. We will explore the theory and applications behind such models, with a focus on contemporary problems such as object class recognition, \ie the ImageNet \gls{ilsvrc} challenge which has been the focus of much of the recent work on deep learning.
 	
@@ -114,7 +114,7 @@
 		~
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=0.95\textwidth]{explicit}
+			\includegraphics[width=0.95\textwidth]{implicit}
 			\caption{Implcitly routed network.}\label{fig:implicitRouter}
 		\end{subfigure}
 		\caption[Explicit \vs implicitly routed networks]{\textbf{Explicit \vs implicitly routed networks.} \copyright Antonio Criminisi, used with permission.}\label{fig:routerConnections}
