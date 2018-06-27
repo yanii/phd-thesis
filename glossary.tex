@@ -10,7 +10,7 @@
   \newglossaryentry{gls-#3}{name={#4},text={#4},
     description={\Glsfmtfirst{gls-#3}, {#6}},#1
   }
-  \makenoidxglossaries
+  \makenoidxglossaries{}
   \newacronym[see={[see Glossary:]{gls-#3}},#2]{#3}{#4}{#5}
 }
 % set glossary acronyms to expand on first use
@@ -38,12 +38,12 @@
 \newglossaryentry{googlenet}{name=GoogLeNet, description={A neural network architecture proposed by \citet{Szegedy2014going} and since extended in the \glsfmttext{inception} v1--4 refinements},see={inception}}
 \newglossaryentry{inception}{name=Inception, description={A building-block of the \glsfmttext{googlenet} neural network architecture designed for efficient state-of-the-art image recognition}, see={googlenet}}
 \newglossaryentry{resnet}{name=ResNet, description={Residual network, a network architecture proposed by \citet{He2015} that uses residual connections to improve generalization and training of very deep architectures.}}
-\newglossaryentry{structuralprior}{name=Structural Prior, description={The encoding of prior knowledge into a neural network by architecture design, \eg a \glsfmttext{cnn}, what some might call ``infinitely strong regularization''~\citep{goodfellow2016deep}}, see={cnn}}
+\newglossaryentry{structuralprior}{name=Structural Prior, description={The encoding of prior knowledge into a neural network by architecture design, \eg{} a \glsfmttext{cnn}, what some might call ``infinitely strong regularization''~\citep{goodfellow2016deep}}, see={cnn}}
 \newglossaryentry{cudnn}{name=CuDNN, description={Nvidia's Deep Neural Network acceleration library}, see={cuda}}
 \newglossaryentry{occam}{name={Occam's razor}, description={A general principle in hypothesis selection; given several hypothesis that match the evidence, the simplest hypothesis, \ie the one with the least assumptions, should be selected}}
 \newglossaryentry{finetuned}{name={finetuned}, description={A method of continuing the training of a pre-trained network, with varied definitions. Typically a subset or all of the layers of a pre-trained \glsfmttext{dnn} are trained at a greatly reduced learning rate}}
 \newglossaryentry{featuremap}{name={feature map}, description={The input/output of a convolutional layer, a 3D tensor with two spatial dimensions and a third dimension corresponding to the output image from a single convolutional filter}}
-\newglossaryentry{filter}{name={filter}, description={A convolutional filter, or kernel, of spatial dimensions $w$$\times$$h$, and depth $c$, where $c$ is the number of channels in the input \Glsfmtlong{featuremap}},see={featuremap}}
+\newglossaryentry{filter}{name={filter}, description={A convolutional filter, or kernel, of spatial dimensions \(w\)\(\times\)\(h\), and depth $c$, where $c$ is the number of channels in the input \Glsfmtlong{featuremap}},see={featuremap}}
 \newglossaryentry{regularization}{name={regularization}, description={a broadly-used, but relatively ill-defined term --- often its usage implies a definition of `anything that improves generalization', instead we define regularization as any modification of the training algorithm that modifies, explicitly or implicitly, the error surface such that it is smoother, the prototypical method being weight decay~\citep{hinton1987learning}}}
 \newglossaryentry{padding}{name={padding}, description={padding of the input \glsfmttext{featuremap}/image for convolution, pads the outer edge of the image with (typically zero) dummy values to allow the convolutional filter to be applied to every input pixel},see={featuremap}}
 \newglossaryentry{stride}{name={stride}, description={number of rows/columns of the input \glsfmttext{featuremap}/image to skip during convolution},see={featuremap}}

@@ -22,6 +22,48 @@
 	
 	Towards this objective, we generalize neural networks\index{neural network} and decision trees intuitively by using a new graphical notation for representing both. This notation isolates the differences between the two models, such that we can represent a hybrid model, \ie a \emph{Conditional Network}, compactly\footnote{This notation itself was created by Dr.\ Antonio Criminisi, and is not a contribution of this dissertation. Some figures are used with the permission of Dr.\ Antonio Criminisi/Microsoft Research.}.
 	
+	\section{Structured Sparsity and Data Routing}
+	\label{sec:structuredsparsity}
+	The seminal work in~\cite{Krizhevsky2012} demonstrated how 
+	introducing rectified linear unit activations (ReLUs) allows {\em deep} CNNs to be trained effectively. 
+	Given a scalar input $v_j$, its ReLU activation is $\sigma(v_j)=\max(0, v_j)$. 
+	Thus, this type of non-linearity \emph{switches off} a large number of feature responses within a CNN.
+	ReLU activations induce a data-dependent sparsity; but this sparsity does not tend to have much structure in it. Enforcing a special type of {\em structured} sparsity is at the basis of the efficiency gain attained by conditional networks. We illustrate this concept with a toy example.
+
+	%%% Figure ---------------
+	\begin{figure}[t]
+	\centerline{
+	\includegraphics[width=0.85\linewidth]{sparsity}
+	}
+	\caption{{\bf Block-diagonal correlation of activations, and data routing.}
+	{\bf (a)} An example 2-layer preceptron with ReLU activations. This is a portion of the `VGG' model~\cite{Simonyan2014verydeep} trained on Imagenet.
+	{\bf (b)} The correlation matrix $\mat \Lambda_{12}$ shows {\em unstructured} activation correlation between unit pairs. 
+	{\bf (c)} Reordering the units reveals a noisy, block-diagonal structure. 
+	{\bf (e)} Zeroing-out the off-diagonal elements is equivalent to removing connections between unit pairs. This corrsponds to the sparser, {\em routed} perceptron in {\bf (d)}.
+	}
+	\label{fig:sparsity}
+	\end{figure}
+
+	The output of the exemplar multi-layer perceptron (MLP) of  Fig.~\ref{fig:sparsity}a is computed as $\vec v_2 = \sigma(\mat P_{12} \vec v_1) = \sigma(\mat P_{12} \sigma(\mat P_{01} \vec v_0))$.
+	Given a trained MLP we can look at the average correlation of activations between 
+	pairs of units in two successive layers, over all training data. 
+	For example, the matrix $\mat \Lambda_{12}$ (Fig.~\ref{fig:sparsity}b) shows the joint correlations 
+	of activations in layers 1 and 2 in a perceptron trained on the Imagenet classification task.\footnote{The correlation matrix $\mat \Lambda_{12}$ is not the same as the weight matrix $\mat P_{12}$.} 
+	Here we use the final two layers of the deep CNN model of~\cite{Simonyan2014verydeep} with 
+	a reduced number of features (250) and classes (350) to aid visualization. 
+
+	Thanks to the ReLUs, the correlation matrix $\mat \Lambda_{12}$ has many zero-valued elements (in white in Fig.~\ref{fig:sparsity}b), and these are distributed in an {\em unstructured} way. 
+	Reordering the rows and columns of $\Lambda_{12}$ reveals an underlying, noisy block-diagonal pattern  (Fig.~\ref{fig:sparsity}c). 
+	This operation corresponds to finding groups of layer-1 features which are highly active for certain subsets of classes (indexed in layer-2).
+	Thus, the darker blocks in Fig.~\ref{fig:sparsity}c correspond to three super-classes (sets of `related' classes). 
+	Zeroing out the off-diagonal elements (Fig.~\ref{fig:sparsity}e) corresponds to removing connections between corresponding unit pairs. 
+	This yields the sparse architecture in Fig.~\ref{fig:sparsity}d, where selected subsets of the layer-1 features are sent (after transformation) to the corresponding subsets of layer-2 units; thus giving rise to data routing.
+
+	We have shown how imposing a block-diagonal pattern of sparsity to the joint activation correlation 
+	in a neural network corresponds to equipping the network with a tree-like, 
+	routed architecture. Next section will formalize this intuition further and show the benefits of 
+	sparse architectures.
+
 	\section{A New Graphical Notation}
 	The proposals we will make require a re-interpretation of existing classification models, that is neural networks\index{neural network} and decision trees, but standard graphical diagrams for both of these models hides the implicit functional similarities on which we will build our models, and are instead connection-centric --- focused on showing the connectivity of the models rather than the underlying data transformations. As such, before we are able to explain the concept of a conditional network, a new graphical language is proposed.
 	
@@ -135,6 +177,132 @@
 	
 	\subsection{Conditional Networks}
 	The generalization, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
+
+	\subsection{Computational Efficiency}
+	\label{sec:efficiency}
+	
+	%%% Figure ---------------
+	\begin{figure}[t]
+	\centerline{
+	\includegraphics[width=0.9\linewidth]{conditionalNetwork}
+	}
+	   \caption{{\bf A generic conditional network.} 
+	   Conditional networks fuse efficient data routing with accurate data transformation in a single model. 
+	   Vector concatenations are denoted with $\oplus$.}
+	\label{fig:conditionalNetwork}
+	\end{figure}
+	
+	\noindent{\bf Efficiency through explicit data routing.}
+	Split nodes can have {\em explicit} routers where data is {\em conditionally} sent to the children according to the output of a routing function (\eg node 2 in Fig.~\ref{fig:conditionalNetwork}),
+	or have \emph{implicit} routers where the data is unconditionally but selectively sent to the children using selection matrices $\mat S$ (\eg node 1).
+	If the routing is explicit and hard (like in trees), then successive operations will be applied to ever smaller subsets of incoming data, with the associated compute savings. 
+	Next we show how implicit conditional networks can also yield efficiency. 
+	
+	\noindent{\bf Efficiency of implicit routed networks.}
+	Figures~\ref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
+	architecture. The total numbers of filters at each layer is fixed for 
+	both to $c_1$, $c_2$ and $c_3$.
+	The number of multiplications necessary in the first convolution is 
+	$c_2 \times c_1 k_x k_y W H$, with $W, H$ the size of the feature 
+	map and $k_x, k_y$ the kernel size (for simplicity here we ignore max-pooling operations).
+	This is the same for both architectures.
+	However, due to routing, the depth of the second set of filters is different between the two architectures.
+	Therefore, for the conventional CNN the cost of the second convolution is 
+	$c_3 \times c_2 k_x k_y W H$, while for the branched architecture 
+	the cost is $c_3 \times \left( \frac{c_2}{2}\right) k_x k_y W H$, \ie half the cost of the standard CNN. 
+	The increased efficiency is due {\em only} to the fact that shallower kernels are convolved with shallower feature maps. 
+	Simultaneous processing of parallel routes may yield additional 
+	time savings.\footnote{Feature not yet implemented in Caffe~\cite{Jia2014}.}
+	
+	%%% Figure ---------------
+	\begin{figure}[t]
+	\centerline{
+	\includegraphics[width=0.85\linewidth]{implicitEfficiency}
+	}
+	\caption{{\bf Computational efficiency of implicit conditional networks.} 
+	{\bf (top)} A standard CNN (one route).
+	{\bf (bottom)} A two-routed architecture with no explicit routers.
+	The larger boxes denote feature maps, the smaller ones the filters.
+	Due to branching, the depth of the second set of kernels (in yellow) changes between the two architectures.
+	The reduction in kernel size yields fewer computations and thus higher efficiency in the branched network.
+	}
+	\label{fig:implicitEfficiency}
+	\end{figure}
+	%%%
+	
+	\subsection{Back-propagation Training}
+	\label{sec:training}
+	{\em Implicitly}-routed conditional networks can be trained with the standard back-propagation algorithm~\cite{Krizhevsky2012,Szegedy2014going}. 
+	The selection functions $\mat S$ become extra parameters to optimize over, and their gradients can be derived straightforwardly. 
+	Now we show that {\em explicitly}-routed networks can also be trained using back-propagation.  
+	To do so we need to compute partial derivatives with respect to the router's parameters (all other differentiation operations are as in conventional CNNs). 
+	We illustrate this using the small network in Fig.~\ref{fig:training}. 
+	Here subscripts index layers and superscripts index routes (instead, in Fig.~\ref{fig:conditionalNetwork} the subscripts indexed the input and output nodes).
+	The training loss to be minimized is
+	\begin{equation}
+	L(\boldsymbol\theta)  = \frac{1}{2} \left(\vec v_2(\boldsymbol\theta) - \vec v_2^*\right)^\top \left(\vec v_2(\boldsymbol\theta) - \vec v_2^*\right),
+	\end{equation}
+	with $\boldsymbol\theta = \{ \{ \mat P^j \}, \mat P^{\tt R} \} $ denoting the parameters of the network, and $\vec v_2^*$ the ground-truth assignments to the output units. We define this energy for a single training data point, though the extension to a full dataset is a trivial outer summation.
+	The network's forward mapping is
+	\begin{equation}
+	\vec v_1^j = \sigma \left( \mat P^j \vec v_0 \right) \;\;\;\; \textrm{and} \;\;\;\; \vec v_2(\boldsymbol\theta) = \vec r(\boldsymbol\theta) \; \mat V_1(\boldsymbol\theta),
+	\end{equation} 
+	with $\vec r= \sigma \left( \mat P^{\tt R} \vec v_0 \right)$ the output of the router.
+	In general: 
+	i) the routing weights $\vec r$ are {\em continuous}, $r(i)\in[0,1]$, and
+	ii) multiple routes can be ``on'' at the same time.
+	$\mat V_1$ is a matrix whose $j$-th row is $(\vec v_1^j) ^\top$.
+	%\[
+	%\mat V_1 = \left[
+	%\begin{array}{ccc}
+	%\vdots & \vdots & \vdots \\
+	%- & (\vec v_1^j) ^\top& - \\
+	%\vdots & \vdots & \vdots \\
+	%\end{array}
+	%\right]
+	%\]
+	The update rule is
+	$
+	\Delta \boldsymbol\theta_{t+1}  := -\rho \left. \frac{\partial E}{\partial \boldsymbol\theta} \right|_t,
+	$ with $t$ indexing iterations. We compute the partial derivatives through the chain rule as follows:
+	%%%
+	\begin{equation}
+	\frac{\partial L}{\partial \boldsymbol\theta} = 
+	\frac{\partial L}{\partial \vec v_2} \; 
+	\frac{\partial \vec v_2}{\partial \boldsymbol\theta} = 
+	\frac{\partial L}{\partial \vec v_2} \left( 
+	\frac{\partial \textcolor{myred}{\vec r}}{\partial \textcolor{myred}{\mat P^{\tt R}}} \mat V_1 +  
+	\sum_{j=1}^{R} \;\textcolor{myred}{r(j)}\; 
+	\frac{\partial \vec v_1^j}{\partial \boldsymbol\phi^j} 
+	\frac{\partial \boldsymbol\phi^j}{\partial \textcolor{myblue}{\mat P^j}}\right)
+	\label{eq:chainrule},
+	\end{equation}
+	with $\boldsymbol{\phi}^j := \mat P^j \vec v_0$, and $R$ the number of routes. 
+	Equation~(\ref{eq:chainrule}) shows the influence of the soft routing weights on the 
+	back-propagated gradients, for each route.
+	Thus, explicit routers can be trained as part of the overall back-propagation procedure. 
+	Since trees and DAGs are special instances of conditional networks, 
+	now we have a recipe for training them via back-propagation (\cf~\cite{Kontschieder2015,Schulter2013Alternating,Suarez1999GlobalTree}).
+	
+	
+	%%% Figure ---------------
+	\begin{figure}[t]
+	\centerline{
+	\includegraphics[width=0.6\linewidth]{training}
+	}
+	   \caption{{\bf Training a network's routers via back-propagation.} 
+	   A toy conditional network used to illustrate how to train the router's parameters $\mat P^{\tt R}$ via gradient descent back-propagation.}
+	\label{fig:training}
+	\end{figure}
+	%%%
+	
+	In summary, conditional networks may be thought of as:
+	\begin{enumerate}
+	\item Decision trees/DAGs which have been enriched with (learned) data transformation operations, or as
+	\item CNNs with rich, DAG-shaped architectures and trainable data routing functions. 
+	Next, we show efficiency advantages of such branched models with comparative experiments.
+	\end{enumerate}
+	
 	
 	\section[Results]{Results\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
 	\subsection{\Glsfmttext{ilsvrc}}
