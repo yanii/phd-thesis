@@ -31,7 +31,7 @@
 	ReLU activations induce a data-dependent sparsity; but this sparsity does not tend to have much structure in it. Enforcing a special type of {\em structured} sparsity is at the basis of the efficiency gain attained by conditional networks. We illustrate this concept with a toy example.
 
 	%%% Figure ---------------
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 	\centerline{
 	\includegraphics[width=0.85\linewidth]{sparsity}
 	}
@@ -44,20 +44,20 @@
 	\label{fig:sparsity}
 	\end{figure}
 
-	The output of the exemplar multi-layer perceptron (MLP) of  Fig.~\ref{fig:sparsity}a is computed as $\vec v_2 = \sigma(\mat P_{12} \vec v_1) = \sigma(\mat P_{12} \sigma(\mat P_{01} \vec v_0))$.
+	The output of the exemplar multi-layer perceptron (MLP) of \cref{fig:sparsity}a is computed as $\vec v_2 = \sigma(\mat P_{12} \vec v_1) = \sigma(\mat P_{12} \sigma(\mat P_{01} \vec v_0))$.
 	Given a trained MLP we can look at the average correlation of activations between 
 	pairs of units in two successive layers, over all training data. 
-	For example, the matrix $\mat \Lambda_{12}$ (Fig.~\ref{fig:sparsity}b) shows the joint correlations 
+	For example, the matrix $\mat \Lambda_{12}$ (\cref{fig:sparsity}b) shows the joint correlations 
 	of activations in layers 1 and 2 in a perceptron trained on the Imagenet classification task.\footnote{The correlation matrix $\mat \Lambda_{12}$ is not the same as the weight matrix $\mat P_{12}$.} 
 	Here we use the final two layers of the deep CNN model of~\cite{Simonyan2014verydeep} with 
 	a reduced number of features (250) and classes (350) to aid visualization. 
 
-	Thanks to the ReLUs, the correlation matrix $\mat \Lambda_{12}$ has many zero-valued elements (in white in Fig.~\ref{fig:sparsity}b), and these are distributed in an {\em unstructured} way. 
-	Reordering the rows and columns of $\Lambda_{12}$ reveals an underlying, noisy block-diagonal pattern  (Fig.~\ref{fig:sparsity}c). 
+	Thanks to the ReLUs, the correlation matrix $\mat \Lambda_{12}$ has many zero-valued elements (in white in \cref{fig:sparsity}b), and these are distributed in an {\em unstructured} way. 
+	Reordering the rows and columns of $\Lambda_{12}$ reveals an underlying, noisy block-diagonal pattern  (\cref{fig:sparsity}c). 
 	This operation corresponds to finding groups of layer-1 features which are highly active for certain subsets of classes (indexed in layer-2).
-	Thus, the darker blocks in Fig.~\ref{fig:sparsity}c correspond to three super-classes (sets of `related' classes). 
-	Zeroing out the off-diagonal elements (Fig.~\ref{fig:sparsity}e) corresponds to removing connections between corresponding unit pairs. 
-	This yields the sparse architecture in Fig.~\ref{fig:sparsity}d, where selected subsets of the layer-1 features are sent (after transformation) to the corresponding subsets of layer-2 units; thus giving rise to data routing.
+	Thus, the darker blocks in Fig.~\cref{fig:sparsity}c correspond to three super-classes (sets of `related' classes). 
+	Zeroing out the off-diagonal elements (Fig.~\cref{fig:sparsity}e) corresponds to removing connections between corresponding unit pairs. 
+	This yields the sparse architecture in Fig.~\cref{fig:sparsity}d, where selected subsets of the layer-1 features are sent (after transformation) to the corresponding subsets of layer-2 units; thus giving rise to data routing.
 
 	We have shown how imposing a block-diagonal pattern of sparsity to the joint activation correlation 
 	in a neural network corresponds to equipping the network with a tree-like, 
@@ -119,7 +119,7 @@
 	Random forests consist of a number of decision trees, each of which is applied to a restricted number of the input feature dimensionality. It may not be immediately obvious how this is represented in our new graphical language, but in fact a simple extension of the above theme represents selection --- \ie an identity matrix of reduced rank, as illustrated in \cref{fig:selectionnotation}.
 	
 	\subsection{Explicit Routing}
-	\begin{figure}[htbp!] 
+	\begin{figure}[tbp] 
 		\centering
 		\includegraphics[width=0.95\textwidth]{treenotation}
 		\caption[Proposed graphical notation for a decision stump]{\textbf{The proposed compact graphical notation for a ``decision stump''.}}\label{fig:treeNotation}
@@ -181,7 +181,7 @@
 	\subsection{Computational Efficiency}\label{sec:efficiency}
 	
 	%%% Figure ---------------
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 	\centerline{
 	\includegraphics[width=0.9\linewidth]{conditionalNetwork}
 	}
@@ -192,13 +192,13 @@
 	\end{figure}
 	
 	\paragraph{Efficiency through explicit data routing.}
-	Split nodes can have {\em explicit} routers where data is {\em conditionally} sent to the children according to the output of a routing function (\eg node 2 in Fig.~\ref{fig:conditionalNetwork}),
+	Split nodes can have {\em explicit} routers where data is {\em conditionally} sent to the children according to the output of a routing function (\eg node 2 in \cref{fig:conditionalNetwork}),
 	or have \emph{implicit} routers where the data is unconditionally but selectively sent to the children using selection matrices $\mat S$ (\eg node 1).
 	If the routing is explicit and hard (like in trees), then successive operations will be applied to ever smaller subsets of incoming data, with the associated compute savings. 
 	Next we show how implicit conditional networks can also yield efficiency. 
 	
 	\paragraph{Efficiency of implicit routed networks.}
-	Figures~\ref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
+	\cref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
 	architecture. The total numbers of filters at each layer is fixed for 
 	both to $c_1$, $c_2$ and $c_3$.
 	The number of multiplications necessary in the first convolution is 
@@ -214,7 +214,7 @@
 	time savings.\footnote{Feature not yet implemented in Caffe~\cite{Jia2014}.}
 	
 	%%% Figure ---------------
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 	\centerline{
 	\includegraphics[width=0.85\linewidth]{implicitEfficiency}
 	}
@@ -234,8 +234,8 @@
 	The selection functions $\mat S$ become extra parameters to optimize over, and their gradients can be derived straightforwardly. 
 	Now we show that {\em explicitly}-routed networks can also be trained using back-propagation.  
 	To do so we need to compute partial derivatives with respect to the router's parameters (all other differentiation operations are as in conventional CNNs). 
-	We illustrate this using the small network in Fig.~\ref{fig:training}. 
-	Here subscripts index layers and superscripts index routes (instead, in Fig.~\ref{fig:conditionalNetwork} the subscripts indexed the input and output nodes).
+	We illustrate this using the small network in \cref{fig:training}. 
+	Here subscripts index layers and superscripts index routes (instead, in \cref{fig:conditionalNetwork} the subscripts indexed the input and output nodes).
 	The training loss to be minimized is
 	\begin{equation}
 	L(\boldsymbol\theta)  = \frac{1}{2} \left(\vec v_2(\boldsymbol\theta) - \vec v_2^*\right)^\top \left(\vec v_2(\boldsymbol\theta) - \vec v_2^*\right),
@@ -269,14 +269,14 @@
 	\frac{\partial L}{\partial \vec v_2} \; 
 	\frac{\partial \vec v_2}{\partial \boldsymbol\theta} = 
 	\frac{\partial L}{\partial \vec v_2} \left( 
-	\frac{\partial \textcolor{myred}{\vec r}}{\partial \textcolor{myred}{\mat P^{\tt R}}} \mat V_1 +  
-	\sum_{j=1}^{R} \;\textcolor{myred}{r(j)}\; 
+	\frac{\partial \vec r}{\partial \textcolor{myred}{\mat P^{\tt R}}} \mat V_1 +  
+	\sum_{j=1}^{R} \;r(j)\; 
 	\frac{\partial \vec v_1^j}{\partial \boldsymbol\phi^j} 
-	\frac{\partial \boldsymbol\phi^j}{\partial \textcolor{myblue}{\mat P^j}}\right)
+	\frac{\partial \boldsymbol\phi^j}{\partial \mat P^j}\right)
 	\label{eq:chainrule},
 	\end{equation}
 	with $\boldsymbol{\phi}^j := \mat P^j \vec v_0$, and $R$ the number of routes. 
-	Equation~(\ref{eq:chainrule}) shows the influence of the soft routing weights on the 
+	\cref{eq:chainrule} shows the influence of the soft routing weights on the 
 	back-propagated gradients, for each route.
 	Thus, explicit routers can be trained as part of the overall back-propagation procedure. 
 	Since trees and DAGs are special instances of conditional networks, 
@@ -284,9 +284,9 @@
 	
 	
 	%%% Figure ---------------
-	\begin{figure}[t]
+	\begin{figure}[tbp]
 	\centerline{
-	\includegraphics[width=0.6\linewidth]{training}
+	\includegraphics[width=0.4\linewidth]{training}
 	}
 	   \caption{{\bf Training a network's routers via back-propagation.} 
 	   A toy conditional network used to illustrate how to train the router's parameters $\mat P^{\tt R}$ via gradient descent back-propagation.}
@@ -302,7 +302,61 @@
 	\end{enumerate}
 	
 	
-	\section[Results]{Results\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
+	\section[Results]{Results}
+	%\protect\footnote{Note, two interesting experiments are omitted here because they are primarily the work of my co-authors, Antonio Criminisi and Duncan Robertson. I refer interested readers to the technical report for completeness: \citet{Ioannou2015}.}}
+
+	\subsection{Conditional Sparsification of a Perceptron}\label{sec:results_perceptron}
+	We begin with a toy experiment, designed to illustrate potential advandages of using explicit routes within a neural network. We take a perceptron (the last layer of ``VGG11''~\cite{Simonyan2014verydeep}) and
+	train it on the 1,000 Imagenet classes, with no scale or relighting augmentation~\cite{Jia2014}.
+	Then we turn the perceptron into a small tree, with $R$ routes and an additional, compact perceptron as a router (see \cref{fig:resultsSinglePerc}a). The router ${\mat P}^{\tt R}_8$ and the projection matrices ${\mat P}^i_8$ are trained to minimize the overall classification loss (\cref{sec:training}).
+
+	% figure
+	\begin{figure}[tbp]
+	\centerline{
+	\includegraphics[width=0.9\linewidth]{resultsSinglePerc.png}
+	}
+	\caption{{\bf Conditional sparsification of a single-layer perceptron.}
+	{\bf (a)}  We take the deep CNN model in~\cite{Simonyan2014verydeep} (`VGG11') and turn the last fully connected layer (size $4095\times1000$) into a tree with $R$ routes ($R=4$ shown in figure).
+	{\bf (b)} The top-5-error \vs test-time-cost curves for six conditional networks trained with different values of $R\in\{2,4,6,8,16,24,32\}$. 
+	Test-time cost is computed as number of floating point operations per image, and is hardware-independent.
+	The strong sub-linear shape of the curves indicates a net gain in the trade-off between accuracy and efficiency. 
+	}
+	\label{fig:resultsSinglePerc}
+	\end{figure}
+
+	\paragraph{Interpolating between trees and CNNs.}
+	Given a test image we apply the convolutional layers until the beginning of the tree. 
+	Then we apply the router, and its $R$ outputs are soft-max normalized and treated 
+	as probabilities for deciding which route/s to send the image to. 
+	We can send the image only to the highest probability route only (as done in trees)
+	or we could send it to multiple routes, \eg the $\tau$ most probable ones. 
+	For $\tau=1$ we reproduce the behaviour of a tree. 
+	This corresponds to the left-most point in the curves in 
+	\cref{fig:resultsSinglePerc}b (lowest cost and higher error). 
+	Setting $\tau=R$ corresponds to sending the image to {\em all} routes. 
+	The latter reproduces the same behaviour as the CNN, with nearly the same 
+	cost (lowest error and highest compute cost point in the curves).
+	Different values of $\tau \in \{1,\dots,R\}$ correspond to different points along the error-cost curves.
+
+	\paragraph{Dynamic accuracy-efficiency trade-off.}
+	The ability to select the desired accuracy-efficiency operating point 
+	at {\em run-time} allows \eg better battery management in mobile applications.
+	In contrast, a CNN corresponds to a {\em single} point in the accuracy-efficiency space 
+	(see the black point in fig.~\ref{fig:resultsSinglePerc}b). 
+	The pronounced sub-linear behaviour of the curves in fig.~\ref{fig:resultsSinglePerc}b 
+	suggests that we can increase the efficiency considerably with little accuracy reduction
+	(in the figure a 4-fold efficiency increase yields an increase in error of less than $1\%$). 
+
+	\paragraph{Why care about the amount of computation?}
+	Modern parallel architectures (such as GPUs) yield
+	high classification accuracy in little time. But parallelism is not the only way of 
+	increasing efficiency. Here we focus on reducing the total amount of
+	computations while maintaining high accuracy. 
+	Computation affects power consumption, which is of huge practical 
+	importance in mobile applications (to increase battery life on a smartphone) 
+	as well as in cloud services (the biggest costs in data centres are due to their cooling).
+	Next we extend conditional processing also to the expensive convolutional layers of a deep CNN.
+
 	\subsection{\Glsfmttext{ilsvrc}}
 	We first validate the use of conditional networks for image classification on the \gls{ilsvrc} dataset~\citep{ILSVRC2015}, a large dataset consisting of 1.2M training images for 1000 classes, and 50,000 validation images.
 	
@@ -723,17 +777,61 @@
 	Most of the conditional networks proposed by the Bayesian search procedure are distributed along a curve characterized by either high accuracy, or low model size, or both. 
 	Reducing the NiN model by filter reduction (pink diamonds in the figure) does not yield the same gains as data routing.
 	Despite NiN achieving the highest accuracy (it has been optimized for accuracy alone), the optimal conditional network is much closer to the origin of the 3D space, thus indicating much higher efficiency (in terms of memory and computation) for a small loss in accuracy.
+
+	\subsection{Conditional Ensembles of CNNs}
+	A key difference between CNNs and conditional networks is that the latter may include (trainable) data routers. Here we use an {\em explicitly}-routed architecture to create an {\em ensemble} of CNNs where the data traverses only selected, component CNNs (and not necessarily all of them), thus saving computation.
+
+	As an example, the branched network in \cref{fig:resultsMixing_Network} is applied to the ILSVRC2012 image classification task. 
+	The network has $R=2$ routes, each of which is itself a deep CNN. 
+	Here, we use GoogLeNet~\cite{Szegedy2014going} as the basis 
+	of each component route, although other architectures may be used.
+	Generalizing to $R>2$ is straightforward.
+	The routes have different compute cost (denoted by different-sized rectangles), arising from differing degrees of test-time oversampling.
+	We use no oversampling for the first route and 10X oversampling for the second route. 
+
+	\begin{figure}[tbp]
+		\centerline{
+			\includegraphics[width=0.8\linewidth]{resultsMixing_Network_2routes.png}
+		}
+		\caption{{\bf Explicit data routing for conditional ensembles.} 
+		An explicitly-routed conditional network that mixes existing deep CNNs in a learned, data-dependent fashion.}
+		\label{fig:resultsMixing_Network}
+	\end{figure}
+
+	The router determines which image should be sent to which route (or both).
+	The router is trained together with the rest of the network via back-propagation (\cref{sec:training}) to predict the accuracy of each route for each image. 
+	The router is itself a deep CNN, based on CNN1; This allows computation reuse for extra efficiency.
+	At test time, a (dynamic) trade off can be made between predicted accuracy and computational cost.
+
+	\begin{figure}[tbp]
+		\centerline{
+		\includegraphics[width=0.75\linewidth]{resultsMixing_Plot.png}
+		}
+		\caption{{\bf Error-accuracy results for conditional ensembles of CNNs.} 
+		Error-accuracy results for the two GoogLeNet base networks are shown in purple.
+		The {\em dynamic} error-cost curve for our conditional ensemble is in green.
+		In the green circle we achieve same accuracy as the most accurate GoogLeNet with 
+		half its cost.
+		}
+		\label{fig:resultsMixing_Plot}
+	\end{figure}
 	
+	\Cref{fig:resultsMixing_Plot} shows the resulting error-cost curve. 
+	All costs, including the cost of applying the router are taken into consideration here.
+	Given our trained conditional network, we use dynamic, multi-way data routing (\cref{sec:results_perceptron}) to generate a curve in the error-compute space. 
+	Each point on the curve shows the top-5 error on the validation set at a given compute cost, which is an amortized average over the validation set.
+
+	The dashed line corresponds to the trivial error vs. compute trade-off that could be made by selecting one or other base network at random, with a probability chosen so as to achieve a required average compute cost. The fact that the green curve lies significantly below this straight line confirms the much improved trade-off achieved by the conditional network. 
+	In the operating point indicated by the green circle we achieve nearly the same accuracy as the $10\times$ oversampled GoogLeNet with less than half its compute cost.
+	A conventional CNN ensemble would incur a higher cost since all routes are used for all images.
+
 	\section{Discussion}
-
-%\vspace{-0.5\baselineskip}
-
-This chapter has investigated the similarities and differences between decision trees/forests and \gls{dnn}. This has led us to introduce a hybrid model (namely conditional networks) which can be thought both as: 
-\begin{enumerate*}[label= (\textbf{\roman*})]
-\item trees which have been augmented with representation learning capabilities, and
-\item \glspl{cnn}\index{CNN} which have been augmented with explicit data routers and a rich, branched architecture.
-\end{enumerate*}
-Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or \glspl{cnn}\index{CNN}. The desired accuracy-efficiency ratio can be selected \emph{at run time}, without the need to train a new network.
-%Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of \glspl{cnn}\index{CNN}, without loss of accuracy.
+	This chapter has investigated the similarities and differences between decision trees/forests and \gls{dnn}. This has led us to introduce a hybrid model (namely conditional networks) which can be thought both as: 
+	\begin{enumerate*}[label= (\textbf{\roman*})]
+	\item trees which have been augmented with representation learning capabilities, and
+	\item \glspl{cnn}\index{CNN} which have been augmented with explicit data routers and a rich, branched architecture.
+	\end{enumerate*}
+	Experiments on image classification have shown that highly branched architectures yield improved accuracy-efficiency trade-off as compared to trees or \glspl{cnn}\index{CNN}. The desired accuracy-efficiency ratio can be selected \emph{at run time}, without the need to train a new network.
+	%Finally, we have shown how explicit routers can improve the efficiency of {\em ensembles} of \glspl{cnn}\index{CNN}, without loss of accuracy.
 	
 \end{document}
