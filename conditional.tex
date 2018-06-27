@@ -94,19 +94,19 @@
 	
 	\begin{figure}[tbp] 
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.85\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{projectionnotation}
 			\caption{Generic projection with non-linearity, typically found in neural networks.}\label{fig:projectionnotation}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.85\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{identitynotation}
 			\caption{Identity projection with identity function, typically found in decision trees.}\label{fig:identitynotation}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.85\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{selectionnotation}
 			\caption{Selection projection, found in random forests.}\label{fig:selectionnotation}
@@ -320,7 +320,7 @@
 	% figure 
 	\begin{figure}[tbp]
 		\centering
-		\includegraphics[width=\linewidth]{resultsImagenet_conditionalNetwork}
+		\includegraphics[width=0.9\linewidth]{resultsImagenet_conditionalNetwork}
 		\caption[Conditional network used with ILSVRC experiments]{\textbf{Conditional network used with Imagenet experiments.} The network employs implicit data routing in the (expensive) convolutional layers to yield higher computational efficiency than the corresponding, non-routed \glsfmtplural{dnn}\index{DNN}.}\label{fig:Imagenet_CondNet}
 	\end{figure}
 	%
@@ -544,7 +544,7 @@
 	%%% Figure ---------------
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{0.98\linewidth}
+		\begin{subfigure}[b]{0.9\linewidth}
 			%msrc-vgg-11-latelr,msrc-vgg-11-ns-fixed2,msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum,msrc-vgg-11-ns-latelr2
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
@@ -588,7 +588,7 @@
 			\caption{\# \Glsfmttext{flops} for each layer} 
 		\end{subfigure}
 		\vfill
-		\begin{subfigure}[b]{0.98\linewidth}
+		\begin{subfigure}[b]{0.9\linewidth}
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-latelr-layerma.csv}\datatablea
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-fixed2-layerma.csv}\datatableb
 			\pgfplotstableread[col sep=comma]{condnetdata/msrc-vgg-11-ns-inv-grouptree-conv2-wmomentum-layerma.csv}\datatablec
@@ -700,13 +700,13 @@
 	
 	\begin{figure}[tbp] 
 		\centering
-		\begin{subfigure}[b]{0.9\linewidth}
+		\begin{subfigure}[b]{0.8\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsEff}
 			\caption{Test error \vs test-time computation for various architectures used in the CIFAR experiments.}\label{fig:resultsCifar_AccVsEff}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.9\linewidth}
+		\begin{subfigure}[b]{0.8\linewidth}
 			\centering
 			\includegraphics[width=\linewidth]{resultsCifar_AccVsSize}
 			\caption{Test error \vs model size.}\label{fig:resultsCifar_AccVsSize}

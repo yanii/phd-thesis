@@ -128,7 +128,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 
 \paragraph{\Gls{mnist}} This effect is not limited to large state-of-the-art deep networks, or indeed even deep networks. Surprisingly this effect is reproducible with a minimal single hidden-layer \gls{mnist} network. With a fully-connected network with one hidden layer, \gls{relu} activation functions, and a variety of optimization methods, we find that this co-adaption is still present above a minimal number of hidden units.  
 \begin{figure}[tbp]
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 % \begin{axis}[
@@ -182,7 +182,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 %Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
 \label{fig:mnist_ablation_train_loss}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 % \begin{axis}[
@@ -231,7 +231,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 %Maximum increase (solid/left axis), and maximum decrease (dotted/right axis).}
 \label{fig:mnist_ablation_train_acc}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 % \begin{axis}[
@@ -280,7 +280,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 %Maximum decrease (solid/left axis), and maximum increase (dotted/right axis).}
 \label{fig:mnist_ablation_test_loss}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 % \begin{axis}[
@@ -335,7 +335,7 @@ While, as expected, most pairwise ablations result in a decrease in accuracy, a 
 The plots show the maximum increase in loss or decrease in accuracy. Both are measures of the level of neural co-adpation in the trained networks.}\label{fig:mnist_ablation}
 \end{figure}
 \begin{figure}[tbp]
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -368,7 +368,7 @@ The plots show the maximum increase in loss or decrease in accuracy. Both are me
 \caption{Training Loss: Percentage of pairs of hidden units that exhibit adverse co-adaption.}
 \label{fig:mnist_ablation_stats_train_loss_lt}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -398,7 +398,7 @@ The plots show the maximum increase in loss or decrease in accuracy. Both are me
 \caption{Training Loss: Percentage of pairs of hidden units that are independent.}
 \label{fig:mnist_ablation_stats_train_loss_eq}
 \end{subfigure}
-% \begin{subfigure}[b]{\linewidth}
+% \begin{subfigure}[b]{0.95\linewidth}
 % \centering
 % \begin{tikzpicture}
 % \begin{axis}[
@@ -452,7 +452,7 @@ To demonstrate that it is this projection, rather than the zeroing out of neuron
 for a random rotation matrix $\mathbf{R}\in \textrm{SO}_N$. This ``dropproject'' method avoids zeroing out any of the units, while still performing an equivalent projection as that in dropout.
 
 \begin{figure}[tbp]
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -486,7 +486,7 @@ DP-Random}
 \caption{CIFAR Training Log Loss}
 \label{fig:cifar_dropproject_train_loss}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \begin{tikzpicture}
 \begin{axis}[
     thick,
@@ -513,7 +513,7 @@ DP-Random}
 \caption{CIFAR Test Log Loss}
 \label{fig:cifar_dropproject_test_loss}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \begin{tikzpicture}
 \begin{axis}[
     thick,
@@ -539,7 +539,7 @@ DP-Random}
 \caption{\Glsfmttext{cifar10} Training Error}
 \label{fig:cifar_dropproject_train_acc}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
+\begin{subfigure}[b]{0.95\linewidth}
 \begin{tikzpicture}
 \begin{axis}[
     thick,

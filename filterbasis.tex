@@ -234,7 +234,7 @@
 	We did not group filters in the first convolutional layer --- since it operates on the three-channel image space, it is of limited computational impact compared to other layers.
 	\begin{figure}[tbp]
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
@@ -299,7 +299,7 @@
 			%\label{fig:nincifarparamconvonly}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.95\textwidth}
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar.csv}\datatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_root_s.csv}\rdatatable
 			\pgfplotstableread[col sep=comma]{rootdata/nincifar_tree_s.csv}\tdatatable
