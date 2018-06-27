@@ -178,8 +178,7 @@
 	\subsection{Conditional Networks}
 	The generalization, a conditional network, mixes elements of both of these models. Conditional networks may perform arbitrary projections of samples, and use arbitrary non-linear functions. Conditional networks may route samples with a soft or hard router in some or all of the layers, they may select some of all of the input feature space. 
 
-	\subsection{Computational Efficiency}
-	\label{sec:efficiency}
+	\subsection{Computational Efficiency}\label{sec:efficiency}
 	
 	%%% Figure ---------------
 	\begin{figure}[t]
@@ -192,13 +191,13 @@
 	\label{fig:conditionalNetwork}
 	\end{figure}
 	
-	\noindent{\bf Efficiency through explicit data routing.}
+	\paragraph{Efficiency through explicit data routing.}
 	Split nodes can have {\em explicit} routers where data is {\em conditionally} sent to the children according to the output of a routing function (\eg node 2 in Fig.~\ref{fig:conditionalNetwork}),
 	or have \emph{implicit} routers where the data is unconditionally but selectively sent to the children using selection matrices $\mat S$ (\eg node 1).
 	If the routing is explicit and hard (like in trees), then successive operations will be applied to ever smaller subsets of incoming data, with the associated compute savings. 
 	Next we show how implicit conditional networks can also yield efficiency. 
 	
-	\noindent{\bf Efficiency of implicit routed networks.}
+	\paragraph{Efficiency of implicit routed networks.}
 	Figures~\ref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
 	architecture. The total numbers of filters at each layer is fixed for 
 	both to $c_1$, $c_2$ and $c_3$.
@@ -230,8 +229,7 @@
 	\end{figure}
 	%%%
 	
-	\subsection{Back-propagation Training}
-	\label{sec:training}
+	\subsection{Back-propagation Training}\label{sec:training}
 	{\em Implicitly}-routed conditional networks can be trained with the standard back-propagation algorithm~\cite{Krizhevsky2012,Szegedy2014going}. 
 	The selection functions $\mat S$ become extra parameters to optimize over, and their gradients can be derived straightforwardly. 
 	Now we show that {\em explicitly}-routed networks can also be trained using back-propagation.  
