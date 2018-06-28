@@ -517,7 +517,7 @@
 				point meta=explicit symbolic,
 				every node near coord/.append style={xshift=0.01em, anchor=west, font=\footnotesize\sffamily\sansmath},
 			] table[meta=Network Name,x=Multiply-Acc Ops,y expr = {\thisrow{Top-5 Error (centre crop)}*100},]{\datatablec};
-			\legend{\texttt{conv1}/1, \texttt{conv1}/2, \texttt{conv1}/4}
+			\legend{\texttt{conv1}/stride 1, \texttt{conv1}/stride 2, \texttt{conv1}/stride 4}
 			\end{axis}
 			\end{tikzpicture}
 			%\caption{\textbf{\glsfmttext{flops} (Multiply-Add) \vs Error.}}
@@ -582,7 +582,7 @@
 		\end{subfigure}
 		\caption[Efficiency of conditional networks on \Glsfmttext{ilsvrc}]{\textbf{Efficiency of conditional networks on \glsfmttext{ilsvrc} relative to state-of-the-art models.} Our \glsfmttext{vgg}-11-GMP (GMP) reduces model size significantly, and is the baseline network. \glsfmttext{vgg}-11 conditional networks (Cond.\ Network) yield points closer to the origin for networks with the same \texttt{conv1} stride, noted as (\texttt{conv1}/stride) in the legend.}\label{fig:Imagenet_results}
 	\end{figure}
-	\Cref{table:Imagenet_results} summarize the results, and \cref{fig:Imagenet_results} shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. The best network by these measures (\ie closest to the origin) is GoogLeNet~\citep{Szegedy2014going}. In both networks much of the computational saving is obtained by routingsubsets of features to different branches of the network. GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
+	\Cref{table:Imagenet_results} summarize the results, and \cref{fig:Imagenet_results} shows top-5 error as a function of test-time cost\footnote{Measured here as number of multiply-accumulate operations. We have observed this measure to correlate very well with \gls{cpu} time.} and model size. The best network by these measures (\ie closest to the origin) is GoogLeNet~\citep{Szegedy2014going}. In both networks much of the computational saving is obtained by routing subsets of features to different branches of the network. GoogLeNet learns low-dimensional embeddings, has multiple intermediate training losses, and a very different training schedule. These differences, along with its deeper DAG structure, may explain its superior performance.
 	
 	The conditional network of \cref{fig:Imagenet_CondNet} 
 	corresponds to the green circle in \cref{fig:Imagenet_results}.
@@ -591,7 +591,7 @@
 	and almost one-fifth (21\%) of the parameters.
 	Although it is the second closest to the origin (after GoogLeNet), we believe that better results can be achieved 
 	by using routes of different (learned) cardinality, as well as incorporating low-dimensional embedding and multiple-loss training. This is left for future work. 
-	Note that the most efficient model in~\citep{He2015b} uses 1.9E+10 flops which is just outside the plot. 
+	Note that the most efficient model in~\citep{He2015b} uses \(1.9\times 10^{10}\) flops which is just outside the plot. 
 	More accurate versions of~\citep{He2015b} are more expensive still.
 	Finally, \cref{fig:VggPerLayerCost} shows efficiency improvements achieved by our conditional network, layer by layer.
 	
