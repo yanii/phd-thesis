@@ -129,8 +129,8 @@
     \begin{equation}
         \begin{aligned}
             \gls{fmY}_i &= \sum_{l} \gls{fmY}^\textrm{basis}_l \gls{convolution} \gls{fmK}^\textrm{weights}_{il}\\
-            &= f^\textrm{weights}_{il} \sum_{l} \gls{fmY}^\textrm{basis}_l \quad\textrm{(since $\gls{fmK}^\textrm{weights}_{il}$ is a scalar)}\\
-            &= f^\textrm{weights}_{il} \left( \sum_{l=0}^{m/2} \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{h}_{il} + \sum_{l=m/2}^m \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{v}_{il}\right),
+            &= \sum_{l} f^\textrm{weights}_{il} \gls{fmY}^\textrm{basis}_l \quad\textrm{(since $\gls{fmK}^\textrm{weights}_{il}$ is a scalar)}\\
+            &= \sum_{l=0}^{m/2} f^\textrm{weights}_{il} \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{h}_{il} + \sum_{l=m/2}^m f^\textrm{weights}_{il} \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{v}_{il},
         \end{aligned}
     \end{equation}
     where $\gls{fmK}^\textrm{h}$ and $\gls{fmK}^\textrm{v}$ are the horizontal and vertical filters respectively.
@@ -161,7 +161,14 @@
         \caption[Learned cross-shaped filters]{\textbf{Learned Cross-Shaped Filters}. The cross-shaped filters (c) learned as weighted linear combination of (b) $1$$\times$$3$ and (c) $3$$\times$$1$ basis filters in the first convolutional layer of the the `vgg-gmp-lr-join' model trained using the \gls{ilsvrc} dataset.}\label{fig:conv1filters}
     \end{figure}
     
-    Note that, in general, more than two different sizes of basis filter might be used in the \gls{compositelayer}\index{composite layer}. For example,  \cref{fig:ourmethodfullrank} shows a combination of three sets of filters with spatial dimensions $w$$\times$$1$, $1$$\times$$h$, and $w$$\times$$h$. Also note that an interesting option is to omit the $1$$\times$$1$ linear combination layer and instead allow the connection weights in a subsequent network layer to learn to combine the basis filters of the preceding layer (despite any intermediate non-linearity, \eg \glspl{relu}). This possibility is explored empirically in the \cref{spatialbasisresults}.
+    Note that, in general, more than two different sizes of basis filter might be used in the \gls{compositelayer}\index{composite layer}. In the more general case, for a set of heterogeneous filter groups $\gls{fmK}^{g=0,\ldots,G}$, we can express this as
+    \begin{equation}
+        \begin{aligned}
+            \gls{fmY}_i &= \sum_{l} f^\textrm{weights}_{il} \sum_g \gls{fmX}_l \gls{convolution} \gls{fmK}^g_{il}.
+        \end{aligned}
+    \end{equation}
+    
+    For example,  \cref{fig:ourmethodfullrank} shows a combination of three sets of filters with spatial dimensions $w$$\times$$1$, $1$$\times$$h$, and $w$$\times$$h$. Also note that an interesting option is to omit the $1$$\times$$1$ linear combination layer and instead allow the connection weights in a subsequent network layer to learn to combine the basis filters of the preceding layer (despite any intermediate non-linearity, \eg \glspl{relu}). This possibility is explored empirically in the \cref{spatialbasisresults}.
     
     In that our method uses a combination of filters in a \gls{compositelayer}\index{composite layer}, it is similar to the `GoogLeNet' of \citet{Szegedy2014going} which uses \gls{inception}\index{inception} modules comprising several (square) filters of different sizes ranging from 1$\times$1 to 5$\times$5. In our case, however, we are implicitly learning linear combinations of less computationally expensive filters with different orientations (\eg 3$\times$1 and 1$\times$3 filters), rather than combinations of filters of different sizes. Amongst networks with similar computational requirements, GoogLeNet is one of the most accurate for large scale image classification tasks (see \cref{fig:vggplots}), partly due to the use of heterogeneous filters in the \gls{inception}\index{inception} modules, but also the use of low-dimensional embeddings and global pooling.
 
