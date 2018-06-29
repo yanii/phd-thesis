@@ -79,20 +79,63 @@
     %%%
     
     \subsection{Convolutional Filters}
-    
     The convolutional layers of a \gls{cnn} produce output `images' (usually called \emph{feature maps}\index{feature map}) by convolving input images with one or more learned filters. %The output images of convolutional layers are  to distinguish them from raw input images.
     In a typical convolutional layer, as illustrated in \cref{fig:fullrank}, a $c$-channel input image of size $H$$\times$$W$ pixels is convolved with $d$ filters of size $h$$\times$$w$$\times$$c$ to create a $d$-channel output image. Each filter is represented by $h w c$ independent weights. Therefore the computational complexity for the convolution of the filter with a $c$-channel input image is $\gls{bigoh}(d w h c)$ (per pixel in the output \gls{featuremap}\index{feature map}).
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    Here we will use our existing mathematical description of convolution from \cref{sec:convolutioninpractice}, where the incoming \gls{featuremap} is denoted by $\gls{fmX}$, outgoing \gls{featuremap} $\gls{fmY}$, and convolutional filter, or kernel $\gls{fmK}$. The scalar elements of each \gls{featuremap} are $\gls{fmX}_{i,j,k}$, $\gls{fmY}_{i,j,k}$, where $i=\{0,\ldots,\gls{c}\}$ is the \glspl{featuremap} channel (\ie colour for an input image), and $j=\{0,\ldots,\gls{filterh}\}$, $k=\{0,\ldots,\gls{filterw}\}$ are the spatial coordinates, rows and columns respectively, of the channel $i$ image. The filter's scalar elements are $\gls{fmK}_{i,j,k,l}$, where $i$ is the filter's index in the convolutional layer's filter bank and the output channel in $\gls{fmY}$ to which the filter's result is written, $j$ is the input channel in $\gls{fmX}$ over which the filter's spatial elements are convolved, and $(k, l)$ are the row and column offset between the output and input images.
+
+    A convolutional layer, as illustrated in \cref{fig:fullrank}, then convolves across the layer such that,
+    \begin{equation}
+        \begin{aligned}
+            \gls{fmY}_{i,j,k} &= \sum_{l,m,n} \gls{fmX}_{l,j+m,k+n}\; \gls{fmK}_{i,l,m,n},
+        \end{aligned}
+    \end{equation}
+    for all valid indices $l,m,n$, depending on the \gls{padding}\index{padding} of the input image. We will express this in shorter terms using the convolution operator $\gls{convolution}$ and allowing considering only a single pixel (\ie fixed $j,\,k$) output spatially for simplicity, 
+    \begin{equation}
+        \begin{aligned}
+            \gls{fmY}_i &= \sum_{l} \gls{fmX}_l \gls{convolution} \gls{fmK}_{il}.
+        \end{aligned}
+    \end{equation}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%55
     
     In what follows, we describe schemes for modifying the architecture of the convolutional layers so as to reduce computational complexity. The idea is to replace expensive, full-rank spatial convolutional filters, with modified versions that represent the same number of effective filters by a linear combinations of smaller basis vectors. 
     
     \subsection{Sequential Separable Filters}\label{seqsep}
-    An existing scheme for reducing the computational complexity of convolutional layers~\citep{journals/corr/JaderbergVZ14} is to replace each one with a sequence of two regular convolutional layers but with filters that are rectangular in the spatial domain, as shown in \cref{fig:separableseq}. The first convolutional layer has $m$ filters of size $w$$\times$$1$$\times$$c$, producing an output \gls{featuremap}\index{feature map} with $m$ channels. The second convolutional layer has $d$ filters of size $1$$\times$$h$$\times$$m$, producing an output \gls{featuremap}\index{feature map} with $d$ channels. By these means the full rank original convolutional filter bank is represented by a low rank approximation formed from a linear combination of a set of separable $w$$\times$$h$ basis filters.  The computational complexity of this scheme is $\gls{bigoh}(m c w)$ for the first layer of horizontal filters and $\gls{bigoh}(d m h)$ for the second layer of vertical filters, with a total of $\gls{bigoh}(m(c w + d h))$.
+    An existing scheme for reducing the computational complexity of convolutional layers~\citep{journals/corr/JaderbergVZ14} is to replace each one with a sequence of two regular convolutional layers but with filters that are rectangular in the spatial domain, as shown in \cref{fig:separableseq}. 
+    
+    The first convolutional layer has $m$ horizontal filters $\gls{fmK}_{i,\,l=0,\ldots,m}$ of size $w$$\times$$1$$\times$$c$, producing an output \gls{featuremap}\index{feature map} with $m$ channels. The second convolutional layer has $d$ vertical filters $\gls{fmK}_{i,\,l=0,\ldots,d}$ of size $1$$\times$$h$$\times$$m$, producing an output \gls{featuremap}\index{feature map} with $d$ channels. 
+    
+    Mathematically, the seperable convolution illustrated in \cref{fig:separableseq} can be expressed,
+    \begin{equation}
+        \begin{aligned}
+            \gls{fmY}_i &= \sum_{l} \gls{fmY}^\textrm{h}_l \gls{convolution} \gls{fmK}^\textrm{v}_{il}\\
+            =& \sum_{l} \left(\gls{fmX}^\textrm{h}_l \gls{convolution} \gls{fmK}^\textrm{h}_{il}\right) \gls{convolution} \gls{fmK}^\textrm{v}_{il},
+        \end{aligned}
+    \end{equation}
+    where $\gls{fmX}^\textrm{h}$ and $\gls{fmX}^\textrm{v}$ are the input feature maps convolved with the horizontal and vertical filters $\gls{fmK}^\textrm{h}$ and $\gls{fmK}^\textrm{v}$ respectively.
+
+    By these means the full rank original convolutional filter bank is represented by a low rank approximation formed from a linear combination of a set of separable $w$$\times$$h$ basis filters. The computational complexity of this scheme is $\gls{bigoh}(m c w)$ for the first layer of horizontal filters and $\gls{bigoh}(d m h)$ for the second layer of vertical filters, with a total of $\gls{bigoh}(m(c w + d h))$.
     
     Note that \citet{journals/corr/JaderbergVZ14} use this scheme to approximate existing full rank filters belonging to previously trained networks using a retrospective fitting step. In this work, by contrast,  we {\em train} networks containing convolutional layers with this architecture from scratch. In effect, we learn the separable basis filters and their combination weights simultaneously during network training.
     
     
     \subsection{Filters as Linear Combinations of a Basis}
-    We introduce a novel method for reducing convolutional layer complexity by training with low-rank filters. This works by representing convolutional filters as linear combinations of basis filters as illustrated in \cref{fig:ourmethod}. This scheme uses \emph{\glspl{compositelayer}\index{composite layer|textbf}} comprising several sets of filters where the filters in each set have different spatial dimensions (see \cref{fig:compositelayers}). The outputs of these basis filters may be combined in a subsequent layer containing filters with spatial dimensions $1$$\times$$1$, as illustrated in \cref{fig:ourmethod}. Here, our \gls{compositelayer}\index{composite layer} contains horizontal $w$$\times$$1$ and vertical $1$$\times$$h$ filters, the outputs of which are concatenated in the channel dimension, resulting in an intermediate $m$-channel \gls{featuremap}\index{feature map}. These filter responses are then linearly combined by the next layer of $d$ $1$$\times$$1$ filters to give a $d$-channel output \gls{featuremap}\index{feature map}. In this case, the filters are applied on the input \gls{featuremap}\index{feature map} with $c$ channels and followed by a set of $m$ 1$\times$1 filters over the $m$ output channels of the basis filters. If the number of horizontal and vertical filters is the same, the computational complexity is $\gls{bigoh}( m(wc/2 +hc/2 + d))$.
+    We introduce a novel method for reducing convolutional layer complexity by training with low-rank filters. This works by representing convolutional filters as linear combinations of basis filters as illustrated in \cref{fig:ourmethod}. This scheme uses \emph{\glspl{compositelayer}\index{composite layer|textbf}} comprising several sets of filters where the filters in each set have different spatial dimensions (see \cref{fig:compositelayers}). The outputs of these basis filters may be combined in a subsequent layer containing filters with spatial dimensions $1$$\times$$1$.
+    
+    This configuration is illustrated in \cref{fig:ourmethod}, and can be expressed as,
+    \begin{equation}
+        \begin{aligned}
+            \gls{fmY}_i &= \sum_{l} \gls{fmY}^\textrm{basis}_l \gls{convolution} \gls{fmK}^\textrm{weights}_{il}\\
+            &= f^\textrm{weights}_{il} \sum_{l} \gls{fmY}^\textrm{basis}_l \quad\textrm{(since $\gls{fmK}^\textrm{weights}_{il}$ is a scalar)}\\
+            &= f^\textrm{weights}_{il} \left( \sum_{l=0}^{m/2} \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{h}_{il} + \sum_{l=m/2}^m \gls{fmX}_l \gls{convolution} \gls{fmK}^\textrm{v}_{il}\right),
+        \end{aligned}
+    \end{equation}
+    where $\gls{fmK}^\textrm{h}$ and $\gls{fmK}^\textrm{v}$ are the horizontal and vertical filters respectively.
+    
+    Here, our \gls{compositelayer}\index{composite layer} contains horizontal $w$$\times$$1$ and vertical $1$$\times$$h$ filters, the outputs of which are concatenated in the channel dimension, resulting in an intermediate $m$-channel \gls{featuremap}\index{feature map}. These filter responses are then linearly combined by the next layer of $d$ $1$$\times$$1$ filters to give a $d$-channel output \gls{featuremap}\index{feature map}. In this case, the filters are applied on the input \gls{featuremap}\index{feature map} with $c$ channels and followed by a set of $m$ 1$\times$1 filters over the $m$ output channels of the basis filters. If the number of horizontal and vertical filters is the same, the computational complexity is $\gls{bigoh}( m(wc/2 +hc/2 + d))$.
     
     The effective filters learned in our models are low-rank in that, although we only learn mostly basis filters much smaller than the original networks (\eg $1$$\times$$h$, $w$$\times$$1$), the effective filter size when also using only a few full $w$$\times$$h$ basis filters is still a full 3$\times$3. Necessarily, some of the parameters in our effective filters are linear combinations of others, since the effective filter is a learned linear combination of the low-rank basis filters.
     
