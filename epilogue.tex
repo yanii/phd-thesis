@@ -36,7 +36,7 @@ For reference, the initial public release of the papers behind the work presente
 \end{itemize}
 
 \section{Recent Research Related to \Cref{lowrankfilters}}
-The method presented in this paper directly applied to many deep learning vision problems, and we have heard directly from developers of it's use in embedded devices, in applications as diverse as some of the most popular mobile phones to autonomous drones.
+The method presented in this chapter directly applied to many deep learning vision problems, and we have heard directly from developers of it's use in embedded devices, in applications as diverse as some of the most popular mobile phones to autonomous drones.
 
 Unfortunately even citing authors assume the paper present a low-rank approximation of the filters, despite our explicit and frequent statements that our models are trained from scratch and not approximated. This is likely due to the title and its similarity to the titles of a large amount of literature proceeding presenting methods of approximation.
 \subsection*{Rethinking the Inception Architecture for Computer Vision}
@@ -46,7 +46,7 @@ Unfortunately even citing authors assume the paper present a low-rank approximat
 \end{description}
 \Citet{szegedy2015rethinking} published an update to the \Gls{inception} architecture around 3 weeks after our pre-print publication, making it likely that their work was independent. Nevertheless, the method they present is identical to our proposal~\citep{Ioannou2016} --- the training of the \Gls{inception} architecture with low-rank (\ie 1$\times$3 and 3$\times$1) filters to reduce computation and improve generalization. They call these `factorized filters' which we disagree with, since being simply concatenated they are not a factorization (\ie separation of a multiplication), rather we argue they are linearly combined, and so represent a basis.
 
-The method proposed in this paper (and identical to our proposed method) forms the basis of all current \Gls{inception} architectures, and are now used in all Google deep learning backed products, for example Google Photos\texttrademark.
+The method proposed in this chapter (and identical to our proposed method) forms the basis of all current \Gls{inception} architectures, and are now used in all Google deep learning backed products, for example Google Photos\texttrademark.
 
 \section{Recent Research Related to \Cref{deeproots}}
 Unfortunately, likely due to the prominence of Google and Facebook in the research community, the Xception and ResNeXt papers below have received most of the citations and credit for root units in recent work, despite the pre-prints coming five and six months after our pre-print publication, respectively. On the other hand, this exposure has brought a lot of attention to the method, making the use of filter groups, and root modules specifically, for efficiency and generalization increasingly common. 
