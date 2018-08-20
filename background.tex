@@ -311,7 +311,7 @@ where $\gls{delta}^n_j$ is as defined in \cref{eqn:fulldeltadefinition}, and $y_
 %
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.85\textwidth]{learningratedecrease}
+\includegraphics[width=0.82\textwidth]{learningratedecrease}
 \caption[Learning rate and convergence]{\textbf{An illustration of the effect of step size (learning rate) and learning policy on convergence with backpropagation\index{backpropagation}.} This example is of a symmetric 2D error surface, where the parameters are initialized to one of the symmetrically identical surface points $x_i$ where $i=0\ldots4$. For each of the different initial learning rates $\gls{lr}_i$, the learning rate is decreased by $10\%$ each iteration.}\label{fig:learningrate}
 \end{figure}
 Backpropagation\index{backpropagation} is a method of steepest descent. This is illustrated in \cref{fig:learningrate}, where the backpropagation\index{backpropagation} learning rule, \cref{eqn:backproplearningrule}, specifies a step size in the form of the \emph{learning rate}. The learning rate parameter scales the step size, or the magnitude of the weight change vector. \Cref{fig:learningrate} also illustrates the effect of learning rate on gradient descent. Too small a learning rate can result in very slow learning such as for $\gls{lr}_0$, while too large a step size can result in bouncing around the minima ($\gls{lr}_2, \gls{lr}_3$), or missing it altogether. 
