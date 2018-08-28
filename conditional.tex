@@ -35,7 +35,7 @@
 	\centerline{
 	\includegraphics[width=0.85\linewidth]{sparsity}
 	}
-	\caption{{\bf Block-diagonal correlation of activations, and data routing.}
+	\caption[Block-diagonal correlation of activations, and data routing]{{\bf Block-diagonal correlation of activations, and data routing.}
 	{\bf (a)} An example 2-layer preceptron with ReLU activations. This is a portion of the `VGG' model~\cite{Simonyan2014verydeep} trained on Imagenet.
 	{\bf (b)} The correlation matrix $\mat \Lambda_{12}$ shows {\em unstructured} activation correlation between unit pairs. 
 	{\bf (c)} Reordering the units reveals a noisy, block-diagonal structure. 
@@ -185,7 +185,7 @@
 	\centerline{
 	\includegraphics[width=0.9\linewidth]{conditionalNetwork}
 	}
-	   \caption{{\bf A generic conditional network.} 
+	   \caption[A generic conditional network]{{\bf A generic conditional network.} 
 	   Conditional networks fuse efficient data routing with accurate data transformation in a single model. 
 	   Vector concatenations are denoted with $\oplus$.}
 	\label{fig:conditionalNetwork}
@@ -218,7 +218,7 @@
 	\centerline{
 	\includegraphics[width=0.85\linewidth]{implicitEfficiency}
 	}
-	\caption{{\bf Computational efficiency of implicit conditional networks.} 
+	\caption[Computational efficiency of implicit conditional networks]{{\bf Computational efficiency of implicit conditional networks.} 
 	{\bf (top)} A standard CNN (one route).
 	{\bf (bottom)} A two-routed architecture with no explicit routers.
 	The larger boxes denote feature maps, the smaller ones the filters.
@@ -288,7 +288,7 @@
 	\centerline{
 	\includegraphics[width=0.4\linewidth]{training}
 	}
-	   \caption{{\bf Training a network's routers via back-propagation.} 
+	   \caption[Training a network's routers via back-propagation]{{\bf Training a network's routers via back-propagation.} 
 	   A toy conditional network used to illustrate how to train the router's parameters $\mat P^{\tt R}$ via gradient descent back-propagation.}
 	\label{fig:training}
 	\end{figure}
@@ -315,7 +315,7 @@
 	\centerline{
 	\includegraphics[width=0.9\linewidth]{resultsSinglePerc.png}
 	}
-	\caption{{\bf Conditional sparsification of a single-layer perceptron.}
+	\caption[Conditional sparsification of a single-layer perceptron]{{\bf Conditional sparsification of a single-layer perceptron.}
 	{\bf (a)}  We take the deep CNN model in~\cite{Simonyan2014verydeep} (`VGG11') and turn the last fully connected layer (size $4095\times1000$) into a tree with $R$ routes ($R=4$ shown in figure).
 	{\bf (b)} The top-5-error \vs test-time-cost curves for six conditional networks trained with different values of $R\in\{2,4,6,8,16,24,32\}$. 
 	Test-time cost is computed as number of floating point operations per image, and is hardware-independent.
@@ -793,7 +793,7 @@
 		\centerline{
 			\includegraphics[width=0.8\linewidth]{resultsMixing_Network_2routes.png}
 		}
-		\caption{{\bf Explicit data routing for conditional ensembles.} 
+		\caption[Explicit data routing for conditional ensembles]{{\bf Explicit data routing for conditional ensembles.} 
 		An explicitly-routed conditional network that mixes existing deep CNNs in a learned, data-dependent fashion.}
 		\label{fig:resultsMixing_Network}
 	\end{figure}
@@ -807,7 +807,7 @@
 		\centerline{
 		\includegraphics[width=0.75\linewidth]{resultsMixing_Plot.png}
 		}
-		\caption{{\bf Error-accuracy results for conditional ensembles of CNNs.} 
+		\caption[Error-accuracy results for conditional ensembles of CNNs]{{\bf Error-accuracy results for conditional ensembles of CNNs.} 
 		Error-accuracy results for the two GoogLeNet base networks are shown in purple.
 		The {\em dynamic} error-cost curve for our conditional ensemble is in green.
 		In the green circle we achieve same accuracy as the most accurate GoogLeNet with 
