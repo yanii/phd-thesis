@@ -165,9 +165,9 @@
 	\subsection{Implicit Routing}
 	It is in fact possible for networks to learn a conditional routing of data without an explicit router. We call this form of conditional routing \emph{\gls{implicitrouting}\index{implicit routing|textbf}} \vs \emph{\gls{explicitrouting}\index{explicit routing|textbf}}, where a router is used. 
 	
-	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in \cref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by $\circleplus$ operator,
+	In an explicitly routed network, the routes are trained by combining the routes before the training loss. For example, in \cref{fig:explicitRouter} the input to layer $v_2$, $y_1$, is a linear combination of the routes weighted by the router weights, represented by the $\circleplus$ operator in \cref{fig:explicitRouter},
 	\begin{equation}
-	y_1 = \left\{y_1^j\right\} \forall j\circleplus \vec r = \sum_j r_j \sigma\left(P^j \vec v_1^j \right).
+	y_1 = \sum_j r_j \sigma\left(P^j \vec v_1^j \right).
 	\end{equation}
 	
 	For an implicitly routed network instead a (non-weighted) linear combination is followed by a single fully-connected layer, \ie inner product and \gls{relu}, \ie for \cref{fig:implicitRouter}, the output of $\vec v_2$, is simply,
@@ -198,7 +198,7 @@
 	Next we show how implicit conditional networks can also yield efficiency. 
 	
 	\paragraph{Efficiency of implicit routed networks.}
-	\cref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
+	\Cref{fig:implicitEfficiency} compares a standard CNN with a 2-routed
 	architecture. The total numbers of filters at each layer is fixed for 
 	both to $c_1$, $c_2$ and $c_3$.
 	The number of multiplications necessary in the first convolution is 

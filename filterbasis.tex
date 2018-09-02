@@ -392,39 +392,39 @@
 	%\begin{landscape}
 		\begin{figure}[p]
 			\centering
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-conv8-corr}}
 				\caption{Standard}\label{fig:normalcovartestfull}
 			\end{subfigure}
 			\hspace{1em}
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel2-convonly-conv8-corr}}
 				\caption{Root-2 (1 group)}\label{fig:root2corrfull}
 			\end{subfigure}
 			\hspace{1em}
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel4-convonly-conv8-corr}}
 				\caption{Root-4 (2 groups)}\label{fig:root4corrfull}
 			\end{subfigure}
 			\hspace{1em}
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel8-convonly-conv8-corr}}
 				\caption{Root-8 (4 groups)}\label{fig:root8corrfull}
 			\end{subfigure}
 			\hspace{1em}
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel16-convonly-conv8-corr}}
 				\caption{Root-16 (8 groups)}\label{fig:root16corrfull}
 			\end{subfigure}
 			\hspace{1em}
-			\begin{subfigure}[b]{0.3\textheight}
+			\begin{subfigure}[b]{0.28\textheight}
 				\centering
 				\vspace*{0.6em}
 				\covarlabels{conv2c}{192}{conv3a}{192}{\includegraphics[width=\textwidth]{Figs/PDF/msrc-cifar-nin-4pad-funnel32-convonly-conv8-corr}}
@@ -1082,7 +1082,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=Model Parameters (\# Floats),
@@ -1133,7 +1133,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{flops} (Multiply-Add),
@@ -1183,7 +1183,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{gpu} Forward (ms),
@@ -1240,7 +1240,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{cpu} Forward (ms),
@@ -1355,7 +1355,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.22\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=Model Parameters (\# Floats),
@@ -1406,7 +1406,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.22\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{flops} (Multiply-Add),
@@ -1542,7 +1542,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=Model Parameters (\# Floats),
@@ -1592,7 +1592,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{flops} (Multiply-Add),
@@ -1641,7 +1641,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{gpu} Forward (ms),
@@ -1695,7 +1695,7 @@
 			\begin{tikzpicture}
 			\begin{axis}[
 				width=0.95\textwidth,
-				height=0.24\textheight,
+				height=0.2\textheight,
 				axis x line=bottom,
 				ylabel=Top-5 Error,
 				xlabel=\gls{cpu} Forward (ms),
@@ -1752,42 +1752,42 @@
 	\subsection{The Effect on Image-level Filters of Root Modules}
 	\begin{figure}[tb]
 		\centering
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1}
 			\caption{Standard}
 			\label{fig:resnet50normalconv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root4-convonly}
 			\caption{Root-2}
 			\label{fig:resnet50root2conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root8-convonly}
 			\caption{Root-4}
 			\label{fig:resnet50root4conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root16-convonly}
 			\caption{Root-8}
 			\label{fig:resnet50root8conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root32-convonly}
 			\caption{Root-16}
 			\label{fig:resnet50root16conv0}
 		\end{subfigure}
 		~
-		\begin{subfigure}[b]{0.45\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{Figs/Raster/msrc-resnet-50-conv1-root64-convonly}
 			\caption{Root-32}
