@@ -118,6 +118,12 @@ def pdfcolorsplit(file, doublesided, merge, use_pdftoppm, reassemble, verbose):
     ranges = ['%d-%d' % (x,y-1) for (x,y) in zip(edges[:-1], edges[1:])]
 
     print(iscolor, ranges)
+    currentcolor = iscolor[0]
+    print('Color pages:')
+    for i in range(len(ranges)):
+        if currentcolor:
+            print(ranges[i])
+        currentcolor = not currentcolor
 
     # Finally output split files
     if verbose:
