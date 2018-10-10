@@ -1,5 +1,6 @@
-Yani Ioannou's PhD Thesis, based on CUED PhD thesis template
-========================
+Yani Ioannou's PhD Thesis
+
+You can find here the LaTeX source for my PhD thesis, the final version which can be found [here](https://drive.google.com/uc?export=download&id=0B-xhFKshQBSaWlN5VUtJajE3c0E).
 
 ## Acknowledgements(s)
 
