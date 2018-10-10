@@ -1,6 +1,6 @@
-Yani Ioannou's PhD Thesis
+# PhD Thesis: Structural Priors in Deep Neural Networks
 
-You can find here the LaTeX source for my PhD thesis, the final version which can be found [here](https://drive.google.com/uc?export=download&id=0B-xhFKshQBSaWlN5VUtJajE3c0E).
+You can find here the LaTeX source for my PhD thesis submitted to the University of Cambridge in September, 2017. The final version can be found [here](https://drive.google.com/uc?export=download&id=0B-xhFKshQBSaWlN5VUtJajE3c0E).
 
 ## Acknowledgements(s)
 
